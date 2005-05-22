@@ -1,0 +1,4 @@
+MD5 c157f136df56b4fd918a7a925bbf1c18 smoke-7.ebuild 970
+MD5 92a2bf7b4c3eebd09d53b684b22513af files/parallel-make.diff 1696
+MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-smoke-7 0

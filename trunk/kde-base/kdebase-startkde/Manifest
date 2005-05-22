@@ -1,0 +1,5 @@
+MD5 2d56e51c1768d6da981969f9eaa7d536 kdebase-startkde-7.ebuild 1903
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdebase-startkde-7 0
+MD5 38116c7e3963674ec4a3c0948904ec3b files/agent-shutdown.sh 320
+MD5 016f5ae82399f6d6c1b9f82aa80ac831 files/agent-startup.sh 550
+MD5 e9130fa3d37d12bb7eac50d4c63fd54a files/startkde-7-gentoo.diff 1460

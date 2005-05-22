@@ -1,0 +1,4 @@
+MD5 f48aff9b271c64ecc8fb4d02af891087 kword-7.ebuild 992
+MD5 6ee3768e50296eb2a8158093ee518133 files/CAN-2005-0064.patch 829
+MD5 77399be6733ffca4ed1142ab319c1453 files/koffice_1_3_xpdf_buffer_overflow.diff 1808
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kword-7 0
