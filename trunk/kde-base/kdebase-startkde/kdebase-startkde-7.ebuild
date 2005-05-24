@@ -1,12 +1,13 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/kde-base/kdebase-startkde/kdebase-startkde-3.4.0-r1.ebuild,v 1.1 2005/05/11 20:03:54 greg_g Exp $
 
 KMNAME=kdebase
 KMNOMODULE=true
 KMEXTRACTONLY="kdm/kfrontend/sessions/kde.desktop.in startkde"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kde-meta eutils kde-source
 
 DESCRIPTION="startkde script, which starts a complete KDE session, and associated scripts"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
@@ -29,37 +30,45 @@ src_compile() {
 }
 
 src_install() {
-
 	# startkde script
-	dodir $KDEDIR/bin
-	cd $D/$KDEDIR/bin
-	cp $S/startkde .
-	patch -p0 < $FILESDIR/startkde-$PV-gentoo.diff
-	sed -i -e "s:_KDEDIR_:${KDEDIR}:" startkde
-	chmod a+x startkde
+	epatch ${FILESDIR}/${PF}-gentoo.patch
+	exeinto ${KDEDIR}/bin
+	doexe startkde
 
 	# startup and shutdown scripts
-	insopts -m0755
 	insinto ${KDEDIR}/env
-	doins $FILESDIR/agent-startup.sh
-	insinto $KDEDIR/shutdown
-	doins $FILESDIR/agent-shutdown.sh
+	doins ${FILESDIR}/agent-startup.sh
 
-	# x11 session script - old style
-	cd ${T}
-	echo "#!/bin/sh
-${KDEDIR}/bin/startkde" > kde-$SLOT
-	chmod a+x kde-$SLOT
+	exeinto ${KDEDIR}/shutdown
+	doexe ${FILESDIR}/agent-shutdown.sh
+
+	# freedesktop environment variables
+	cat <<EOF > ${T}/xdg.sh
+export XDG_DATA_DIRS="${KDEDIR}/share:/usr/share"
+export XDG_CONFIG_DIRS="${KDEDIR}/etc/xdg"
+EOF
+	insinto ${KDEDIR}/env
+	doins ${T}/xdg.sh
+
+	# x11 session script
+	cat <<EOF > ${T}/kde-${SLOT}
+#!/bin/sh
+exec ${KDEDIR}/bin/startkde
+EOF
 	exeinto /etc/X11/Sessions
-	doexe kde-$SLOT
+	doexe ${T}/kde-${SLOT}
 
-	# x11 session - new style
-	dodir /usr/share/xsessions
-	sed -e "s:@KDE_BINDIR@:${KDEDIR}/bin:g;s:Name=KDE:Name=KDE $PV:" \
-		$S/kdm/kfrontend/sessions/kde.desktop.in > $D/usr/share/xsessions/kde-$SLOT.desktop
+	# freedesktop compliant session script
+	sed -e "s:@KDE_BINDIR@:${KDEDIR}/bin:g;s:Name=KDE:Name=KDE ${SLOT}:" \
+		${S}/kdm/kfrontend/sessions/kde.desktop.in > ${T}/kde-${SLOT}.desktop
+	insinto /usr/share/xsessions
+	doins ${T}/kde-${SLOT}.desktop
 }
 
 pkg_postinst () {
+	echo
 	einfo "To enable gpg-agent and/or ssh-agent in KDE sessions,"
-	einfo "edit $KDEDIR/env/agent-startup.sh and $KDEDIR/shutdown/agent-shutdown.sh"
+	einfo "edit ${KDEDIR}/env/agent-startup.sh and"
+	einfo "${KDEDIR}/shutdown/agent-shutdown.sh"
+	echo
 }

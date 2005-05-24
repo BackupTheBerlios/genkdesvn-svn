@@ -1,6 +1,7 @@
---- startkde	2005-02-23 12:24:24.000000000 +0100
-+++ startkde	2005-03-10 12:00:05.000000000 +0100
-@@ -14,6 +14,43 @@
+diff -Nur KDE/kdebase.orig/startkde KDE/kdebase/startkde
+--- KDE/kdebase.orig/startkde	2005-03-04 12:20:04.000000000 +0100
++++ KDE/kdebase/startkde	2005-05-11 14:56:43.000000000 +0200
+@@ -14,6 +14,42 @@
  	exit 1
  fi
  
@@ -10,32 +11,29 @@
 +cd ${HOME}
 +if [ -L .kde -o ! -d .kde ]; then
 +	# handle ~/.kde* dirs - separate ones for separate KDEs
-+	[ -d .kde ] && mv .kde .kde.backup
++	[ -d .kde/ ] cp -r .kde/ .kde.backup
++	rm -f .kde
 +	if [ ! -e .kdedevel ]; then
 +		# migrate old config files
-+		if [ -e .kdecvs ]; then
-+			cp -r .kdecvs .kdedevel
-+       elif [ -e .kde3.4 ]; then
-+           cp -r .kde3.4 .kdedevel
++		if [ -e .kde3.4 ]; then
++			cp -r .kde3.4 .kdedevel
 +		elif [ -e .kde3.3 ]; then
 +			cp -r .kde3.3 .kdedevel
 +		elif [ -e .kde3.2 ]; then
 +			cp -r .kde3.2 .kdedevel
-+       else
++		else
 +			mkdir .kdedevel
 +		fi
++		cd .kdedevel
 +		for file in share/apps/kdevdocumentation/search/htdig.conf \
 +			    share/apps/kalarmd/clients \
-+			    share/config/kdevdocumentationrc \
-+			    share/config/katesyntaxhighlightingrc \
-+			    share/config/ksysguardrc \
 +			    share/config/kresources/calendar/stdrc \
-+			    share/config/ksmserverrc \
-+			    share/config/kcalrc; do
-+			if [ -e ".kdedevel/${file}" ]; then
-+				sed -i -e "s:$HOME/\.kde3\.[23]:$HOME/\.kdedevel:g" \
-+				       -e 's:$HOME/\.kde3\.[23]:$HOME/\.kdedevel:g' \
-+					".kdedevel/${file}"
++			    share/config/*rc; do
++			if [ -e "${file}" ]; then
++				sed -i -e "s:$HOME/\.kde3\.[234]:$HOME/\.kdedevel:g" \
++				       -e 's:$HOME/\.kde3\.[234]:$HOME/\.kdedevel:g' \
++				       -e 's:/usr/kde/3\.[234]/:/usr/kde/devel/:g' \
++					"${file}"
 +			fi
 +		done
 +	fi
