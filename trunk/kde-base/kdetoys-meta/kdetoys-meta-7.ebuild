@@ -3,6 +3,7 @@
 # $Header: $
 
 KMSUBMODULES="
+	amor
 	eyesapplet
 	fifteenapplet
 	kmoon
@@ -10,7 +11,7 @@ KMSUBMODULES="
 	kteatime
 	ktux
 	kweather
-	amor"
+	kworldwatch"
 inherit kde-meta-parent
 
 DESCRIPTION="kdetoys - merge this to pull in all kdetoys-derived packages"
