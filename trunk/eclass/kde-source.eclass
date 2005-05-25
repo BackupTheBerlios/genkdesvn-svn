@@ -152,7 +152,7 @@ kde-source_src_unpack() {
 			ESCM_SHALLOWITEMS=`echo "$ESCM_SHALLOWITEMS $ESCM_ROOT$KSCM_MODULE/$item" | sed -e "s/\/*$//g"`
 		done
 
-		[ -z "$KSCM_I18N_PO" ] && KSCM_I18N_PO="$KSCM_SUBDIR"
+		[ -z "$KSCM_L10N_PO" ] && KSCM_L10N_PO="$KSCM_SUBDIR"
 
 	else
 
@@ -168,9 +168,9 @@ kde-source_src_unpack() {
 
 	fi
 
-	if [ -z "$KSCM_I18N_MODULE" ]; then
+	if [ -z "$KSCM_L10N_MODULE" ]; then
 
-		[ "$KSCM_ROOT" == "extragear" ] && KSCM_I18N_MODULE=extragear-$KSCM_MODULE || KSCM_I18N_MODULE=$KSCM_MODULE
+		[ "$KSCM_ROOT" == "extragear" ] && KSCM_L10N_MODULE=extragear-$KSCM_MODULE || KSCM_L10N_MODULE=$KSCM_MODULE
 
 	fi
 
@@ -178,7 +178,8 @@ kde-source_src_unpack() {
 	for lang in $LINGUAS
 	do
 
-		ESCM_DEEPITEMS="$ESCM_DEEPITEMS l10n/$lang/messages/$KSCM_I18N_MODULE"
+		ESCM_DEEPITEMS="$ESCM_DEEPITEMS l10n/$lang/messages/$KSCM_L10N_MODULE"
+		#ESCM_DEEPITEMS="$ESCM_DEEPITEMS l10n/$lang/docs/$KSCM_L10N_MODULE/$KSCM"
 
 	done
 	
@@ -206,13 +207,13 @@ kde-source_src_unpack() {
 	for lang in $LINGUAS
 	do
 	
-		local srcdir="$WORKDIR/l10n/$lang/messages/$KSCM_I18N_MODULE"
+		local srcdir="$WORKDIR/l10n/$lang/messages/$KSCM_L10N_MODULE"
 		local destdir="$S/po/$lang"
 
 		mkdir -p $destdir
-		[ -z "$KSCM_I18N_PO" ] && KSCM_I18N_PO="\"*\""
+		[ -z "$KSCM_L10N_PO" ] && KSCM_L10N_PO="\"*\""
 
-		for po in $KSCM_I18N_PO
+		for po in $KSCM_L10N_PO
 		do
 
 			cp $srcdir/`eval echo $po`.po $destdir

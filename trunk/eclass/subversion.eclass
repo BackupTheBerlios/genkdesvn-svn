@@ -218,7 +218,7 @@ function subversion_modules_fetch() {
 		
 			einfo "Updating $entry $method"
 			# Disable externals
-			[ -d $module ] && subversion_perform "propdel" "svn:externals" $module
+			[ -d $module/.svn ] && subversion_perform "propdel" "svn:externals" $module
 			subversion_perform "update" "$currentmode" "$module"
 			echo $currentmode > "$module/$modefile"
 

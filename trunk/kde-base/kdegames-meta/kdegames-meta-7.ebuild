@@ -1,9 +1,41 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
-MAXKDEVER=$PV
+KMSUBMODULES="
+	arts?(kasteroids)
+	arts?(kbounce)
+	arts?(kolf)
+	atlantik
+	katomic
+	kbackgammon
+	kbattleship
+	kblackbox
+	kenolaba
+	kfouleggs
+	kgoldrunner
+	kjumpingcube
+	klickety
+	klines
+	kmahjongg
+	kmines
+	konquest
+	kpat
+	kpoker
+	ktron
+	ktuberling
+	ksame
+	kshisen
+	ksirtet
+	ksmiletris
+	ksnake
+	ksokoban
+	kspaceduel
+	kreversi
+	kwin4
+	lskat"
+inherit kde-meta-parent
 
-inherit kde-functions
 DESCRIPTION="kdegames - merge this to pull in all kdegames-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
@@ -12,36 +44,3 @@ SLOT="$PV"
 KEYWORDS="~x86 ~ppc ~sparc ~ppc64"
 IUSE=""
 
-RDEPEND="
-arts? ( $(deprange $PV $MAXKDEVER kde-base/kasteroids)
-	$(deprange $PV $MAXKDEVER kde-base/kbounce)
-	$(deprange $PV $MAXKDEVER kde-base/kolf) )
-$(deprange $PV $MAXKDEVER kde-base/atlantik)
-$(deprange $PV $MAXKDEVER kde-base/katomic)
-$(deprange $PV $MAXKDEVER kde-base/kbackgammon)
-$(deprange $PV $MAXKDEVER kde-base/kbattleship)
-$(deprange $PV $MAXKDEVER kde-base/kblackbox)
-$(deprange $PV $MAXKDEVER kde-base/kenolaba)
-$(deprange $PV $MAXKDEVER kde-base/kfouleggs)
-$(deprange $PV $MAXKDEVER kde-base/kgoldrunner)
-$(deprange $PV $MAXKDEVER kde-base/kjumpingcube)
-$(deprange $PV $MAXKDEVER kde-base/klickety)
-$(deprange $PV $MAXKDEVER kde-base/klines)
-$(deprange $PV $MAXKDEVER kde-base/kmahjongg)
-$(deprange $PV $MAXKDEVER kde-base/kmines)
-$(deprange $PV $MAXKDEVER kde-base/konquest)
-$(deprange $PV $MAXKDEVER kde-base/kpat)
-$(deprange $PV $MAXKDEVER kde-base/kpoker)
-$(deprange $PV $MAXKDEVER kde-base/ktron)
-$(deprange $PV $MAXKDEVER kde-base/ktuberling)
-$(deprange $PV $MAXKDEVER kde-base/ksame)
-$(deprange $PV $MAXKDEVER kde-base/kshisen)
-$(deprange $PV $MAXKDEVER kde-base/ksirtet)
-$(deprange $PV $MAXKDEVER kde-base/ksmiletris)
-$(deprange $PV $MAXKDEVER kde-base/ksnake)
-$(deprange $PV $MAXKDEVER kde-base/ksokoban)
-$(deprange $PV $MAXKDEVER kde-base/kspaceduel)
-$(deprange $PV $MAXKDEVER kde-base/kreversi)
-$(deprange $PV $MAXKDEVER kde-base/kwin4)
-$(deprange $PV $MAXKDEVER kde-base/lskat)
-"

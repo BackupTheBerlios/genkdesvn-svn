@@ -1,8 +1,45 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-MAXKDEVER=$PV
+# $Header: $
 
-inherit kde-functions
+KMSUBMODULES="
+	pda?(kpilot)
+	certmanager
+	kaddressbook
+	kalarm
+	kandy
+	karm
+	kdepim-kioslaves
+	kdepim-kresources
+	kdepim-wizards
+	kitchensync
+	kmail
+	kmailcvt
+	knode
+	knotes
+	kode
+	konsolekalendar
+	kontact
+	kontact-specialdates
+	korganizer
+	korn
+	ksync
+	ktnef
+	libkcal
+	libkdenetwork
+	libkdepim
+	libkholidays
+	libkmime
+	libkpgp
+	libkpimexchange
+	libkpimidentities
+	libksieve
+	mimelib
+	networkstatus"
+# 	not compiled by default
+#	kmobile
+inherit kde-meta-parent
+
 DESCRIPTION="kdepim - merge this to pull in all kdepim-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
@@ -11,40 +48,4 @@ SLOT="$PV"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE="pda"
 
-RDEPEND="
-	$(deprange $PV $MAXKDEVER kde-base/certmanager)
-	$(deprange $PV $MAXKDEVER kde-base/kaddressbook)
-	$(deprange $PV $MAXKDEVER kde-base/kalarm)
-	$(deprange $PV $MAXKDEVER kde-base/kandy)
-	$(deprange $PV $MAXKDEVER kde-base/karm)
-	$(deprange $PV $MAXKDEVER kde-base/kdepim-kioslaves)
-	$(deprange $PV $MAXKDEVER kde-base/kdepim-kresources)
-	$(deprange $PV $MAXKDEVER kde-base/kdepim-wizards)
-	$(deprange $PV $MAXKDEVER kde-base/kitchensync)
-	$(deprange $PV $MAXKDEVER kde-base/kmail)
-	$(deprange $PV $MAXKDEVER kde-base/kmailcvt)
-	$(deprange $PV $MAXKDEVER kde-base/knode)
-	$(deprange $PV $MAXKDEVER kde-base/knotes)
-	$(deprange $PV $MAXKDEVER kde-base/kode)
-	$(deprange $PV $MAXKDEVER kde-base/konsolekalendar)
-	$(deprange $PV $MAXKDEVER kde-base/kontact)
-	$(deprange $PV $MAXKDEVER kde-base/kontact-specialdates)
-	$(deprange $PV $MAXKDEVER kde-base/korganizer)
-	$(deprange $PV $MAXKDEVER kde-base/korn)
-	pda? ( $(deprange $PV $MAXKDEVER kde-base/kpilot) )
-	$(deprange $PV $MAXKDEVER kde-base/ksync)
-	$(deprange $PV $MAXKDEVER kde-base/ktnef)
-	$(deprange $PV $MAXKDEVER kde-base/libkcal)
-	$(deprange $PV $MAXKDEVER kde-base/libkdenetwork)
-	$(deprange $PV $MAXKDEVER kde-base/libkdepim)
-	$(deprange $PV $MAXKDEVER kde-base/libkholidays)
-	$(deprange $PV $MAXKDEVER kde-base/libkmime)
-	$(deprange $PV $MAXKDEVER kde-base/libkpgp)
-	$(deprange $PV $MAXKDEVER kde-base/libkpimexchange)
-	$(deprange $PV $MAXKDEVER kde-base/libkpimidentities)
-	$(deprange $PV $MAXKDEVER kde-base/libksieve)
-	$(deprange $PV $MAXKDEVER kde-base/mimelib)
-	$(deprange $PV $MAXKDEVER kde-base/networkstatus)"
 
-# not compiled by default
-#	$(deprange $PV $MAXKDEVER kde-base/kmobile)
