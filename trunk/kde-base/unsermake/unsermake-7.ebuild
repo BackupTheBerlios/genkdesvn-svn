@@ -1,5 +1,10 @@
 # Copyright 1999-2004 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+KSCM_ROOT=kdenonbeta
+ESCM_DEEPITEMS=kdenonbeta/$PN
+inherit kde-source
 
 IUSE=""
 DESCRIPTION="Unsermake - Advanced KDE build system"
@@ -10,6 +15,13 @@ SLOT=0
 
 DEPEND=">=dev-lang/python-2.2"
 RDEPEND="$DEPEND"
+
+src_unpack()
+{
+
+	subversion_src_unpack
+
+}
 
 src_compile()
 {
