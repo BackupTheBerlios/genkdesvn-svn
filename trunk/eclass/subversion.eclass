@@ -29,7 +29,7 @@ DESCRIPTION="Based on the ${ECLASS} eclass"
 
 ## -- add subversion in DEPEND
 #
-DEPEND="dev-util/subversion"
+DEPEND=">=dev-util/subversion-1.2.0"
 
 
 ## -- ESVN_STORE_DIR:  subversion sources store directory
@@ -154,7 +154,7 @@ function subversion_perform() {
 		"$MODE_SHALLOW") options="-N";;
 	esac
 
-	local execute=`echo svn --non-interactive $command $options $args | sed -e "s/^ *//"`
+	local execute=`echo svn $command $options $args | sed -e "s/^ *//"`
 	debug-print "$FUNCNAME: Performing \"$execute\""
 	$execute 2> $errorfile
 	[ $? -eq 1 ] && subversion_handle_error
@@ -217,9 +217,7 @@ function subversion_modules_fetch() {
 		else 
 		
 			einfo "Updating $entry $method"
-			# Disable externals
-			[ -d $module/.svn ] && subversion_perform "propdel" "svn:externals" $module
-			subversion_perform "update" "$currentmode" "$module"
+			subversion_perform "--ignore-externals update" "$currentmode" "$module"
 			echo $currentmode > "$module/$modefile"
 
 		fi
