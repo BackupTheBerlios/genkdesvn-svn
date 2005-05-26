@@ -9,5 +9,5 @@ inherit kde-meta eutils kde-source
 DESCRIPTION="KDE pam client that allows you to auth as a specified user without actually doing anything as that user"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE="pam"
-DEPEND="pam? ( sys-libs/pam ~kde-base/kdebase-pam-4 ) !pam? ( sys-apps/shadow )"
+DEPEND="pam? ( sys-libs/pam ~kde-base/kdebase-pam-5 ) !pam? ( sys-apps/shadow )"
 
