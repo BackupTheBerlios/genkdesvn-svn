@@ -15,7 +15,7 @@ KMEXTRACTONLY="libkonq/konq_defaults.h
 	    kioslave/thumbnail/configure.in.in" # for the HAVE_LIBART test
 KMCOMPILEONLY="kcontrol/background"
 DEPEND="$DEPEND
-	pam? ( sys-libs/pam ~kde-base/kdebase-pam-4 )
+	pam? ( sys-libs/pam ~kde-base/kdebase-pam-5 )
 	$(deprange $PV $MAXKDEVER kde-base/kcontrol)"
 	# Requires the desktop background settings and kdm modules,
 	# so until we separate the kcontrol modules into separate ebuilds :-),
