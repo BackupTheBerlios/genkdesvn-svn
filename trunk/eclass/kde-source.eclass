@@ -227,6 +227,14 @@ kde-source_src_unpack() {
 	done
 
 	[ -d $S/po ] && echo "SUBDIRS = \$(AUTODIRS)" > $S/po/Makefile.am
+	
+	# Visiblity stuff is way broken! Just disable it when it's pres
+	# until upstream finds a way to have it working right.
+	if grep HAVE_GCC_VISIBILITY configure &> /dev/null || ! [[ -f configure ]];
+	then
+		find ${S} -name configure.in.in | xargs sed -i -e 's:KDE_ENABLE_HIDDEN_VISIBILITY::g'
+		rm -f configure
+	fi
 
 }
 
