@@ -1,0 +1,10 @@
+# ChangeLog for kde-base/kdelibs
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*kdelibs-7-r1 (28 May 2005)
+
+  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kdelibs-7-r1.ebuild files/digest-kdelibs-7-r1
+  Weekly revision bump; bugs 89692, 96108, 95644, 85161, 105798, 105586, 85161
+
+

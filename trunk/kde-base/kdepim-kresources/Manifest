@@ -1,4 +1,4 @@
 MD5 1d400525e5242f732c9afbfe85c9ec9d kdepim-kresources-7.ebuild 1194
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdepim-kresources-7 0
-MD5 574333e97498d8631e021e05442328e7 files/icaltimezone.c.diff 482
 MD5 54ceeeba45d6d32a321821536b100e40 files/use-installed-kode.diff 687
+MD5 574333e97498d8631e021e05442328e7 files/icaltimezone.c.diff 482

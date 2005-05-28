@@ -1,3 +1,6 @@
+MD5 a749880187953303dc038e086cb1dbcf ChangeLog 271
+MD5 5107a05e7d6e884d941732c4c8d6f726 libkcal-7-r1.ebuild 527
 MD5 5107a05e7d6e884d941732c4c8d6f726 libkcal-7.ebuild 527
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-libkcal-7 0
 MD5 574333e97498d8631e021e05442328e7 files/icaltimezone.c.diff 482
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-libkcal-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-libkcal-7-r1 0

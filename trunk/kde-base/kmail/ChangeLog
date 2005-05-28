@@ -1,0 +1,9 @@
+# ChangeLog for kde-base/kmail
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*kmail-7-r1 (28 May 2005)
+
+  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kmail-7-r1.ebuild files/digest-kmail-7-r1
+  Weekly revision bump; bugs 102171, 79147, 105889, 31975, 97654
+
