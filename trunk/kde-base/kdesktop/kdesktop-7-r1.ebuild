@@ -20,7 +20,7 @@ $(deprange $PV $MAXKDEVER kde-base/kcontrol)"
 	# there's a dep here
 RDEPEND="${DEPEND}
 $(deprange $PV $MAXKDEVER kde-base/kcheckpass)
-	sys-apps/eject"
+$(deprange $PV $MAXKDEVER kde-base/kdialog)"
 
 KMCOPYLIB="libkonq libkonq/"
 KMEXTRACTONLY="kcheckpass/kcheckpass.h

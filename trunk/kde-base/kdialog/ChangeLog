@@ -1,0 +1,9 @@
+# ChangeLog for kde-base/kdialog
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*kdialog-7-r1 (28 May 2005)
+
+  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kdialog-7-r1.ebuild files/digest-kdialog-7-r1
+  Install kdeeject as part of this ebuild
+
