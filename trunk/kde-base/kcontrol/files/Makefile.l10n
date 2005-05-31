@@ -1,0 +1,16 @@
+install-data-am: install-nls-files
+
+install-nls-files:
+	$(mkinstalldirs) $(DESTDIR)$(kde_locale)/$(KDE_LANG)
+	$(INSTALL_DATA) $(srcdir)/charset $(DESTDIR)$(kde_locale)/$(KDE_LANG)/charset
+	$(INSTALL_DATA) $(srcdir)/entry.desktop $(DESTDIR)$(kde_locale)/$(KDE_LANG)/entry.desktop
+	$(INSTALL_DATA) $(srcdir)/flag.png $(DESTDIR)$(kde_locale)/$(KDE_LANG)/flag.png
+
+uninstall: uninstall-nls-files uninstall-recursive
+
+uninstall-nls-files:
+	-rm -f $(DESTDIR)$(kde_locale)/$(KDE_LANG)/charset
+	-rm -f $(DESTDIR)$(kde_locale)/$(KDE_LANG)/entry.desktop
+	-rm -f $(DESTDIR)$(kde_locale)/$(KDE_LANG)/flag.png
+
+SUBDIRS=
