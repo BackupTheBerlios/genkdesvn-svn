@@ -9,7 +9,7 @@ HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="x86 ~ppc"
+KEYWORDS="x86 ~ppc amd64"
 IUSE=""
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/karbon)

@@ -10,7 +10,7 @@ DESCRIPTION="shared koffice libraries"
 HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc"
+KEYWORDS="x86 ~ppc amd64"
 
 IUSE=""
 SLOT="$PV"

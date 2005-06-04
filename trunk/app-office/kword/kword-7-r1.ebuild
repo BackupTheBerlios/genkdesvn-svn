@@ -9,7 +9,7 @@ inherit kde-meta eutils kde-source
 DESCRIPTION="KOffice Word Processor"
 HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc"
+KEYWORDS="x86 ~ppc amd64"
 IUSE=""
 SLOT="$PV"
 DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
