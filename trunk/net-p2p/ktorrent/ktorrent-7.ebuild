@@ -15,3 +15,5 @@ HOMEPAGE="http://extragear.kde.org/apps/ktorrent"
 LICENSE="GPL-2"
 KEYWORDS="~x86"
 
+PATCHES="$FILESDIR/ktorrent-7-Makefile.am.patch"
+
