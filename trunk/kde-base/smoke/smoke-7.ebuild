@@ -14,8 +14,8 @@ HOMEPAGE="http://developer.kde.org/language-bindings/smoke/"
 KEYWORDS="~x86 ~ppc ~amd64"
 IUSE=""
 DEPEND="dev-lang/perl"
-PATCHES="$FILESDIR/no-gtk-glib-check.diff
-$FILESDIR/parallel-make.diff"
+PATCHES="$FILESDIR/no-gtk-glib-check.diff"
+
 
 # enable-final works, but requires at least 1.5GB of RAM to complete without swapping,
 # so it's best to turn it off here. (I don't have that much RAM, so can't estimate

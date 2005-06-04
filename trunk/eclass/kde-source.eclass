@@ -183,12 +183,10 @@ kde-source_src_unpack() {
 
 	done
 	
-	# Prevent subversion eclass from handling patches
-	if [ -n "$KMNAME" ]; then
+	# Handle patches
+	if [ -z "$KMNAME" ]; then
 
-		# Let kde-meta handle patches
-		MASKEDPATCHES="$PATCHES"
-		PATCHES=""
+		ESVN_PATCHES="$PATCHES"
 
 	fi
 
@@ -199,7 +197,6 @@ kde-source_src_unpack() {
 	if [ -n "$KMNAME" ]; then
 	
 		# Ask kde-meta to handle patches and prune makefiles as needed
-		PATCHES="$MASKEDPATCHES"
 		kde-meta_src_unpack "patches makefiles"
 
 	fi
