@@ -617,7 +617,16 @@ function subversion_svn_fetch() {
 	[ -z "${ESVN_REPO_URI##*/}" ] && ESVN_REPO_URI="${ESVN_REPO_URI%/}"
 	ESVN_CO_DIR="${ESVN_PROJECT}/${ESVN_REPO_URI##*/}"
 
-	ESVN_FETCH_OPTS="$MODE_SHALLOW" && ESVN_UPDATE_OPTS="$MODE_SHALLOW"
+	if [ -n "$ESCM_DEEPITEMS" -o -n "$ESCM_SHALLOWITEMS" ]; then
+
+		ESVN_FETCH_OPTS="$MODE_SHALLOW" && ESVN_UPDATE_OPTS="$MODE_SHALLOW"
+
+	else
+
+		ESVN_FETCH_OPTS="$MODE_DEEP" && ESVN_UPDATE_OPTS="$MODE_DEEP"
+	
+	fi
+
 	# First update trunk
 
 	# If trunk does not yet exist, perform initial checkout
@@ -632,7 +641,7 @@ function subversion_svn_fetch() {
 	else
 
 		cd $ESVN_STORE_DIR/$ESVN_CO_DIR
-		subversion_modules_fetch "$MODE_SHALLOW" "."
+		subversion_modules_fetch "$ESVN_UPDATE_OPTS" "."
 
 	fi
 
@@ -655,6 +664,8 @@ function subversion_svn_fetch() {
 		fi
 
 	done
+
+	[ -z $ESCM_DEEPITEMS -a -z $ESCM_SHALLOWITEMS ] && ESCM_DEEPITEMS="."
 
 	src_to_workdir "$ESVN_STORE_DIR/$ESVN_CO_DIR" subversion_deep_copy
 
