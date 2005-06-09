@@ -19,7 +19,7 @@ ECVS_MODULE="$EBERLIOS_MODULE"
 ECVS_USER="$EBERLIOS_USER"
 
 # If no server indicated in ebuild, assume cvs.berlios.de
-[ -z $EBERLIOS_SERVER ] && ESF_SERVER="cvs.berlios.de"
+[ -z $EBERLIOS_SERVER ] && EBERLIOS_SERVER="cvs.berlios.de"
 ECVS_SERVER="$EBERLIOS_SERVER:/cvsroot/$EBERLIOS_MODULE"
 
 ECVS_BRANCH=""
