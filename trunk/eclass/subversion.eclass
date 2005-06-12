@@ -665,7 +665,7 @@ function subversion_svn_fetch() {
 
 	done
 
-	[ -z $ESCM_DEEPITEMS -a -z $ESCM_SHALLOWITEMS ] && ESCM_DEEPITEMS="."
+	[ -z "$ESCM_DEEPITEMS" -a -z "$ESCM_SHALLOWITEMS" ] && ESCM_DEEPITEMS="."
 
 	src_to_workdir "$ESVN_STORE_DIR/$ESVN_CO_DIR" subversion_deep_copy
 
