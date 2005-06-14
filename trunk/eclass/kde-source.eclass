@@ -35,6 +35,7 @@ ESVN_PROJECT="kde"
 [ -z "$ESVN_REPO_URI" ] && ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk"
 [ -z "$ESVN_SERVER" ] && ESVN_SERVER="svn://anonsvn.kde.org/home/kde/trunk"
 ESVN_WEBINT="http://websvn.kde.org/"
+ESVN_CERTIFICATES="http://genkdesvn.berlios.de/certificates/ec08b331e2e6cabccb6c3e17a85e28ce"
 
 # for apps living inside modules like kdenonbeta - see also beginning of our _src_unpack
 # KCVS_SUBDIR=...

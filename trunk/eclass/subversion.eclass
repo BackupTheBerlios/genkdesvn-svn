@@ -113,6 +113,19 @@ readonly MODE_NONE="none"
 
 readonly modefile=".svn.eclass.mode"
 readonly errorfile="$T/.svn.lasterror"
+
+function subversion_obtain_certificates() {
+
+	_DISTDIR=$DISTDIR
+	DISTDIR="$HOME/.subversion/auth/svn.ssl.server"
+	for URI in $ESVN_CERTIFICATES
+	do
+		[ ! -f $DISTDIR/`basename $URI` ] && einfo "Obtaining SSL certificate $URI" && `eval $FETCHCOMMAND`
+	done
+	DISTDIR=$_DISTDIR
+
+}
+
 function subversion_handle_error() {
 
 	read errormsg < $errorfile
@@ -217,7 +230,7 @@ function subversion_modules_fetch() {
 		else 
 		
 			einfo "Updating $entry $method"
-			subversion_perform "--ignore-externals update" "$currentmode" "$module"
+			subversion_perform "update" "$currentmode" "$module"
 			echo $currentmode > "$module/$modefile"
 
 		fi
@@ -722,6 +735,7 @@ function subversion_bootstrap() {
 
 function subversion_src_unpack() {
 
+	subversion_obtain_certificates
 	subversion_svn_fetch
 	subversion_bootstrap || die "${ESVN}: unknown problem in subversion_bootstrap()."
 
