@@ -4,6 +4,7 @@
 KMNAME=kdepim
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+RESTRICT="unsermake"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE personal information manager"

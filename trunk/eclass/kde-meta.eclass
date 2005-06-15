@@ -419,6 +419,8 @@ function kde-meta_src_compile() {
 	
 	set_common_variables	
 
+	eval unsermake_setup
+
 	# kdebase: all configure.in's talk about java. Need to investigate which ones 
 	# actually need it.
 	if [ "$KMNAME" == "kdebase" ]; then
@@ -443,12 +445,7 @@ function kde-meta_src_compile() {
 		debug-print "$FUNCNAME: now in section $section"
 		if [ "$section" == "configure" ]; then
 			# don't log makefile.common stuff in confcache
-			if ! use unsermake ; then
-				[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
-			else
-				export PATH="$PATH:/usr/kde/unsermake"
-				[ ! -f "Makefile.in" ] && unsermake -f admin/Makefile.common
-			fi
+			[ ! -f "Makefile.in" ] && $make -f admin/Makefile.common
 			confcache_start
 			myconf="$EXTRA_ECONF $myconf"
 		fi
@@ -476,12 +473,7 @@ function kde-meta_src_compile() {
 				# Transform all .kcfgc files in it into .h files
 				for kcfgc in *.kcfgc
 				do
-					if ! use unsermake ; then
-						emake "`basename $kcfgc .kcfgc`.h" || die
-					else
-						export PATH="$PATH:/usr/kde/unsermake"
-						unsermake "`basename $kcfgc .kcfgc`.h" || die
-					fi
+					$emake "`basename $kcfgc .kcfgc`.h" || die
 					debug-print "Generated config header `pwd`/$kcfgc"
 				done
 
@@ -504,12 +496,7 @@ function kde-meta_src_compile() {
 				debug-print "Making compile-only `pwd`"
 
 				# Make these dependencies now
-				if ! use unsermake ; then
-					emake || die
-				else
-					export PATH="$PATH:/usr/kde/unsermake"
-					unsermake || die
-				fi
+				$emake || die
 
 				# Return to original directory
 				popd
@@ -538,12 +525,7 @@ function kde-meta_src_install() {
 				for dir in $KMMODULE $KMEXTRA $DOCS; do
 					if [ -d $S/$dir ]; then 
 						cd $S/$dir
-						if ! use unsermake ; then
-							make DESTDIR=${D} destdir=${D} install || die
-						else
-							export PATH="$PATH:/usr/kde/unsermake"
-							unsermake DESTDIR=${D} destdir=${D} install || die
-						fi
+						$make DESTDIR=${D} destdir=${D} install || die
 					fi
 				done
 				;;
