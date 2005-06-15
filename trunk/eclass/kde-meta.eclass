@@ -516,6 +516,8 @@ function kde-meta_src_install() {
 	
 	set_common_variables
 	
+	eval unsermake_setup
+
 	if [ "$1" == "" ]; then
 		kde-meta_src_install make dodoc
 	fi
