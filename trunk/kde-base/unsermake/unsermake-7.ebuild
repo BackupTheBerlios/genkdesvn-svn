@@ -37,8 +37,15 @@ src_install()
 pkg_postinst()
 {
 	einfo
-	einfo "To enable kde builds with unsermake, set the unsermake environent"
-	einfo "variable:  export UNSERMAKE=\"/usr/kde/unsermake/unsermake\""
+	einfo "To enable kde builds with unsermake, set the unsermake useflag"
+	einfo
+	einfo "To manually build KDE applications with unsermake,"
+	einfo "you have to add unsermake to your PATH:"
+	einfo "export PATH=\"\$PATH:/usr/kde/unsermake\""
+	einfo "And then proceed as normal, but instead call unsermake directly"
+	einfo "unsermake -f Makefile.cvs"
+	einfo "./configure"
+	einfo "unsermake"
 	einfo
 	einfo "Unsermake builds are highly experimental; use at your own risk"
 	einfo

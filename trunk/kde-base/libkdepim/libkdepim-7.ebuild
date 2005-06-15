@@ -14,4 +14,5 @@ DEPEND="
 $(deprange $PV $MAXKDEVER kde-base/libkcal)"
 
 KMCOPYLIB="libkcal libkcal"
-KMEXTRA="libemailfunctions/"
+KMCOMPILEONLY="libemailfunctions/"
+#KMEXTRA="libemailfunctions/"

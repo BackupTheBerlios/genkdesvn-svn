@@ -164,10 +164,16 @@ function create_fullpaths() {
 	for item in $KMMODULE; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMMODULEFULLPATH="$KMMODULEFULLPATH ${S}/$tmp"
+		if [ -z "$MODULE_DIR" ] && [ -n "$item" ]; then
+			MODULE_DIR="$item"
+		fi
 	done
 	for item in $KMEXTRA; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMEXTRAFULLPATH="$KMEXTRAFULLPATH ${S}/$tmp"
+		if [ -z "$MODULE_DIR" ] && [ -n "$item" ]; then
+			MODULE_DIR="$item"
+		fi
 	done
 	for item in $KMCOMPILEONLY; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
@@ -437,8 +443,13 @@ function kde-meta_src_compile() {
 		debug-print "$FUNCNAME: now in section $section"
 		if [ "$section" == "configure" ]; then
 			# don't log makefile.common stuff in confcache
-			[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
- 			confcache_start
+			if ! use unsermake ; then
+				[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
+			else
+				export PATH="$PATH:/usr/kde/unsermake"
+				[ ! -f "Makefile.in" ] && unsermake -f admin/Makefile.common
+			fi
+			confcache_start
 			myconf="$EXTRA_ECONF $myconf"
 		fi
 
@@ -465,7 +476,12 @@ function kde-meta_src_compile() {
 				# Transform all .kcfgc files in it into .h files
 				for kcfgc in *.kcfgc
 				do
-					emake "`basename $kcfgc .kcfgc`.h" || die
+					if ! use unsermake ; then
+						emake "`basename $kcfgc .kcfgc`.h" || die
+					else
+						export PATH="$PATH:/usr/kde/unsermake"
+						unsermake "`basename $kcfgc .kcfgc`.h" || die
+					fi
 					debug-print "Generated config header `pwd`/$kcfgc"
 				done
 
@@ -488,7 +504,12 @@ function kde-meta_src_compile() {
 				debug-print "Making compile-only `pwd`"
 
 				# Make these dependencies now
-				emake || die
+				if ! use unsermake ; then
+					emake || die
+				else
+					export PATH="$PATH:/usr/kde/unsermake"
+					unsermake || die
+				fi
 
 				# Return to original directory
 				popd
@@ -517,7 +538,12 @@ function kde-meta_src_install() {
 				for dir in $KMMODULE $KMEXTRA $DOCS; do
 					if [ -d $S/$dir ]; then 
 						cd $S/$dir
-						make DESTDIR=${D} destdir=${D} install || die
+						if ! use unsermake ; then
+							make DESTDIR=${D} destdir=${D} install || die
+						else
+							export PATH="$PATH:/usr/kde/unsermake"
+							unsermake DESTDIR=${D} destdir=${D} install || die
+						fi
 					fi
 				done
 				;;

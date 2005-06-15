@@ -12,13 +12,14 @@ ECLASS=kde
 INHERITED="$INHERITED $ECLASS"
 DESCRIPTION="Based on the $ECLASS eclass"
 HOMEPAGE="http://www.kde.org/"
-IUSE="${IUSE} debug arts xinerama kdeenablefinal"
+IUSE="${IUSE} debug arts xinerama kdeenablefinal unsermake"
 
 DEPEND=">=sys-devel/automake-1.7.0
 	sys-devel/autoconf
 	sys-devel/make
 	dev-util/pkgconfig
 	dev-lang/perl
+	unsermake? (>=kde-base/unsermake-7)
 	~kde-base/kde-env-3"
 
 RDEPEND="~kde-base/kde-env-3"
@@ -95,7 +96,8 @@ kde_src_compile() {
 	addwrite "${QTDIR}/etc/settings"
 	# things that should access the real homedir
 	[ -d "$REALHOME/.ccache" ] && ln -sf "$REALHOME/.ccache" "$HOME/"	
-	[ -n "$UNSERMAKE" ] && addwrite "/usr/kde/unsermake"
+	#[ -n "$UNSERMAKE" ] && addwrite "/usr/kde/unsermake"
+	use unsermake && addwrite "/usr/kde/unsermake"
 	
 	while [ "$1" ]; do
 
@@ -104,7 +106,8 @@ kde_src_compile() {
 				debug-print-section myconf
 				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --with-qt-libraries=${QTDIR}/$(get_libdir)"
 				# calculate dependencies separately from compiling, enables ccache to work on kde compiles
-				[ -z "$UNSERMAKE" ] && myconf="$myconf --disable-dependency-tracking"
+				#[ -z "$UNSERMAKE" ] && myconf="$myconf --disable-dependency-tracking"
+				! use unsermake && myconf="$myconf --disable-dependency-tracking"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
@@ -126,13 +129,20 @@ kde_src_compile() {
 
 				# rebuild configure script, etc
 				# This can happen with e.g. a cvs snapshot			
-				if [ ! -f "./configure" ] || [ -n "$UNSERMAKE" ]; then
+				#if [ ! -f "./configure" ] || [ -n "$UNSERMAKE" ]; then
+				if [ ! -f "./configure" ] || use unsermake ; then
 					for x in Makefile.cvs admin/Makefile.common; do
 						if [ -f "$x" ] && [ -z "$makefile" ]; then makefile="$x"; fi
 					done
 					if [ -f "$makefile" ]; then
-						debug-print "$FUNCNAME: configure: generating configure script, running make -f $makefile"
-						make -f $makefile
+						if ! use unsermake ; then
+							debug-print "$FUNCNAME: configure: generating configure script, running make -f $makefile"
+							make -f $makefile
+						else
+							debug-print "$FUNCNAME: configure: generating configure script, running unsermake -f $makefile"
+							export PATH="$PATH:/usr/kde/unsermake"
+							unsermake -f $makefile
+						fi
 					fi
 					[ -f "./configure" ] || die "no configure script found, generation unsuccessful"
 				fi
@@ -165,9 +175,26 @@ kde_src_compile() {
 				fi
 				;;
 			make)
+				pwd
+				einfo "$MODULE_DIR"
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
-				emake || die "died running emake, $FUNCNAME:make"
+				if ! use unsermake ; then
+					emake || die "died running emake, $FUNCNAME:make"
+				else
+					# Some apps use KSCM to state directories
+					if [ -z "$MODULE_DIR" -a -n "$KSCM_SUBDIR" ]; then
+						MODULE_DIR="$KSCM_SUBDIR"
+					fi
+
+					# unsermake expects to be called from within module directory, so ...
+					if [ -n "$MODULE_DIR" -a -d "$MODULE_DIR" ]; then
+						cd "$MODULE_DIR" || die "Cannot cd to $MODULE_DIR"
+					fi
+
+					export PATH="$PATH:/usr/kde/unsermake"
+					unsermake || die "died running unsermake, $FUNCNAME:unsermake"
+				fi
 				;;
 			all)
 				debug-print-section all
@@ -192,7 +219,12 @@ kde_src_install() {
 		case $1 in
 			make)
 				debug-print-section make
-				make install DESTDIR=${D} destdir=${D} || die "died running make install, $FUNCNAME:make"
+				if ! use unsermake ; then
+					make install DESTDIR=${D} destdir=${D} || die "died running make install, $FUNCNAME:make"
+				else
+					export PATH="$PATH:/usr/kde/unsermake"
+					unsermake install DESTDIR=${D} destdir=${d} || die "died running unsermake install, $FUNCNAME:unsermake"
+				fi
 				;;
 	    	dodoc)
 				debug-print-section dodoc
