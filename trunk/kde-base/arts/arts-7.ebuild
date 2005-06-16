@@ -22,7 +22,7 @@ DEPEND="alsa? ( media-libs/alsa-lib virtual/alsa )
 	>=dev-libs/glib-2
 	>=x11-libs/qt-3.3"
 
-ESCM_EXTERNALS="KDE/kdelibs/libltdl"
+KMCOMPILEONLY="KDE/kdelibs/libltdl"
 
 src_compile() {
 
