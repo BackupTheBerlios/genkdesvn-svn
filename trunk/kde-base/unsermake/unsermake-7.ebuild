@@ -37,7 +37,7 @@ src_install()
 pkg_postinst()
 {
 	einfo
-	einfo "To enable kde builds with unsermake, set the unsermake useflag"
+	einfo "To enable kde builds with unsermake, add unsermake to your FEATURES in /etc/make.conf"
 	einfo
 	einfo "To manually build KDE applications with unsermake,"
 	einfo "you have to add unsermake to your PATH:"

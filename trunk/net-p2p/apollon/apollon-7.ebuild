@@ -6,6 +6,7 @@ inherit kde sourceforge
 
 DESCRIPTION="A KDE-based giFT GUI to search for and monitor downloads."
 HOMEPAGE="http://apollon.sourceforge.net"
+RESTRICT="unsermake"
 
 SLOT="0"
 LICENSE="GPL-2"
