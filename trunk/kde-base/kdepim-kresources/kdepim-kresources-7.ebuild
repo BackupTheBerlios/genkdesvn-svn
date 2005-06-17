@@ -5,6 +5,7 @@ KMNAME=kdepim
 KMMODULE=kresources
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+RESTRICT=unsermake
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE PIM groupware plugin collection"
@@ -35,12 +36,13 @@ KMCOMPILEONLY="
 	libkcal/libical/src/libical/
 	libkcal/libical/src/libicalss/
 	certmanager/
-	libkdenetwork/gpgmepp
-	libkpgp/
-	knotes/
-	akregator/src/librss
+	akregator/
 	kaddressbook/
-	libemailfunctions/ "
+	knotes/
+	libkpgp/
+	libemailfunctions/
+	libkdenetwork/gpgmepp "
+#akregator/src/librss
 
 PATCHES="$FILESDIR/use-installed-kode.diff $FILESDIR/icaltimezone.c.diff"
 

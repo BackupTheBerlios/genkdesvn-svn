@@ -72,12 +72,8 @@ src_compile() {
 
 src_install() {
 
-	if ! use unsermake ; then
-		make DESTDIR=${D} install || die
-	else
-		export PATH="$PATH:/usr/kde/unsermake"
-		unsermake DESTDIR=${D} install || die
-	fi
+	eval unsermake_setup
+	$make DESTDIR=${D} install || die
 
 	dodoc AUTHORS ChangeLog FAQ README TODO
 
