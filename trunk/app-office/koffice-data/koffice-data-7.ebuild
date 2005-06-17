@@ -5,6 +5,7 @@
 MAXKOFFICEVER=$PV
 KMNAME=koffice
 KMMODULE=
+KMNOMODULE="true"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="shared koffice data files"

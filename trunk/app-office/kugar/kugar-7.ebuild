@@ -18,6 +18,7 @@ DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	dev-util/pkgconfig"
 
 KMCOPYLIB="
+	libkoproperty lib/koproperty
 	libkformula lib/kformula
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
