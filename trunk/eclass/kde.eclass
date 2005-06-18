@@ -214,8 +214,6 @@ kde_src_compile() {
 				fi
 				;;
 			make)
-				pwd
-				einfo "$MODULE_DIR"
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
 				if [ $make == unsermake ] ; then

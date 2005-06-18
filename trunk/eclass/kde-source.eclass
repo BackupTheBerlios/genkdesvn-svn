@@ -90,9 +90,11 @@ fi
 
 if [ -n "$KSCM_SUBDIR" -o -n "$KSCM_MODULE" ]; then
 	S="$WORKDIR/$ESCM_ROOT$KSCM_MODULE"
+	SVN_MODULE="${ESCM_ROOT}${KSCM_MODULE}"
 else
 	# default for kde-base ebuilds
 	S="$WORKDIR/$ESCM_ROOT${KSCM_MODULE:-$PN}"
+	SVN_MODULE="${ESCM_ROOT}${KSCM_MODULE:-$PN}"
 fi
 
 kde-source_src_unpack() {

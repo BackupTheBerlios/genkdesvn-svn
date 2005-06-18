@@ -684,6 +684,111 @@ function subversion_svn_fetch() {
 
 }
 
+## -- subversion_svn_check() ------------------------------------------------- #
+
+function subversion_svn_check() {
+
+	einfo "autoskipcvs is set, meaning if code hasn't changed, package will be skipped"
+	einfo "Note that this is not, and should not be, the default behaviour !"
+
+	SVN_PATH=""
+	SVN_EXTRA=""
+
+	if [ -n "${KMMODULE}" -a -z "${KMNOMODULE}" ]; then
+		SVN_PATH="${SVN_MODULE}/${KMMODULE}"
+	elif [ -n "${KSCM_SUBDIR}" -a -z "${KMNOMODULE}" ]; then
+		SVN_PATH="${SVN_MODULE}/${KSCM_SUBDIR}"
+	else
+		SVN_PATH="${SVN_MODULE}"
+
+		if [ -n "${KMEXTRA}" ]; then
+			# "po" gets added autom. so check if theres anything else besides po
+			for i in ${KMEXTRA}; do
+				if [ "${i}" != "po" ]; then
+					SVN_EXTRA="${SVN_EXTRA} ${i}"
+				fi
+			done
+		fi
+
+		if [ -z "${SVN_EXTRA}" -a -n "${KMEXTRACTONLY}" ]; then
+			SVN_EXTRA="${KMEXTRACTONLY}"
+		fi
+	fi
+
+	# ESVN_REPO_URI is empty.
+	[ -z "${ESVN_REPO_URI}" ] && die "${ESVN}: ESVN_REPO_URI is empty."
+
+	# check for the protocol.
+	case ${ESVN_REPO_URI%%:*} in
+		http)	;;
+		https)	;;
+		svn)	;;
+		file)	;;
+		svn+ssh) ;;
+		*)
+			die "${ESVN}: fetch from "${ESVN_REPO_URI%:*}" is not yet implemented."
+			;;
+	esac
+
+	if [ ! -d "${ESVN_STORE_DIR}" ]; then
+		return 0
+	fi
+	cd -P "${ESVN_STORE_DIR}" || die "${ESVN}: can't chdir to ${ESVN_STORE_DIR}"
+
+	ESVN_STORE_DIR=${PWD}
+
+	[ -z "${ESVN_REPO_URI##*/}" ] && ESVN_REPO_URI="${ESVN_REPO_URI%/}"
+	ESVN_CO_DIR="${ESVN_PROJECT}/${ESVN_REPO_URI##*/}"
+
+
+	# loop into module(s)
+	cd "${ESVN_CO_DIR}"
+	if [ -n "${SVN_EXTRA}" ]; then
+
+		for i in ${SVN_EXTRA} ; do
+
+			MODULE="${SVN_PATH}/${i}"
+			eval subversion_check_revisions
+
+		done
+
+	else
+
+		MODULE="${SVN_PATH}"
+		eval subversion_check_revisions
+
+	fi
+
+	# check flag
+	if [ -z "${ESVN_REVISION_CHANGED}" ]; then
+		ewarn "Revision has not changed for ${PN}"
+		ewarn "Exiting ebuild now ..."
+		exit 1
+	else
+		ewarn "Revision changed, proceeding with svn update"
+	fi
+
+}
+
+
+## -- subversion_check_revisions() ------------------------------------------------- #
+
+function subversion_check_revisions() {
+
+	if [ ! -d "${MODULE}" ] && [ ! -f "${MODULE}" ]; then
+		return 0
+	fi
+
+	einfo "Checking revision for ${MODULE}"
+	REPOS_REV=`subversion_perform "info" "${ESVN_REPO_URI}/${MODULE}" | grep "Last Changed Rev" | cut -d\  -f4`
+	LOCAL_REV=`subversion_perform "info" "${MODULE}" | grep "Last Changed Rev" | cut -d\  -f4`
+
+	if [ ${REPOS_REV} != ${LOCAL_REV} ]; then
+		ESVN_REVISION_CHANGED="1"
+	fi
+
+}
+
 ## -- subversion_bootstrap() ------------------------------------------------ #
 
 function subversion_bootstrap() {
@@ -736,6 +841,10 @@ function subversion_bootstrap() {
 function subversion_src_unpack() {
 
 	subversion_obtain_certificates
+
+	if ( hasq autoskipcvs ${FEATURES} ); then
+		eval subversion_svn_check
+	fi
 	subversion_svn_fetch
 	subversion_bootstrap || die "${ESVN}: unknown problem in subversion_bootstrap()."
 
