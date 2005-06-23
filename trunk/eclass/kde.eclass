@@ -28,6 +28,7 @@ SLOT="0"
 
 function unsermake_setup() {
 
+	make_cmd=make
 	make=make
 	emake=emake
 	unsermake_pkg='~kde-base/unsermake-7'
@@ -40,8 +41,16 @@ function unsermake_setup() {
 
 				addwrite "/usr/kde/unsermake"
 				export PATH="$PATH:/usr/kde/unsermake"
-				make=unsermake
-				emake=unsermake
+
+				make_cmd=unsermake
+				make="${make_cmd}"
+				emake="${make_cmd}"
+
+				## add UNSERMAKEOPTS if found
+				if [ -n ${UNSERMAKEOPTS} ]; then
+					make="${make} ${UNSERMAKEOPTS}"
+					emake="${emake} ${UNSERMAKEOPTS}"
+				fi
 				
 				if [ -n "$1" ] && [ $1 == info ]; then
 				
@@ -153,7 +162,7 @@ kde_src_compile() {
 				debug-print-section myconf
 				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --with-qt-libraries=${QTDIR}/$(get_libdir)"
 				# calculate dependencies separately from compiling, enables ccache to work on kde compiles
-				[ ! $make == unsermake ] && myconf="$myconf --disable-dependency-tracking"
+				[ ! $make_cmd == unsermake ] && myconf="$myconf --disable-dependency-tracking"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
@@ -216,7 +225,7 @@ kde_src_compile() {
 			make)
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
-				if [ $make == unsermake ] ; then
+				if [ $make_cmd == unsermake ] ; then
 					# Some apps use KSCM to state directories
 					if [ -z "$MODULE_DIR" -a -n "$KSCM_SUBDIR" ]; then
 						MODULE_DIR="$KSCM_SUBDIR"

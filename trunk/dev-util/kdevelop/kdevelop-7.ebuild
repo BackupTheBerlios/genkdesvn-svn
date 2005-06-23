@@ -3,6 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-util/kdevelop/kdevelop-3.2.0.ebuild,v 1.2 2005/03/20 16:17:29 carlo Exp $
 
 KSCM_ROOT="KDE"
+RESTRICT="unsermake"
 inherit kde kde-source
 
 DESCRIPTION="Integrated Development Enviroment for Unix, supporting KDE/Qt, C/C++ and a many other languages."
