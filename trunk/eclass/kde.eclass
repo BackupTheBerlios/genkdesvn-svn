@@ -47,7 +47,7 @@ function unsermake_setup() {
 				emake="${make_cmd}"
 
 				## add UNSERMAKEOPTS if found
-				if [ -n ${UNSERMAKEOPTS} ]; then
+				if [ -n "${UNSERMAKEOPTS}" ]; then
 					make="${make} ${UNSERMAKEOPTS}"
 					emake="${emake} ${UNSERMAKEOPTS}"
 				fi
