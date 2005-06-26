@@ -34,11 +34,8 @@ KMCOMPILEONLY="
 	libkcal/libical/src/libicalss/"
 
 src_compile() {
-	export DO_NOT_COMPILE="libkcal" && kde-meta_src_compile myconf configure
-	# generate "ical.h"
-	cd ${S}/libkcal/libical/src/libical && make ical.h
-	# generate "icalss.h"
-	cd ${S}/libkcal/libical/src/libicalss && make icalss.h
+	# fix icaltimezone.c error
+	epatch ${FILESDIR}/${P}-libical-timezone.patch
 
-	kde-meta_src_compile make
+	kde-meta_src_compile
 }
