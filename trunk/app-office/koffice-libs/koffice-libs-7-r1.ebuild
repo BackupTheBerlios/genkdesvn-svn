@@ -4,6 +4,7 @@
 MAXKOFFICEVER=7
 KMNAME=koffice
 KMMODULE=lib
+RESTRICT=
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="shared koffice libraries"
@@ -12,12 +13,19 @@ HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
 KEYWORDS="x86 ~ppc amd64"
 
-IUSE=""
+IUSE="doc"
 SLOT="$PV"
 
-DEPEND="dev-util/pkgconfig"
+# unsermake cant handle doc generation, dont know what the problem is
+if use doc; then
+	RESTRICT=unsermake
+fi
 
-RDEPEND="$DEPEND $(deprange $PV $MAXKOFFICEVER app-office/koffice-data)"
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-data)"
+
+DEPEND="${RDEPEND}
+	doc? ( app-doc/doxygen )
+	dev-util/pkgconfig"
 
 KMEXTRA="
 	interfaces/
@@ -27,11 +35,14 @@ KMEXTRA="
 	filters/xsltfilter/
 	filters/generic_wrapper/
 	kounavail/
-	doc/koffice
-	doc/thesaurus"
+	doc/api/
+	doc/koffice/
+	doc/thesaurus/"
 
 KMEXTRACTONLY="
-	kchart/kdchart"
+	kchart/kdchart/"
+
+need-kde 3.3
 
 src_unpack() {
 	kde-source_src_unpack
@@ -42,5 +53,21 @@ src_unpack() {
 	kde-meta_src_unpack makefiles
 }
 
-need-kde 3.1
+src_compile() {
+    kde-meta_src_compile
+
+	unsermake_setup
+    if use doc; then
+        $make apidox || die
+    fi
+}
+
+src_install() {
+    kde-meta_src_install
+
+	unsermake_setup
+    if use doc; then
+        $make DESTDIR=${D} install-apidox || die
+    fi
+}
 

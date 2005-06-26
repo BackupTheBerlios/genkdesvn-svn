@@ -14,7 +14,9 @@ KEYWORDS="x86 ~ppc amd64"
 IUSE=""
 SLOT="$PV"
 
-DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)"
+
+DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 KMCOPYLIB="
@@ -32,6 +34,6 @@ KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/kformula"
 
-need-kde 3.1
+need-kde 3.3
 
 

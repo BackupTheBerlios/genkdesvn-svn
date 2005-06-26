@@ -11,14 +11,19 @@ HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
 KEYWORDS="x86 ~ppc amd64"
 
-IUSE="postgres mysql"
+IUSE="mysql postgres"
 SLOT="$PV"
 
-DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
-	dev-util/pkgconfig
-	dev-db/sqlite
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+	sys-libs/readline
+	mysql? ( dev-db/mysql )
 	postgres? ( dev-libs/libpqxx )
-	mysql? ( dev-db/mysql )"
+	dev-db/sqlite
+	dev-lang/python
+	!dev-db/kdexi"
+
+DEPEND="${RDEPEND}
+	dev-util/pkgconfig"
 
 KMCOPYLIB="
 	libkformula lib/kformula
@@ -35,7 +40,8 @@ KMEXTRACTONLY="lib/"
 
 src_compile() {
 	myconf="${myconf} $(use_enable postgres pgsql) $(use_enable mysql)"
-	kde_src_compile
+	#kde_src_compile
+	kde-meta_src_compile
 }
 
 # Kexi requires Qextmdi

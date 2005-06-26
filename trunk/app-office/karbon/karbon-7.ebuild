@@ -14,8 +14,12 @@ KEYWORDS="x86 ~ppc amd64"
 IUSE=""
 SLOT="$PV"
 
-DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
-	>=media-libs/libart_lgpl-2.3.9
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+	>=media-gfx/imagemagick-5.5.2
+	>=media-libs/freetype-2
+	>=media-libs/libart_lgpl-2.3.9"
+
+DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 KMCOPYLIB="

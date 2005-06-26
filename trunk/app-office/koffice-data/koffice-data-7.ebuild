@@ -17,6 +17,8 @@ KEYWORDS="x86 ~ppc amd64"
 IUSE=""
 SLOT="$PV"
 
+RDEPEND=""
+
 DEPEND="dev-util/pkgconfig"
 
 KMEXTRA="
@@ -26,4 +28,4 @@ KMEXTRA="
 	templates/
 	autocorrect/"
 
-need-kde 3.1
+need-kde 3.3

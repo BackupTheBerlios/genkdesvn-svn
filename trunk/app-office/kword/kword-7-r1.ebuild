@@ -12,10 +12,14 @@ LICENSE="GPL-2 LGPL-2"
 KEYWORDS="x86 ~ppc amd64"
 IUSE=""
 SLOT="$PV"
-DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+	$(deprange $PV $MAXKOFFICEVER app-office/kspread)
 	>=app-text/wv2-0.1.8
-	>=media-gfx/imagemagick-5.4.5
-	>=app-text/libwpd-0.8
+	>=media-gfx/imagemagick-5.5.2
+	>=app-text/libwpd-0.8"
+
+DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 KMCOPYLIB="
@@ -27,9 +31,10 @@ KMCOPYLIB="
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
-	libkstore lib/store"
+	libkstore lib/store
+	libkspreadcommon kspread"
 
-KMEXTRACTONLY="lib/ kchart/kdchart"
+KMEXTRACTONLY="lib/ kspread/ kchart/kdchart"
 
 KMCOMPILEONLY="filters/liboofilter interfaces/ kspread/"
 
@@ -37,4 +42,4 @@ KMEXTRA="filters/kword"
 
 PATCHES="${FILESDIR}/CAN-2005-0064.patch"
 
-need-kde 3.1
+need-kde 3.3
