@@ -5,10 +5,21 @@ EMERGE="/usr/bin/emerge"
 
 SLOT="7"
 
-KDE_APPS="
-x11-libs/qt
-kde-base/kdelibs
+## output variables
 
+USAGE="updateKDEsvn\nUsage: [-a] [-h] [-m metaname]\n
+-a: All packages are processed (DEFAULT).\n
+-h: Shows usage.\n
+-m metaname: Only packages of given metaname are processed. Available names are kdebase, kdenetwork, kdepim, kdeadmin, kdeutils, kdemultimedia, kdegraphics, kdeaccessibility, kdetoys, kdewebdev, kdesdk, kdeedu, kdegames, kdeaddons, kdebindings, kdeartwork, koffice.\n"
+
+META_USAGE="Bad metaname.\n
+Available metanames are:\n
+kdebase, kdenetwork, kdepim, kdeadmin, kdeutils, kdemultimedia, kdegraphics, kdeaccessibility, kdetoys, kdewebdev, kdesdk, kdeedu, kdegames, kdeaddons, kdebindings, kdeartwork, koffice.\n"
+
+## KDE MODULES LIST
+
+KDE_KDEBASE="x11-libs/qt
+kde-base/kdelibs
 kde-base/libkonq
 kde-base/kcminit
 kde-base/kdebase-data
@@ -48,9 +59,9 @@ kde-base/ksmserver
 kde-base/kstart
 kde-base/ksysguard
 kde-base/ksystraycmd
-kde-base/ktip
+kde-base/ktip"
 
-kde-base/librss
+KDE_KDENETWORK="kde-base/librss
 kde-base/dcoprss
 kde-base/kdenetwork-filesharing
 kde-base/kdenetwork-kfile-plugins
@@ -66,9 +77,9 @@ kde-base/krfb
 kde-base/ksirc
 kde-base/ktalkd
 kde-base/kwifimanager
-kde-base/lisa
+kde-base/lisa"
 
-kde-base/libkdenetwork
+KDE_KDEPIM="kde-base/libkdenetwork
 kde-base/libkdepim
 kde-base/ktnef
 kde-base/libkcal
@@ -103,9 +114,9 @@ kde-base/knode
 kde-base/konsolekalendar
 kde-base/korn
 kde-base/kpilot
-kde-base/ksync
+kde-base/ksync"
 
-kde-base/kdeadmin-kfile-plugins
+KDE_KDEADMIN="kde-base/kdeadmin-kfile-plugins
 kde-base/kcmlinuz
 kde-base/kcron
 kde-base/kdat
@@ -113,9 +124,9 @@ kde-base/kpackage
 kde-base/ksysv
 kde-base/kuser
 kde-base/lilo-config
-kde-base/secpolicy
+kde-base/secpolicy"
 
-kde-base/ark
+KDE_KDEUTILS="kde-base/ark
 kde-base/kcalc
 kde-base/kcardtools
 kde-base/kcharselect
@@ -131,9 +142,9 @@ kde-base/kmilo
 kde-base/kregexpeditor
 kde-base/ksim
 kde-base/ktimer
-kde-base/kwalletmanager
+kde-base/kwalletmanager"
 
-media-libs/taglib
+KDE_KDEMULTIMEDIA="media-libs/taglib
 kde-base/libkcddb
 kde-base/kdemultimedia-kioslaves
 kde-base/kdemultimedia-kfile-plugins
@@ -152,9 +163,9 @@ kde-base/kmid
 kde-base/kmix
 kde-base/krec
 kde-base/kscd
-kde-base/noatun
+kde-base/noatun"
 
-kde-base/kdegraphics-kfile-plugins
+KDE_KDEGRAPHICS="kde-base/kdegraphics-kfile-plugins
 kde-base/libkscan
 kde-base/kamera
 kde-base/kcoloredit
@@ -173,17 +184,17 @@ kde-base/kruler
 kde-base/ksnapshot
 kde-base/ksvg
 kde-base/kuickshow
-kde-base/kview
+kde-base/kview"
 
-kde-base/kbstateapplet
+KDE_KDEACCESSIBILITY="kde-base/kbstateapplet
 kde-base/kdeaccessibility-iconthemes
 kde-base/kmag
 kde-base/kmousetool
 kde-base/kmouth
 kde-base/kttsd
-kde-base/ksayit
+kde-base/ksayit"
 
-kde-base/amor
+KDE_KDETOYS="kde-base/amor
 kde-base/eyesapplet
 kde-base/fifteenapplet
 kde-base/kmoon
@@ -191,17 +202,16 @@ kde-base/kodo
 kde-base/kteatime
 kde-base/ktux
 kde-base/kweather
-kde-base/kworldwatch
+kde-base/kworldwatch"
 
-kde-base/kfilereplace
+KDE_KDEWEBDEV="kde-base/kfilereplace
 kde-base/kimagemapeditor
 kde-base/klinkstatus
 kde-base/kommander
 kde-base/kxsldbg
-kde-base/quanta
+kde-base/quanta"
 
-
-kde-base/kdesdk-kfile-plugins
+KDE_KDESDK="kde-base/kdesdk-kfile-plugins
 kde-base/kdesdk-kioslaves
 kde-base/kdesdk-misc
 kde-base/kdesdk-scripts	
@@ -214,9 +224,9 @@ kde-base/kmtrace
 kde-base/kompare
 kde-base/kspy
 kde-base/kuiviewer
-kde-base/umbrello
+kde-base/umbrello"
 
-kde-base/libkdeedu
+KDE_KDEEDU="kde-base/libkdeedu
 kde-base/kalzium
 kde-base/kbruch
 kde-base/keduca
@@ -234,9 +244,9 @@ kde-base/ktouch
 kde-base/kturtle
 kde-base/kverbos
 kde-base/kvoctrain
-kde-base/kwordquiz
+kde-base/kwordquiz"
 
-kde-base/libkdegames
+KDE_KDEGAMES="kde-base/libkdegames
 kde-base/atlantik
 kde-base/kasteroids
 kde-base/katomic
@@ -268,9 +278,9 @@ kde-base/kspaceduel
 kde-base/ktron
 kde-base/ktuberling
 kde-base/kwin4
-kde-base/lskat
+kde-base/lskat"
 
-kde-base/atlantikdesigner
+KDE_KDEADDONS="kde-base/atlantikdesigner
 kde-base/kaddressbook-plugins
 kde-base/kate-plugins
 kde-base/kdeaddons-docs-konq-plugins
@@ -283,9 +293,9 @@ kde-base/ksig
 kde-base/noatun-plugins
 kde-base/renamedlg-audio
 kde-base/renamedlg-images
-kde-base/vimpart
+kde-base/vimpart"
 
-kde-base/dcopc
+KDE_KDEBINDINGS="kde-base/dcopc
 kde-base/dcopjava
 kde-base/dcopperl
 kde-base/dcoppython
@@ -297,9 +307,9 @@ kde-base/qtruby
 kde-base/korundum
 kde-base/qtjava
 kde-base/qtsharp
-kde-base/xparts
+kde-base/xparts"
 
-kde-base/kdeartwork-emoticons
+KDE_KDEARTWORK="kde-base/kdeartwork-emoticons
 kde-base/kdeartwork-icewm-themes
 kde-base/kdeartwork-iconthemes
 kde-base/kdeartwork-kscreensaver
@@ -307,9 +317,9 @@ kde-base/kdeartwork-kwin-styles
 kde-base/kdeartwork-kworldclock
 kde-base/kdeartwork-sounds
 kde-base/kdeartwork-styles
-kde-base/kdeartwork-wallpapers
+kde-base/kdeartwork-wallpapers"
 
-app-office/koffice-data
+KDE_KOFFICE="app-office/koffice-data
 app-office/koffice-libs
 app-office/karbon
 app-office/kchart
@@ -323,17 +333,33 @@ app-office/kexi
 app-office/krita
 app-office/kplato
 app-office/kword
+app-office/datakiosk"
+
+KDE_APPS="
+${KDE_KDEBASE}
+${KDE_KDENETWORK}
+${KDE_KDEPIM}
+${KDE_KDEADMIN}
+${KDE_KDEUTILS}
+${KDE_KDEMULTIMEDIA}
+${KDE_KDEGRAPHICS}
+${KDE_KDEACCESSIBILITY}
+${KDE_KDETOYS}
+${KDE_KDEWEBDEV}
+${KDE_KDESDK}
+${KDE_KDEEDU}
+${KDE_KDEGAMES}
+${KDE_KDEADDONS}
+${KDE_KDEBINDINGS}
+${KDE_KDEARTWORK}
+${KDE_KOFFICE}
 
 app-admin/kconfigeditor
 app-admin/kiosktool
 app-cdr/k3b
 app-editors/kile
-app-editos/yzis
 dev-util/kcfgcreator
 dev-util/kdevelop
-games-board/gamesman
-kde-misc/kat
-kde-misc/komose
 kde-misc/pwmanager
 media-libs/libkexif
 media-libs/libkipi
@@ -343,17 +369,13 @@ media-plugins/kipi-plugins
 media-gfx/showimg
 media-plugins/digikamimageplugins
 media-sound/amarok
-media-sound/kradio
 media-tv/kdetv
-media-video/kaffeine
 media-video/kmplayer
 media-video/kplayer
 net-irc/konversation
-net-p2p/apollon
 net-p2p/kmldonkey
 net-p2p/ktorrent
 net-wireless/kdebluetooth
-x11-themes/gtk-qt-engine
 "
 
 # Check if emerge command is found and executable
@@ -366,13 +388,115 @@ if [ ! -x ${EQUERY} ]; then
 	die "Command not found: ${EQUERY} ! Please install app-portage/gentoolkit"
 fi
 
+# Check for args
+while getopts "ahm:" opt; do
+	case $opt in
+		a  )
+			METANAME="all"
+			;;
+		m  )
+			METANAME="${OPTARG}"
+			;;
+
+		h | \?  )
+			echo -ne ${USAGE}
+			exit 1
+			;;
+
+		* )
+			METANAME="all"
+			;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+# Check if METANAMES is set
+if [ -n "${METANAME}" ]; then
+	case ${METANAME} in
+		all)
+			LIST_APPS="${KDE_APPS}"
+			;;
+		kdeaccessibility)
+			LIST_APPS="${KDE_KDEACCESSIBILITY}"
+			;;
+		kdeaddons)
+			LIST_APPS="${KDE_KDEADDONS}"
+			;;
+		kdeadmin)
+			LIST_APPS="${KDE_KDEADMIN}"
+			;;
+		kdeartwork)
+			LIST_APPS="${KDE_KDEARTWORK}"
+			;;
+		kdebase)
+			LIST_APPS="${KDE_KDEBASE}"
+			;;
+		kdebindings)
+			LIST_APPS="${KDE_KDEBINDINGS}"
+			;;
+		kdeedu)
+			LIST_APPS="${KDE_KDEEDU}"
+			;;
+		kdegames)
+			LIST_APPS="${KDE_KDEGAMES}"
+			;;
+		kdegraphics)
+			LIST_APPS="${KDE_KDEGRAPHICS}"
+			;;
+		kdemultimedia)
+			LIST_APPS="${KDE_KDEMULTIMEDIA}"
+			;;
+		kdenetwork)
+			LIST_APPS="${KDE_KDENETWORK}"
+			;;
+		kdepim)
+			LIST_APPS="${KDE_KDEPIM}"
+			;;
+		kdesdk)
+			LIST_APPS="${KDE_KDESDK}"
+			;;
+		kdetoys)
+			LIST_APPS="${KDE_KDETOYS}"
+			;;
+		kdeutils)
+			LIST_APPS="${KDE_KDEUTILS}"
+			;;
+		kdewebdev)
+			LIST_APPS="${KDE_KDEWEBDEV}"
+			;;
+		koffice)
+			LIST_APPS="${KDE_KOFFICE}"
+			;;
+
+		\?)
+			echo -ne ${META_USAGE}
+			exit 1
+			;;
+
+		*)
+			echo -ne ${META_USAGE}
+			exit 1
+			;;
+	esac
+
+else
+
+	LIST_APPS="${KDE_APPS}"
+
+fi
+
+
+#######################
 # Loop list of KDE APPS
-for i in ${KDE_APPS} ; do
+
+echo ">>> Starting update of KDE !!!"
+echo ""
+
+for i in ${LIST_APPS} ; do
 
 	if [ -n "${i}" ]; then
 
 		# check if app exists and is installed
-		#PACKAGE=`${EQUERY} list "${i}" | grep "${i}-${SLOT}" | cut -d"/" -f2`
 		PACKAGE=`${EQUERY} list "${i}" | grep "${i}-${SLOT}"`
 		if [ -n "${PACKAGE}" ]; then
 

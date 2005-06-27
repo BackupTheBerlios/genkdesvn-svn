@@ -7,7 +7,7 @@ inherit flag-o-matic
 KSCM_MODULE="kdesupport"
 ESCM_SHALLOWITEMS="$KSCM_MODULE"
 ESCM_DEEPITEMS="KDE/kde-common/admin $KSCM_MODULE/$PN"
-#KSCM_SUBDIR="$PN"
+KSCM_SUBDIR="$PN"
 #KSCM_SUBDIR_NODOC=1
 inherit kde-source
 
