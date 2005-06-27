@@ -33,9 +33,5 @@ KMCOMPILEONLY="
 	libkcal/libical/src/libical/
 	libkcal/libical/src/libicalss/"
 
-src_compile() {
-	# fix icaltimezone.c error
-	epatch ${FILESDIR}/${P}-libical-timezone.patch
+PATCHES="$FILESDIR/icaltimezone.c.diff"
 
-	kde-meta_src_compile
-}
