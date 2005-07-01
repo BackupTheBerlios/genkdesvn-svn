@@ -31,16 +31,13 @@ function unsermake_setup() {
 	make_cmd=make
 	make=make
 	emake=emake
-	unsermake_pkg='~kde-base/unsermake-7'
+	unsermake_pkg='>=kde-base/unsermake-7-r1'
 
 	if ( hasq unsermake $FEATURES ); then
 
 		if ( has_version $unsermake_pkg ); then
 
 			if ( ! hasq unsermake $RESTRICT ); then
-
-				addwrite "/usr/kde/unsermake"
-				export PATH="$PATH:/usr/kde/unsermake"
 
 				make_cmd=unsermake
 				make="${make_cmd}"
