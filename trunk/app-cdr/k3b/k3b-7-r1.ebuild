@@ -16,8 +16,8 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="css dvdr encode ffmpeg flac hal kde mp3 musepack vorbis"
 
 DEPEND="kde? ( || ( kde-base/kdesu kde-base/kdebase ) )
-	hal? ( =sys-apps/dbus-0.23*
-		=sys-apps/hal-0.4* )
+	hal? ( >=sys-apps/dbus-0.23
+		>=sys-apps/hal-0.4 )
 	media-libs/libsndfile
 	media-libs/libsamplerate
 	media-libs/taglib
