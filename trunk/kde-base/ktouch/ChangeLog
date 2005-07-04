@@ -7,8 +7,3 @@
   04 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  ktouch-7-r1.ebuild files/digest-ktouch-7-r1
   Introduce dependency on libkdeedu
 
-*ktouch-7-r1 (04 Jul 2005)
-
-  04 Jul 2005;  <mtanev@csua.berkeley.edu>  ktouch-7-r1.ebuild files/digest-ktouch-7-r1
-  Introduce dependency on libkdeedu
-
