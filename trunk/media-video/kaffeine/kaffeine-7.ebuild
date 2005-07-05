@@ -6,10 +6,11 @@ inherit kde sourceforge
 
 DESCRIPTION="Media player for KDE"
 LICENSE="GPL-2"
+RESTRICT="unsermake"
 
 SLOT="0"
 KEYWORDS="~x86 ~ppc ~sparc ~amd64"
-IUSE="dvb xine gstreamer arts"
+IUSE="dvb gstreamer arts"
 
 DEPEND=">=media-libs/xine-lib-1
 	gstreamer? ( >=media-libs/gst-plugins )
