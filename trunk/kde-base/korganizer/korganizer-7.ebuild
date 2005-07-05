@@ -40,7 +40,8 @@ KMEXTRACTONLY="
 	kontact/interfaces/
 	libkholidays"
 KMCOMPILEONLY="
-	libemailfunctions"
+	libemailfunctions
+	kdgantt"
 
 # They seems to be used only by korganizer
 KMEXTRA="
