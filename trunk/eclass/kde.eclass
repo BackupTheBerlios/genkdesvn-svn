@@ -32,6 +32,7 @@ function unsermake_setup() {
 	make=make
 	emake=emake
 	unsermake_pkg='>=kde-base/unsermake-7-r1'
+	export UNSERMAKE=no
 
 	if ( hasq unsermake $FEATURES ); then
 
@@ -42,6 +43,7 @@ function unsermake_setup() {
 				make_cmd=unsermake
 				make="${make_cmd}"
 				emake="${make_cmd}"
+				export UNSERMAKE=yes
 
 				## add UNSERMAKEOPTS if found
 				if [ -n "${UNSERMAKEOPTS}" ]; then
