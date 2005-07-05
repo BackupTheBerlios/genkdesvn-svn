@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 DESCRIPTION="Poppler is a PDF rendering library based on the xpdf-3.0 code base."
 HOMEPAGE="http://poppler.freedesktop.org"
@@ -16,7 +17,7 @@ DEPEND=">=media-libs/freetype-2.0.5
 	dev-util/pkgconfig
 	gtk? ( =x11-libs/gtk+-2* )
 	jpeg? ( media-libs/jpeg )
-	qt? ( >=x11-libs/qt-3* ) "
+	qt? ( >=x11-libs/qt-3 ) "
 
 src_compile() {
 	econf $(use_enable qt poppler-qt) $(use_enable gtk poppler-glib) $(use_enable gtk gtk-test) $(use_enable jpeg libjpeg)   || die
