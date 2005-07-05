@@ -41,6 +41,8 @@ KMEXTRACTONLY="
 
 KMCOMPILEONLY="filters/liboofilter"
 
+KMUIONLY="lib/kotext"
+
 KMEXTRA="filters/kword"
 
 need-kde 3.3
