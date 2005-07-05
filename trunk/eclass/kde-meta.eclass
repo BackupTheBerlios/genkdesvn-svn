@@ -183,6 +183,10 @@ function create_fullpaths() {
 		tmp=`echo $item | sed -e "s/\*$//g"`
 		KMCFGONLYFULLPATH="$KMCFGONLYFULLPATH ${S}/$tmp"
 	done
+	for item in $KMUIONLY; do
+		tmp=`echo $item | sed -e "s/\*$//g"`
+		KMUIONLYFULLPATH="$KMUIONLYFULLPATH ${S}/$tmp"
+	done
 	for item in $KMEXTRACTONLY; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMEXTRACTONLYFULLPATH="$KMEXTRACTONLYFULLPATH ${S}/$tmp"
@@ -204,7 +208,8 @@ function change_makefiles() {
 	# check if the dir is defined as KMEXTRACTONLY or if it was defined is KMEXTRACTONLY in the parent dir, this is valid only if it's not also defined as KMMODULE, KMEXTRA or KMCOMPILEONLY. They will ovverride KMEXTRACTONLY, but only in the current dir.
 	isextractonly="false"
 	if ( ( hasq "$1" $KMEXTRACTONLYFULLPATH || [ $2 = "true" ] ) && \
-		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH $KMCFGONLYFULLPATH) ); then
+		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH
+		 $KMCFGONLYFULLPATH ) ); then
 		isextractonly="true"
 	fi
 	debug-print "isextractonly = $isextractonly"
@@ -314,7 +319,7 @@ function kde-meta_src_unpack() {
 		# recursively fetched in cvs
 		deeplist="admin Makefile.am Makefile.am.in configure.in.in configure.in.bot configure.in.mid
 		acinclude.m4 aclocal.m4 AUTHORS COPYING INSTALL README NEWS ChangeLog
-		$KMMODULE $KMEXTRA $KMCFGONLY $KMCOMPILEONLY $KMEXTRACTONLY $DOCS"
+		$KMMODULE $KMEXTRA $KMCFGONLY $KMUIONLY $KMCOMPILEONLY $KMEXTRACTONLY $DOCS"
 
 	;;
 	unpack)
@@ -488,6 +493,25 @@ function kde-meta_src_compile() {
 
 			done
 
+			for dir in $KMUIONLYFULLPATH
+			do
+				
+				# Go to indicated directory
+				pushd $dir >/dev/null
+				debug-print "Generating config headers in `pwd`"
+
+				# Transform all .ui files in it into .h files
+				for ui in *.ui
+				do
+					uic $ui -o "`basename $ui .ui`.h" || die
+					debug-print "Generated ui header `pwd`/$ui"
+				done
+
+				# Return to original directory
+				popd >/dev/null
+
+			done
+			
 			# Make in compile-only directories in order
 			for dir in $KMCOMPILEONLYFULLPATH
 			do
