@@ -1,0 +1,9 @@
+# ChangeLog for kde-base/libkdepim
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*libkdepim-7-r1 (04 Jul 2005)
+
+  04 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  libkdepim-7-r1.ebuild files/digest-libkdepim-7-r1
+  Make sure libemailfunctions headers are actually installed
+
