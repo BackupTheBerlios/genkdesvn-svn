@@ -22,15 +22,6 @@ RDEPEND="$DEPEND
               mp3? ( media-sound/lame ) )"
 
 KMCOPYLIB="libkcddb libkcddb"
-#KMCOMPILEONLY="kscd/libwm
-#	libkcddb/"
 KMCOMPILEONLY="kscd/libwm"
 KMCFGONLY="libkcddb"
 KMUIONLY="libkcddb"
-
-#src_compile () {
-#	DO_NOT_COMPILE=libkcddb kde-meta_src_compile myconf configure
-#	cd $S/libkcddb && make configbase.h
-#	cd $S/libkcddb && make cdinfodialogbase.h
-#	DO_NOT_COMPILE=libkcddb kde-meta_src_compile make
-#}
