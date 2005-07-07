@@ -208,8 +208,7 @@ function change_makefiles() {
 	# check if the dir is defined as KMEXTRACTONLY or if it was defined is KMEXTRACTONLY in the parent dir, this is valid only if it's not also defined as KMMODULE, KMEXTRA or KMCOMPILEONLY. They will ovverride KMEXTRACTONLY, but only in the current dir.
 	isextractonly="false"
 	if ( ( hasq "$1" $KMEXTRACTONLYFULLPATH || [ $2 = "true" ] ) && \
-		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH
-		 $KMCFGONLYFULLPATH ) ); then
+		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH $KMCFGONLYFULLPATH ) ); then
 		isextractonly="true"
 	fi
 	debug-print "isextractonly = $isextractonly"
