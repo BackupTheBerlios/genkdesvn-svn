@@ -7,6 +7,7 @@ inherit kde sourceforge
 DESCRIPTION="kradio is a radio tuner application for KDE"
 HOMEPAGE="http://kradio.sourceforge.net/"
 SRC_URI="http://download.berlios.de/genkdesvn/admin.tar.bz2"
+FEATURES="unsermake"
 
 SLOT="0"
 LICENSE="GPL-2"
