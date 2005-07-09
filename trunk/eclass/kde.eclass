@@ -188,8 +188,8 @@ kde_src_compile() {
 						if [ -f "$x" ] && [ -z "$makefile" ]; then makefile="$x"; fi
 					done
 					if [ -f "$makefile" ]; then
-						debug-print "$FUNCNAME: configure: generating configure script, running $make -f $makefile"
-						$make -f $makefile
+						debug-print "$FUNCNAME: configure: generating configure script, running make -f $makefile"
+						make -f $makefile
 					fi
 					[ -f "./configure" ] || die "no configure script found, generation unsuccessful"
 				fi
