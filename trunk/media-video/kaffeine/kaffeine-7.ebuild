@@ -26,3 +26,4 @@ src_compile() {
 
 }
 
+PATCHES="$FILESDIR/detect-autoconf.diff"
