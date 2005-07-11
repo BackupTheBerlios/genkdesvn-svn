@@ -13,5 +13,5 @@ IUSE=""
 DESCRIPTION="BitTorrent frontend for the KDE desktop"
 HOMEPAGE="http://extragear.kde.org/apps/ktorrent"
 LICENSE="GPL-2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
