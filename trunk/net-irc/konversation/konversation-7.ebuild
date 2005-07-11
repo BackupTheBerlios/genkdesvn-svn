@@ -1,5 +1,6 @@
-# Copyright 1999-2003 Gentoo Technologies, Inc.
+# Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KSCM_ROOT=extragear
 KSCM_MODULE=network
@@ -12,7 +13,7 @@ IUSE="nls"
 DESCRIPTION="A user friendly IRC Client for KDE3.x"
 HOMEPAGE="http://konversation.sourceforge.net"
 LICENSE="GPL-2"
-KEYWORDS="x86"
+KEYWORDS="~amd64 ~x86"
 
 src_install() {
 	kde_src_install
