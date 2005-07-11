@@ -10,6 +10,7 @@ inherit kde kde-source
 DESCRIPTION="A digital photo management application for KDE."
 HOMEPAGE="http://digikam.sourceforge.net/"
 
+SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~x86 ~ppc ~amd64"
 IUSE=""
@@ -19,7 +20,6 @@ DEPEND=">=media-libs/libgphoto2-2
 	media-libs/libkipi
 	media-libs/imlib2
 	media-libs/tiff
-	sys-libs/gdbm
-	!media-plugins/digikamplugins"
+	sys-libs/gdbm"
 
 need-kde 3.2
