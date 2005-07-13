@@ -5,8 +5,9 @@
 inherit kde sourceforge
 
 DESCRIPTION="Media player for KDE"
+HOMEPAGE="http://kaffeine.sourceforge.net/"
+SRC_URI="http://download.berlios.de/genkdesvn/admin.tar.bz2"
 LICENSE="GPL-2"
-RESTRICT="unsermake"
 
 SLOT="0"
 KEYWORDS="~x86 ~ppc ~sparc ~amd64"
@@ -19,11 +20,15 @@ DEPEND=">=media-libs/xine-lib-1
 
 need-kde 3.2
 
-src_compile() {
-
-	myconf="$(use_with arts) $(use_with gstreamer) $(use_with dvb)"
-	kde_src_compile
-
+src_unpack() {
+	cvs_src_unpack
+	cd $S
+	rm -r admin
+	unpack $A
 }
 
-PATCHES="$FILESDIR/detect-autoconf.diff"
+src_compile() {
+	myconf="$(use_with arts) $(use_with gstreamer) $(use_with dvb)"
+	kde_src_compile
+}
+
