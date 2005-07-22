@@ -43,7 +43,8 @@ function unsermake_setup() {
 				make_cmd=unsermake
 				make="${make_cmd}"
 				emake="${make_cmd}"
-				export UNSERMAKE=yes
+				unset UNSERMAKE
+				export UNSERMAKE
 
 				## add UNSERMAKEOPTS if found
 				if [ -n "${UNSERMAKEOPTS}" ]; then
