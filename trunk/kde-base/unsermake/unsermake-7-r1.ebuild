@@ -45,7 +45,7 @@ pkg_postinst()
 	einfo "To enable kde builds with unsermake, add unsermake to your FEATURES in /etc/make.conf"
 	einfo
 	einfo "To manually build KDE applications with unsermake, call unsermake instead of make as follows:"
-	einfo "unsermake -f Makefile.cvs"
+	einfo "make -f Makefile.cvs"
 	einfo "./configure"
 	einfo "unsermake"
 	einfo
