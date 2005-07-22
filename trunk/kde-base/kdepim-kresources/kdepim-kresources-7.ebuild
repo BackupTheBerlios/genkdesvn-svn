@@ -5,7 +5,6 @@ KMNAME=kdepim
 KMMODULE=kresources
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-RESTRICT=unsermake
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE PIM groupware plugin collection"
