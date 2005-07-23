@@ -228,11 +228,25 @@ kde-source_src_unpack() {
 
 	[ -d $S/po ] && echo "SUBDIRS = \$(AUTODIRS)" > $S/po/Makefile.am
 	
-	# Visiblity stuff is way broken! Just disable it when it's pres
+	# kde-specific stuff stars here
+
+	# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
+	# makefile regenerate any .cpp and .h files depending on them.
+	cd $S
+	debug-print "$FUNCNAME: Searching for .ui files in $PWD"
+	UIFILES="`find . -name '*.ui' -print`"
+	debug-print "$FUNCNAME: .ui files found:"
+	debug-print "$UIFILES"
+	# done in two stages, because touch doens't have a silent/force mode
+	if [ -n "$UIFILES" ]; then
+		debug-print "$FUNCNAME: touching .ui files..."
+		touch $UIFILES
+	fi
+
+	# Visiblity stuff is way broken! Just disable it when it's present
 	# until upstream finds a way to have it working right.
-	if grep HAVE_GCC_VISIBILITY configure &> /dev/null || ! [[ -f configure ]];
-	then
-		find ${S} -name configure.in.in | xargs sed -i -e 's:KDE_ENABLE_HIDDEN_VISIBILITY::g'
+	if grep KDE_ENABLE_HIDDEN_VISIBILITY configure.in &> /dev/null || ! [[ -f configure ]]; then
+		find ${S} -name configure.in.in | xargs sed -i -e 's:KDE_ENABLE_HIDDEN_VISIBILITY:echo Disabling hidden visibility:g'
 		rm -f configure
 	fi
 
