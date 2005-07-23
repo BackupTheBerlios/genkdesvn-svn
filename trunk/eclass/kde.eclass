@@ -107,9 +107,7 @@ kde_src_compile() {
 		case $1 in
 			myconf)
 				debug-print-section myconf
-				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --with-qt-libraries=${QTDIR}/$(get_libdir)"
-				# calculate dependencies separately from compiling, enables ccache to work on kde compiles
-				[ "$UNSERMAKE" == no ] && myconf="$myconf --disable-dependency-tracking"
+				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --enable-pch --disable-dependency-tracking --with-qt-libraries=${QTDIR}/$(get_libdir)"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
