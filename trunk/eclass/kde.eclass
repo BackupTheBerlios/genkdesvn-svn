@@ -27,12 +27,12 @@ RDEPEND="~kde-base/kde-env-3"
 # overridden in other places like kde-dist, kde-source and some individual ebuilds
 SLOT="0"
 
-function make() {
-	[ $UNSERMAKE == no ] && echo make || echo unsermake
+function make_cmd() {
+	[ "$UNSERMAKE" == no ] && echo make || echo unsermake
 }
 
-function emake() {
-	[ $UNSERMAKE == no ] && echo emake || echo unsermake
+function emake_cmd() {
+	[ "$UNSERMAKE" == no ] && echo emake || echo unsermake
 }
 
 kde_pkg_setup() {
@@ -72,14 +72,11 @@ kde_src_unpack() {
 		touch $UIFILES
 	fi
 
-	# temp fix for bug #78720, until the real bug in gcc gets fixed
-	# briefly, -fvisibility-inlines-hidden is broken on amd64 and ppc
-	# this only applies to kde 3.4. the grep prevents us from removing configure unnecessarily.
-	if useq amd64 || useq ppc; then
-		if grep -- '-fvisibility=hidden -fvisibility-inlines-hidden' admin/acinclude.m4.in >/dev/null; then
-			sed -i -e 's:-fvisibility=hidden -fvisibility-inlines-hidden:-fvisibility=hidden:' admin/acinclude.m4.in
-			rm -f configure
-		fi
+	# Visiblity stuff is way broken! Just disable it when it's present
+	# until upstream finds a way to have it working right.
+	if grep KDE_ENABLE_HIDDEN_VISIBILITY configure.in &> /dev/null || ! [[ -f configure ]]; then
+		find ${S} -name configure.in.in | xargs sed -i -e 's:KDE_ENABLE_HIDDEN_VISIBILITY::g'
+		rm -f configure
 	fi
 }
 
@@ -112,7 +109,7 @@ kde_src_compile() {
 				debug-print-section myconf
 				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --with-qt-libraries=${QTDIR}/$(get_libdir)"
 				# calculate dependencies separately from compiling, enables ccache to work on kde compiles
-				[ $UNSERMAKE == no ] && myconf="$myconf --disable-dependency-tracking"
+				[ "$UNSERMAKE" == no ] && myconf="$myconf --disable-dependency-tracking"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
@@ -160,9 +157,13 @@ kde_src_compile() {
 					myconf="${myconf} --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib"
 				fi
 
+				# Use libsuffix instead of libdir to keep kde happy
+				if [ $(get_libdir) != "lib" ] ; then
+					myconf="${myconf} --enable-libsuffix=$(get_libdir | sed s/lib//)"
+				fi
+
 				./configure \
 					${myconf} \
-					--libdir="\${exec_prefix}/$(get_libdir)" \
 					|| die "died running ./configure, $FUNCNAME:configure"
 					
 				# Seems ./configure add -O2 by default but hppa don't want that but we need -ffunction-sections
@@ -175,7 +176,7 @@ kde_src_compile() {
 			make)
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
-				if [ $UNSERMAKE != no ] ; then
+				if [ "$UNSERMAKE" != no ] ; then
 					# Some apps use KSCM to state directories
 					if [ -z "$MODULE_DIR" -a -n "$KSCM_SUBDIR" ]; then
 						MODULE_DIR="$KSCM_SUBDIR"
@@ -187,7 +188,7 @@ kde_src_compile() {
 					fi
 
 				fi
-				$emake || die "died running $emake, $FUNCNAME:make"
+				$(emake_cmd) || die "died running $(emake_cmd), $FUNCNAME:make"
 				;;
 			all)
 				debug-print-section all
@@ -212,7 +213,7 @@ kde_src_install() {
 		case $1 in
 			make)
 				debug-print-section make
-				$(make) install DESTDIR=${D} destdir=${D} || die "died running $(make) install, $FUNCNAME:make"
+				$(make_cmd) install DESTDIR=${D} destdir=${D} || die "died running $(make_cmd) install, $FUNCNAME:make"
 				;;
 	    	dodoc)
 				debug-print-section dodoc

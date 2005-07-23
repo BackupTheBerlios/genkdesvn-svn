@@ -475,7 +475,7 @@ function kde-meta_src_compile() {
 				# Transform all .kcfgc files in it into .h files
 				for kcfgc in *.kcfgc
 				do
-					$emake "`basename $kcfgc .kcfgc`.h" || die
+					$(emake_cmd) "`basename $kcfgc .kcfgc`.h" || die
 					debug-print "Generated config header `pwd`/$kcfgc"
 				done
 
@@ -517,7 +517,7 @@ function kde-meta_src_compile() {
 				debug-print "Making compile-only `pwd`"
 
 				# Make these dependencies now
-				$emake || die
+				$(emake_cmd) || die
 
 				# Return to original directory
 				popd
@@ -546,7 +546,7 @@ function kde-meta_src_install() {
 				for dir in $KMMODULE $KMEXTRA $DOCS; do
 					if [ -d $S/$dir ]; then 
 						cd $S/$dir
-						$(make) DESTDIR=${D} destdir=${D} install || die
+						$(make_cmd) DESTDIR=${D} destdir=${D} install || die
 					fi
 				done
 				;;
