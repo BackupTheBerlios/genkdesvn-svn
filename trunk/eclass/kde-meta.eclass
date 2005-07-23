@@ -423,8 +423,6 @@ function kde-meta_src_compile() {
 	
 	set_common_variables	
 
-	eval unsermake_setup
-
 	# kdebase: all configure.in's talk about java. Need to investigate which ones 
 	# actually need it.
 	if [ "$KMNAME" == "kdebase" ]; then
@@ -449,7 +447,7 @@ function kde-meta_src_compile() {
 		debug-print "$FUNCNAME: now in section $section"
 		if [ "$section" == "configure" ]; then
 			# don't log makefile.common stuff in confcache
-			[ ! -f "Makefile.in" ] && $make -f admin/Makefile.common
+			[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
 			confcache_start
 			myconf="$EXTRA_ECONF $myconf"
 		fi
@@ -539,8 +537,6 @@ function kde-meta_src_install() {
 	
 	set_common_variables
 	
-	eval unsermake_setup
-
 	if [ "$1" == "" ]; then
 		kde-meta_src_install make dodoc
 	fi
@@ -550,7 +546,7 @@ function kde-meta_src_install() {
 				for dir in $KMMODULE $KMEXTRA $DOCS; do
 					if [ -d $S/$dir ]; then 
 						cd $S/$dir
-						$make DESTDIR=${D} destdir=${D} install || die
+						$(make) DESTDIR=${D} destdir=${D} install || die
 					fi
 				done
 				;;

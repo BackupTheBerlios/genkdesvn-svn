@@ -1,10 +1,10 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 MAXKOFFICEVER=7
 KMNAME=koffice
 KMMODULE=lib
-RESTRICT=
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="shared koffice libraries"
@@ -18,7 +18,7 @@ SLOT="$PV"
 
 # unsermake cant handle doc generation, dont know what the problem is
 if use doc; then
-	RESTRICT=unsermake
+	UNSERMAKE=no
 fi
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-data)"
@@ -54,20 +54,18 @@ src_unpack() {
 }
 
 src_compile() {
-    kde-meta_src_compile
+	kde-meta_src_compile
 
-	unsermake_setup
-    if use doc; then
-        $make apidox || die
-    fi
+	if use doc; then
+		$(make) apidox || die
+	fi
 }
 
 src_install() {
-    kde-meta_src_install
+	kde-meta_src_install
 
-	unsermake_setup
-    if use doc; then
-        $make DESTDIR=${D} install-apidox || die
-    fi
+	if use doc; then
+		$(make) DESTDIR=${D} install-apidox || die
+	fi
 }
 

@@ -6,7 +6,6 @@ KMNAME=kdemultimedia
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
-#RESTRICT="unsermake"
 
 DESCRIPTION="KDE CD ripper and audio encoder frontend"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"

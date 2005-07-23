@@ -5,7 +5,6 @@
 KMNAME=kdewebdev
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-#RESTRICT="unsermake"
 inherit kde-meta kde-source
 
 DESCRIPTION="KDE: Quanta Plus Web Development Environment"

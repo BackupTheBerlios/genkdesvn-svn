@@ -1,9 +1,9 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/kdevelop/kdevelop-3.2.0.ebuild,v 1.2 2005/03/20 16:17:29 carlo Exp $
+# $Header: $
 
 KSCM_ROOT="KDE"
-RESTRICT="unsermake"
+UNSERMAKE=no
 inherit kde kde-source
 
 DESCRIPTION="Integrated Development Enviroment for Unix, supporting KDE/Qt, C/C++ and a many other languages."

@@ -19,67 +19,20 @@ DEPEND=">=sys-devel/automake-1.7.0
 	sys-devel/make
 	dev-util/pkgconfig
 	dev-lang/perl
-	~kde-base/kde-env-3"
+	~kde-base/kde-env-3
+	>=kde-base/unsermake-7-r1"
 
 RDEPEND="~kde-base/kde-env-3"
 
 # overridden in other places like kde-dist, kde-source and some individual ebuilds
 SLOT="0"
 
-function unsermake_setup() {
+function make() {
+	[ $UNSERMAKE == no ] && echo make || echo unsermake
+}
 
-	make_cmd=make
-	make=make
-	emake=emake
-	unsermake_pkg='>=kde-base/unsermake-7-r1'
-	export UNSERMAKE=no
-
-	if ( hasq unsermake $FEATURES ); then
-
-		if ( has_version $unsermake_pkg ); then
-
-			if ( ! hasq unsermake $RESTRICT ); then
-
-				make_cmd=unsermake
-				make="${make_cmd}"
-				emake="${make_cmd}"
-				unset UNSERMAKE
-				export UNSERMAKE
-
-				## add UNSERMAKEOPTS if found
-				if [ -n "${UNSERMAKEOPTS}" ]; then
-					make="${make} ${UNSERMAKEOPTS}"
-					emake="${emake} ${UNSERMAKEOPTS}"
-				fi
-				
-				if [ -n "$1" ] && [ $1 == info ]; then
-				
-					ewarn "Unsermake will be used as the make tool for this operation"
-					ewarn "To disable it, remove unsermake from FEATURES in /etc/make.conf"
-
-				fi
-
-			elif [ -n "$1" ] && [ $1 == info ]; then
-
-				ewarn "Ebuild prohibits use of unsermake, even though it is installed and enabled"
-				ewarn "Unsermake will NOT be used as the make tool for this operation"
-			
-			fi
-
-		elif [ -n "$1" ] && $1 == info ]; then
-
-			ewarn "FEATURES=unsermake has been set, however $unsermake_pkg is not installed"
-			ewarn "Unsermake will NOT be used as the make tool for this operation"
-
-		fi
-
-	elif ( has_version $unsermake_pkg -a $1 == info ); then
-
-		ewarn "$unsermake_pkg is installed, but FEATURES=unsermake has not been set"
-		ewarn "Unsermake will NOT be used as the make tool for this operation"
-
-	fi
-
+function emake() {
+	[ $UNSERMAKE == no ] && echo emake || echo unsermake
 }
 
 kde_pkg_setup() {
@@ -93,7 +46,6 @@ kde_pkg_setup() {
 			die
 		fi
 	fi
-	eval unsermake_setup info
 }
 
 kde_src_unpack() {
@@ -136,8 +88,6 @@ kde_src_compile() {
 	debug-print-function $FUNCNAME $*
 	[ -z "$1" ] && kde_src_compile all
 
-	eval unsermake_setup
-
 	# Ugly, ugly, ugly hack to make apps use qt-7
 	has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
 
@@ -162,7 +112,7 @@ kde_src_compile() {
 				debug-print-section myconf
 				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --with-qt-libraries=${QTDIR}/$(get_libdir)"
 				# calculate dependencies separately from compiling, enables ccache to work on kde compiles
-				[ ! $make_cmd == unsermake ] && myconf="$myconf --disable-dependency-tracking"
+				[ $UNSERMAKE == no ] && myconf="$myconf --disable-dependency-tracking"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
@@ -225,7 +175,7 @@ kde_src_compile() {
 			make)
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
-				if [ $make_cmd == unsermake ] ; then
+				if [ $UNSERMAKE != no ] ; then
 					# Some apps use KSCM to state directories
 					if [ -z "$MODULE_DIR" -a -n "$KSCM_SUBDIR" ]; then
 						MODULE_DIR="$KSCM_SUBDIR"
@@ -255,8 +205,6 @@ kde_src_install() {
 	debug-print-function $FUNCNAME $*
 	[ -z "$1" ] && kde_src_install all
 
-	eval unsermake_setup
-
 	cd ${S}
 
 	while [ "$1" ]; do
@@ -264,7 +212,7 @@ kde_src_install() {
 		case $1 in
 			make)
 				debug-print-section make
-				$make install DESTDIR=${D} destdir=${D} || die "died running $make install, $FUNCNAME:make"
+				$(make) install DESTDIR=${D} destdir=${D} || die "died running $(make) install, $FUNCNAME:make"
 				;;
 	    	dodoc)
 				debug-print-section dodoc

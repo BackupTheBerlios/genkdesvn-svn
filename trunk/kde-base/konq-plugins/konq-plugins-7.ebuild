@@ -6,7 +6,7 @@ KMNODOCS=true
 MAXKDEVER=$PV
 inherit kde-meta kde-source
 
-RESTRICT="unsermake"
+UNSERMAKE=no
 DESCRIPTION="Various plugins for konqueror"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
