@@ -5,7 +5,6 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=ktorrent
-UNSERMAKE=no
 inherit kde kde-source
 
 DESCRIPTION="A BitTorrent program for KDE."
