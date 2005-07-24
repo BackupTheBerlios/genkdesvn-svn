@@ -1,17 +1,19 @@
-# Copyright 1999-2005 Gentoo Technologies, Inc.
+# Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 KSCM_ROOT=extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=ktorrent
+UNSERMAKE=no
 inherit kde kde-source
 
-need-kde 3
-
-IUSE=""
-DESCRIPTION="BitTorrent frontend for the KDE desktop"
-HOMEPAGE="http://extragear.kde.org/apps/ktorrent"
+DESCRIPTION="A BitTorrent program for KDE."
+HOMEPAGE="http://ktorrent.pwsp.net/"
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~x86"
 
+SLOT="0"
+KEYWORDS="~amd64 ~ppc ~x86"
+IUSE=""
+
+need-kde 3
