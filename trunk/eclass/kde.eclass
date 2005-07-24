@@ -35,6 +35,10 @@ function emake_cmd() {
 	[ "$UNSERMAKE" == no ] && echo emake || echo unsermake
 }
 
+function automake_cmd() {
+	echo env UNSERMAKE=$UNSERMAKE AUTOMAKE=automake-1.7 make -f
+}
+
 kde_pkg_setup() {
 	if [ "${PN}" != "arts" ] && [ "${PN}" != "kdelibs" ] ; then
 		use arts && if ! built_with_use kdelibs arts ; then
@@ -134,8 +138,8 @@ kde_src_compile() {
 						if [ -f "$x" ] && [ -z "$makefile" ]; then makefile="$x"; fi
 					done
 					if [ -f "$makefile" ]; then
-						debug-print "$FUNCNAME: configure: generating configure script, running make -f $makefile"
-						make -f $makefile
+						debug-print "$FUNCNAME: configure: generating configure script, running $(automake_cmd) $makefile"
+						$(automake_cmd) $makefile
 					fi
 					[ -f "./configure" ] || die "no configure script found, generation unsuccessful"
 				fi
@@ -174,7 +178,7 @@ kde_src_compile() {
 			make)
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
-				if [ "$UNSERMAKE" != no ] ; then
+				if [ "$UNSERMAKE" != "no" ] ; then
 					# Some apps use KSCM to state directories
 					if [ -z "$MODULE_DIR" -a -n "$KSCM_SUBDIR" ]; then
 						MODULE_DIR="$KSCM_SUBDIR"

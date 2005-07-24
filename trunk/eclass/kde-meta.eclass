@@ -447,7 +447,7 @@ function kde-meta_src_compile() {
 		debug-print "$FUNCNAME: now in section $section"
 		if [ "$section" == "configure" ]; then
 			# don't log makefile.common stuff in confcache
-			[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
+			[ ! -f "Makefile.in" ] && $(automake_cmd) admin/Makefile.common
 			confcache_start
 			myconf="$EXTRA_ECONF $myconf"
 		fi
