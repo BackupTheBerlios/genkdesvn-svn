@@ -5,17 +5,19 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=konversation
-inherit kde-base kde-source
+inherit kde kde-source
+
+DESCRIPTION="A user friendly IRC Client for KDE3.x"
+HOMEPAGE="http://konversation.kde.org/"
+
+SLOT="0"
+LICENSE="GPL-2"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE="nls"
 
 need-kde 3
 
-IUSE="nls"
-DESCRIPTION="A user friendly IRC Client for KDE3.x"
-HOMEPAGE="http://konversation.sourceforge.net"
-LICENSE="GPL-2"
-KEYWORDS="~amd64 ~x86"
-
 src_install() {
 	kde_src_install
-	use nls || rm -rf ${D}/usr/share/locale
+	use nls || rm -rf "${D}"/usr/share/locale
 }
