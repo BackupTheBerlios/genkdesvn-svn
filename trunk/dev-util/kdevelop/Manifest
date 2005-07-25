@@ -1,2 +1,7 @@
+MD5 a8d41d9b3a70bdb44d32b1b785b2f4c4 kdevelop-7-r1.ebuild 2456
 MD5 92fa6e89afd54283c02f6bd824db3b99 kdevelop-7.ebuild 2481
+MD5 4134d3591882176b0b53c05721a258ec ChangeLog 274
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdevelop-7 0
+MD5 72bf5d9a24a821f9584ec59ccf1a2d6e files/kdevelop-7-gcc4.patch 446
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdevelop-7-r1 0
+MD5 1760f21a5c2d5c152495c12af8232d04 files/kdevelop-7-makefiles.patch 815

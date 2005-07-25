@@ -25,6 +25,12 @@ src_unpack() {
 	cd $S
 	rm -r admin
 	unpack $A
+	# Visiblity stuff is way broken! Just disable it when it's present
+	# until upstream finds a way to have it working right.
+	if grep KDE_ENABLE_HIDDEN_VISIBILITY configure.in &> /dev/null || ! [[ -f configure ]]; then
+	find ${S} -name configure.in.in | xargs sed -i -e 's:KDE_ENABLE_HIDDEN_VISIBILITY:echo Disabling hidden visibility:g'
+		rm -f configure
+	fi
 }
 
 src_compile() {
