@@ -1,3 +1,6 @@
 MD5 2c7d8d1f502ffdd3cdafe84366472cb5 kalarm-7.ebuild 983
-MD5 574333e97498d8631e021e05442328e7 files/icaltimezone.c.diff 482
+MD5 2c7d8d1f502ffdd3cdafe84366472cb5 kalarm-7-r1.ebuild 983
+MD5 ba4e250020678d1c5e51db6246a7b10b ChangeLog 326
+MD5 e6ffd3c360ff1f1f56a8e0504264ed21 files/icaltimezone.c.diff 505
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kalarm-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kalarm-7-r1 0

@@ -18,4 +18,4 @@ KMCOPYLIB="libktnef ktnef/lib"
 KMEXTRACTONLY="libkdepim/email.h"
 KMCOMPILEONLY="libemailfunctions/"
 
-#PATCHES="$FILESDIR/icaltimezone.c.diff"
+PATCHES="$FILESDIR/icaltimezone.c.diff"
