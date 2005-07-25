@@ -28,11 +28,11 @@ RDEPEND="~kde-base/kde-env-3"
 SLOT="0"
 
 function make_cmd() {
-	[ "$UNSERMAKE" == no ] && echo make || echo unsermake
+	[ "$UNSERMAKE" == no ] && echo make || echo unsermake $UNSERMAKEOPTS
 }
 
 function emake_cmd() {
-	[ "$UNSERMAKE" == no ] && echo emake || echo unsermake
+	[ "$UNSERMAKE" == no ] && echo emake || echo unsermake $UNSERMAKEOPTS
 }
 
 function automake_cmd() {
