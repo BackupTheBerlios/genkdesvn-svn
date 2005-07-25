@@ -69,8 +69,7 @@ src_compile() {
 }
 
 src_install() {
-	eval unsermake_setup
-	$make DESTDIR=${D} install || die
+	$(make_cmd) DESTDIR=${D} install || die
 
 	dodoc AUTHORS ChangeLog COPYING FAQ INSTALL KNOWNBUGS PERMISSIONS README TODO
 
