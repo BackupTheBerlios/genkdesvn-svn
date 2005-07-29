@@ -80,8 +80,15 @@ if [ -z $KSCM_ROOT ]; then
 
 else
 
-	# Ebuild-set root
-	ESCM_ROOT="$KSCM_ROOT/"
+	if "$KSCM_ROOT" == "extragear"; then
+
+		ESCM_ROOT="trunk/$KSCM_ROOT/"
+	
+	else
+		# Ebuild-set root
+		ESCM_ROOT="$KSCM_ROOT/"
+
+	fi
 
 fi
 
