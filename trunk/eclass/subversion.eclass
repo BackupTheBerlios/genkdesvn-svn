@@ -76,7 +76,7 @@ ESVN_STORE_DIR="${DISTDIR}/svn-src"
 #
 # default: ${PN/-svn}.
 #
-[ -z "${ESVN_PROJECT}" ] && ESVN_PROJECT="${PN/-svn}"
+#[ ! -n "${ESVN_PROJECT}" ] && ESVN_PROJECT="${PN/-svn}"
 
 
 ## -- ESVN_BOOTSTRAP:
@@ -206,7 +206,7 @@ function subversion_modules_fetch() {
 		local currentmode=$mode
 		local method="recursively"
 
-		[ "$module" == "." ] && entry="trunk" || entry="$module"
+		[ "$module" == "." ] && entry="base" || entry="$module"
 		previous_update_mode $module
 
 		lastmode=$result
@@ -645,7 +645,7 @@ function subversion_svn_fetch() {
 	# If trunk does not yet exist, perform initial checkout
 	if [ ! -d "${ESVN_CO_DIR}/.svn" ]; then
 
-		einfo "Creating $ESVN_PROJECT trunk in $ESVN_STORE_DIR/$ESVN_CO_DIR from $ESVN_REPO_URI"
+		einfo "Creating $ESVN_PROJECT base in $ESVN_STORE_DIR/$ESVN_CO_DIR from $ESVN_REPO_URI"
 
 		mkdir -p "${ESVN_PROJECT}"
 		cd "${ESVN_PROJECT}"

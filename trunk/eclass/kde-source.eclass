@@ -31,8 +31,8 @@ INHERITED="$INHERITED $ECLASS"
 # Mirror list is available at http://developer.kde.org/source/anoncvs.html
 #[ -z "$ECVS_SERVER" ] && ECVS_SERVER="anoncvs.kde.org:/home/kde"
 #[ -z "$ECVS_AUTH" ] && ECVS_AUTH="pserver"
-ESVN_PROJECT="kde"
-[ -z "$ESVN_REPO_URI" ] && ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk"
+ESVN_PROJECT=""
+[ -z "$ESVN_REPO_URI" ] && ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde"
 [ -z "$ESVN_SERVER" ] && ESVN_SERVER="svn://anonsvn.kde.org/home/kde/trunk"
 ESVN_WEBINT="http://websvn.kde.org/"
 ESVN_CERTIFICATES="http://download.berlios.de/genkdesvn/ec08b331e2e6cabccb6c3e17a85e28ce"
@@ -70,10 +70,10 @@ DESCRIPTION="$DESCRIPTION (development version) "
 
 if [ -z $KSCM_ROOT ]; then
 	
-	ESCM_ROOT=""
+	ESCM_ROOT="trunk"
 	
 	# Base KDE modules live under KDE
-	[ "$KDEBASE" == "true" ] && ESCM_ROOT="KDE/"
+	[ "$KDEBASE" == "true" ] && ESCM_ROOT="branches/KDE/3.5/"
 
 	# KOffice modules live right in the root of the trunk
 	[ "$KMNAME" == "koffice" ] && ESCM_ROOT=""
@@ -101,7 +101,7 @@ kde-source_src_unpack() {
 
 	debug-print-function $FUNCNAME $*
 
-	ESCM_EXTERNALS="$ESCM_EXTERNALS KDE/kde-common/admin"
+	ESCM_EXTERNALS="$ESCM_EXTERNALS branches/KDE/3.5/kde-common/admin"
 	ESCM_DEEPITEMS="$ESCM_DEEPITEMS $ESCM_EXTERNALS"
 	
 	# If submodules are used we fetch the module + specific extra files
