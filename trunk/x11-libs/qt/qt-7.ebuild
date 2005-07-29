@@ -1,10 +1,12 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 inherit eutils flag-o-matic
 
+KSCM_ROOT="branches/qt/3.3/"
 KSCM_MODULE="qt-copy"
-ESCM_DEEPITEMS="$KSCM_MODULE"
+ESCM_DEEPITEMS="$KSCM_ROOT$KSCM_MODULE"
 inherit kde-source
 
 SRCTYPE="free"
