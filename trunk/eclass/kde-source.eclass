@@ -80,7 +80,7 @@ if [ -z $KSCM_ROOT ]; then
 
 else
 
-	if "$KSCM_ROOT" == "extragear"; then
+	if [ "$KSCM_ROOT" == "extragear" ]; then
 
 		ESCM_ROOT="trunk/$KSCM_ROOT/"
 	
