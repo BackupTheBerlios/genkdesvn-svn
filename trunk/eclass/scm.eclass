@@ -81,7 +81,7 @@ function src_to_workdir() {
 	for item in $ESCM_EXTERNALS
 	do
 
-		[ -e $WORKDIR/$item ] && einfo "Moving $WORKDIR/$item to $S" && mv $WORKDIR/$item $S
+		[ -e $WORKDIR/$item ] && einfo "Moving $item to $S" && mv $WORKDIR/$item $S
 
 	done
 	

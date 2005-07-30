@@ -110,6 +110,7 @@ kde-source_src_unpack() {
 
 	ESCM_EXTERNALS="$ESCM_EXTERNALS branches/KDE/3.5/kde-common/admin"
 	ESCM_DEEPITEMS="$ESCM_DEEPITEMS $ESCM_EXTERNALS"
+	ESCM_CHECKITEMS=""
 	
 	# If submodules are used we fetch the module + specific extra files
 	if [ -n "$KSCM_SUBDIR" ]; then
@@ -120,6 +121,9 @@ kde-source_src_unpack() {
 		# shallowlist stores items to be fetched non-recursively
 		shallowlist=""
 
+		# checklist stores items to be checked their revisions against installed versions
+		checklist=""
+
 		# If meta ebuilds are in use (preferrably)
 		if [ -n "$KMNAME" ]; then
 
@@ -129,7 +133,10 @@ kde-source_src_unpack() {
 			# We need Makefile.cvs for meta cvs ebuilds
 			deeplist="Makefile.cvs $deeplist"
 
+			checklist="$checklist $KMMODULE $KMEXTRA"
+
 			KMEXTRA="$KMEXTRA po"
+
 
 		else
 			
@@ -143,6 +150,7 @@ kde-source_src_unpack() {
 			if [ -z "$KSCM_SUBDIR_NODOC" ]; then
 
 				deeplist="$deeplist doc/${KSCM_SUBDIR}"
+				checklist="$checklist doc/${KSCM_SUBDIR}"
 
 			fi
 
@@ -162,6 +170,12 @@ kde-source_src_unpack() {
 			ESCM_SHALLOWITEMS=`echo "$ESCM_SHALLOWITEMS $ESCM_ROOT$KSCM_MODULE/$item" | sed -e "s/\/*$//g"`
 		done
 
+		for item in $checklist
+		do
+			ESCM_CHECKITEMS=`echo "$ESCM_CHECKITEMS $ESCM_ROOT$KSCM_MODULE/$item" | sed -e "s/\/*$//g"`
+		done
+
+
 		[ -z "$KSCM_L10N_PO" ] && KSCM_L10N_PO="$KSCM_SUBDIR"
 
 	else
@@ -169,12 +183,11 @@ kde-source_src_unpack() {
 		# If submodules are not used, and the module is the same as the ebuild name.
 		# Used by monolithic ebuilds with intact names (old kde-base)
 		if [ -z "$KSCM_MODULE" ]; then
-			
 			KSCM_MODULE="$PN"
-
 		fi
 		
 		ESCM_DEEPITEMS="$ESCM_DEEPITEMS $ESCM_ROOT$KSCM_MODULE"
+		ESCM_CHECKITEMS="$ESCM_CHECKITEMS $ESCM_ROOT$KSCM_MODULE"
 
 	fi
 
@@ -188,7 +201,8 @@ kde-source_src_unpack() {
 	for lang in $LINGUAS
 	do
 
-		ESCM_DEEPITEMS="$ESCM_DEEPITEMS l10n/$lang/messages/$KSCM_L10N_MODULE"
+		ESCM_DEEPITEMS="$ESCM_DEEPITEMS trunk/l10n/$lang/messages/$KSCM_L10N_MODULE"
+		ESCM_CHECKITEMS="$ESCM_CHECKITEMS trunk/l10n/$lang/messages/$KSCM_L10N_MODULE"
 		#ESCM_DEEPITEMS="$ESCM_DEEPITEMS l10n/$lang/docs/$KSCM_L10N_MODULE/$KSCM"
 
 	done
