@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KSCM_ROOT=kdenonbeta
-ESCM_DEEPITEMS=kdenonbeta/$PN
+KSCM_ROOT=trunk/kdenonbeta/
+ESCM_DEEPITEMS=$KSCM_ROOT$PN
 inherit python kde-source
 
 IUSE=""
