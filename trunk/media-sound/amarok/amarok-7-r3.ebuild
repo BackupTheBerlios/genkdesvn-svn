@@ -23,7 +23,6 @@ DEPEND="kde? ( ( || ( kde-base/konqueror kde-base/kdebase ) )
 	 xine? ( >=media-libs/xine-lib-1_rc4 )
 	 gstreamer? ( >=media-libs/gstreamer-0.8.8
 	              >=media-libs/gst-plugins-0.8.6 )
-	 helix? ( || ( media-video/helixplayer >=media-video/realplayer-10 ) )
 	 >=media-libs/tunepimp-0.3.0
 	 >=media-libs/taglib-1.3.1
 	 mysql? ( >=dev-db/mysql-4 )
@@ -39,7 +38,8 @@ RDEPEND="${DEPEND}
 	gstreamer? ( mp3? ( >=media-plugins/gst-plugins-mad-0.8.6 )
 	             vorbis? ( >=media-plugins/gst-plugins-ogg-0.8.6
 	                       >=media-plugins/gst-plugins-vorbis-0.8.6 )
-	             flac? ( >=media-plugins/gst-plugins-flac-0.8.6 ) )"
+	             flac? ( >=media-plugins/gst-plugins-flac-0.8.6 ) )
+	helix? ( || ( media-video/helixplayer >=media-video/realplayer-10 ) )"
 
 DEPEND="${DEPEND}
 	>=dev-util/pkgconfig-0.9.0"
