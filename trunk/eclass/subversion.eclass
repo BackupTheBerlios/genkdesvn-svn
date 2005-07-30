@@ -120,9 +120,11 @@ function subversion_src_extract() {
 
 function subversion_src_bootstrap() {
 	debug-print-function $FUNCNAME $*
-	if [ "${ESVN_BOOTSTRAP}" ]; then
+	if [ "${ESVN_BOOTSTRAP}" ]
+	then
 		einfo "Bootstrapping with ${ESVN_BOOTSTRAP}"
 		if [ -x "${ESVN_BOOTSTRAP}" ]
+		then
 			./${ESVN_BOOTSTRAP} || die "${ESVN}: cannot execute $ESVN_BOOTSTRAP"
 		else
 			${ESVN_BOOTSTRAP} || die "${ESVN}: cannot execute $ESVN_BOOTSTRAP"
