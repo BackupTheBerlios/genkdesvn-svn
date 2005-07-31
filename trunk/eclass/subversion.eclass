@@ -14,7 +14,7 @@ ECLASS="subversion"
 INHERITED="$INHERITED $ECLASS"
 
 # Add dependency on eclass-helper-svn
-DEPEND="$DEPEND app-portage/eclass-helper-svn"
+DEPEND="$DEPEND >=app-portage/eclass-helper-svn-0.02"
 
 ## ESVN_STORE_DIR: Central repository for working copies
 [ -z "${ESVN_STORE_DIR}" ] && ESVN_STORE_DIR="${DISTDIR}/svn-src"
@@ -100,7 +100,7 @@ function subversion_src_fetch() {
 	err=$?
 	if [ $err -ne 0 ]
 	then
-		if [ $err -eq 1 ]
+		if [ $err -eq 16 ]
 		then
 			ewarn "WARNING: Revisions for ${CATEGORY}/${PF} have not changed since last merge."
 			ewarn "WARNING: This merge will be aborted immediately."
