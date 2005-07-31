@@ -76,7 +76,7 @@ if [ -z $KSCM_ROOT ]; then
 	[ "$KDEBASE" == "true" ] && ESCM_ROOT="branches/KDE/3.5/"
 
 	# KOffice modules live right in the root of the trunk
-	[ "$KMNAME" == "koffice" ] && ESCM_ROOT=""
+	[ "$KMNAME" == "koffice" ] && ESCM_ROOT="trunk/"
 
 else
 
