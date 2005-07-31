@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 KMMODULE=kresources
@@ -31,17 +32,22 @@ KMEXTRACTONLY="
 	kmail/kmailicalIface.h
 	libkdenetwork/
 	libemailfunctions/ "
-KMCOMPILEONLY="
-	libkcal/libical/src/libical/
-	libkcal/libical/src/libicalss/
-	certmanager/
-	akregator/
-	kaddressbook/
-	knotes/
-	libkpgp/
-	libemailfunctions/
-	libkdenetwork/gpgmepp "
-#akregator/src/librss
 
-PATCHES="$FILESDIR/use-installed-kode.diff $FILESDIR/icaltimezone.c.diff"
+KMCOMPILEONLY="
+    libkcal/libical/src/libical/
+    knotes/
+    kaddressbook/interfaces/
+    kaddressbook/common/
+    "	
+PATCHES="$FILESDIR/use-installed-kode.diff  $FILESDIR/icaltimezone.c.diff"
+
+src_compile() {
+	export DO_NOT_COMPILE="knotes"
+
+	kde-meta_src_compile myconf configure
+
+	cd ${S}/knotes/; make libknotesresources.la
+
+	kde-meta_src_compile make
+}
 
