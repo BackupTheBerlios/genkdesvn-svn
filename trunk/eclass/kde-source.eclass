@@ -40,6 +40,10 @@ ESVN_CERTIFICATES="http://download.berlios.de/genkdesvn/ec08b331e2e6cabccb6c3e17
 # for apps living inside modules like kdenonbeta - see also beginning of our _src_unpack
 # KCVS_SUBDIR=...
 
+inherit libtool
+
+ESVN_BOOTSTRAP=elibtoolize
+
 # If a tag is specified as ECVS_BRANCH, it will be used for the kde-common module
 # as well. If that is wrong (fex when checking out kopete branch kopete_0_6_2_release),
 # use KCVS_BRANCH instead.
@@ -57,6 +61,7 @@ ESVN_CERTIFICATES="http://download.berlios.de/genkdesvn/ec08b331e2e6cabccb6c3e17
 inherit subversion
 #... and reset $ECLASS. Ugly I know, hopefully I can prettify it someday
 ECLASS=kde-source
+
 
 # --- end user-configurable settings ---
 
