@@ -7,6 +7,7 @@ inherit eutils flag-o-matic
 KSCM_ROOT="branches/qt/3.3/"
 KSCM_MODULE="qt-copy"
 ESCM_DEEPITEMS="$KSCM_ROOT$KSCM_MODULE"
+ESCM_CHECKITEMS="$ESCM_DEEPITEMS"
 inherit kde-source
 
 SRCTYPE="free"
