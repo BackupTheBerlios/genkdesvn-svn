@@ -1,9 +1,11 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 inherit kde flag-o-matic eutils kde-source
 set-kdedir 7
 
+KSCM_ROOT=branches/arts/1.5
 DESCRIPTION="aRts, the KDE sound (and all-around multimedia) server/output manager"
 HOMEPAGE="http://multimedia.kde.org/"
 SRC_URI=""
@@ -22,7 +24,7 @@ DEPEND="alsa? ( media-libs/alsa-lib virtual/alsa )
 	>=dev-libs/glib-2
 	>=x11-libs/qt-3.3"
 
-KMCOMPILEONLY="KDE/kdelibs/libltdl"
+KMCOMPILEONLY="branches/KDE/3.5/kdelibs/libltdl"
 
 src_compile() {
 
