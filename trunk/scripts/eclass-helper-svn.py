@@ -99,7 +99,11 @@ class item_info:
 		return not self.type(remote) == "nonexistent"
 
 	def revision(self, remote=True):
-		return self.tags[remote]["Last Changed Rev"]
+		for tag in "Last Changed Rev", "Revision":
+			if tag in self.tags[remote]:
+				return self.tags[remote][tag]
+		else:
+			eerror("QA notice: revision could not be determined")
 
 	def mode(self, oldmode):
 		modepath = self.wc + "/.svn.eclass.mode"
@@ -167,6 +171,7 @@ class subversion_handler:
 					if stream == stdout:
 						on_output(line.strip())
 					elif stream == stderr:
+			#			ewarn("Error: " + line)
 						error = self.handle_error(line.strip(), command, on_output, on_error)
 						if error:
 							break
@@ -239,10 +244,12 @@ def update_modules(ancestries, svnrevs):
 					recurse = True
 				elif recurse:
 					info.remove()
-				if info.modifiedP():
-					subversion.update(module, recurse)
-					info.update()
-					info.setmode(recurse)
+				#if info.modifiedP():
+				# Unfortunately there is no way to determine if files have been erased
+				# So update always
+				subversion.update(module, recurse)
+				info.update()
+				info.setmode(recurse)
 				if svnrevs:
 					svnrevs.write(module + ":" + info.revision(False) + "\n")
 			if len(ancestry) > 1:
