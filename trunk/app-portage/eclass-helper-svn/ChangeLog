@@ -2,6 +2,11 @@
 # Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eclass-helper-svn-0.02b (31 Jul 2005)
+
+  31 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  eclass-helper-svn-0.02b.ebuild files/digest-eclass-helper-svn-0.02b
+  Yet a new version to remove from svn import stuff
+
 *eclass-helper-svn-0.02a (31 Jul 2005)
 
   31 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  eclass-helper-svn-0.02a.ebuild files/digest-eclass-helper-svn-0.02a
