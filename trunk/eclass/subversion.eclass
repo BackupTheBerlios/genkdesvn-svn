@@ -8,13 +8,13 @@
 # Purpose: 
 #
 
-inherit python multilib scm
+inherit scm
 
 ECLASS="subversion"
 INHERITED="$INHERITED $ECLASS"
 
-# Add dependency on eclass-helper-svn
-DEPEND="$DEPEND >=app-portage/eclass-helper-svn-0.02b"
+DEPEND="$DEPEND
+	>=dev-util/subversion-1.2.0"
 
 ## ESVN_STORE_DIR: Central repository for working copies
 [ -z "${ESVN_STORE_DIR}" ] && ESVN_STORE_DIR="${DISTDIR}/svn-src"
@@ -38,6 +38,8 @@ function subversion_obtain_certificates() {
 
 }
 
+SCRIPT_DIR="$FILESDIR/../../../scripts"
+
 function subversion_deep_copy() {
 	debug-print-function $FUNCNAME $*
 
@@ -52,7 +54,6 @@ function subversion_deep_copy() {
 	popd >/dev/null
 
 }
-
 
 function subversion_src_fetch() {
 	debug-print-function $FUNCNAME $*
@@ -94,8 +95,7 @@ function subversion_src_fetch() {
 	for item in $ESCM_DEEPITEMS;	do ARGUMENTS="$ARGUMENTS --deep=$item";		done
 	for item in $ESCM_SHALLOWITEMS;	do ARGUMENTS="$ARGUMENTS --shallow=$item";	done
 
-	python_version
-	HELPER="python /usr/$(get_libdir)/python${PYVER}/site-packages/eclass-helper-svn.py"
+	HELPER="$SCRIPT_DIR/eclass-helper-svn.py"
 	${HELPER} ${ARGUMENTS}
 	err=$?
 	if [ $err -ne 0 ]
@@ -110,7 +110,6 @@ function subversion_src_fetch() {
 			die "${HELPER} ${ARGUMENTS} has failed with exit code $err"
 		fi
 	fi
-
 }
 
 function subversion_src_extract() {

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KSCM_ROOT=extragear
+KSCM_ROOT=trunk/extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=ktorrent
 inherit kde kde-source
