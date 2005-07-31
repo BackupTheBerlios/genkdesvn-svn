@@ -14,7 +14,7 @@ ECLASS="subversion"
 INHERITED="$INHERITED $ECLASS"
 
 # Add dependency on eclass-helper-svn
-DEPEND="$DEPEND >=app-portage/eclass-helper-svn-0.02"
+DEPEND="$DEPEND >=app-portage/eclass-helper-svn-0.02a"
 
 ## ESVN_STORE_DIR: Central repository for working copies
 [ -z "${ESVN_STORE_DIR}" ] && ESVN_STORE_DIR="${DISTDIR}/svn-src"
