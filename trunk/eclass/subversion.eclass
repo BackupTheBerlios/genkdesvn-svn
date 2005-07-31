@@ -8,7 +8,7 @@
 # Purpose: 
 #
 
-inherit scm
+inherit scm libtool
 
 ECLASS="subversion"
 INHERITED="$INHERITED $ECLASS"
@@ -38,7 +38,7 @@ function subversion_obtain_certificates() {
 
 }
 
-SCRIPT_DIR="$FILESDIR/../../../scripts"
+SCRIPT_DIR="$(dirname $(dirname $(dirname $FILESDIR)))/scripts"
 
 function subversion_deep_copy() {
 	debug-print-function $FUNCNAME $*
@@ -133,7 +133,7 @@ function subversion_src_bootstrap() {
 
 function subversion_src_unpack() {
 	debug-print-function $FUNCNAME $*
-	subversion_obtain_certificates
+#	subversion_obtain_certificates
 	subversion_src_fetch
 	subversion_src_extract
 	subversion_src_bootstrap
