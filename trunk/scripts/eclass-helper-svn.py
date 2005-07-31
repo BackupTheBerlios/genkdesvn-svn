@@ -24,6 +24,7 @@ err_malformed = re.compile(".*Malformed.*")
 err_notversioned = re.compile(".*Not a versioned resource.*")
 err_notfound = re.compile(".*File not found.*")
 err_notwc = re.compile(".*is not a working copy.*")
+err_validate = re.compile("$Error validating server certificate for.*")
 sleep_time=30
 
 def einfo(message):
@@ -171,7 +172,6 @@ class subversion_handler:
 					if stream == stdout:
 						on_output(line.strip())
 					elif stream == stderr:
-			#			ewarn("Error: " + line)
 						error = self.handle_error(line.strip(), command, on_output, on_error)
 						if error:
 							break
