@@ -38,6 +38,7 @@ kde_pkg_setup() {
 			die
 		fi
 	fi
+	keepobj_initialize
 }
 
 kde_src_unpack() {

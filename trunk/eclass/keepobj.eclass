@@ -12,8 +12,6 @@ INHERITED="$INHERITED $ECLASS"
 
 [ -z "$PORTAGE_OBJDIR" ] && PORTAGE_OBJDIR=/var/tmp/portage/objects
 
-keepobj_initialize
-
 function objdir() {
 	if [ $(keepobj_enabled) ]
 	then
