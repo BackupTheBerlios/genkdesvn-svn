@@ -1,18 +1,9 @@
 #!/usr/bin/python
 
-import sys
-import os
-#import svn
-import output
-import commands
-import types
-import re
-import time
-import shutil
+import sys, os, output, commands, types, re, time, shutil
 
 from os import *
 from os.path import *
-#from svn import core, client
 from commands import *
 from popen2 import *
 from select import *
@@ -141,8 +132,11 @@ class item_info:
 
 	def log(self, revision):
 		einfo("Differences between revision " + revision + " and latest revision " + self.revision())
+		def on_output(line):
+			if line!="":
+				svninfo(line)
 		command="svn log --revision " + str(int(revision)+1) + ":" + self.revision() + " " + self.repository
-		self.handler.perform(command)
+		self.handler.perform(command, on_output)
 
 # Construct complete list of improper ancestors of item
 
@@ -360,6 +354,8 @@ if __name__ == "__main__":
 				sys.exit(17)
 			else:
 				sys.exit(16)
+	if logonly:
+		sys.exit(17)
 		
 	ancestries=[]
 	for item in deep:
