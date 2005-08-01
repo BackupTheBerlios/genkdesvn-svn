@@ -5,7 +5,7 @@ KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KSCM_L10N_PO="kcontrol \"kcm*\" filetypes kaccess kthememanager"
-[ -n "$LINGUAS" ] && ESCM_SHALLOWITEMS="l10n/scripts"
+[ -n "$LINGUAS" ] && ESCM_SHALLOWITEMS="trunk/l10n/scripts"
 for lang in $LINGUAS
 do
 
@@ -45,24 +45,26 @@ KMCOMPILEONLY="kicker/libkicker kicker/taskmanager kicker/taskbar"
 src_unpack() {
 
 	kde-source_src_unpack	
-	cp -r $S/admin $WORKDIR/l10n/scripts
+	[ -n "$LINGUAS" ] cp -r $S/admin $WORKDIR/trunk/l10n/scripts
 
 }
 
 src_compile() {
 
-	local _S=$S
-	pushd $WORKDIR/trunk/l10n >/dev/null
-	scripts/autogen.sh $LINGUAS
-	for lang in $LINGUAS
-	do
+	if [ -n "$LINGUAS" ]; then
+		local _S=$S
+		pushd $WORKDIR/trunk/l10n >/dev/null
+		scripts/autogen.sh $LINGUAS
+		for lang in $LINGUAS
+		do
 
-		S=$WORKDIR/trunk/l10n/$lang	
-		[ -d $S/messages ] && cat $FILESDIR/Makefile.l10n >> $S/messages/Makefile.in && kde_src_compile
+			S=$WORKDIR/trunk/l10n/$lang	
+			[ -d $S/messages ] && cat $FILESDIR/Makefile.l10n >> $S/messages/Makefile.in && kde_src_compile
 
-	done
-	popd >/dev/null
-	S=$_S
+		done
+		popd >/dev/null
+		S=$_S
+	fi
 	
 	myconf="$myconf `use_with ssl` `use_with arts` `use_with opengl gl`"
 	kde-meta_src_compile
