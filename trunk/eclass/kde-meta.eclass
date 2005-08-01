@@ -475,7 +475,7 @@ function kde-meta_src_compile() {
 				# Transform all .kcfgc files in it into .h files
 				for kcfgc in *.kcfgc
 				do
-					$(emake_cmd) "`basename $kcfgc .kcfgc`.h" || die
+					keepobj $(emake_cmd) "`basename $kcfgc .kcfgc`.h" || die
 					debug-print "Generated config header `pwd`/$kcfgc"
 				done
 
@@ -517,7 +517,7 @@ function kde-meta_src_compile() {
 				debug-print "Making compile-only `pwd`"
 
 				# Make these dependencies now
-				$(emake_cmd) || die
+				keepobj $(emake_cmd) || die
 
 				# Return to original directory
 				popd
