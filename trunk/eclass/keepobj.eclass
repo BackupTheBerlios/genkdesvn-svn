@@ -47,14 +47,14 @@ function keepobj_enabled() {
 }
 
 function keepcache_enabled() {
-	if [ $(keepobj_enabled) ] && ( hasq confcache $FEATURES )
+	if ( hasq confcache $FEATURES )
 	then
-		echo "yes"
+		echo "$(keepobj_enabled)"
 	fi
 }
 
 function keepobj_initialize() {
-	if ( $(keepobj_enabled) ) && [ ! -d $(objdir) ]
+	if [ $(keepobj_enabled) ] && [ ! -d $(objdir) ]
 	then
 		mkdir -p $(objdir)
 	fi
