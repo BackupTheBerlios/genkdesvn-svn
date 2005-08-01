@@ -5,7 +5,6 @@
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-UNSERMAKE=no
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE login manager, similar to xdm and gdm"
