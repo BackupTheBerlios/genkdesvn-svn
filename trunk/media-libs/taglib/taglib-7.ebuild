@@ -4,9 +4,10 @@
 
 inherit flag-o-matic
 
+KSCM_ROOT="trunk/"
 KSCM_MODULE="kdesupport"
-ESCM_SHALLOWITEMS="$KSCM_MODULE"
-ESCM_DEEPITEMS="KDE/kde-common/admin $KSCM_MODULE/$PN"
+ESCM_SHALLOWITEMS="$KSCM_ROOT$KSCM_MODULE"
+ESCM_DEEPITEMS="branches/KDE/3.5/kde-common/admin $KSCM_ROOT$KSCM_MODULE/$PN"
 KSCM_SUBDIR="$PN"
 #KSCM_SUBDIR_NODOC=1
 inherit kde-source
@@ -24,7 +25,7 @@ RDEPEND=""
 src_unpack() {
 
 	subversion_src_unpack
-	mv $WORKDIR/KDE/kde-common/admin $S/
+	mv $WORKDIR/branches/KDE/3.5/kde-common/admin $S/
 
 }
 
