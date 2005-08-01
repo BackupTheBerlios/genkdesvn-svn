@@ -46,7 +46,7 @@ src_compile() {
 
 	kde-meta_src_compile myconf configure
 
-	cd ${S}/knotes/; make libknotesresources.la
+	cd $(objdir)/knotes/; $(make_cmd) libknotesresources.la
 
 	kde-meta_src_compile make
 }
