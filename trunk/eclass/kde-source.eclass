@@ -256,17 +256,21 @@ kde-source_src_unpack() {
 	
 	# kde-specific stuff stars here
 
-	# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
-	# makefile regenerate any .cpp and .h files depending on them.
-	cd $S
-	debug-print "$FUNCNAME: Searching for .ui files in $PWD"
-	UIFILES="`find . -name '*.ui' -print`"
-	debug-print "$FUNCNAME: .ui files found:"
-	debug-print "$UIFILES"
-	# done in two stages, because touch doens't have a silent/force mode
-	if [ -n "$UIFILES" ]; then
-		debug-print "$FUNCNAME: touching .ui files..."
-		touch $UIFILES
+	# No touching if we're keeping deps
+	if [ ! $(keepobj_enabled) ]
+	then
+		# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
+		# makefile regenerate any .cpp and .h files depending on them.
+		cd $S
+		debug-print "$FUNCNAME: Searching for .ui files in $PWD"
+		UIFILES="`find . -name '*.ui' -print`"
+		debug-print "$FUNCNAME: .ui files found:"
+		debug-print "$UIFILES"
+		# done in two stages, because touch doens't have a silent/force mode
+		if [ -n "$UIFILES" ]; then
+			debug-print "$FUNCNAME: touching .ui files..."
+			touch $UIFILES
+		fi
 	fi
 
 	# Visiblity stuff is way broken! Just disable it when it's present

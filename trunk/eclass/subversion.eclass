@@ -50,7 +50,7 @@ function subversion_deep_copy() {
 	einfo "Copying $item to working directory"
 	debug-print "$FUNCNAME: Deep-copying $item from $src to $dest, omitting .svn*"
 	pushd $src >/dev/null
-	debug-print `find $item \( -path "*.svn*" ! -name . -prune \) -o \( -exec \cp --parents {} $dest/ \;  \) 2>&1`
+	debug-print `find $item \( -path "*.svn*" ! -name . -prune \) -o \( -exec \cp -p --parents {} $dest/ \;  \) 2>&1`
 	popd >/dev/null
 
 }

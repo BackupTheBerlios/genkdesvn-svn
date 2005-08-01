@@ -7,7 +7,7 @@
 # Revisions Caleb Tennis <caleb@gentoo.org>
 # The kde eclass is inherited by all kde-* eclasses. Few ebuilds inherit straight from here.
 
-inherit base eutils kde-functions
+inherit base eutils kde-functions keepobj
 ECLASS=kde
 INHERITED="$INHERITED $ECLASS"
 DESCRIPTION="Based on the $ECLASS eclass"
@@ -50,6 +50,7 @@ kde_pkg_setup() {
 			die
 		fi
 	fi
+	keepobj_initialize
 }
 
 kde_src_unpack() {
@@ -63,17 +64,21 @@ kde_src_unpack() {
 	
 	# kde-specific stuff stars here
 	
-	# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
-	# makefile regenerate any .cpp and .h files depending on them.
-	cd $S
-	debug-print "$FUNCNAME: Searching for .ui files in $PWD"
-	UIFILES="`find . -name '*.ui' -print`"
-	debug-print "$FUNCNAME: .ui files found:"
-	debug-print "$UIFILES"
-	# done in two stages, because touch doens't have a silent/force mode
-	if [ -n "$UIFILES" ]; then
-		debug-print "$FUNCNAME: touching .ui files..."
-		touch $UIFILES
+	# Don't touch anything if we're keeping files
+	if [ ! $(keepobj_enabled) ]
+	then
+		# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
+		# makefile regenerate any .cpp and .h files depending on them.
+		cd $S
+		debug-print "$FUNCNAME: Searching for .ui files in $PWD"
+		UIFILES="`find . -name '*.ui' -print`"
+		debug-print "$FUNCNAME: .ui files found:"
+		debug-print "$UIFILES"
+		# done in two stages, because touch doens't have a silent/force mode
+		if [ -n "$UIFILES" ]; then
+			debug-print "$FUNCNAME: touching .ui files..."
+			touch $UIFILES
+		fi
 	fi
 
 	# Visiblity stuff is way broken! Just disable it when it's present
@@ -111,13 +116,19 @@ kde_src_compile() {
 		case $1 in
 			myconf)
 				debug-print-section myconf
-				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --enable-pch --disable-dependency-tracking --with-qt-libraries=${QTDIR}/$(get_libdir)"
+				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --enable-pch --with-qt-libraries=${QTDIR}/$(get_libdir)"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
 					myconf="$myconf --disable-debug --without-debug"
 				fi
-				if useq kdeenablefinal && [ -n "$KDEBASE" ]; then
+				if [ $(keepcache_enabled) ]; then
+					myconf="$myconf --config-cache"
+				fi
+				if [ ! $(keepobj_enabled) ]; then
+					myconf="$myconf --disable-dependency-tracking"
+				fi
+				if useq kdeenablefinal && [ ! $(keepobj_enabled) ] && [ -n "$KDEBASE" ]; then
 					myconf="$myconf --enable-final"
 				else
 					myconf="$myconf --disable-final"
@@ -164,15 +175,13 @@ kde_src_compile() {
 					myconf="${myconf} --enable-libsuffix=$(get_libdir | sed s/lib//)"
 				fi
 
-				./configure \
-					${myconf} \
-					|| die "died running ./configure, $FUNCNAME:configure"
+				keepobj $(srcdir)/configure ${myconf} || die "died running $(srcdir)/configure, $FUNCNAME:configure"
 					
 				# Seems ./configure add -O2 by default but hppa don't want that but we need -ffunction-sections
 				if [ "${ARCH}" = "hppa" ]
 				then
 					einfo Fixating Makefiles
-					find ${S} -name Makefile | while read a; do sed -e s/-O2/-ffunction-sections/ -i "${a}" ; done
+					find $(objdir) -name Makefile | while read a; do sed -e s/-O2/-ffunction-sections/ -i "${a}" ; done
 				fi
 				;;
 			make)
@@ -190,7 +199,7 @@ kde_src_compile() {
 					fi
 
 				fi
-				$(emake_cmd) || die "died running $(emake_cmd), $FUNCNAME:make"
+				keepobj $(emake_cmd) || die "died running $(emake_cmd), $FUNCNAME:make"
 				;;
 			all)
 				debug-print-section all
@@ -215,7 +224,7 @@ kde_src_install() {
 		case $1 in
 			make)
 				debug-print-section make
-				$(make_cmd) install DESTDIR=${D} destdir=${D} || die "died running $(make_cmd) install, $FUNCNAME:make"
+				keepobj $(make_cmd) install DESTDIR=${D} destdir=${D} || die "died running $(make_cmd) install, $FUNCNAME:make"
 				;;
 	    	dodoc)
 				debug-print-section dodoc

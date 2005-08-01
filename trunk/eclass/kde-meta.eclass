@@ -546,7 +546,7 @@ function kde-meta_src_install() {
 				for dir in $KMMODULE $KMEXTRA $DOCS; do
 					if [ -d $S/$dir ]; then 
 						cd $S/$dir
-						$(make_cmd) DESTDIR=${D} destdir=${D} install || die
+						keepobj $(make_cmd) DESTDIR=${D} destdir=${D} install || die
 					fi
 				done
 				;;

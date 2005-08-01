@@ -25,7 +25,7 @@ function scm_deep_copy() {
 	einfo "Copying $item to $dest"
 	debug-print "$FUNCNAME: Deep-copying $item from $src to $dest"
 	pushd $src >/dev/null
-	debug-print `cp -Rf --parents "$item" "$dest" 2>&1`
+	debug-print `cp -Rfp --parents "$item" "$dest" 2>&1`
 	popd >/dev/null
 
 }
@@ -45,7 +45,7 @@ function scm_shallow_copy() {
 	einfo "Copying $item to $dest"
 	debug-print "$FUNCNAME: Shallow-copying $item from $src to $dest"
 	pushd $src >/dev/null
-	debug-print `cp -f --parents "$item"/* "$dest" 2>&1`
+	debug-print `cp -fp --parents "$item"/* "$dest" 2>&1`
 	popd >/dev/null
 
 }
