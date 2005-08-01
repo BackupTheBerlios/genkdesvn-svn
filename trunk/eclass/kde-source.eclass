@@ -75,7 +75,7 @@ DESCRIPTION="$DESCRIPTION (development version) "
 
 if [ -z $KSCM_ROOT ]; then
 	
-	ESCM_ROOT="trunk"
+	ESCM_ROOT="trunk/"
 	
 	# Base KDE modules live under KDE
 	[ "$KDEBASE" == "true" ] && ESCM_ROOT="branches/KDE/3.5/"
