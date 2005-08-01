@@ -1,14 +1,13 @@
 # Copyright 1999-2004 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/kde-functions.eclass,v 1.112 2005/03/13 18:42:41 danarmak Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/kde-functions.eclass,v 1.118 2005/07/25 15:11:49 caleb Exp $
 #
 # Author Dan Armak <danarmak@gentoo.org>
 #
 # This contains everything except things that modify ebuild variables
 # and functions (e.g. $P, src_compile() etc.)
 
-ECLASS=kde-functions
-INHERITED="$INHERITED $ECLASS"
+inherit qt3
 
 # map of the monolithic->split ebuild derivation; used to build deps describing
 # the relationships between them
@@ -289,7 +288,6 @@ kde-base/kdepim kde-base/libkpimidentities
 kde-base/kdepim kde-base/libksieve
 kde-base/kdepim kde-base/mimelib
 kde-base/kdepim kde-base/networkstatus
-kde-base/kdepim kde-base/kdgantt
 kde-base/kdesdk kde-base/cervisia
 kde-base/kdesdk kde-base/kapptemplate
 kde-base/kdesdk kde-base/kbabel
@@ -338,18 +336,18 @@ kde-base/kdewebdev kde-base/kxsldbg
 kde-base/kdewebdev kde-base/quanta
 app-office/koffice app-office/karbon
 app-office/koffice app-office/kchart
+app-office/koffice app-office/kexi
 app-office/koffice app-office/kformula
 app-office/koffice app-office/kivio
 app-office/koffice app-office/koffice-data
 app-office/koffice app-office/koffice-libs
 app-office/koffice app-office/koffice-meta
 app-office/koffice app-office/koshell
+app-office/koffice app-office/kplato
 app-office/koffice app-office/kpresenter
+app-office/koffice app-office/krita
 app-office/koffice app-office/kspread
 app-office/koffice app-office/kugar
-app-office/koffice app-office/kexi
-app-office/koffice app-office/krita
-app-office/koffice app-office/kplato
 app-office/koffice app-office/kword
 '
 
@@ -428,7 +426,7 @@ deprange-list() {
 	if [ "${MAXVER%.*}" != "$BASEVER" ]; then
 		die "deprange(): unsupported parameters $MINVER $MAXVER - BASEVER must be identical"
 	fi
-	
+
 	# Get version suffixes
 	local MINSUFFIX MAXSUFFIX
 	if [ "$MINVER" != "${MINVER/_}" ]; then
@@ -443,7 +441,7 @@ deprange-list() {
 	else
 		SUFFIXLESSMAXVER=$MAXVER
 	fi
-	
+
 	# Separate out the optional lower bound revision number
 	if [ "$MINVER" != "${MINVER/-}" ]; then
 		local MINREV=${MINVER##*-}
@@ -467,13 +465,13 @@ deprange-list() {
 		# If the range bounds differ only by their suffixes
 		elif [ "$MINMINOR" == "$MAXMINOR" ]; then
 			NEWDEP="$(deprange-iterate-suffixes ~$PACKAGE-$BASEVER.$MINMINOR $MINSUFFIX $MAXSUFFIX)"
-			
+
 			# Revision constraint on lower bound
 			if [ -n "$MINREV" ]; then
 				NEWDEP="$NEWDEP
 						$(deprange-iterate-numbers =$PACKAGE-$BASEVER.${MINMINOR}_$MINSUFFIX-r $MINREV 99)"
 			fi
-			
+
 		# If the minor version numbers are different too
 		else
 
@@ -481,14 +479,14 @@ deprange-list() {
 			if [ -n "$MAXSUFFIX" ]; then
 				NEWDEP="$(deprange-iterate-suffixes ~$PACKAGE-$BASEVER.$MAXMINOR alpha1 $MAXSUFFIX)"
 			fi
-			
+
 			# regular versions in between
 			if [ -n "$MINREV" -a -z "$MINSUFFIX" ]; then
 				let MAXMINOR++
 			fi
 			NEWDEP="$NEWDEP
 					$(deprange-iterate-numbers ~${PACKAGE}-${BASEVER}. $MINMINOR $MAXMINOR)"
-		
+
 			# Min version's allowed suffixes
 			if [ -n "$MINSUFFIX" ]; then
 				NEWDEP="$NEWDEP
@@ -505,7 +503,7 @@ deprange-list() {
 						$(deprange-iterate-numbers $BASE ${MINREV#r} 99)"
 			fi
 		fi
-		
+
 		# Output
 		echo -n $NEWDEP
 	done
@@ -527,13 +525,13 @@ deprange-iterate-numbers() {
 # eg: deprange-iterate-suffixes ~kde-base/libkonq-3.4.0 alpha8 beta2
 deprange-iterate-suffixes() {
 	local NAME=$1 MINSUFFIX=$2 MAXSUFFIX=$3
-	
+
 	# Separate out the optional lower bound revision number
 	if [ "$MINSUFFIX" != "${MINSUFFIX/-}" ]; then
 		local MINREV=${MINSUFFIX##*-}
 	fi
 	MINSUFFIX=${MINSUFFIX%-*}
-	
+
 	# Separate out the version suffixes
 	local MINalpha MINbeta MINpre MINrc
 	if [ "$MINSUFFIX" != "${MINSUFFIX/alpha}" ]; then
@@ -559,20 +557,20 @@ deprange-iterate-suffixes() {
 	else
 		die "deprange(): version suffix $MAXSUFFIX (probably _pN) not supported"
 	fi
-	
+
 	local started="" NEWDEP="" var
-	
+
 	# Loop over version suffixes
 	for suffix in rc pre beta alpha; do
 		local upper="" lower=""
-		
+
 		# If -n $started, we've encountered the upper bound in a previous iteration
 		# and so we use the maximum allowed upper bound for this prefix
 		if [ -n "$started" ]; then
 			upper=10
-			
+
 		else
-		
+
 			# Test for the upper bound in the current iteration
 			var=MAX$suffix
 			if [ -n "${!var}" ]; then
@@ -580,29 +578,29 @@ deprange-iterate-suffixes() {
 				started=yes
 			fi
 		fi
-		
+
 		# If the upper bound has been found
 		if [ -n "$upper" ]; then
-		
+
 			# Test for the lower bound in the current iteration (of the loop over prefixes)
 			var=MIN$suffix
 			if [ -n "${!var}" ]; then
 				lower=${!var}
-				
+
 				# If the lower bound has a revision number, don't touch that yet
 				if [ -n "$MINREV" ]; then
 					let lower++
 				fi
-				
+
 			# If not found, we go down to the minimum allowed for this prefix
 			else
 				lower=1
 			fi
-			
+
 			# Add allowed versions with this prefix
 			NEWDEP="$NEWDEP
 					$(deprange-iterate-numbers ${NAME}_${suffix} $lower $upper)"
-					
+
 			# If we've encountered the lower bound on this iteration, don't consider additional prefixes
 			if [ -n "${!var}" ]; then
 				break
@@ -814,47 +812,17 @@ need-qt() {
 			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} =x11-libs/${QT}-2.3*"
 			;;
 	    3*)
-			DEPEND="${DEPEND} >=x11-libs/${QT}-${QTVER}"
-			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} >=x11-libs/${QT}-${QTVER}"
-			;;
-		7*)
-			DEPEND="${DEPEND} >=x11-libs/${QT}-${QTVER}"
-			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} >=x11-libs/${QT}-${QTVER}"
+			DEPEND="${DEPEND} $(qt_min_version ${QTVER})"
+			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} $(qt_min_version ${QTVER})"
 			;;
 	    *)	echo "!!! error: $FUNCNAME() called with invalid parameter: \"$QTVER\", please report bug" && exit 1;;
 	esac
 
-	set-qtdir ${QTVER}
-
 }
 
 set-qtdir() {
-
-	debug-print-function $FUNCNAME $*
-
-
-	# select 1st element in dot-separated string
-	IFSBACKUP=$IFS
-	IFS="."
-	QTMAJORVER=""
-	for x in $1; do
-		[ -z "$QTMAJORVER" ] && QTMAJORVER=$x
-	done
-	IFS=$IFSBACKUP
-
-	# Don't set the QTDIR if it's already set
-	# See bug #61967
-	if [ ! $QTDIR ]; then
-
-		[ "$QTMAJORVER" == "7" ] && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/$QTMAJORVER"
-		
-	fi	
-
-	# i'm putting this here so that the maximum amount of qt/kde apps gets it -- danarmak
-	# if $QTDIR/etc/settings/qtrc file exists, the qt build tools try to create
-	# a .qtrc.lock file in that directory. It's easiest to allow them to do so.
-	[ -d "$QTDIR/etc/settings" ] && addwrite "$QTDIR/etc/settings"
-	addpredict "$QTDIR/etc/settings"
+	DONOTHING=1
+	# Functionality not needed anymore
 }
 
 # returns minimal qt version needed for specified kde version
@@ -872,7 +840,7 @@ qtver-from-kdever() {
 		3.4*)	ver=3.3;;
 		3*)	ver=3.0.5;;
 		5)	ver=3.3;; # cvs version
-		7)	ver=3.3;; # sub(version)
+		7)	ver=3.3;; # (sub)version
 		*)	echo "!!! error: $FUNCNAME called with invalid parameter: \"$1\", please report bug" && exit 1;;
 	esac
 
@@ -948,7 +916,7 @@ kde_remove_flag() {
 }
 
 # is this a kde-base ebuid?
-if [ "$CATEGORY" == "kde-base" ]; then
-	debug-print "$ECLASS: KDEBASE ebuild recognized"
+if [ "${CATEGORY}" == "kde-base" ]; then
+	debug-print "${ECLASS}: KDEBASE ebuild recognized"
 	export KDEBASE="true"
 fi
