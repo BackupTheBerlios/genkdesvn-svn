@@ -41,6 +41,7 @@ src_install()
 
 pkg_postinst()
 {	
+	subversion_pkg_postinst
 	einfo
 	einfo "To enable kde builds with unsermake, add unsermake to your FEATURES in /etc/make.conf"
 	einfo

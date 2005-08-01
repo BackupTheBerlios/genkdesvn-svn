@@ -63,6 +63,7 @@ CONFIG_PROTECT=\"${PREFIX}/share/config ${PREFIX}/env ${PREFIX}/shutdown\"" > ${
 }
 
 pkg_postinst() {
+	subversion_pkg_postinst
 	if ! use artswrappersuid ; then
 		einfo "Run chmod u+s ${PREFIX}/bin/artswrapper to let artsd use realtime priority"
 		einfo "and so avoid possible skips in sound. However, on untrusted systems this"

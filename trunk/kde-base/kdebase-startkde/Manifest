@@ -1,4 +1,4 @@
-MD5 a4dae50257913b08f38f2eb56e17728c kdebase-startkde-7.ebuild 2191
+MD5 172e55bde9aa7493035f26b2385142cf kdebase-startkde-7.ebuild 2216
 MD5 38116c7e3963674ec4a3c0948904ec3b files/agent-shutdown.sh 320
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdebase-startkde-7 0
 MD5 aae7bd7ed3b048c0a1f648b7ec857cbe files/kdebase-startkde-7-gentoo.patch 1378
