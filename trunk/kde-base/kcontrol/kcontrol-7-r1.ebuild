@@ -45,7 +45,7 @@ KMCOMPILEONLY="kicker/libkicker kicker/taskmanager kicker/taskbar"
 src_unpack() {
 
 	kde-source_src_unpack	
-	[ -n "$LINGUAS" ] cp -r $S/admin $WORKDIR/trunk/l10n/scripts
+	[ -n "$LINGUAS" ] && cp -r $S/admin $WORKDIR/trunk/l10n/scripts
 
 }
 
