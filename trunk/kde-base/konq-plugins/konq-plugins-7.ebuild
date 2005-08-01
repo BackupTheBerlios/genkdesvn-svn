@@ -1,12 +1,13 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdeaddons
 KMNODOCS=true
 MAXKDEVER=$PV
+UNSERMAKE=no
 inherit kde-meta kde-source
 
-UNSERMAKE=no
 DESCRIPTION="Various plugins for konqueror"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
