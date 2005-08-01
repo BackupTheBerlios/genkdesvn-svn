@@ -138,7 +138,13 @@ class item_info:
 			else:
 				self.repository = self.handler.repository + "/" + self.item
 			self.tags[True] = self.info(self.repository)
-			
+
+	def log(self, revision):
+		einfo("Differences between revision " + revision + " and latest revision " + self.revision())
+		command="svn log --revision " + str(int(revision)+1) + ":" + self.revision() + " " + self.repository
+		self.handler.perform(command)
+
+# Construct complete list of improper ancestors of item
 
 class subversion_handler:
 
@@ -197,8 +203,6 @@ class subversion_handler:
 		else:
 			return item_info(self, item)
 
-
-# Construct complete list of improper ancestors of item
 def ancestors(item, recurse, descendents=[]):
 	if item == "":
 		return descendents[0]
@@ -296,7 +300,7 @@ if __name__ == "__main__":
 			shallow.append(value.strip("/ "))
 		elif param == "--check":
 			check.append(value.strip("/ "))
-		elif param == "--log-only":
+		elif param == "--logonly":
 			logonly = {"yes":True}.get(value.strip(), False)
 
 	base_module=repository[repository.rfind("/")+1:]
@@ -328,20 +332,34 @@ if __name__ == "__main__":
 			info = subversion.info(item)
 			# If repository claims item as directory, compare its revision to revision provided
 			if info.directoryP():
-				if item not in revisions or info.revision() != revisions[item]:
+				if item not in revisions:
 					break
+				elif info.revision() != revisions[item]:
+					if logonly:
+						info.log(revisions[item])
+					else:
+						break
 			# If repository claims item as file, compare its topdir's revision to revision provided for topdir
 			elif info.fileP():
 				topdir = dirname(item)
 				einfo("Inspecting revision of " + topdir)
 				topdir_info = subversion.info(topdir)
-				if topdir not in revisions or topdir_info.revision() != revisions[topdir]:
+				if topdir not in revisions:
 					break
+				elif topdir_info.revision() != revisions[topdir]:
+					if logonly:
+						topdir_info.log(revisions[topdir])
+					else:
+						break
 			# If repository claims item does not exist, see if it is in provided revision
 			elif item in revisions:
-				break
+				if not logonly:
+					break
 		else:
-			sys.exit(16)
+			if logonly:
+				sys.exit(17)
+			else:
+				sys.exit(16)
 		
 	ancestries=[]
 	for item in deep:
