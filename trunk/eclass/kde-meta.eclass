@@ -379,7 +379,7 @@ function kde-meta_src_unpack() {
 				libname=$x
 			else
 				dirname=$x
-				cd $S
+				cd $(objdir)
 				mkdir -p ${dirname}
 				cd ${dirname}
 				if [ ! "$(find ${PREFIX}/$(get_libdir)/ -name "${libname}*")" == "" ]; then
