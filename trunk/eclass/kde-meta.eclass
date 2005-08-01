@@ -384,7 +384,7 @@ function kde-meta_src_unpack() {
 				cd ${dirname}
 				if [ ! "$(find ${PREFIX}/$(get_libdir)/ -name "${libname}*")" == "" ]; then
 					echo "Symlinking library ${libname} under ${PREFIX}/$(get_libdir)/ in source dir"
-					ln -s ${PREFIX}/$(get_libdir)/${libname}* .
+					ln -sf ${PREFIX}/$(get_libdir)/${libname}* .
 				else
 					die "Can't find library ${libname} under ${PREFIX}/$(get_libdir)/"
 				fi
