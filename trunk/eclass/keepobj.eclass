@@ -12,6 +12,8 @@ INHERITED="$INHERITED $ECLASS"
 
 [ -z "$PORTAGE_OBJDIR" ] && PORTAGE_OBJDIR=/var/tmp/portage/objects
 
+keepobj_initialize
+
 function objdir() {
 	if [ $(keepobj_enabled) ]
 	then
@@ -54,7 +56,7 @@ function keepcache_enabled() {
 }
 
 function keepobj_initialize() {
-	if ( hasq keepobj ${FEATURES} ) && [ ! -d $(objdir) ]
+	if ( $(keepobj_enabled) ) && [ ! -d $(objdir) ]
 	then
 		mkdir -p $(objdir)
 	fi

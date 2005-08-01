@@ -7,14 +7,14 @@
 # Revisions Caleb Tennis <caleb@gentoo.org>
 # The kde eclass is inherited by all kde-* eclasses. Few ebuilds inherit straight from here.
 
-inherit base eutils kde-functions keepobj
+inherit base eutils kde-functions keepobj unsermake
 ECLASS=kde
 INHERITED="$INHERITED $ECLASS"
 DESCRIPTION="Based on the $ECLASS eclass"
 HOMEPAGE="http://www.kde.org/"
 IUSE="${IUSE} debug arts xinerama kdeenablefinal"
 
-DEPEND=">=sys-devel/automake-1.7.0
+DEPEND="$DEPEND >=sys-devel/automake-1.7.0
 	sys-devel/autoconf
 	sys-devel/make
 	dev-util/pkgconfig
@@ -27,18 +27,6 @@ RDEPEND="~kde-base/kde-env-3"
 # overridden in other places like kde-dist, kde-source and some individual ebuilds
 SLOT="0"
 
-function make_cmd() {
-	[ "$UNSERMAKE" == no ] && echo make || echo unsermake $UNSERMAKEOPTS
-}
-
-function emake_cmd() {
-	[ "$UNSERMAKE" == no ] && echo emake || echo unsermake $UNSERMAKEOPTS
-}
-
-function automake_cmd() {
-	echo env UNSERMAKE=$UNSERMAKE AUTOMAKE=automake-1.7 make -f
-}
-
 kde_pkg_setup() {
 	if [ "${PN}" != "arts" ] && [ "${PN}" != "kdelibs" ] ; then
 		use arts && if ! built_with_use kdelibs arts ; then
@@ -50,7 +38,6 @@ kde_pkg_setup() {
 			die
 		fi
 	fi
-	keepobj_initialize
 }
 
 kde_src_unpack() {
