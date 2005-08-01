@@ -79,17 +79,24 @@ function subversion_src_fetch() {
 	ARGUMENTS="$ARGUMENTS --repository=${ESVN_REPO_URI}"
 	ARGUMENTS="$ARGUMENTS --work-base=${ESVN_STORE_DIR}/${ESVN_PROJECT}"
 	ARGUMENTS="$ARGUMENTS --revdb-out=${T}/SVNREVS"
-
 	REVDB_IN="${ROOT}/var/db/pkg/${CATEGORY}/${PF}/SVNREVS"
 	if [ -f $REVDB_IN ]; then
 		ARGUMENTS="$ARGUMENTS --revdb-in=$REVDB_IN"
-		if ( hasq autoskipcvs ${FEATURES} ); then 
-			ewarn "WARNING: Previous merge of ${CATEGORY}/${PF} exists and autoskipcvs has been set."
-			ewarn "WARNING: Emerge will be aborted if there have been no relevant changes since last merge."
-			ewarn "WARNING: Note, that this is not, and should not be the default behavior."
-			ewarn "WARNING: Items to be inspected are $ESCM_CHECKITEMS"
+		if ( hasq autoskipcvs ${FEATURES} ) || ( hasq logonly ${FEATURES} ); then
+			if ( hasq autoskipcvs ${FEATURES} ); then
+				ewarn "WARNING: Previous merge of ${CATEGORY}/${PF} exists and autoskipcvs has been set."
+				ewarn "WARNING: Emerge will be aborted if there have been no relevant changes since last merge."
+				ewarn "WARNING: Note, that this is not, and should not be the default behavior."
+				ewarn "WARNING: Items to be inspected are $ESCM_CHECKITEMS"
+			else
+				ewarn "Log check started for ${CATEGORY}/${PF}"
+				ARGUMENTS="$ARGUMENTS --logonly=yes"
+			fi
 			for item in $ESCM_CHECKITEMS; do ARGUMENTS="$ARGUMENTS --check=$item"; done
 		fi
+	elif ( hasq logonly $FEATURES ); then
+		ewarn "No previous revision recorded for ${CATEGORY}/${PF}"
+		exit 1
 	fi
 	
 	for item in $ESCM_DEEPITEMS;	do ARGUMENTS="$ARGUMENTS --deep=$item";		done
@@ -105,6 +112,10 @@ function subversion_src_fetch() {
 			ewarn "WARNING: Revisions for ${CATEGORY}/${PF} have not changed since last merge."
 			ewarn "WARNING: This merge will be aborted immediately."
 			ewarn "WARNING: To avoid this in the FUTURE, unset autoskipcvs from your FEATURES"
+			exit 1
+		elif [ $err -eq 17 ]
+		then
+			ewarn "Log check complete for ${CATEGORY}/${PF}"
 			exit 1
 		else
 			die "${HELPER} ${ARGUMENTS} has failed with exit code $err"
