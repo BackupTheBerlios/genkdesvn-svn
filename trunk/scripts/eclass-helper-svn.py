@@ -16,6 +16,7 @@ err_notversioned = re.compile(".*Not a versioned resource.*")
 err_notfound = re.compile(".*File not found.*")
 err_notwc = re.compile(".*is not a working copy.*")
 err_validate = re.compile("$Error validating server certificate for.*")
+err_locked = re.compile(".*Working copy.*locked.*")
 sleep_time=30
 
 def einfo(message):
@@ -153,6 +154,13 @@ class subversion_handler:
 
 		if err_closed.match(error) or err_timeout.match(error) or err_malformed.match(error): 
 			ewarn("Subversion has reported the following network error:")
+			svnwarn(error.split(":")[1].strip())
+			einfo("Retrying in " + str(sleep_time) + " seconds")
+			time.sleep(sleep_time)
+			self.perform(command, on_output, on_error)
+		elif err_locked.match(error):
+			ewarn("Subversion reports a lock, another ebuild might be active.")
+			ewarn("If no other ebuilds are active, interrupt, and execute svn cleanup on the reported directory:")
 			svnwarn(error.split(":")[1].strip())
 			einfo("Retrying in " + str(sleep_time) + " seconds")
 			time.sleep(sleep_time)
