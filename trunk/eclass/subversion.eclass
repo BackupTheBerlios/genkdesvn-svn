@@ -102,7 +102,7 @@ function subversion_src_fetch() {
 	for item in $ESCM_DEEPITEMS;	do ARGUMENTS="$ARGUMENTS --deep=$item";		done
 	for item in $ESCM_SHALLOWITEMS;	do ARGUMENTS="$ARGUMENTS --shallow=$item";	done
 
-	HELPER="$SCRIPT_DIR/eclass-helper-svn.py"
+	HELPER="env LANGUAGE=en_US $SCRIPT_DIR/eclass-helper-svn.py"
 	${HELPER} ${ARGUMENTS}
 	err=$?
 	if [ $err -ne 0 ]
