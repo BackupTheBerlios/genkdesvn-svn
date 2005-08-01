@@ -9,7 +9,7 @@ KSCM_L10N_PO="kcontrol \"kcm*\" filetypes kaccess kthememanager"
 for lang in $LINGUAS
 do
 
-	ESCM_SHALLOWITEMS="$ESCM_SHALLOWITEMS l10n/$lang/messages"
+	ESCM_SHALLOWITEMS="$ESCM_SHALLOWITEMS trunk/l10n/$lang/messages"
 
 done
 inherit kde-meta eutils kde-source
@@ -52,12 +52,12 @@ src_unpack() {
 src_compile() {
 
 	local _S=$S
-	pushd $WORKDIR/l10n >/dev/null
+	pushd $WORKDIR/trunk/l10n >/dev/null
 	scripts/autogen.sh $LINGUAS
 	for lang in $LINGUAS
 	do
 
-		S=$WORKDIR/l10n/$lang	
+		S=$WORKDIR/trunk/l10n/$lang	
 		[ -d $S/messages ] && cat $FILESDIR/Makefile.l10n >> $S/messages/Makefile.in && kde_src_compile
 
 	done
@@ -74,9 +74,9 @@ src_install() {
 	for lang in $LINGUAS
 	do
 
-		if [ -d $WORKDIR/l10n/$lang/messages ]; then
+		if [ -d $WORKDIR/trunk/l10n/$lang/messages ]; then
 		
-			pushd $WORKDIR/l10n/$lang >/dev/null
+			pushd $WORKDIR/trunk/l10n/$lang >/dev/null
 			make DESTDIR=${D} install
 			popd >/dev/null
 
