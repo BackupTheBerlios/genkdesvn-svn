@@ -233,7 +233,7 @@ kde-source_src_unpack() {
 	for lang in $LINGUAS
 	do
 	
-		local srcdir="$WORKDIR/l10n/$lang/messages/$KSCM_L10N_MODULE"
+		local srcdir="$WORKDIR/trunk/l10n/$lang/messages/$KSCM_L10N_MODULE"
 		local destdir="$S/po/$lang"
 
 		mkdir -p $destdir
