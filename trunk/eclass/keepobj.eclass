@@ -32,7 +32,9 @@ function srcdir() {
 
 function keepobj() {
 	debug-print-function $FUNCNAME $*
-	pushd $(objdir) >/dev/null
+	cur=`pwd`/
+	rel="${cur##$S}"
+	pushd $(objdir)/${rel} >/dev/null
 	$*
 	retcode=$?
 	popd >/dev/null
