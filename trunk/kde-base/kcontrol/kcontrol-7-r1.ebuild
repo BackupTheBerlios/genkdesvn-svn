@@ -6,13 +6,13 @@ KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KSCM_L10N_PO="kcontrol \"kcm*\" filetypes kaccess kthememanager"
-[ -n "$LINGUAS" ] && ESCM_SHALLOWITEMS="trunk/l10n/scripts"
-for lang in $LINGUAS
-do
+#[ -n "$LINGUAS" ] && ESCM_SHALLOWITEMS="trunk/l10n/scripts"
+#for lang in $LINGUAS
+#do
 
-	ESCM_SHALLOWITEMS="$ESCM_SHALLOWITEMS trunk/l10n/$lang/messages"
+#	ESCM_SHALLOWITEMS="$ESCM_SHALLOWITEMS trunk/l10n/$lang/messages"
 
-done
+#done
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="The KDE Control Center"
@@ -46,26 +46,26 @@ KMCOMPILEONLY="kicker/libkicker kicker/taskmanager kicker/taskbar"
 src_unpack() {
 
 	kde-source_src_unpack	
-	[ -n "$LINGUAS" ] && cp -r $S/admin $WORKDIR/trunk/l10n/scripts
+#	[ -n "$LINGUAS" ] && cp -r $S/admin $WORKDIR/trunk/l10n/scripts
 
 }
 
 src_compile() {
 
-	if [ -n "$LINGUAS" ]; then
-		local _S=$S
-		pushd $WORKDIR/trunk/l10n >/dev/null
-		UNSERMAKE=no scripts/autogen.sh $LINGUAS
-		for lang in $LINGUAS
-		do
+#	if [ -n "$LINGUAS" ]; then
+#		local _S=$S
+#		pushd $WORKDIR/trunk/l10n >/dev/null
+#		UNSERMAKE=no scripts/autogen.sh $LINGUAS
+#		for lang in $LINGUAS
+#		do
 
-			S=$WORKDIR/trunk/l10n/$lang	
-			[ -d $S/messages ] && cat $FILESDIR/Makefile.l10n >> $S/messages/Makefile.in && kde_src_compile
+#			S=$WORKDIR/trunk/l10n/$lang	
+#			[ -d $S/messages ] && cat $FILESDIR/Makefile.l10n >> $S/messages/Makefile.in && kde_src_compile
 
-		done
-		popd >/dev/null
-		S=$_S
-	fi
+#		done
+#		popd >/dev/null
+#		S=$_S
+#	fi
 	
 	myconf="$myconf `use_with ssl` `use_with arts` `use_with opengl gl`"
 	kde-meta_src_compile
@@ -74,18 +74,18 @@ src_compile() {
 
 src_install() {
 
-	for lang in $LINGUAS
-	do
+#	for lang in $LINGUAS
+#	do
 
-		if [ -d $WORKDIR/trunk/l10n/$lang/messages ]; then
+#		if [ -d $WORKDIR/trunk/l10n/$lang/messages ]; then
 		
-			pushd $WORKDIR/trunk/l10n/$lang >/dev/null
-			make DESTDIR=${D} install
-			popd >/dev/null
+#			pushd $WORKDIR/trunk/l10n/$lang >/dev/null
+#			make DESTDIR=${D} install
+#			popd >/dev/null
 
-		fi
+#		fi
 
-	done
+#	done
 	kde-meta_src_install
 
 }
