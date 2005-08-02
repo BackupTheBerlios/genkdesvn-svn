@@ -2,8 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KSCM_ROOT="KDE"
-UNSERMAKE=no
+KSCM_ROOT=branches/KDE/3.5
 inherit kde eutils kde-source
 
 DESCRIPTION="Integrated Development Enviroment for Unix, supporting KDE/Qt, C/C++ and a many other languages."
