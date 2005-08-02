@@ -78,6 +78,17 @@ function src_to_workdir() {
 
 	done
 
+	# Restore the original timestamps
+	cd $WORKDIR
+	for item in $(find . -true)
+	do
+		if [ -e $src/$item ]
+		then
+			touch $item -r $src/$item
+		fi
+	done
+	cd $OLDPWD
+
 	for item in $ESCM_EXTERNALS
 	do
 
