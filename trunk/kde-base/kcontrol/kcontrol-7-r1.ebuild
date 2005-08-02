@@ -5,6 +5,7 @@ KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KSCM_L10N_PO="kcontrol \"kcm*\" filetypes kaccess kthememanager"
+UNSERMAKE=no
 [ -n "$LINGUAS" ] && ESCM_SHALLOWITEMS="trunk/l10n/scripts"
 for lang in $LINGUAS
 do
