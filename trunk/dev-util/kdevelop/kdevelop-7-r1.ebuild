@@ -3,6 +3,7 @@
 # $Header: $
 
 KSCM_ROOT=branches/KDE/3.5
+UNSERMAKE=no
 inherit kde eutils kde-source
 
 DESCRIPTION="Integrated Development Enviroment for Unix, supporting KDE/Qt, C/C++ and a many other languages."
