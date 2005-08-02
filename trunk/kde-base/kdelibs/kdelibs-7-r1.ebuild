@@ -43,9 +43,6 @@ DEPEND="${RDEPEND}
 
 src_compile() {
 
-	# Allow for choice between 3 and 7, depending on what's installed
-	has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
-
 	myconf="--with-distribution=Gentoo --enable-libfam --enable-dnotify"
 	myconf="${myconf} $(use_with alsa) $(use_with arts)"
 	myconf="${myconf} $(use_with tiff) $(use_with jpeg2k jasper) $(use_with openexr)"
@@ -62,14 +59,14 @@ src_compile() {
 
 	kde_src_compile
 
-	use doc && make apidox
+	use doc && keepobj $(make_cmd) apidox
 }
 
 src_install() {
 
 	kde_src_install
 
-	use doc && make DESTDIR=${D} install-apidox
+	use doc && keepobj $(make_cmd) DESTDIR=${D} install-apidox
 
 	# needed to fix lib64 issues on amd64, see bug #45669
 	use amd64 && ln -s ${KDEDIR}/lib ${D}/${KDEDIR}/lib64
