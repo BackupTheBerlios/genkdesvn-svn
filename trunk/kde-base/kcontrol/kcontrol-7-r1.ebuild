@@ -1,11 +1,11 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KSCM_L10N_PO="kcontrol \"kcm*\" filetypes kaccess kthememanager"
-UNSERMAKE=no
 [ -n "$LINGUAS" ] && ESCM_SHALLOWITEMS="trunk/l10n/scripts"
 for lang in $LINGUAS
 do
@@ -55,7 +55,7 @@ src_compile() {
 	if [ -n "$LINGUAS" ]; then
 		local _S=$S
 		pushd $WORKDIR/trunk/l10n >/dev/null
-		scripts/autogen.sh $LINGUAS
+		UNSERMAKE=no scripts/autogen.sh $LINGUAS
 		for lang in $LINGUAS
 		do
 
