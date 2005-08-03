@@ -17,8 +17,8 @@
 inherit versionator
 
 QTPKG="x11-libs/qt-"
-QT3MAJORVERSIONS="7 3.3 3.2 3.1 3.0"
-QT3VERSIONS="7 3.3.4-r6 3.3.4-r5 3.3.4-r4 3.3.4-r3 3.3.4-r2 3.3.4-r1 3.3.4
+QT3MAJORVERSIONS="3.3 7 3.2 3.1 3.0"
+QT3VERSIONS="3.3.4-r6 7 3.3.4-r5 3.3.4-r4 3.3.4-r3 3.3.4-r2 3.3.4-r1 3.3.4
 3.3.3-r3 3.3.3-r2 3.3.3-r1 3.3.3 3.3.2 3.3.1-r2 3.3.1-r1 3.3.1 3.3.0-r1 3.3.0
 3.2.3-r1 3.2.3 3.2.2-r1 3.2.2 3.2.1-r2 3.2.1-r1 3.2.1 3.2.0 3.1.2-r4 3.1.2-r3
 3.1.2-r2 3.1.2-r1 3.1.2 3.1.1-r2 3.1.1-r1 3.1.1 3.1.0-r3 3.1.0-r2 3.1.0-r1 3.1.0"
@@ -41,7 +41,7 @@ qt_min_version_list() {
 	local VERSIONS=""
 
 	case $MINVER in
-		3|3.0|3.0.0) VERSIONS="=${QTPKG}3*";;
+		3|3.0|3.0.0) VERSIONS="=${QTPKG}3* =${QTPKG}7*";;
 		3.1|3.1.0|3.2|3.2.0|3.3|3.3.0) 
 			for x in $QT3MAJORVERSIONS; do
 				if $(version_is_at_least $MINVER $x); then
@@ -56,7 +56,7 @@ qt_min_version_list() {
 				fi
 			done
 			;;
-		*) VERSIONS="=${QTPKG}3*";;
+		*) VERSIONS="=${QTPKG}3* =${QTPKG}7*";;
 	esac
 
 	echo "$VERSIONS"
