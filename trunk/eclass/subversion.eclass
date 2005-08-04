@@ -131,6 +131,7 @@ function subversion_src_extract() {
 function subversion_src_bootstrap() {
 	debug-print-function $FUNCNAME $*
 
+	cd $S
 	for patch in ${ESVN_PATCHES}; do
 		[ -f "${patch}" ] && epatch ${patch}
 	done
