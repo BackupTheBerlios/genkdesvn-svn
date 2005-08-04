@@ -255,6 +255,7 @@ kde-base/kdenetwork kde-base/librss
 kde-base/kdenetwork kde-base/lisa
 kde-base/kdepim kde-base/akregator
 kde-base/kdepim kde-base/certmanager
+kde-base/kdepim kde-base/indexlib
 kde-base/kdepim kde-base/kaddressbook
 kde-base/kdepim kde-base/kalarm
 kde-base/kdepim kde-base/kandy
