@@ -8,8 +8,9 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE mail client"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
+
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkdenetwork)
 $(deprange $PV $MAXKDEVER kde-base/libkdepim)
 $(deprange $PV $MAXKDEVER kde-base/libkpimidentities)
@@ -17,13 +18,15 @@ $(deprange $PV $MAXKDEVER kde-base/mimelib)
 $(deprange $PV $MAXKDEVER kde-base/libksieve)
 $(deprange $PV $MAXKDEVER kde-base/certmanager)
 $(deprange $PV $MAXKDEVER kde-base/libkcal)
-$(deprange $PV $MAXKDEVER kde-base/kontact)"
+$(deprange $PV $MAXKDEVER kde-base/kontact)
+$(deprange $PV $MAXKDEVER kde-base/indexlib)"
 RDEPEND="${DEPEND}
 $(deprange $PV $MAXKDEVER kde-base/kdepim-kioslaves)
 $(deprange $PV $MAXKDEVER kde-base/kdebase-kioslaves)
 $(deprange $PV $MAXKDEVER kde-base/kmailcvt)"
 
 KMCOPYLIB="
+	libindex indexlib/
 	libkdepim libkdepim/
 	libkpimidentities libkpimidentities/
 	libmimelib mimelib/
@@ -49,7 +52,6 @@ KMEXTRACTONLY="
 KMCOMPILEONLY="libemailfunctions"
 # the kmail plugins are installed with kmail
 KMEXTRA="
-	indexlib/
 	plugins/kmail/
 	kontact/plugins/kmail/" # We add here the kontact's plugin instead of compiling it with kontact because it needs a lot of this programs deps.
 

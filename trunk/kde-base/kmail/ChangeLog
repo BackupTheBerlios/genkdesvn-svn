@@ -2,6 +2,11 @@
 # Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*kmail-7-r2 (04 Aug 2005)
+
+  04 Aug 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kmail-7-r2.ebuild files/digest-kmail-7-r2
+  Introduce dependency on indexlib
+
 *kmail-7-r1 (28 May 2005)
 
   28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kmail-7-r1.ebuild files/digest-kmail-7-r1
