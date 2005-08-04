@@ -130,6 +130,11 @@ function subversion_src_extract() {
 
 function subversion_src_bootstrap() {
 	debug-print-function $FUNCNAME $*
+
+	for patch in ${ESVN_PATCHES}; do
+		[ -f "${patch}" ] && epatch ${patch}
+	done
+	
 	if [ "${ESVN_BOOTSTRAP}" ]
 	then
 		einfo "Bootstrapping with ${ESVN_BOOTSTRAP}"
