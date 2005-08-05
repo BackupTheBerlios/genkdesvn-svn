@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdemultimedia
 KMMODULE=kioslave
@@ -8,21 +9,28 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="kioslaves from kdemultimedia package"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
-IUSE="oggvorbis flac encode"
+KEYWORDS=" ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="encode flac mp3 vorbis"
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkcddb)
 	media-sound/cdparanoia
 	media-libs/taglib
-	oggvorbis? ( media-libs/libvorbis )
-	flac? ( media-libs/flac )
-	encode? ( media-sound/lame )"
+	encode? ( vorbis? ( media-libs/libvorbis )
+	          flac? ( media-libs/flac ) )"
+RDEPEND="${DEPEND}
+	encode? ( mp3? ( media-sound/lame ) )"
+
 KMCOPYLIB="libkcddb libkcddb"
 KMEXTRACTONLY="akode/configure.in.in"
-KMCOMPILEONLY="libkcddb/"
+KMCOMPILEONLY="libkcddb/ kscd/"
 
 src_compile() {
 	myconf="--with-cdparanoia --enable-cdparanoia"
-	use oggvorbis && myconf="$myconf --with-vorbis=/usr" || myconf="$myconf --without-vorbis"
+	if use encode; then
+		myconf="$myconf $(use_with vorbis) $(use_with flac)"
+	else
+		myconf="$myconf --without-vorbis --without-flac"
+	fi
+
 	DO_NOT_COMPILE=libkcddb kde-meta_src_compile myconf configure
 	cd $S/libkcddb && keepobj make configbase.h
 	DO_NOT_COMPILE=libkcddb kde-meta_src_compile make
