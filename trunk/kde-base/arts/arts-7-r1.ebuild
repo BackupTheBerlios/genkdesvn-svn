@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+ESCM_EXTERNALS="branches/KDE/3.5/kdelibs/libltdl"
 inherit kde flag-o-matic eutils kde-source
 set-kdedir 7
 
