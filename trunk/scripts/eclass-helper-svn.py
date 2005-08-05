@@ -190,13 +190,13 @@ class subversion_handler:
 	def checkout(self, module="", recurse=False, ignore_externals=False):
 		url=(self.repository + module).rstrip("/ ")
 		einfo("Performing initial " + {True:"recursive "}.get(recurse, "") + "checkout of " + url)
-		command="svn checkout " + {False:"-N "}.get(recurse, "") + url
+		command="svn checkout --ignore-externals " + {False:"-N "}.get(recurse, "") + url
 		self.perform(command)
 
 	def update(self, module="", recurse=False, ignore_externals=False):
 		url=(self.base + "/" + module).rstrip("/ ")
 		einfo("Updating working copy of " + url + {True:" recursively"}.get(recurse, ""))
-		command="svn update " + {False:"-N "}.get(recurse, "") + url
+		command="svn update --ignore-externals " + {False:"-N "}.get(recurse, "") + url
 		self.perform(command)
 	  
 	def info(self, item=""):
