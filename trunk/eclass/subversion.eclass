@@ -55,6 +55,7 @@ function subversion_deep_copy() {
 
 }
 
+ESVN_CO_DIR="${ESVN_PROJECT}/${ESVN_REPO_URI##*/}"
 function subversion_src_fetch() {
 	debug-print-function $FUNCNAME $*
 
@@ -69,7 +70,6 @@ function subversion_src_fetch() {
 		export SANDBOX_WRITE="${SANDBOX_WRITE%%:/}"
 	fi
 
-	ESVN_CO_DIR="${ESVN_PROJECT}/${ESVN_REPO_URI##*/}"
 
 	# Enable writes
 	addwrite "/etc/subversion"
@@ -151,7 +151,7 @@ function subversion_src_bootstrap() {
 function subversion_src_unpack() {
 	debug-print-function $FUNCNAME $*
 	subversion_obtain_certificates
-	[ "$ESVN_REPO_URI" != "offline" ] && subversion_src_fetch
+	subversion_src_fetch
 	subversion_src_extract
 	subversion_src_bootstrap
 }
