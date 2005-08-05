@@ -151,7 +151,7 @@ function subversion_src_bootstrap() {
 function subversion_src_unpack() {
 	debug-print-function $FUNCNAME $*
 	subversion_obtain_certificates
-	subversion_src_fetch
+	[ "$ESVN_SERVER" != "offline" ] && subversion_src_fetch
 	subversion_src_extract
 	subversion_src_bootstrap
 }
