@@ -25,6 +25,7 @@ DEPEND="$DEPEND
 ## ESVN_PROJECT: Project name 
 #[ -z "${ESVN_PROJECT}" ] && ESVN_PROJECT="${PN/-svn}"
 
+
 function subversion_obtain_certificates() {
 	debug-print-function $FUNCNAME $*
 
@@ -76,6 +77,7 @@ function subversion_src_fetch() {
 	addwrite "${ESVN_STORE_DIR}"
 	! has userpriv ${FEATURE} && addwrite "/root/.subversion"
 	
+	ARGUMENTS="$ARGUMENTS $ESVN_RUN_ARGS"
 	ARGUMENTS="$ARGUMENTS --repository=${ESVN_REPO_URI}"
 	ARGUMENTS="$ARGUMENTS --work-base=${ESVN_STORE_DIR}/${ESVN_PROJECT}"
 	ARGUMENTS="$ARGUMENTS --revdb-out=${T}/SVNREVS"
@@ -88,17 +90,18 @@ function subversion_src_fetch() {
 				ewarn "WARNING: Emerge will be aborted if there have been no relevant changes since last merge."
 				ewarn "WARNING: Note, that this is not, and should not be the default behavior."
 				ewarn "WARNING: Items to be inspected are $ESCM_CHECKITEMS"
+				ARGUMENTS="$ARGUMENTS --checkrevs"
 			else
 				ewarn "Log check started for ${CATEGORY}/${PF}"
-				ARGUMENTS="$ARGUMENTS --logonly=yes"
+				ARGUMENTS="$ARGUMENTS --logonly"
 			fi
-			for item in $ESCM_CHECKITEMS; do ARGUMENTS="$ARGUMENTS --check=$item"; done
 		fi
 	elif ( hasq logonly $FEATURES ); then
 		ewarn "No previous revision recorded for ${CATEGORY}/${PF}"
 		exit 1
 	fi
 	
+	for item in $ESCM_CHECKITEMS; do ARGUMENTS="$ARGUMENTS --check=$item"; done
 	for item in $ESCM_DEEPITEMS;	do ARGUMENTS="$ARGUMENTS --deep=$item";		done
 	for item in $ESCM_SHALLOWITEMS;	do ARGUMENTS="$ARGUMENTS --shallow=$item";	done
 
@@ -109,9 +112,12 @@ function subversion_src_fetch() {
 	then
 		if [ $err -eq 16 ]
 		then
-			ewarn "WARNING: Revisions for ${CATEGORY}/${PF} have not changed since last merge."
-			ewarn "WARNING: This merge will be aborted immediately."
-			ewarn "WARNING: To avoid this in the FUTURE, unset autoskipcvs from your FEATURES"
+			if ( hasq autoskipcvs ${FEATURES} ); then
+				ewarn "WARNING: Revisions for ${CATEGORY}/${PF} have not changed since last merge."
+				ewarn "WARNING: This merge will be aborted immediately."
+				ewarn "WARNING: To avoid this in the FUTURE, unset autoskipcvs from your FEATURES"
+			fi
+			touch "/tmp/.svn.uptodate.${CATEGORY}.${PF}"
 			exit 1
 		elif [ $err -eq 17 ]
 		then
@@ -150,7 +156,6 @@ function subversion_src_bootstrap() {
 
 function subversion_src_unpack() {
 	debug-print-function $FUNCNAME $*
-	#subversion_obtain_certificates
 	subversion_src_fetch
 	subversion_src_extract
 	subversion_src_bootstrap
