@@ -8,6 +8,7 @@ from commands import *
 from popen2 import *
 from select import *
 from re import match
+from optparse import OptionParser
 
 err_closed = re.compile(".*Connection closed unexpectedly.*")
 err_timeout = re.compile(".*Connection timed out.*")
@@ -265,45 +266,28 @@ def update_modules(ancestries, svnrevs):
 
 if __name__ == "__main__":
 
-	# List of items to be fetched recursively
-	deep = []
+	parser = OptionParser()
+	parser.add_option("--work-base", action="store", type="string", dest="work_base", help="local storage for working copies")
+	parser.add_option("--repository", action="store", type="string", dest="repository", help="repository to check out from")
+	parser.add_option("--revdb-in", action="store", type="string", dest="revdb_in", help="path to file to read revision numbers from")
+	parser.add_option("--revdb-out", action="store", type="string", dest="revdb_out", help="path to file to record revision numbers in")
+	parser.add_option("--deep", action="append", type="string", dest="deep", default=[], help="item to be checked out recursively")
+	parser.add_option("--shallow", action="append", type="string", dest="shallow", default=[], help="item to be checked out non-recursively")
+	parser.add_option("--check", action="append", type="string", dest="check", default=[], help="item to be checked for revision changes")
+	parser.add_option("--logonly", action="store_true", dest="logonly", help="")
+	parser.add_option("--checkrevs", action="store_true", dest="checkrevs", help="")
+	(values, args) = parser.parse_args()
 
-	# List of items to be fetched non-recursively
-	shallow = []
-
-	# List of items to have their revisions checked for updates
-	check = []
-
-	# Input datafile with item revisions
-	revdb_in = None
-
-	# Output datafile with item revisions
-	revdb_out = None
-
-	# Table of revisions to check against
+	work_base = values.work_base
+	repository = values.repository
+	revdb_in = values.revdb_in and file(values.revdb_in, "r")
+	revdb_out = values.revdb_out and file(values.revdb_out, "w")
+	deep = values.deep
+	shallow=values.shallow
+	check = values.check
+	checkrevs = values.checkrevs
+	logonly = values.logonly
 	revisions = {}
-
-	#
-	logonly = False
-
-	# Extract command-line options
-	for param, value in map(lambda option: option.split("="), sys.argv[1:]):
-		if param == "--work-base":
-			work_base = value.rstrip("/ ")
-		elif param == "--repository":
-			repository = value.rstrip("/ ")
-		elif param == "--revdb-in":
-			revdb_in = file(value.rstrip("/ "), "r")
-		elif param == "--revdb-out":
-			revdb_out = file(value.rstrip("/ "), "w")
-		elif param == "--deep":
-			deep.append(value.strip("/ "))
-		elif param == "--shallow":
-			shallow.append(value.strip("/ "))
-		elif param == "--check":
-			check.append(value.strip("/ "))
-		elif param == "--logonly":
-			logonly = {"yes":True}.get(value.strip(), False)
 
 	base_module=repository[repository.rfind("/")+1:]
 	working_copy=work_base + "/" + base_module
@@ -315,12 +299,6 @@ if __name__ == "__main__":
 	
 	subversion = subversion_handler(repository, work_base)
 
-	if isdir(working_copy + "/.svn"):
-		if subversion.info().modifiedP():
-			subversion.update()
-	else:
-		subversion.checkout()
-
 	# Extract revisions from input revision database of item:revision pairs
 	if revdb_in:
 		for line in revdb_in:
@@ -328,7 +306,7 @@ if __name__ == "__main__":
 			revisions[item] = revision.strip()
 		revdb_in.close()
 
-	if len(check) > 0:
+	if checkrevs and len(check) > 0:
 		for item in check:
 			einfo("Inspecting revision of " + item)
 			info = subversion.info(item)
@@ -365,6 +343,12 @@ if __name__ == "__main__":
 	if logonly:
 		sys.exit(17)
 		
+	if isdir(working_copy + "/.svn"):
+		if subversion.info().modifiedP():
+			subversion.update()
+	else:
+		subversion.checkout()
+
 	ancestries=[]
 	for item in deep:
 		ancestree(ancestries, ancestors(item, True))
