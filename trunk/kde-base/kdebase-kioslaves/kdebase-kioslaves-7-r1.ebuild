@@ -6,7 +6,6 @@ KMNAME=kdebase
 KMMODULE=kioslave
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-KSCM_L10N_PO="\"kio_*\""
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="kioslave: the kde VFS framework - kioslave plugins present a filesystem-like view of arbitrary data"
