@@ -6,9 +6,7 @@ inherit eutils flag-o-matic
 
 KSCM_ROOT="branches/qt/3.3/"
 KSCM_MODULE="qt-copy"
-ESCM_DEEPITEMS="$KSCM_ROOT$KSCM_MODULE"
-ESCM_CHECKITEMS="$ESCM_DEEPITEMS"
-inherit kde-source
+inherit kde-repo
 
 SRCTYPE="free"
 DESCRIPTION="QT version ${PV}"
@@ -54,7 +52,7 @@ src_unpack() {
 
 	export QTDIR=${S}
 
-	subversion_src_unpack
+	kde-repo_src_unpack
 	cd ${S}
 	
 	mkdir ${S}/include/private
