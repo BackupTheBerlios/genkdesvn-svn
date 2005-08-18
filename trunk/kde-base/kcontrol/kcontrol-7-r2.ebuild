@@ -5,7 +5,6 @@
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-KSCM_L10N_PO="kcontrol \"kcm*\" filetypes kthememanager kaccess kdmconfig kfontinst fontinst joystick privacy"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="The KDE Control Center"
