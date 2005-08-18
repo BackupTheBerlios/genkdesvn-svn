@@ -177,7 +177,9 @@ kde-source_src_unpack() {
 	do
 
 		ESCM_DEEPITEMS="${ESCM_DEEPITEMS} trunk/l10n/$lang/messages/${KSCM_TRANS_MODULE}"
-		ESCM_CHECKITEMS="${ESCM_CHECKITEMS} trunk/l10n/$lang/messages/${KSCM_TRANS_MODULE}"
+
+		# Disabled as the translation module is shared by more packages
+		#ESCM_CHECKITEMS="${ESCM_CHECKITEMS} trunk/l10n/$lang/messages/${KSCM_TRANS_MODULE}"
 
 	done
 
