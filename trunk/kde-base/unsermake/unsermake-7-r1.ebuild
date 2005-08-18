@@ -2,9 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KSCM_ROOT=trunk/kdenonbeta/
-ESCM_DEEPITEMS=$KSCM_ROOT$PN
-inherit python kde-source
+KSCM_ROOT=trunk/kdenonbeta
+inherit python kde-repo
 
 IUSE=""
 DESCRIPTION="Unsermake - Advanced KDE build system"
@@ -16,11 +15,6 @@ SLOT="0"
 DEPEND=">=dev-lang/python-2.2
 	!<kde-base/kdelibs-3.4"
 RDEPEND="$DEPEND"
-
-src_unpack()
-{
-	subversion_src_unpack
-}
 
 src_compile()
 {
