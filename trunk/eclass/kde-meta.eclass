@@ -481,9 +481,9 @@ function kde-meta_src_compile() {
 
 				# Clean makefile as this directory is exclusively used for
 				# compilation of config headers
-	            echo 'all:' > Makefile
-	            echo 'install:' >> Makefile
-	            echo '.PHONY: all' >> Makefile
+	            echo 'all:' > Makefile.am
+	            echo 'install:' >> Makefile.am
+	            echo '.PHONY: all' >> Makefile.am
 
 				# Return to original directory
 				popd >/dev/null
