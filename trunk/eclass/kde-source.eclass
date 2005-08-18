@@ -86,13 +86,13 @@ INHERITED="$INHERITED $ECLASS"
 #
 ###
 
-if [ -n ${KMNAME} ]
+if [ -n "${KMNAME}" ]
 then
 	if [ -n "${KMMODULE}" ]
 	then
-		KSCM_SUBDIR=${KMMODULE}
+		KSCM_SUBDIR="${KMMODULE}"
 	else
-		KSCM_SUBDIR=${PN}
+		KSCM_SUBDIR="${PN}"
 	fi
 fi
 
@@ -120,9 +120,9 @@ elif [ "${KDEBASE}" == "true" ]
 then
 
 	case ${PV} in
-		7) KSCM_ROOT=branches/KDE/3.5;;
-		8.0) KSCM_ROOT=branches/KDE/4.0;;
-		8.1) KSCM_ROOT=trunk/KDE;;
+		7) KSCM_ROOT="branches/KDE/3.5";;
+		8.0) KSCM_ROOT="branches/KDE/4.0";;
+		8.1) KSCM_ROOT="trunk/KDE";;
 	esac
 
 fi
