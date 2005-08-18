@@ -32,7 +32,7 @@ function srcdir() {
 
 function keepobj() {
 	debug-print-function $FUNCNAME $*
-	cur=`pwd`/
+	cur=`pwd`
 	rel="${cur##$S}"
 	pushd $(objdir)/${rel} >/dev/null
 	$*
@@ -42,7 +42,7 @@ function keepobj() {
 }
 
 function keepobj_enabled() {
-	if ( hasq keepobj ${FEATURES} )
+	if ( hasq keepobj ${FEATURES} ) && ( ! hasq keepobj ${RESTRICT} )
 	then
 		echo "yes"
 	fi
@@ -60,5 +60,7 @@ function keepobj_initialize() {
 	then
 		mkdir -p $(objdir)
 	fi
+	ewarn "Feature keepobj has been set, thus already compiled objects will be reused between merges"
+	ewarn "This should significantly speed up compilation, but also beware of problems"
 }
 
