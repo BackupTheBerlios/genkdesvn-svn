@@ -5,7 +5,6 @@
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-KSCM_L10N_PO="kicker appletproxy clockapplet extensionproxy naughtyapplet"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE panel housing varous applets"
