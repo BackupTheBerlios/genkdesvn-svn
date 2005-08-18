@@ -1,10 +1,12 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 KMMODULE=wizards
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+UNSERMAKE=no
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDEPIM wizards"
@@ -46,24 +48,10 @@ KMEXTRACTONLY="
 	knotes/
 	certmanager/lib/
 	kmail"
-KMCOMPILEONLY="kresources/slox
-		kresources/groupwise
-		kresources/egroupware
-		kresources/lib
-		libemailfunctions"
-
-src_compile() {
-	export DO_NOT_COMPILE="kresources" && kde-meta_src_compile myconf configure
-
-	# generate headers
-	cd ${S}/kresources/slox && make kabcsloxprefs.h
-	cd ${S}/kresources/slox && make kcalsloxprefs.h
-	cd ${S}/kresources/groupwise && make kabc_groupwiseprefs.h
-	cd ${S}/kresources/groupwise && make kcal_groupwiseprefsbase.h
-	cd ${S}/kresources/egroupware && make kcal_egroupwareprefs.h
-	cd ${S}/kresources/egroupware && make kabc_egroupwareprefs.h
-	cd ${S}/kresources/egroupware && make knotes_egroupwareprefs.h
-	cd ${S}/kresources/lib && make kresources_groupwareprefs.h
-
-	kde-meta_src_compile make
-}
+KMCOMPILEONLY="
+	libemailfunctions"
+KMCFGONLY="
+	kresources/slox
+	kresources/lib
+	kresources/egroupware
+	kresources/groupwise"
