@@ -5,7 +5,6 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=multimedia
 KSCM_SUBDIR=$PN
-KSCM_L10N_PO="\"*$PN*\""
 inherit kde eutils flag-o-matic kde-source
 
 DESCRIPTION="K3b, KDE CD Writing Software"
