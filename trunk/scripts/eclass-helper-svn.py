@@ -282,9 +282,9 @@ if __name__ == "__main__":
 	repository = values.repository
 	revdb_in = values.revdb_in and file(values.revdb_in, "r")
 	revdb_out = values.revdb_out and file(values.revdb_out, "w")
-	deep = values.deep
-	shallow=values.shallow
-	check = values.check
+	deep = [ deep.strip("/ ") for deep in values.deep ]
+	shallow = [ shallow.strip("/ ") for shallow in values.shallow ]
+	check = [ check.strip("/ ") for check in values.check ]
 	checkrevs = values.checkrevs
 	logonly = values.logonly
 	revisions = {}
