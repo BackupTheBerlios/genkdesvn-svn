@@ -56,9 +56,20 @@ function keepcache_enabled() {
 }
 
 function keepobj_initialize() {
-	if [ $(keepobj_enabled) ] && [ ! -d $(objdir) ]
+	if [ $(keepobj_enabled) ]
 	then
-		mkdir -p $(objdir)
+		if [ ! -d $(objdir) ]
+		then
+			mkdir -p $(objdir)
+		else
+			for item in ${KEEPOBJ_EXEMPT}
+			do
+				if [ -d "$(objdir)/${item}" ]
+				then
+					rm -rf "$(objdir)/${item}"
+				fi
+			done
+		fi
 	fi
 	ewarn "Feature keepobj has been set, thus already compiled objects will be reused between merges"
 	ewarn "This should significantly speed up compilation, but also beware of problems"
