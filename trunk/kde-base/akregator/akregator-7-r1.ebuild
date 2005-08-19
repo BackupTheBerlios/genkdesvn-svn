@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 MAXKDEVER=$PV
@@ -18,3 +19,4 @@ libkpinterfaces kontact/interfaces"
 KMEXTRACTONLY="libkdepim
 kontact/interfaces"
 KMEXTRA="kontact/plugins/akregator"
+KEEPOBJ_EXEMPT="kontact/plugins/akregator"
