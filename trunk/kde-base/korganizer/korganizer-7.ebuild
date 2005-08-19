@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 MAXKDEVER=$PV
@@ -40,21 +41,12 @@ KMEXTRACTONLY="
 	kontact/interfaces/
 	libkholidays"
 KMCOMPILEONLY="
-	libemailfunctions
-	kdgantt"
+	libemailfunctions"
 
 # They seems to be used only by korganizer
 KMEXTRA="
 	kgantt
 	kdgantt
 	kontact/plugins/korganizer/" # We add here the kontact's plugin instead of compiling it with kontact because it needs a lot of korganizer deps.
+KEEPOBJ_EXEMPT="kontact/plugins/korganizer"
 
-#src_compile() {
-#	export DO_NOT_COMPILE="kalarmd" && kde-meta_src_compile myconf configure
-#	# generate "alarmdaemoniface_stub.h"
-#	cd ${S}/kalarmd && make alarmdaemoniface_stub.h
-#	# generate "alarmguiiface_stub.h"
-#	cd ${S}/kalarmd && make alarmguiiface_stub.h
-#	
-#	kde-meta_src_compile make
-#}
