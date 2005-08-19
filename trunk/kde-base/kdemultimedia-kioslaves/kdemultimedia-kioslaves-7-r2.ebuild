@@ -21,7 +21,8 @@ RDEPEND="${DEPEND}
 
 KMCOPYLIB="libkcddb libkcddb"
 KMEXTRACTONLY="akode/configure.in.in"
-KMCOMPILEONLY="libkcddb/ kscd/"
+KMCOMPILEONLY="kscd/"
+KMCFGONLY="libkcddb/"
 
 src_compile() {
 	myconf="--with-cdparanoia --enable-cdparanoia"
@@ -31,7 +32,5 @@ src_compile() {
 		myconf="$myconf --without-vorbis --without-flac"
 	fi
 
-	DO_NOT_COMPILE=libkcddb kde-meta_src_compile myconf configure
-	cd $S/libkcddb && keepobj make configbase.h
-	DO_NOT_COMPILE=libkcddb kde-meta_src_compile make
+	kde-meta_src_compile
 }
