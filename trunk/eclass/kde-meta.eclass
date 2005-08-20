@@ -500,7 +500,7 @@ function kde-meta_src_compile() {
 				# Transform all .ui files in it into .h files
 				for ui in *.ui
 				do
-					uic $ui -o "`basename $ui .ui`.h" || die
+					${QTDIR}/bin/uic $ui -o "`basename $ui .ui`.h" || die
 					debug-print "Generated ui header `pwd`/$ui"
 				done
 
