@@ -639,7 +639,7 @@ if __name__ == "__main__":
 
 	skipped_packages = [package for package in packages if package.isprocessed and package.isskipped]
 	uptodate_packages = [package for package in packages if package.isprocessed and package.isuptodate]
-	completed_packages = [package for package in packages if package.isprocessed and package.issuccessful]
+	completed_packages = [package for package in packages if package.isprocessed and package.issuccessful and not package.isuptodate]
 	failed_packages = [package for package in packages if package.isprocessed and not package.ismeta and not package.issuccessful and not package.isskipped]
 	
 	def metaout(meta):
