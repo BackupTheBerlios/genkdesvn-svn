@@ -81,6 +81,10 @@ function subversion_src_fetch() {
 	ARGUMENTS="$ARGUMENTS --repository=${ESVN_REPO_URI}"
 	ARGUMENTS="$ARGUMENTS --work-base=${ESVN_STORE_DIR}/${ESVN_PROJECT}"
 	ARGUMENTS="$ARGUMENTS --revdb-out=${T}/SVNREVS"
+	if [ "$ESVN_OFFLINE" ]
+	then
+		ARGUMENTS="$ARGUMENTS --offline"
+	fi
 	REVDB_IN="${ROOT}/var/db/pkg/${CATEGORY}/${PF}/SVNREVS"
 	if [ -f $REVDB_IN ]; then
 		ARGUMENTS="$ARGUMENTS --revdb-in=$REVDB_IN"
