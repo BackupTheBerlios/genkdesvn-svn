@@ -44,15 +44,16 @@ KMEXTRA="
 	kabc/
 	kfile-plugins/vcf
 	kontact/plugins/kaddressbook"
+KEEPOBJ_EXEMPT="kontact/plugins/kaddressbook"
 
 PATCHES="$FILESDIR/icaltimezone.c.diff"
 
 src_compile() {
-	export DO_NOT_COMPILE="libical" && kde-meta_src_compile myconf configure
+	export DO_NOT_COMPILE="libkcal" && kde-meta_src_compile myconf configure
 	# generate "ical.h"
-	cd ${S}/libical/src/libical && make ical.h
+	cd ${S}/libkcal/libical/src/libical && keepobj && make ical.h
 	# generate "icalss.h"
-	cd ${S}/libical/src/libicalss && make icalss.h
+	cd ${S}/libkcal/libical/src/libicalss && keepobj make icalss.h
 
 	kde-meta_src_compile "make"
 }
