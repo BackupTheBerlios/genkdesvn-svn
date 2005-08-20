@@ -21,6 +21,6 @@ RDEPEND="$DEPEND
               mp3? ( media-sound/lame ) )"
 
 KMCOPYLIB="libkcddb libkcddb"
-KMCOMPILEONLY="kscd/libwm"
+KMCOMPILEONLY="kscd"
 KMCFGONLY="libkcddb"
 KMUIONLY="libkcddb"
