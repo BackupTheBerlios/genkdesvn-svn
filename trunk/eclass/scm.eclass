@@ -22,7 +22,7 @@ function scm_deep_copy() {
 	local src="$2"
 	local dest="$3"
 
-	einfo "Copying $item to $dest"
+	#einfo "Copying $item to $dest"
 	debug-print "$FUNCNAME: Deep-copying $item from $src to $dest"
 	pushd $src >/dev/null
 	debug-print `cp -Rfp --parents "$item" "$dest" 2>&1`
@@ -42,7 +42,7 @@ function scm_shallow_copy() {
 	local src="$2"
 	local dest="$3"
 	
-	einfo "Copying $item to $dest"
+	#einfo "Copying $item to $dest"
 	debug-print "$FUNCNAME: Shallow-copying $item from $src to $dest"
 	pushd $src >/dev/null
 	debug-print `cp -fp --parents "$item"/* "$dest" 2>&1`
@@ -63,6 +63,8 @@ function src_to_workdir() {
 	local shallow_copy=scm_shallow_copy
 
 	[ -n $2 ] && deep_copy=$2
+
+	einfo "Copying files over ..."
 
 	for item in $ESCM_SHALLOWITEMS
 	do
