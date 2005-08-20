@@ -48,7 +48,8 @@ class item_info:
 		self.wc = self.handler.base + "/" + self.item
 		self.tags = {}
 		self.update(False)
-		self.update(True)
+		if not self.handler.offline:
+			self.update(True)
 	
 	def info(self, item, local=False):
 		tags = {}
@@ -77,22 +78,32 @@ class item_info:
 		return (not self.existsP(False)) or (self.existsP(True) and self.revision(False) != self.revision(True))
 
 	# Determine type of module (file, directory or missing)
-	def type(self, remote=True):
+	def type(self, remote=None):
+		if remote == None:
+			remote = not self.handler.offline
 		return self.tags[remote]["Node Kind"]
 		
 	# Determine if module is a file
-	def fileP(self, remote=True):
+	def fileP(self, remote=None):
+		if remote == None:
+			remote = not self.handler.offline
 		return self.type(remote) == "file"
 
 	# Determine if module is a directory
-	def directoryP(self, remote=True):
+	def directoryP(self, remote=None):
+		if remote == None:
+			remote = not self.handler.offline
 		return self.type(remote) == "directory"
 
 	# Determine if module exists
-	def existsP(self, remote=True):
+	def existsP(self, remote=None):
+		if remote == None:
+			remote = not self.handler.offline
 		return not self.type(remote) == "nonexistent"
 
-	def revision(self, remote=True):
+	def revision(self, remote=None):
+		if remote == None:
+			remote = not self.handler.offline
 		for tag in "Last Changed Rev", "Revision":
 			if tag in self.tags[remote]:
 				return self.tags[remote][tag]
@@ -144,9 +155,10 @@ class item_info:
 
 class subversion_handler:
 
-	def __init__(self, repository, path):
+	def __init__(self, repository, path, offline):
 		self.repository = repository
 		self.path = path
+		self.offline = offline
 		self.infos = {}
 		self.base = repository[repository.rfind("/")+1:]
 		chdir(path)
@@ -195,10 +207,11 @@ class subversion_handler:
 		self.perform(command)
 
 	def update(self, module="", recurse=False, ignore_externals=False):
-		url=(self.base + "/" + module).rstrip("/ ")
-		einfo("Updating working copy of " + url + {True:" recursively"}.get(recurse, ""))
-		command="svn update --ignore-externals " + {False:"-N "}.get(recurse, "") + url
-		self.perform(command)
+		if not self.offline:
+			url=(self.base + "/" + module).rstrip("/ ")
+			einfo("Updating working copy of " + url + {True:" recursively"}.get(recurse, ""))
+			command="svn update --ignore-externals " + {False:"-N "}.get(recurse, "") + url
+			self.perform(command)
 	  
 	def info(self, item=""):
 		if item in self.infos:
@@ -276,6 +289,7 @@ if __name__ == "__main__":
 	parser.add_option("--check", action="append", type="string", dest="check", default=[], help="item to be checked for revision changes")
 	parser.add_option("--logonly", action="store_true", dest="logonly", help="")
 	parser.add_option("--checkrevs", action="store_true", dest="checkrevs", help="")
+	parser.add_option("--offline", action="store_true", dest="offline", help="specify if operation is to be in offline mode")
 	(values, args) = parser.parse_args()
 
 	work_base = values.work_base
@@ -292,12 +306,11 @@ if __name__ == "__main__":
 	base_module=repository[repository.rfind("/")+1:]
 	working_copy=work_base + "/" + base_module
 
-	einfo("Synchronizing with repository at " + repository)
 	if not isdir(work_base):
 		einfo("Creating local repository for working copies in " + work_base)
 		mkdir(work_base)
 	
-	subversion = subversion_handler(repository, work_base)
+	subversion = subversion_handler(repository, work_base, values.offline)
 
 	# Extract revisions from input revision database of item:revision pairs
 	if revdb_in:
@@ -308,7 +321,7 @@ if __name__ == "__main__":
 
 	if checkrevs and len(check) > 0:
 		for item in check:
-			einfo("Inspecting revision of " + item)
+			einfo({True:"(offline) ", False:""}[values.offline] + "Comparing installed vs. latest revision of " + item)
 			info = subversion.info(item)
 			# If repository claims item as directory, compare its revision to revision provided
 			if info.directoryP():
@@ -322,7 +335,7 @@ if __name__ == "__main__":
 			# If repository claims item as file, compare its topdir's revision to revision provided for topdir
 			elif info.fileP():
 				topdir = dirname(item)
-				einfo("Inspecting revision of " + topdir)
+				einfo({True:"(offline) ", False:""}[values.offline] + "Comparing installed vs. latest revision of " + topdir)
 				topdir_info = subversion.info(topdir)
 				if topdir not in revisions:
 					break
@@ -339,15 +352,18 @@ if __name__ == "__main__":
 			if logonly:
 				sys.exit(17)
 			else:
+				einfo("Revisions have NOT changed")
 				sys.exit(16)
+		einfo("Revisions have changed")
 	if logonly:
 		sys.exit(17)
 		
-	if isdir(working_copy + "/.svn"):
-		if subversion.info().modifiedP():
-			subversion.update()
-	else:
-		subversion.checkout()
+	if not values.offline:
+		if isdir(working_copy + "/.svn"):
+			if subversion.info().modifiedP():
+				subversion.update()
+		else:
+			subversion.checkout()
 
 	ancestries=[]
 	for item in deep:
@@ -356,4 +372,7 @@ if __name__ == "__main__":
 		ancestree(ancestries, ancestors(item, False))
 
 	#print_ancestries(ancestries)
+	if not values.offline:
+		einfo("Synchronizing with repository at " + repository)
+
 	update_modules(ancestries, revdb_out)

@@ -514,9 +514,7 @@ def update(package):
 			upfile = "/tmp/.svn.uptodate." + cat + "." + p
 			if path.isfile(upfile):
 				remove(upfile)
-			environ = os.environ.copy()
-			environ["ESVN_RUN_ARGS"] = "--checkrevs"
-			code = os.spawnlpe(os.P_WAIT, "emerge", "-d1", "=" + package.fullname, environ)
+			code = os.spawnlpe(os.P_WAIT, "emerge", "-1", "=" + package.fullname, environ)
 			package.isprocessed = True
 			package.issuccessful = code == 0 or path.isfile(upfile)
 			package.isuptodate = code == 1 and path.isfile(upfile)
@@ -594,7 +592,7 @@ if __name__ == "__main__":
 	parser = OptionParser()
 	#parser.add_option("-l", "--changelog", action="store_true", dest="changelog", help="display changelogs since last merge")
 	parser.add_option("-p", "--pretend", action="store_true", dest="pretend")
-	#parser.add_option("--offline", action="store_true", dest="offline", help="operate in offline mode")
+	parser.add_option("--offline", action="store_true", dest="offline", help="operate in offline mode")
 	#parser.add_option("--noupdate", action="store_true", dest="noupdate", help="check items out only when they are missing; operate in offline mode otherwise")
 	parser.add_option("--resume", action="store_true", dest="resume", help="resumes interrupted session")
 	parser.add_option("--skipfirst", action="store_true", dest="skipfirst", help="skips first package, useful for resume")
@@ -633,6 +631,8 @@ if __name__ == "__main__":
 			package.isskipped = True
 			skip -= 1
 		
+	environ = os.environ.copy()
+	environ["ESVN_RUN_ARGS"] = "--checkrevs" + {True:" --offline", False:""}[values.offline]
 	signal_handler.packages = packages
 	for package in packages:
 		handler(package)
@@ -641,28 +641,30 @@ if __name__ == "__main__":
 	uptodate_packages = [package for package in packages if package.isprocessed and package.isuptodate]
 	completed_packages = [package for package in packages if package.isprocessed and package.issuccessful]
 	failed_packages = [package for package in packages if package.isprocessed and not package.ismeta and not package.issuccessful and not package.isskipped]
+	
+	def metaout(meta):
+		if not meta == None:
+			return output.blue("(" + meta + ")\t")
+		else:
+			return "\t\t"
 
 	if len(completed_packages) > 0:
 		print output.green("******Completed******: ")
 		for package in completed_packages:
-			print "\t" + output.blue("(" + package.meta + ")\t" + output.green(package.fullname)
-	)
+			print "\t" + metaout(package.meta) + output.green(package.fullname)
 			
 	if len(uptodate_packages) > 0:
 		print output.green("******Up to date******: ")
 		for package in uptodate_packages:
-			print "\t" + output.blue("(" + package.meta + ")\t" + output.green(package.fullname)
-	)
+			print "\t" + metaout(package.meta) + output.green(package.fullname)
 	
 	if len(skipped_packages) > 0:
 		print output.yellow("******Skipped******: ")
 		for package in skipped_packages:
-			print "\t" + output.blue("(" + package.meta + ")\t" + output.yellow(package.fullname)
-	)
+			print "\t" + metaout(package.meta) + output.yellow(package.fullname)
 	
 	if len(failed_packages) > 0:
 		print output.yellow("******Failed******: ")
 		for package in failed_packages:
-			print "\t" + output.blue("(" + package.meta + ")\t" + output.red(package.fullname)
-	)
+			print "\t" + metaout(package.meta) + output.red(package.fullname)
 	
