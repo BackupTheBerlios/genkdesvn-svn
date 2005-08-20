@@ -464,6 +464,25 @@ function kde-meta_src_compile() {
 			# If in make section, create necessary headers to satisfy
 			# interdependencies before actually making.
 
+			for dir in $KMUIONLYFULLPATH
+			do
+				
+				# Go to indicated directory
+				pushd $dir >/dev/null
+				debug-print "Generating config headers in `pwd`"
+
+				# Transform all .ui files in it into .h files
+				for ui in *.ui
+				do
+					keepobj $(emake_cmd) "$(basename $ui .ui).h" || die
+					debug-print "Generated ui header `pwd`/$ui"
+				done
+
+				# Return to original directory
+				popd >/dev/null
+
+			done
+
 			# For every dir listed in $KMCFGONLY
 			for dir in $KMCFGONLYFULLPATH
 			do
@@ -479,36 +498,22 @@ function kde-meta_src_compile() {
 					debug-print "Generated config header `pwd`/$kcfgc"
 				done
 
+				# Return to original directory
+				popd >/dev/null
+
+			done
+
+			for dir in $KMCFGONLYFULLPATH $KMUIONLYFULLPATH
+			do
+
 				# Clean makefile as this directory is exclusively used for
 				# compilation of config headers
-	            echo 'all:' > Makefile.am
-	            echo 'install:' >> Makefile.am
-	            echo '.PHONY: all' >> Makefile.am
-
-				# Return to original directory
-				popd >/dev/null
+	            echo 'all:' > $dir/Makefile.am
+	            echo 'install:' >> $dir/Makefile.am
+	            echo '.PHONY: all' >> $dir/Makefile.am
 
 			done
 
-			for dir in $KMUIONLYFULLPATH
-			do
-				
-				# Go to indicated directory
-				pushd $dir >/dev/null
-				debug-print "Generating config headers in `pwd`"
-
-				# Transform all .ui files in it into .h files
-				for ui in *.ui
-				do
-					${QTDIR}/bin/uic $ui -o "`basename $ui .ui`.h" || die
-					debug-print "Generated ui header `pwd`/$ui"
-				done
-
-				# Return to original directory
-				popd >/dev/null
-
-			done
-			
 			# Make in compile-only directories in order
 			for dir in $KMCOMPILEONLYFULLPATH
 			do
