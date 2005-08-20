@@ -55,4 +55,4 @@ KMEXTRA="
 	plugins/kmail/
 	kontact/plugins/kmail/" # We add here the kontact's plugin instead of compiling it with kontact because it needs a lot of this programs deps.
 
-KEEPOBJ_EXEMPT="plugins/kmail/bodypartformatter"
+KEEPOBJ_EXEMPT="plugins/kmail/"
