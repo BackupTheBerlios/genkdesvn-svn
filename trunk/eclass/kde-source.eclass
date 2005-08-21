@@ -204,7 +204,7 @@ kde-source_src_unpack() {
 
 		if [ -z "${KSCM_SUBDIR}" ]
 		then
-			translations="${translations} $(collect_translations ${S})"
+			translations="${translations} $(for po in ${srcdir}/*.po; do basename $po .po; done)"
 		else
 			[ ! ${KMNOMODULE} ] && translations="$translations $(collect_translations ${S}/${KSCM_SUBDIR})"
 
