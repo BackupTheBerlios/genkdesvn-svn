@@ -321,7 +321,7 @@ if __name__ == "__main__":
 
 	if checkrevs and len(check) > 0:
 		for item in check:
-			einfo({True:"(offline) ", False:""}[values.offline] + "Comparing installed vs. latest revision of " + item)
+			einfo({True:"(offline) "}.get(values.offline, "") + "Comparing installed vs. latest revision of " + item)
 			info = subversion.info(item)
 			# If repository claims item as directory, compare its revision to revision provided
 			if info.directoryP():
@@ -335,7 +335,7 @@ if __name__ == "__main__":
 			# If repository claims item as file, compare its topdir's revision to revision provided for topdir
 			elif info.fileP():
 				topdir = dirname(item)
-				einfo({True:"(offline) ", False:""}[values.offline] + "Comparing installed vs. latest revision of " + topdir)
+				einfo({True:"(offline) "}.get(values.offline, "") + "Comparing installed vs. latest revision of " + topdir)
 				topdir_info = subversion.info(topdir)
 				if topdir not in revisions:
 					break
@@ -371,8 +371,8 @@ if __name__ == "__main__":
 	for item in shallow:
 		ancestree(ancestries, ancestors(item, False))
 
-	#print_ancestries(ancestries)
 	if not values.offline:
 		einfo("Synchronizing with repository at " + repository)
 
+	#print_ancestries(ancestries)
 	update_modules(ancestries, revdb_out)
