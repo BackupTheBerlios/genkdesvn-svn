@@ -168,7 +168,7 @@ kde-source_src_unpack() {
 	if [ -z "${KSCM_TRANS_MODULE}" ]
 	then
 
-		[ "${KSCM_ROOT}" == "extragear" ] && KSCM_TRANS_MODULE=extragear-${KSCM_MODULE} || KSCM_TRANS_MODULE=${KSCM_MODULE}
+		[ "${KSCM_ROOT}" == "trunk/extragear" ] && KSCM_TRANS_MODULE="extragear-${KSCM_MODULE}" || KSCM_TRANS_MODULE="${KSCM_MODULE}"
 
 	fi
 
