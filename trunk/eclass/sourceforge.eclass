@@ -28,9 +28,6 @@ ECVS_SERVER="$ESF_SERVER:/cvsroot/$ESF_MODULE"
 # 
 S=$WORKDIR/$ESF_SUBDIR
 
-# Set homepage to project page on sourceforge
-HOMEPAGE="http://$ESF_MODULE.sourceforge.net"
-
 inherit cvs
 
 function sourceforge_src_unpack() {

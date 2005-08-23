@@ -7,7 +7,7 @@
 # Purpose: Provide common functionality for applications residing in SourceForge CVS
 #
 
-inherit kde sourceforge
+inherit eutils kde sourceforge
 
 ECLASS="kde-sourceforge"
 INHERITED="$INHERITED $ECLASS"
@@ -28,11 +28,34 @@ function kde-sourceforge_src_unpack() {
 	# Prepare to unpack custom admin tarball
 	cd ${S}
 
+	if [ -d "po" ]
+	then
+		strip-linguas -u "po"
+		cd po
+		for po in *.po
+		do
+			lingua="$(basename ${po} .po)"
+			if ( ! hasq "${lingua}" ${LINGUAS} )
+			then
+				debug-print "${FUNCNAME}: removing translations for lingua ${lingua}"
+				rm -f "${lingua}".*
+			fi
+		done
+		cd ${OLDPWD}
+	fi
+
 	# If admin already exists, replace it, it is most likely stale
 	if [ -d "admin" ]
 	then
 		debug-print "${FUNCNAME}: removing old admin directory"
 		rm -rf "admin"
+	fi
+
+	# If configure script exists, remove it so it is regenerated
+	if [ -f "configure" ]
+	then
+		debug-print "${FUNCNAME}: removing old configure script"
+		rm -f "configure"
 	fi
 
 	# Unpack new admin tarball
