@@ -70,8 +70,8 @@ function keepobj_initialize() {
 				fi
 			done
 		fi
+		ewarn "Feature keepobj has been set, thus already compiled objects will be reused between merges"
+		ewarn "This should significantly speed up compilation, but also beware of problems"
 	fi
-	ewarn "Feature keepobj has been set, thus already compiled objects will be reused between merges"
-	ewarn "This should significantly speed up compilation, but also beware of problems"
 }
 
