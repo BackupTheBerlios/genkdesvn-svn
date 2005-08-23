@@ -15,6 +15,11 @@ IUSE=""
 DEPEND=">=net-p2p/gift-0.11.4"
 need-kde 3
 
+src_unpack() {
+	kde-sourceforge_src_unpack
+	cp -f ${S}/admin.old/acinclude.m4.in ${S}/admin
+}
+
 src_install() {
 	einstall || die
 	dodoc AUTHORS ChangeLog HowToGetPlugins.README README TODO || die
