@@ -28,9 +28,9 @@ function kde-sourceforge_src_unpack() {
 	# Prepare to unpack custom admin tarball
 	cd ${S}
 
-	if [ -d "po" ]
+	if [ -d po ]
 	then
-		strip-linguas -u "po"
+		strip-linguas -u po
 		cd po
 		for po in *.po
 		do
@@ -45,17 +45,17 @@ function kde-sourceforge_src_unpack() {
 	fi
 
 	# If admin already exists, replace it, it is most likely stale
-	if [ -d "admin" ]
+	if [ -d admin ]
 	then
-		debug-print "${FUNCNAME}: removing old admin directory"
-		rm -rf "admin"
+		debug-print "${FUNCNAME}: removing old admin directory into admin.old"
+		mv -f admin admin.old
 	fi
 
 	# If configure script exists, remove it so it is regenerated
-	if [ -f "configure" ]
+	if [ -f configure ]
 	then
 		debug-print "${FUNCNAME}: removing old configure script"
-		rm -f "configure"
+		rm -f configure
 	fi
 
 	# Unpack new admin tarball
