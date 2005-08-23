@@ -35,6 +35,7 @@ function keepobj() {
 	cur=`pwd`
 	rel="${cur##$S}"
 	pushd $(objdir)/${rel} >/dev/null
+	debug-print "$FUNCNAME: Executing in $PWD"
 	$*
 	retcode=$?
 	popd >/dev/null
