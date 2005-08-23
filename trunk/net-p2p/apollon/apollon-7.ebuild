@@ -19,4 +19,3 @@ src_install() {
 	einstall || die
 	dodoc AUTHORS ChangeLog HowToGetPlugins.README README TODO || die
 }
-
