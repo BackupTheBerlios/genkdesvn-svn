@@ -21,6 +21,6 @@ src_unpack() {
 }
 
 src_install() {
-	einstall || die
+	keepobj einstall || die
 	dodoc AUTHORS ChangeLog HowToGetPlugins.README README TODO || die
 }
