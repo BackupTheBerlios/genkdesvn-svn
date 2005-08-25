@@ -5,6 +5,7 @@
 KMNAME=kdepim
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+KMNODOCS="true"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE kcal library for korganizer etc"
