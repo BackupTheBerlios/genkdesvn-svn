@@ -47,6 +47,8 @@ pkg_setup() {
 		eerror "but sys-apps/dbus is not built with Qt support."
 		die
 	fi
+
+	kde-source_pkg_setup
 }
 
 src_compile() {
@@ -68,7 +70,7 @@ src_compile() {
 }
 
 src_install() {
-	$(make_cmd) DESTDIR=${D} install || die
+	make DESTDIR=${D} install || die
 
 	dodoc AUTHORS ChangeLog COPYING FAQ INSTALL KNOWNBUGS PERMISSIONS README TODO
 
