@@ -1,6 +1,4 @@
-MD5 fb055910994fb81eaabc0fc1fab4b53b libkpimexchange-7-r1.ebuild 885
-MD5 fb055910994fb81eaabc0fc1fab4b53b libkpimexchange-7.ebuild 885
+MD5 451eb89a94a83f99361aa64286f07840 libkpimexchange-7-r1.ebuild 914
 MD5 78ba80225f6cd1aa7b15b308ca3cd49d ChangeLog 362
 MD5 e6ffd3c360ff1f1f56a8e0504264ed21 files/icaltimezone.c.diff 505
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-libkpimexchange-7 0
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-libkpimexchange-7-r1 0
