@@ -42,6 +42,7 @@ KMEXTRACTONLY="
 KMCOMPILEONLY="filters/liboofilter"
 
 KMUIONLY="lib/kotext"
+KMCFGONLY="lib/kotext"
 
 KMEXTRA="filters/kword"
 
