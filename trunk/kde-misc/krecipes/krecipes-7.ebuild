@@ -28,6 +28,7 @@ pkg_setup() {
 		eerror please try again with USE=\"sqlite\", USE=\"mysql\" or USE=\"postgres\".
 		die
 	fi
+	kde-source_pkg_setup
 }
 
 src_compile() {
