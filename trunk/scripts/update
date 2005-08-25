@@ -594,9 +594,10 @@ if __name__ == "__main__":
 	parser.add_option("-p", "--pretend", action="store_true", dest="pretend")
 	parser.add_option("--offline", action="store_true", dest="offline", help="operate in offline mode")
 	#parser.add_option("--noupdate", action="store_true", dest="noupdate", help="check items out only when they are missing; operate in offline mode otherwise")
-	parser.add_option("--resume", action="store_true", dest="resume", help="resumes interrupted session")
-	parser.add_option("--skipfirst", action="store_true", dest="skipfirst", help="skips first package, useful for resume")
-	parser.add_option("--skip", action="store", type="int", dest="skip", help="skips package, useful for resume")
+	parser.add_option("--resume", action="store_true", dest="resume", help="resume interrupted session")
+	parser.add_option("--skipfirst", action="store_true", dest="skipfirst", help="skip first package, useful for resume")
+	parser.add_option("--skip", action="store", type="int", dest="skip", help="skip package, useful for resume")
+	parser.add_option("--reinstall", action="store_true", dest="reinstall", help="reinstall indicated packages, even if no updates are detected")
 	(values, args) = parser.parse_args()
 
 	# If no package names listed, use all
@@ -632,7 +633,7 @@ if __name__ == "__main__":
 			skip -= 1
 		
 	environ = os.environ.copy()
-	environ["ESVN_RUN_ARGS"] = "--checkrevs" + {True:" --offline"}.get(values.offline, "")
+	environ["ESVN_RUN_ARGS"] = {False:"--checkrevs"}.get(values.reinstall, "") + {True:" --offline"}.get(values.offline, "")
 	signal_handler.packages = packages
 	for package in packages:
 		handler(package)
