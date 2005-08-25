@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdemultimedia
 KMMODULE=mpeglib_artsplug
@@ -20,4 +21,5 @@ pkg_setup() {
 		eerror "${PN} needs the USE=\"arts\" enabled and also the kdelibs compiled with the USE=\"arts\" enabled"
 		die
 	fi
+	kde-source_pkg_setup
 }
