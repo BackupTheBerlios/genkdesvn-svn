@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdeutils
 MAXKDEVER=$PV
@@ -17,4 +18,5 @@ pkg_setup() {
 		eerror "You need to recompile kdelibs with the libksmartcard support!"
 		die
 	fi
+	kde-source_pkg_setup
 }
