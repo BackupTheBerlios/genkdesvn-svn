@@ -906,7 +906,7 @@ kde_remove_flag() {
 
 	debug-print-function $FUNCNAME $*
 
-	if [ -z "${objdir}" ] && objdir=${S}
+	[ -z "${objdir}" ] && objdir=${S}
 	cd ${objdir}/${1} || die
 	[ -n "$2" ] || die
 
