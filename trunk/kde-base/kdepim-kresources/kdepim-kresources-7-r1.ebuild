@@ -6,6 +6,7 @@ KMNAME=kdepim
 KMMODULE=kresources
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+KMNODOC=true
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE PIM groupware plugin collection"
@@ -40,14 +41,3 @@ KMCOMPILEONLY="
     kaddressbook/common/
     "	
 PATCHES="$FILESDIR/use-installed-kode.diff  $FILESDIR/icaltimezone.c.diff"
-
-src_compile() {
-	export DO_NOT_COMPILE="knotes"
-
-	kde-meta_src_compile myconf configure
-
-	cd $(objdir)/knotes/; $(make_cmd) libknotesresources.la
-
-	kde-meta_src_compile make
-}
-
