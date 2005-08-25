@@ -7,7 +7,7 @@ inherit kde sourceforge
 
 DESCRIPTION="kradio is a radio tuner application for KDE"
 HOMEPAGE="http://kradio.sourceforge.net/"
-#SRC_URI="http://download.berlios.de/genkdesvn/admin.tar.bz2"
+SRC_URI="http://download.berlios.de/genkdesvn/kradio-skel.tar.bz2"
 
 SLOT="0"
 LICENSE="GPL-2"
@@ -22,17 +22,12 @@ RDEPEND="lirc? ( app-misc/lirc )
 
 need-kde 3.2
 
+S="${WORKDIR}/${PN}"
+
 src_unpack() {
-	cvs_src_unpack
-	cd $WORKDIR
 	unpack $A
-	ln -s $WORKDIR/admin $S/admin
-	# Visiblity stuff is way broken! Just disable it when it's present
-	# until upstream finds a way to have it working right.
-	if grep KDE_ENABLE_HIDDEN_VISIBILITY configure.in &> /dev/null || ! [[ -f configure ]]; then
-	find ${S} -name configure.in.in | xargs sed -i -e 's:KDE_ENABLE_HIDDEN_VISIBILITY:echo Disabling hidden visibility:g'
-		rm -f configure
-	fi
+	cvs_src_unpack
+	mv ${WORKDIR}/${ESF_SUBDIR} ${S}/
 }
 
 src_compile() {
@@ -49,9 +44,5 @@ src_compile() {
 			-i configure.in.in
 	fi
 	myconf="$myconf $(use_with arts)"
-	_UNSERMAKEOPTS="$UNSERMAKEOPTS"
-	UNSERMAKEOPTS="$UNSERMAKEOPTS -k"
-	kde_src_compile
-	UNSERMAKEOPTS="$_UNSERMAKEOPTS"
 	kde_src_compile
 }
