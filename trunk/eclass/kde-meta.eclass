@@ -250,31 +250,6 @@ function change_makefiles() {
 			echo "SUBDIRS=$dirlist" > Makefile.am
 		fi
 	fi
-	
-	# Fix broken include to avoid manual patches to each kdepim package
-#	if [ "$KMNAME" == "kdepim" ] && [ -f Makefile.am ]; then
-#		cat << EOF > edit.awk 
-#BEGIN {
-#	FS="=";
-#	SETFLAG="false";
-#	FLAG="-I\$(top_builddir)/libkdepim \$(all_includes) "
-#}
-#\$1 == "AM_CPPFLAGS " {
-#	print"AM_CPPFLAGS = " FLAG \$2; 
-#	SETFLAG = "true"
-#}
-#\$1 != "AM_CPPFLAGS " { 
-#	print \$0
-#} 
-#END { 
-#	if ( SETFLAG == "false" ) print "AM_CPPFLAGS = " FLAG
-#}
-#EOF
-#		awk -f edit.awk Makefile.am > Makefile.am.out
-#		mv Makefile.am.out Makefile.am
-#		rm edit.awk
-#	fi
-
 }
 
 function set_common_variables() {
