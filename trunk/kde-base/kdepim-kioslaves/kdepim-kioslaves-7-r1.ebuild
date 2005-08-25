@@ -1,10 +1,11 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 KMMODULE=kioslaves
-
 MAXKDEVER=$PV
+KMNODOCS="true"
 KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
 
