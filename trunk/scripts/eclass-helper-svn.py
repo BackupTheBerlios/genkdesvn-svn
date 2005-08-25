@@ -359,6 +359,7 @@ if __name__ == "__main__":
 		sys.exit(17)
 		
 	if not values.offline:
+		einfo("Synchronizing with repository at " + repository)
 		if isdir(working_copy + "/.svn"):
 			if subversion.info().modifiedP():
 				subversion.update()
@@ -370,9 +371,6 @@ if __name__ == "__main__":
 		ancestree(ancestries, ancestors(item, True))
 	for item in shallow:
 		ancestree(ancestries, ancestors(item, False))
-
-	if not values.offline:
-		einfo("Synchronizing with repository at " + repository)
 
 	#print_ancestries(ancestries)
 	update_modules(ancestries, revdb_out)
