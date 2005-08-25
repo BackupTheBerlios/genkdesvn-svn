@@ -906,7 +906,8 @@ kde_remove_flag() {
 
 	debug-print-function $FUNCNAME $*
 
-	cd $(objdir)/${1} || die
+	if [ -z "${objdir}" ] && objdir=${S}
+	cd ${objdir}/${1} || die
 	[ -n "$2" ] || die
 
 	cp Makefile Makefile.orig
