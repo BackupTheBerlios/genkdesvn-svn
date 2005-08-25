@@ -36,6 +36,5 @@ KMEXTRACTONLY="lib/
 	interfaces/"
 
 KMEXTRA="filters/kchart"
-KEEPOBJ_EXEMPT="filters/kchart"
 
 need-kde 3.1
