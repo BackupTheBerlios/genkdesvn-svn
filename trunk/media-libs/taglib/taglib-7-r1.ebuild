@@ -5,7 +5,7 @@
 KSCM_ROOT=trunk
 KSCM_MODULE=kdesupport
 KSCM_SUBDIR=${PN}
-inherit kde-source unsermake
+inherit kde-source
 
 DESCRIPTION="A library for reading and editing audio meta data"
 HOMEPAGE="http://developer.kde.org/~wheeler/taglib.html"
@@ -18,12 +18,12 @@ IUSE="debug"
 DEPEND="sys-libs/zlib"
 
 src_compile() {
-	$(automake_cmd) Makefile.cvs || die
+	make -f Makefile.cvs || die
 	econf $(use_enable debug) || die
-	$(emake_cmd) || die
+	emake || die
 }
 
 src_install() {
-	$(make_cmd) DESTDIR=${D} install || die
-	dodoc AUTHORS ChangeLog README TODO
+	make DESTDIR=${D} install || die
+	dodoc AUTHORS ChangeLog README
 }
