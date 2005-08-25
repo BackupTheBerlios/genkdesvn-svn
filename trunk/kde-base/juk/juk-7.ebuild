@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdemultimedia
 MAXKDEVER=$PV
@@ -32,4 +33,5 @@ pkg_setup() {
 		eerror "${PN} needs USE=\"arts\" (and kdelibs compiled with USE=\"arts\") or USE=\"gstreamer\""
 		die
 	fi
+	kde-source_pkg_setup
 }
