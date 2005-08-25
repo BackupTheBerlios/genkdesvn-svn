@@ -529,7 +529,7 @@ function kde-meta_src_compile() {
 
 			done
 
-			for dir in $(sort_subdirs ${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS})
+			for dir in $(sort_subdirs ${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS} po)
 			do
 				einfo "Making ${dir}"
 				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"

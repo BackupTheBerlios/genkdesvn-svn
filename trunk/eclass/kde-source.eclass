@@ -223,6 +223,10 @@ function kde-source_src_unpack {
 	# in case meta ebuilds are in use
 	[ -n "$KMNAME" ] && symlinks && kde-meta_src_unpack makefiles
 
+	# Set up translations directory, even if no translations are to be used
+	mkdir -p "${S}/po"
+	echo "SUBDIRS = \$(AUTODIRS)" > "${S}/po/Makefile.am"
+
 	# For every language, copy the necessary translations for compilation
 	for lang in ${LINGUAS}
 	do
@@ -275,9 +279,6 @@ function kde-source_src_unpack {
 		fi
 
 	done
-
-	# Set up translations makefile, if necessary
-	[ -d "${S}/po" ] && echo "SUBDIRS = \$(AUTODIRS)" > "${S}/po/Makefile.am"
 	
 	# Return to source directory for ebuilds with extended src_unpack
 	cd ${S}
