@@ -143,9 +143,6 @@ function kde-repo_src_unpack() {
 			# Add submodule and extras to list of items for revision-check
 			CHECKITEMS="${CHECKITEMS} ${KMMODULE} ${KMEXTRA}"
 
-			# Add translation folder as extra
-			KMEXTRA="${KMEXTRA} po"
-		
 		# If non-meta ebuilds are in use
 		else
 	

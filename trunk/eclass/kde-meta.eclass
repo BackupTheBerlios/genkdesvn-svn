@@ -558,9 +558,10 @@ function kde-meta_src_install() {
 	while [ -n "$1" ]; do
 		case $1 in
 		    make)
-				for dir in $KMMODULE $KMEXTRA $DOCS; do
+				for dir in $KMMODULE $KMEXTRA $DOCS po; do
 					if [ -d $S/$dir ]; then
 						cd $S/$dir
+						einfo "Installing ${dir}"
 						make DESTDIR=${D} destdir=${D} install || die
 					fi
 				done

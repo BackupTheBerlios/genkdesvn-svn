@@ -276,10 +276,11 @@ function kde-source_src_unpack {
 
 	done
 
+	# Set up translations makefile, if necessary
 	[ -d "${S}/po" ] && echo "SUBDIRS = \$(AUTODIRS)" > "${S}/po/Makefile.am"
-
+	
 	# Return to source directory for ebuilds with extended src_unpack
-	cd $S
+	cd ${S}
 
 }
 
