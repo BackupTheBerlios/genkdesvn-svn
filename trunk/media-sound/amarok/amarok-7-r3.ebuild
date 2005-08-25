@@ -60,8 +60,7 @@ pkg_setup() {
 		die
 	fi
 
-	# check whether kdelibs was compiled with arts support
-	kde_pkg_setup
+	kde-source_pkg_setup
 }
 
 src_compile() {
