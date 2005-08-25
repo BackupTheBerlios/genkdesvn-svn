@@ -6,6 +6,7 @@ KMNAME=kdepim
 KMMODULE=wizards
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+KMNODOCS="true"
 UNSERMAKE=no
 inherit kde-meta eutils kde-source
 
