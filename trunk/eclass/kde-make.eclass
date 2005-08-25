@@ -155,18 +155,21 @@ function kde-make_pkg_setup {
 	# Log function tracing information
 	debug-print-function ${FUNCNAME} ${*}
 
-	if [ ! -d ${objdir} ]
+	if is_keepobj_enabled
 	then
-		mkdir -p ${objdir}
-	else
-		for item in ${KEEPOBJ_EXEMPT}
-		do
-			if [ -d "${objdir}/${item}" ]
-			then
-				debug-print "${FUNCNAME}: removing ${objdir}/${item}"
-				rm -rf "${objdir}/${item}"
-			fi
-		done
+		if [ ! -d ${objdir} ]
+		then
+			mkdir -p ${objdir}
+		else
+			for item in ${KEEPOBJ_EXEMPT}
+			do
+				if [ -d "${objdir}/${item}" ]
+				then
+					debug-print "${FUNCNAME}: removing ${objdir}/${item}"
+					rm -rf "${objdir}/${item}"
+				fi
+			done
+		fi
 		ewarn "WARNING: keepobj functionality has been enabled."
 	fi
 
