@@ -4,7 +4,7 @@
 
 EFDO_MODULE="gtk-qt"
 EFDO_SUBDIR="gtk-qt-engine"
-inherit eutils kde-functions freedesktop unsermake
+inherit eutils kde-functions freedesktop kde-make
 
 DESCRIPTION="GTK+2 Qt Theme Engine"
 HOMEPAGE="http://www.freedesktop.org/Software/gtk-qt"
@@ -30,15 +30,15 @@ src_unpack() {
 }
 
 src_compile() {
-	$(make_cmd) -f ${S}/admin/Makefile.common
+	make -f ${S}/admin/Makefile.common
 
 	local myconf="$(use_with arts) $(use_enable debug)"
 	econf ${myconf} || die
-	$(emake_cmd) || die
+	make || die
 }
 
 src_install() {
-	$(make_cmd) DESTDIR="${D}" install || die "Installation failed"
+	make DESTDIR="${D}" install || die "Installation failed"
 
 	dodoc AUTHORS
 }
