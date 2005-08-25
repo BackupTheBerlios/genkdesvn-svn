@@ -48,5 +48,3 @@ KMEXTRA="
 	kgantt
 	kdgantt
 	kontact/plugins/korganizer/" # We add here the kontact's plugin instead of compiling it with kontact because it needs a lot of korganizer deps.
-KEEPOBJ_EXEMPT="kontact/plugins/korganizer"
-
