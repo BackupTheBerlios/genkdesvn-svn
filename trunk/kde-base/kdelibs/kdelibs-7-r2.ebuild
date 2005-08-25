@@ -44,7 +44,10 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	dev-util/pkgconfig"
 
-PATCHES="${FILESDIR}/${P}-knotify-noarts.patch"
+src_unpack() {
+	kde-source_src_unpack
+	! use arts && cd ${S} && epatch ${FILESDIR}/${P}-knotify-noarts.patch
+}
 
 src_compile() {
 	myconf="--with-distribution=Gentoo
