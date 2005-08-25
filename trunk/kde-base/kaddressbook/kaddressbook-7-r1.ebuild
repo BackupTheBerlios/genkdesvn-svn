@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 MAXKDEVER=$PV
@@ -44,16 +45,15 @@ KMEXTRA="
 	kabc/
 	kfile-plugins/vcf
 	kontact/plugins/kaddressbook"
-KEEPOBJ_EXEMPT="kontact/plugins/kaddressbook"
 
 PATCHES="$FILESDIR/icaltimezone.c.diff"
 
 src_compile() {
 	export DO_NOT_COMPILE="libkcal" && kde-meta_src_compile myconf configure
 	# generate "ical.h"
-	cd ${S}/libkcal/libical/src/libical && keepobj && make ical.h
+	cd ${S}/libkcal/libical/src/libical && make ical.h
 	# generate "icalss.h"
-	cd ${S}/libkcal/libical/src/libicalss && keepobj make icalss.h
+	cd ${S}/libkcal/libical/src/libicalss && make icalss.h
 
 	kde-meta_src_compile "make"
 }
