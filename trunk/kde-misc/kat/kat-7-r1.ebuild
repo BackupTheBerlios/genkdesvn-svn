@@ -24,7 +24,7 @@ pkg_setup() {
 		eerror "Re-emerge poppler with qt use-flag enabled!"
 		die "You need poppler built with qt flag to compile ${PN}."
 	fi
-	kde-sourceforge_src_pkg
+	kde-sourceforge_pkg_setup
 }
 
 src_compile(){
