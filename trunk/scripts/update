@@ -633,7 +633,7 @@ if __name__ == "__main__":
 			skip -= 1
 		
 	environ = os.environ.copy()
-	environ["ESVN_RUN_ARGS"] = {False:"--checkrevs"}.get(values.reinstall, "") + {True:" --offline"}.get(values.offline, "")
+	environ["ESVN_RUN_ARGS"] = {True:""}.get(values.reinstall, "--checkrevs") + {True:" --offline"}.get(values.offline, "")
 	signal_handler.packages = packages
 	for package in packages:
 		handler(package)
