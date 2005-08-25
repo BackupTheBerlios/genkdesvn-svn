@@ -39,6 +39,5 @@ KMEXTRACTONLY="lib/
 KMCOMPILEONLY="filters/liboofilter"
 
 KMEXTRA="filters/kspread"
-KEEPOBJ_EXEMPT="filters/kspread"
 
 need-kde 3.3
