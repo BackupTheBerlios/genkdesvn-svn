@@ -72,12 +72,12 @@ src_compile() {
 
 	if ! use arts; then
 		cd arts/knotify
-		keepobj $(make_cmd) || die
+		make || die
 		cd ${OLDPWD}
 	fi
 
 	if use doc; then
-		keepobj $(make_cmd) apidox || die
+		make apidox || die
 	fi
 }
 
@@ -86,12 +86,12 @@ src_install() {
 
 	if ! use arts; then
 		cd arts/knotify
-		keepobj $(make_cmd) DESTDIR="${D}" install || die
+		make DESTDIR="${D}" install || die
 		cd ${OLDPWD}
 	fi
 
 	if use doc; then
-		keepobj $(make_cmd) DESTDIR="${D}" install-apidox || die
+		make DESTDIR="${D}" install-apidox || die
 	fi
 
 	# needed to fix lib64 issues on amd64, see bug #45669
