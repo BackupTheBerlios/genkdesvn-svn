@@ -19,4 +19,3 @@ libkpinterfaces kontact/interfaces"
 KMEXTRACTONLY="libkdepim
 kontact/interfaces"
 KMEXTRA="kontact/plugins/akregator"
-KEEPOBJ_EXEMPT="kontact/plugins/akregator"
