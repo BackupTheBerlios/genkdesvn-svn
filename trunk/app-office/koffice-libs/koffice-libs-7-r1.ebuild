@@ -57,7 +57,7 @@ src_compile() {
 	kde-meta_src_compile
 
 	if use doc; then
-		$(make_cmd) apidox || die
+		make apidox || die
 	fi
 }
 
@@ -65,7 +65,7 @@ src_install() {
 	kde-meta_src_install
 
 	if use doc; then
-		$(make_cmd) DESTDIR=${D} install-apidox || die
+		make DESTDIR=${D} install-apidox || die
 	fi
 }
 
