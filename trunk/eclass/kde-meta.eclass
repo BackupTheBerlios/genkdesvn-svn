@@ -1,6 +1,6 @@
 # Copyright 1999-2004 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/kde-meta.eclass,v 1.31 2005/03/09 20:14:15 danarmak Exp $
+# $Header: $
 #
 # Author Dan Armak <danarmak@gentoo.org>
 # Simone Gotti <motaboy@gentoo.org>
@@ -10,7 +10,7 @@
 inherit kde multilib
 ECLASS=kde-meta
 INHERITED="$INHERITED $ECLASS"
-IUSE="$IUSE kdexdeltas" 
+IUSE="$IUSE kdexdeltas"
 
 # only broken-up ebuilds can use this eclass
 if [ -z "$KMNAME" ]; then
@@ -18,7 +18,7 @@ if [ -z "$KMNAME" ]; then
 fi
 
 # Replace the $myPx mess - it was ugly as well as not general enough for 3.4.0-rc1
-# The following code should set TARBALLVER (the version in the tarball's name) 
+# The following code should set TARBALLVER (the version in the tarball's name)
 # and TARBALLDIRVER (the version of the toplevel directory inside the tarball).
 case "$PV" in
 	3.4.0_alpha1)	TARBALLDIRVER="3.3.90"; TARBALLVER="3.3.90" ;;
@@ -27,30 +27,35 @@ case "$PV" in
 	3.4.0_rc1)		TARBALLDIRVER="3.4.0"; TARBALLVER="3.4.0-rc1" ;;
 	*)				TARBALLDIRVER="$PV"; TARBALLVER="$PV" ;;
 esac
+if [ "${KMNAME}" = "koffice" ]; then
+	case "$PV" in
+		1.4.0_rc1)	TARBALLDIRVER="1.3.98"; TARBALLVER="1.3.98" ;;
+	esac
+fi
+
 TARBALL="$KMNAME-$TARBALLVER.tar.bz2"
 
 # BEGIN adapted from kde-dist.eclass, code for older versions removed for cleanness
 if [ "$KDEBASE" = "true" ]; then
 	unset SRC_URI
-	
+
 	need-kde $PV
-	
+
 	DESCRIPTION="KDE ${PV} - "
 	HOMEPAGE="http://www.kde.org/"
 	LICENSE="GPL-2"
 	SLOT="$KDEMAJORVER.$KDEMINORVER"
-	
+
 	# Main tarball for normal downloading style
 	# Note that we set SRC_PATH, and add it to SRC_URI later on
 	case "$PV" in
 		3.4.0_*)	SRC_PATH="unstable/$TARBALLVER/src/$TARBALL" ;;
 		3.4.0)		SRC_PATH="stable/3.4/src/$TARBALL" ;;
 		3*)			SRC_PATH="stable/$TARBALLVER/src/$TARBALL" ;;
-		5)			SRC_PATH="" ;;
-		7)			SRC_PATH="" ;;
+		5|7)		SRC_PATH="" ;;
 		*)			die "$ECLASS: Error: unrecognized version $PV, could not set SRC_URI" ;;
 	esac
-	
+
 	# Base tarball and xdeltas for patch downloading style
 	# Note that we use XDELTA_BASE, XDELTA_DELTA again in src_unpack()
 	# For future versions, add all applicable xdeltas (from x.y.0) in correct order to XDELTA_DELTA
@@ -59,29 +64,37 @@ if [ "$KDEBASE" = "true" ]; then
 	# Does anyone really want to make this code generic based on $TARBALLVER above?
 	case "$PV" in
 		3.4.0_beta1)	XDELTA_BASE="unstable/3.3.90/src/$KMNAME-3.3.90.tar.bz2"
-						XDELTA_DELTA="unstable/3.3.91/src/$KMNAME-3.3.90-3.3.91.tar.xdelta"
-						;;
+				XDELTA_DELTA="unstable/3.3.91/src/$KMNAME-3.3.90-3.3.91.tar.xdelta"
+				;;
 		3.4.0_beta2)	XDELTA_BASE="unstable/3.3.90/src/$KMNAME-3.3.90.tar.bz2"
-						XDELTA_DELTA="unstable/3.3.91/src/$KMNAME-3.3.90-3.3.91.tar.xdelta unstable/3.3.91/src/$KMNAME-3.3.91-3.3.92.tar.xdelta"
-						;;
-		3.4.0_rc1)		XDELTA_BASE="unstable/3.3.90/src/$KMNAME-3.3.90.tar.bz2"
-						XDELTA_DELTA="unstable/3.3.91/src/$KMNAME-3.3.90-3.3.91.tar.xdelta unstable/3.3.91/src/$KMNAME-3.3.91-3.3.92.tar.xdelta unstable/3.4.0-rc1/src/$KMNAME-3.3.92-3.4.0-rc1.tar.xdelta"
-						;;
-		3.4.0)			;; # xdeltas break off at first stable version, since most people
-							# don't have prerelease tarballs handy
-		*)				;;
-	esac	
+				XDELTA_DELTA="unstable/3.3.91/src/$KMNAME-3.3.90-3.3.91.tar.xdelta unstable/3.3.91/src/$KMNAME-3.3.91-3.3.92.tar.xdelta"
+				;;
+		3.4.0_rc1)	XDELTA_BASE="unstable/3.3.90/src/$KMNAME-3.3.90.tar.bz2"
+				XDELTA_DELTA="unstable/3.3.91/src/$KMNAME-3.3.90-3.3.91.tar.xdelta unstable/3.3.91/src/$KMNAME-3.3.91-3.3.92.tar.xdelta unstable/3.4.0-rc1/src/$KMNAME-3.3.92-3.4.0-rc1.tar.xdelta"
+				;;
+		3.4.0)		;; 	# xdeltas break off at first stable version, since most people
+					# don't have prerelease tarballs handy
+		3.4.1)		XDELTA_BASE="stable/3.4/src/$KMNAME-3.4.0.tar.bz2"
+				XDELTA_DELTA="stable/3.4.1/src/$KMNAME-3.4.0-3.4.1.tar.xdelta"
+				;;
+		*)		;;
+	esac
 
 elif [ "$KMNAME" == "koffice" ]; then
-	SRC_PATH="mirror://kde/stable/koffice-$PV/src/koffice-$PV.tar.bz2"
+	SRC_PATH="stable/koffice-$PV/src/koffice-$PV.tar.bz2"
+	XDELTA_BASE=""
+	XDELTA_DELTA=""
 	case $PV in
-		1.3.4)
-			XDELTA_BASE=""
-			XDELTA_DELTA=""
-			;;	
 		1.3.5)
+			SRC_PATH="stable/koffice-$PV/src/koffice-$PV.tar.bz2"
 			XDELTA_BASE="stable/koffice-1.3.4/src/koffice-1.3.4.tar.bz2"
 			XDELTA_DELTA="stable/koffice-1.3.5/src/koffice-1.3.4-1.3.5.tar.xdelta"
+			;;
+		1.4.0_rc1)
+			SRC_PATH="unstable/koffice-1.4-rc1/src/koffice-1.3.98.tar.bz2"
+			;;
+		1.4.0)
+			SRC_PATH="stable/koffice-1.4/src/koffice-$PV.tar.bz2"
 			;;
 	esac
 fi
@@ -96,7 +109,7 @@ if [ -n "$XDELTA_BASE" ]; then # depends on $PV only, so is safe to modify SRC_U
 else # xdelta don't available, for example with kde 3.4 alpha/beta/rc ebuilds.
 	SRC_URI="$SRC_URI mirror://kde/$SRC_PATH"
 fi
-	
+
 debug-print "$ECLASS: finished, SRC_URI=$SRC_URI"
 
 # Necessary dep for xdeltas. Hope like hell it doesn't worm its way into RDEPEND
@@ -106,27 +119,16 @@ DEPEND="$DEPEND kdexdeltas? ( dev-util/xdelta )"
 # END adapted from kde-dist.eclass
 
 # Add a blocking dep on the package we're derived from
-DEPEND="$DEPEND !=$(get-parent-package $CATEGORY/$PN)-$SLOT*"
-RDEPEND="$RDEPEND !=$(get-parent-package $CATEGORY/$PN)-$SLOT*"
-
-
-# TODO FIX: Temporary place for code common to all ebuilds derived from any one metapackage.
-
-# kdebase: all configure.in's talk about java. Need to investigate which ones 
-# actually need it.
-if [ "$KMNAME" == "kdebase" ]; then
-	IUSE="$IUSE java"
-	DEPEND="$DEPEND java? ( || ( virtual/jdk virtual/jre ) )"
-	RDEPEND="$RDEPEND java? ( || ( virtual/jdk virtual/jre ) )"
-	
-	# bug 82032: the configure check for java is unnecessary as well as broken
-	myconf="$myconf --without-java"
+if [ "${KMNAME}" != "koffice" ]; then
+	DEPEND="${DEPEND} !=$(get-parent-package ${CATEGORY}/${PN})-${SLOT}*"
+	RDEPEND="${RDEPEND} !=$(get-parent-package ${CATEGORY}/${PN})-${SLOT}*"
+else
+	DEPEND="${DEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
+	RDEPEND="${RDEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
 fi
 
-# TODO FIX ends
-
 # Set the following variables in the ebuild. Only KMNAME must be set, the rest are optional.
-# A directory or file can be a path with any number of components (eg foo/bar/baz.h). 
+# A directory or file can be a path with any number of components (eg foo/bar/baz.h).
 # Do not include the same item in more than one of KMMODULE, KMMEXTRA, KMCOMPILEONLY, KMEXTRACTONLY, KMCOPYLIB.
 #
 # KMNAME: name of the metapackage (eg kdebase, kdepim). Must be set before inheriting this eclass
@@ -140,7 +142,7 @@ fi
 # Makefiles are created automagically to compile/install the correct files. Observe these rules:
 # - Don't specify the same file in more than one of the three variables.
 # - When using KMEXTRA, remember to add the doc/foo dir for the extra dirs if one exists.
-# - KMEXTRACTONLY take effect over an entire directory tree, you can override it defining 
+# - KMEXTRACTONLY take effect over an entire directory tree, you can override it defining
 # KMEXTRA, KMCOMPILEONLY for every subdir that must have a different behavior.
 # eg. you have this tree:
 # foo/bar
@@ -153,7 +155,7 @@ fi
 #
 # IMPORTANT!!! you can't define a KMCOMPILEONLY SUBDIR if its parents are defined as KMEXTRA or KMMODULE. or it will be installed anywhere. To avoid this probably are needed some chenges to the generated Makefile.in.
 #
-# KMCOPYLIB: Contains an even number of $IFS (i.e. whitespace) -separated words. 
+# KMCOPYLIB: Contains an even number of $IFS (i.e. whitespace) -separated words.
 # Each two consecutive words, libname and dirname, are considered. symlinks are created under $S/$dirname
 # pointing to $PREFIX/lib/libname*.
 
@@ -164,16 +166,10 @@ function create_fullpaths() {
 	for item in $KMMODULE; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMMODULEFULLPATH="$KMMODULEFULLPATH ${S}/$tmp"
-		if [ -z "$MODULE_DIR" ] && [ -n "$item" ]; then
-			MODULE_DIR="$item"
-		fi
 	done
 	for item in $KMEXTRA; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMEXTRAFULLPATH="$KMEXTRAFULLPATH ${S}/$tmp"
-		if [ -z "$MODULE_DIR" ] && [ -n "$item" ]; then
-			MODULE_DIR="$item"
-		fi
 	done
 	for item in $KMCOMPILEONLY; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
@@ -204,7 +200,7 @@ function change_makefiles() {
 
 	cd $1
 	debug-print "We are in `pwd`"
-	
+
 	# check if the dir is defined as KMEXTRACTONLY or if it was defined is KMEXTRACTONLY in the parent dir, this is valid only if it's not also defined as KMMODULE, KMEXTRA or KMCOMPILEONLY. They will ovverride KMEXTRACTONLY, but only in the current dir.
 	isextractonly="false"
 	if ( ( hasq "$1" $KMEXTRACTONLYFULLPATH || [ $2 = "true" ] ) && \
@@ -212,7 +208,7 @@ function change_makefiles() {
 		isextractonly="true"
 	fi
 	debug-print "isextractonly = $isextractonly"
-	
+
 	dirlistfullpath=
 	for item in *; do
 		if [ -d "$item" ] && [ "$item" != "CVS" ] && [ "$S/$item" != "$S/admin" ]; then
@@ -221,10 +217,10 @@ function change_makefiles() {
 		fi
 	done
 	debug-print "dirlist = $dirlistfullpath"
-	
+
 	for directory in $dirlistfullpath; do
-		
-		if ( hasq "$1" $KMEXTRACTONLYFULLPATH || [ $2 = "true" ] ); then 
+
+		if ( hasq "$1" $KMEXTRACTONLYFULLPATH || [ $2 = "true" ] ); then
 			change_makefiles $directory 'true'
 		else
 			change_makefiles $directory 'false'
@@ -232,12 +228,12 @@ function change_makefiles() {
 		# come back to our dir
 		cd $1
 	done
-	
+
 	cd $1
 	debug-print "Come back to `pwd`"
 	debug-print "dirlist = $dirlistfullpath"
 	if [ $isextractonly = "true" ] || [ ! -f Makefile.am ] ; then
-		# if this is a latest subdir 
+		# if this is a latest subdir
 		if [ -z "$dirlistfullpath" ]; then
 			debug-print "dirlist is empty => we are in the latest subdir"
 			echo 'all:' > Makefile.am
@@ -256,28 +252,28 @@ function change_makefiles() {
 	fi
 	
 	# Fix broken include to avoid manual patches to each kdepim package
-	if [ "$KMNAME" == "kdepim" ] && [ -f Makefile.am ]; then
-		cat << EOF > edit.awk 
-BEGIN {
-	FS="=";
-	SETFLAG="false";
-	FLAG="-I\$(top_builddir)/libkdepim \$(all_includes) "
-}
-\$1 == "AM_CPPFLAGS " {
-	print"AM_CPPFLAGS = " FLAG \$2; 
-	SETFLAG = "true"
-}
-\$1 != "AM_CPPFLAGS " { 
-	print \$0
-} 
-END { 
-	if ( SETFLAG == "false" ) print "AM_CPPFLAGS = " FLAG
-}
-EOF
-		awk -f edit.awk Makefile.am > Makefile.am.out
-		mv Makefile.am.out Makefile.am
-		rm edit.awk
-	fi
+#	if [ "$KMNAME" == "kdepim" ] && [ -f Makefile.am ]; then
+#		cat << EOF > edit.awk 
+#BEGIN {
+#	FS="=";
+#	SETFLAG="false";
+#	FLAG="-I\$(top_builddir)/libkdepim \$(all_includes) "
+#}
+#\$1 == "AM_CPPFLAGS " {
+#	print"AM_CPPFLAGS = " FLAG \$2; 
+#	SETFLAG = "true"
+#}
+#\$1 != "AM_CPPFLAGS " { 
+#	print \$0
+#} 
+#END { 
+#	if ( SETFLAG == "false" ) print "AM_CPPFLAGS = " FLAG
+#}
+#EOF
+#		awk -f edit.awk Makefile.am > Makefile.am.out
+#		mv Makefile.am.out Makefile.am
+#		rm edit.awk
+#	fi
 
 }
 
@@ -294,15 +290,60 @@ function set_common_variables() {
 	fi
 }
 
+function sort_subdirs {
+
+	local modules="${*}"
+	if [ -f subdirs ]
+	then
+		local sorted=""
+		exec < subdirs
+		while read subdir
+		do
+			local subdir="${subdir}/"
+			local children=""
+			for module in ${modules}
+			do
+				module="$(strip_duplicate_slashes ${module}/)"
+
+				if [ -z "${module##${subdir}}" ]
+				then
+					sorted="${sorted} ${module}"
+				elif [ -z "${module##${subdir}*}" ]
+				then
+					children="${children} ${module##${subdir}}"
+				fi
+				
+			done
+			
+			if [ -n "${children}" ]
+			then
+				#pushd ${subdir} >/dev/null
+				#sorted="${sorted} $(sort_subdirs ${children})"
+				#popd >/dev/null
+				local sorted_children=""
+				for child in ${children}
+				do
+					sorted_children="${sorted_children} ${subdir}${child}"
+				done
+				sorted="${sorted} ${sorted_children}"
+			fi
+		done
+		echo ${sorted}
+	else
+		echo ${modules}
+	fi
+
+}
+
 # This has function sections now. Call unpack, apply any patches not in $PATCHES,
 # then call makefiles.
 function kde-meta_src_unpack() {
 	debug-print-function $FUNCNAME $*
 
 	set_common_variables
-	
+
 	sections="$@"
-	[ -z "$sections" ] && sections="unpack patches makefiles"
+	[ -z "$sections" ] && sections="unpack makefiles"
 	for section in $sections; do
 	case $section in
 	prepare)
@@ -332,7 +373,6 @@ function kde-meta_src_unpack() {
 			extractlist="$extractlist $KMNAME-$TARBALLDIRVER/$item"
 		done
 
-
 		# xdeltas require us to uncompress to a tar file first.
 		# $KMTARPARAMS is also available for an ebuild to use; currently used by kturtle
 		if useq kdexdeltas && [ -n "$XDELTA_BASE" ]; then
@@ -353,25 +393,21 @@ function kde-meta_src_unpack() {
 			KMTARPARAMS="$KMTARPARAMS -j"
 		fi
 		cd $WORKDIR
-		
+
 		echo ">>> Extracting from tarball..."
 		# Note that KMTARPARAMS is also used by an ebuild
 		tar -xpf $TARFILE $KMTARPARAMS $extractlist	2> /dev/null
-		
+
 		# Avoid syncing if possible
 		# No idea what the above comment means...
 		if [ -n "$RAWTARBALL" ]; then
 			rm -f $T/$RAWTARBALL
 		fi
-		
+
 		# Default $S is based on $P not $myP; rename the extracted dir to fit $S
-		mv $KMNAME-$TARBALLDIRVER $P
+		mv $KMNAME-$TARBALLDIRVER $P || die
 		S=$WORKDIR/$P
 
-	;;
-	patches)
-
-		# Code moved here so kde-source can utilize it
 		# Copy over KMCOPYLIB items
 		libname=""
 		for x in $KMCOPYLIB; do
@@ -379,31 +415,39 @@ function kde-meta_src_unpack() {
 				libname=$x
 			else
 				dirname=$x
-				cd $(objdir)
+				cd $S
 				mkdir -p ${dirname}
 				cd ${dirname}
 				if [ ! "$(find ${PREFIX}/$(get_libdir)/ -name "${libname}*")" == "" ]; then
 					echo "Symlinking library ${libname} under ${PREFIX}/$(get_libdir)/ in source dir"
-					ln -sf ${PREFIX}/$(get_libdir)/${libname}* .
+					ln -s ${PREFIX}/$(get_libdir)/${libname}* .
 				else
 					die "Can't find library ${libname} under ${PREFIX}/$(get_libdir)/"
 				fi
 				libname=""
 			fi
 		done
-	
+
 		# apply any patches
 		kde_src_unpack autopatch
-	
+
 		# kdebase: Remove the installation of the "startkde" script.
 		if [ "$KMNAME" == "kdebase" ]; then
 			sed -i -e s:"bin_SCRIPTS = startkde"::g ${S}/Makefile.am.in
 		fi
 
+		# Visiblity stuff is way broken! Just disable it when it's present
+		# until upstream finds a way to have it working right.
+		if grep KDE_ENABLE_HIDDEN_VISIBILITY configure.in &> /dev/null || ! [[ -f configure ]]; then
+			find ${S} -name configure.in.in | xargs sed -i -e \
+				's:KDE_ENABLE_HIDDEN_VISIBILITY::g'
+			rm -f configure
+		fi
+
 		# for ebuilds with extended src_unpack
 		cd $S
 
-	;;	
+	;;
 	makefiles)
 
 		# Create Makefile.am files
@@ -420,23 +464,19 @@ function kde-meta_src_unpack() {
 
 function kde-meta_src_compile() {
 	debug-print-function $FUNCNAME $*
-	
-	set_common_variables	
 
-	# kdebase: all configure.in's talk about java. Need to investigate which ones 
-	# actually need it.
+	set_common_variables
+
 	if [ "$KMNAME" == "kdebase" ]; then
-		if use java ; then
-			if has_version virtual/jdk ; then
-				myconf="$myconf --with-java=$(java-config --jdk-home)"
-			else
-				myconf="$myconf --with-java=$(java-config --jre-home)"
-			fi
-		else
-			myconf="$myconf --without-java"
-		fi
+		# bug 82032: the configure check for java is unnecessary as well as broken
+		myconf="$myconf --without-java"
 	fi
-	
+
+	if [ "$KMNAME" == "kdegames" ]; then
+		# make sure games are not installed with setgid bit, as it is a security risk.
+		myconf="$myconf --disable-setgid"
+	fi
+
 	# confcache support. valid only for my (danarmak's) port of stuart's confcache to portage .51,
 	# not for stuart's orig version or ferringb's ebuild-daemon version.
 	# this could be replaced by just using econf, but i don't want to make that change in kde.eclass
@@ -447,8 +487,8 @@ function kde-meta_src_compile() {
 		debug-print "$FUNCNAME: now in section $section"
 		if [ "$section" == "configure" ]; then
 			# don't log makefile.common stuff in confcache
-			[ ! -f "Makefile.in" ] && $(automake_cmd) admin/Makefile.common
-			confcache_start
+			[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
+			[ "`type -t confcache_start`" == "function" ] && confcache_start
 			myconf="$EXTRA_ECONF $myconf"
 		fi
 
@@ -474,7 +514,7 @@ function kde-meta_src_compile() {
 				# Transform all .ui files in it into .h files
 				for ui in *.ui
 				do
-					keepobj $(emake_cmd) "$(basename $ui .ui).h" || die
+					emake "$(basename $ui .ui).h" || die
 					debug-print "Generated ui header `pwd`/$ui"
 				done
 
@@ -494,7 +534,7 @@ function kde-meta_src_compile() {
 				# Transform all .kcfgc files in it into .h files
 				for kcfgc in *.kcfgc
 				do
-					keepobj $(emake_cmd) "`basename $kcfgc .kcfgc`.h" || die
+					emake "`basename $kcfgc .kcfgc`.h" || die
 					debug-print "Generated config header `pwd`/$kcfgc"
 				done
 
@@ -514,34 +554,29 @@ function kde-meta_src_compile() {
 
 			done
 
-			# Make in compile-only directories in order
-			for dir in $KMCOMPILEONLYFULLPATH
+			for dir in $(sort_subdirs ${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS})
 			do
-				# Go to indicated directory
-				pushd $dir
-				debug-print "Making compile-only `pwd`"
-
-				# Make these dependencies now
-				keepobj $(emake_cmd) || die
-
-				# Return to original directory
-				popd
-
+				einfo "Making ${dir}"
+				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+				emake || die "died running emake, $FUNCNAME:make"
+				popd >/dev/null
 			done
+			
+		else
+			kde_src_compile $section
 		fi
 
-		kde_src_compile $section
 		if [ "$section" == "configure" ]; then
-			confcache_stop
+			[ "`type -t confcache_stop`" == "function" ] && confcache_stop
 		fi
 	done
 }
 
 function kde-meta_src_install() {
 	debug-print-function $FUNCNAME $*
-	
+
 	set_common_variables
-	
+
 	if [ "$1" == "" ]; then
 		kde-meta_src_install make dodoc
 	fi
@@ -549,9 +584,9 @@ function kde-meta_src_install() {
 		case $1 in
 		    make)
 				for dir in $KMMODULE $KMEXTRA $DOCS; do
-					if [ -d $S/$dir ]; then 
+					if [ -d $S/$dir ]; then
 						cd $S/$dir
-						keepobj $(make_cmd) DESTDIR=${D} destdir=${D} install || die
+						make DESTDIR=${D} destdir=${D} install || die
 					fi
 				done
 				;;
@@ -564,7 +599,7 @@ function kde-meta_src_install() {
 		esac
 		shift
 	done
-}	
+}
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install
 

@@ -111,14 +111,14 @@ S="$(strip_duplicate_slashes ${WORKDIR}/$(wrap_root ${KSCM_MODULE}))"
 
 function kde-repo_src_unpack() {
 
-	# Print function tracing information
-	debug-print-function $FUNCNAME $*
+	# Log function tracing information
+	debug-print-function ${FUNCNAME} $*
 
 	# Add all externals to list of items to be fetched recursively
 	ESCM_DEEPITEMS="${ESCM_DEEPITEMS} ${ESCM_EXTERNALS}"
 
 	# If submodules are used, fetch the module plus specific extra files
-	if [ -n "$KSCM_SUBDIR" ]
+	if [ -n "${KSCM_SUBDIR}" ]
 	then
 		
 		# DEEPITEMS stores items to be fetched recursively
@@ -131,7 +131,7 @@ function kde-repo_src_unpack() {
 		CHECKITEMS=""
 	
 		# If meta ebuilds are in use (for distro packages)
-		if [ -n "$KMNAME" ]
+		if [ -n "${KMNAME}" ]
 		then
 			
 			# Let kde-meta create deeplist
@@ -141,20 +141,20 @@ function kde-repo_src_unpack() {
 			DEEPITEMS="Makefile.cvs $deeplist"
 
 			# Add submodule and extras to list of items for revision-check
-			CHECKITEMS="$CHECKITEMS $KMMODULE $KMEXTRA"
+			CHECKITEMS="${CHECKITEMS} ${KMMODULE} ${KMEXTRA}"
 
 			# Add translation folder as extra
-			KMEXTRA="$KMEXTRA po"
+			KMEXTRA="${KMEXTRA} po"
 		
 		# If non-meta ebuilds are in use
 		else
 	
 			# Add submodule directory to list of items to be fetched recursively
-			DEEPITEMS="$DEEPITEMS $KSCM_SUBDIR"
+			DEEPITEMS="${DEEPITEMS} ${KSCM_SUBDIR}"
 
 			# Add module directory to list of items to be fetched
 			# non-recursively, which is needed for makefiles, etc.
-			SHALLOWITEMS="$SHALLOWITEMS /"
+			SHALLOWITEMS="${SHALLOWITEMS} /"
 
 			# Unless documents are not to be used, also fetch the corresponding doc folder
 			if [ -z "$KSCM_SUBDIR_NODOC" ]; then

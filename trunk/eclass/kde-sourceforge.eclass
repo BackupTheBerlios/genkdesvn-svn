@@ -7,7 +7,7 @@
 # Purpose: Provide common functionality for applications residing in SourceForge CVS
 #
 
-inherit eutils kde sourceforge
+inherit eutils kde-make kde sourceforge
 
 ECLASS="kde-sourceforge"
 INHERITED="$INHERITED $ECLASS"
@@ -63,4 +63,11 @@ function kde-sourceforge_src_unpack() {
 
 }
 
-EXPORT_FUNCTIONS src_unpack
+function kde-sourceforge_pkg_setup {
+
+	kde-make_pkg_setup
+	kde_pkg_setup
+
+}
+
+EXPORT_FUNCTIONS pkg_setup src_unpack

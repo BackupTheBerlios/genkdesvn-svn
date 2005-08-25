@@ -7,6 +7,8 @@
 # Purpose: 
 #
 
+inherit kde-make
+
 ECLASS="kde-source"
 INHERITED="$INHERITED $ECLASS"
 
@@ -131,7 +133,7 @@ fi
 
 inherit kde-repo
 
-function collect_translations() {
+function collect_translations {
 	
 	# Print function tracing information
 	debug-print-function $FUNCNAME $*
@@ -157,7 +159,39 @@ function collect_translations() {
 
 # --- begin exportable functions --- #
 
-kde-source_src_unpack() {
+function symlinks {
+
+	libname=""
+	for x in $KMCOPYLIB; do
+		if [ "$libname" == "" ]; then
+			libname=$x
+		else
+			dirname=$x
+			cd ${objdir}
+			mkdir -p ${dirname}
+			cd ${dirname}
+			if [ ! "$(find ${PREFIX}/$(get_libdir)/ -name "${libname}*")" == "" ]; then
+				echo "Symlinking library ${libname} under ${PREFIX}/$(get_libdir)/ in object dir"
+				ln -sf ${PREFIX}/$(get_libdir)/${libname}* .
+			else
+				die "Can't find library ${libname} under ${PREFIX}/$(get_libdir)/"
+			fi
+			libname=""
+		fi
+	done
+
+	# apply any patches
+	base_src_unpack autopatch
+
+	# kdebase: Remove the installation of the "startkde" script.
+	if [ "$KMNAME" == "kdebase" ]; then
+		sed -i -e s:"bin_SCRIPTS = startkde"::g ${S}/Makefile.am.in
+	fi
+
+}
+
+
+function kde-source_src_unpack {
 
 	# Print function tracing information
 	debug-print-function $FUNCNAME $*
@@ -187,7 +221,7 @@ kde-source_src_unpack() {
 
 	# Make sure to perform set of patches and other functions
 	# in case meta ebuilds are in use
-	[ -n "$KMNAME" ] && kde-meta_src_unpack patches makefiles
+	[ -n "$KMNAME" ] && symlinks && kde-meta_src_unpack makefiles
 
 	# For every language, copy the necessary translations for compilation
 	for lang in ${LINGUAS}
@@ -244,6 +278,16 @@ kde-source_src_unpack() {
 
 	[ -d "${S}/po" ] && echo "SUBDIRS = \$(AUTODIRS)" > "${S}/po/Makefile.am"
 
+	# Return to source directory for ebuilds with extended src_unpack
+	cd $S
+
 }
 
-EXPORT_FUNCTIONS src_unpack
+function kde-source_pkg_setup {
+
+	kde-make_pkg_setup
+	[ "`type -t kde_pkg_setup`" == "function" ] && kde_pkg_setup
+	
+}
+
+EXPORT_FUNCTIONS pkg_setup src_unpack

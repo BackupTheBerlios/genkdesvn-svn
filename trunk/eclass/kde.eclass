@@ -1,13 +1,13 @@
 # Copyright 1999-2004 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/kde.eclass,v 1.115 2005/02/17 14:58:30 greg_g Exp $
+# $Header: $
 #
 # Author Dan Armak <danarmak@gentoo.org>
 #
 # Revisions Caleb Tennis <caleb@gentoo.org>
 # The kde eclass is inherited by all kde-* eclasses. Few ebuilds inherit straight from here.
 
-inherit base eutils kde-functions keepobj unsermake
+inherit base eutils kde-functions
 ECLASS=kde
 INHERITED="$INHERITED $ECLASS"
 DESCRIPTION="Based on the $ECLASS eclass"
@@ -19,8 +19,7 @@ DEPEND="$DEPEND >=sys-devel/automake-1.7.0
 	sys-devel/make
 	dev-util/pkgconfig
 	dev-lang/perl
-	~kde-base/kde-env-3
-	>=kde-base/unsermake-7-r1"
+	~kde-base/kde-env-3"
 
 RDEPEND="~kde-base/kde-env-3"
 
@@ -38,35 +37,29 @@ kde_pkg_setup() {
 			die
 		fi
 	fi
-	keepobj_initialize
 }
 
 kde_src_unpack() {
-
 	debug-print-function $FUNCNAME $*
-	
+
 	# call base_src_unpack, which implements most of the functionality and has sections,
 	# unlike this function. The change from base_src_unpack to kde_src_unpack is thus
 	# wholly transparent for ebuilds.
 	base_src_unpack $*
-	
+
 	# kde-specific stuff stars here
-	
-	# Don't touch anything if we're keeping files
-	if [ ! $(keepobj_enabled) ]
-	then
-		# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
-		# makefile regenerate any .cpp and .h files depending on them.
-		cd $S
-		debug-print "$FUNCNAME: Searching for .ui files in $PWD"
-		UIFILES="`find . -name '*.ui' -print`"
-		debug-print "$FUNCNAME: .ui files found:"
-		debug-print "$UIFILES"
-		# done in two stages, because touch doens't have a silent/force mode
-		if [ -n "$UIFILES" ]; then
-			debug-print "$FUNCNAME: touching .ui files..."
-			touch $UIFILES
-		fi
+
+	# fix the 'languageChange undeclared' bug group: touch all .ui files, so that the
+	# makefile regenerate any .cpp and .h files depending on them.
+	cd $S
+	debug-print "$FUNCNAME: Searching for .ui files in $PWD"
+	UIFILES="`find . -name '*.ui' -print`"
+	debug-print "$FUNCNAME: .ui files found:"
+	debug-print "$UIFILES"
+	# done in two stages, because touch doens't have a silent/force mode
+	if [ -n "$UIFILES" ]; then
+		debug-print "$FUNCNAME: touching .ui files..."
+		touch $UIFILES
 	fi
 
 	# Visiblity stuff is way broken! Just disable it when it's present
@@ -83,7 +76,7 @@ kde_src_compile() {
 	[ -z "$1" ] && kde_src_compile all
 
 	# Ugly, ugly, ugly hack to make apps use qt-7
-	has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
+	#has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
 
 	cd ${S}
 	export kde_widgetdir="$KDEDIR/$(get_libdir)/kde3/plugins/designer"
@@ -96,27 +89,29 @@ kde_src_compile() {
 	mkdir -p $T/fakehome/.qt
 	export HOME="$T/fakehome"
 	addwrite "${QTDIR}/etc/settings"
+	
+	# Fix bug 96177: if KDEROOTHOME is defined, the ebuild accesses the real homedir via it, and not our exported $HOME
+	unset KDEHOME
+	unset KDEROOTHOME
+
 	# things that should access the real homedir
-	[ -d "$REALHOME/.ccache" ] && ln -sf "$REALHOME/.ccache" "$HOME/"	
+	[ -d "$REALHOME/.ccache" ] && ln -sf "$REALHOME/.ccache" "$HOME/"
+	#[ -n "$UNSERMAKE" ] && addwrite "/usr/kde/unsermake"
 	
 	while [ "$1" ]; do
 
 		case $1 in
 			myconf)
 				debug-print-section myconf
-				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --enable-pch --with-qt-libraries=${QTDIR}/$(get_libdir)"
+				myconf="$myconf --host=${CHOST} --prefix=${PREFIX} --with-x --enable-mitshm $(use_with xinerama) --with-qt-dir=${QTDIR} --enable-mt --with-qt-libraries=${QTDIR}/$(get_libdir)"
+				# calculate dependencies separately from compiling, enables ccache to work on kde compiles
+				[ -z "$UNSERMAKE" ] && myconf="$myconf --disable-dependency-tracking"
 				if use debug ; then
 					myconf="$myconf --enable-debug=full --with-debug"
 				else
 					myconf="$myconf --disable-debug --without-debug"
 				fi
-				if [ $(keepcache_enabled) ]; then
-					myconf="$myconf --config-cache"
-				fi
-				if [ ! $(keepobj_enabled) ]; then
-					myconf="$myconf --disable-dependency-tracking"
-				fi
-				if useq kdeenablefinal && [ ! $(keepobj_enabled) ] && [ -n "$KDEBASE" ]; then
+				if useq kdeenablefinal && [ -n "$KDEBASE" ]; then
 					myconf="$myconf --enable-final"
 				else
 					myconf="$myconf --disable-final"
@@ -137,14 +132,14 @@ kde_src_compile() {
 						if [ -f "$x" ] && [ -z "$makefile" ]; then makefile="$x"; fi
 					done
 					if [ -f "$makefile" ]; then
-						debug-print "$FUNCNAME: configure: generating configure script, running $(automake_cmd) $makefile"
-						$(automake_cmd) $makefile
+						debug-print "$FUNCNAME: configure: generating configure script, running make -f $makefile"
+						make -f $makefile
 					fi
 					[ -f "./configure" ] || die "no configure script found, generation unsuccessful"
 				fi
 
 				export PATH="${KDEDIR}/bin:${PATH}"
-				
+
 				# configure doesn't need to know about the other KDEs installed.
 				# in fact, if it does, it sometimes tries to use the wrong dcopidl, etc.
 				# due to the messed up way configure searches for things
@@ -163,31 +158,21 @@ kde_src_compile() {
 					myconf="${myconf} --enable-libsuffix=$(get_libdir | sed s/lib//)"
 				fi
 
-				keepobj $(srcdir)/configure ${myconf} || die "died running $(srcdir)/configure, $FUNCNAME:configure"
-					
+				./configure \
+					${myconf} \
+					|| die "died running ./configure, $FUNCNAME:configure"
+
 				# Seems ./configure add -O2 by default but hppa don't want that but we need -ffunction-sections
 				if [ "${ARCH}" = "hppa" ]
 				then
 					einfo Fixating Makefiles
-					find $(objdir) -name Makefile | while read a; do sed -e s/-O2/-ffunction-sections/ -i "${a}" ; done
+					find ${S} -name Makefile | while read a; do sed -e s/-O2/-ffunction-sections/ -i "${a}" ; done
 				fi
 				;;
 			make)
 				export PATH="${KDEDIR}/bin:${PATH}"
 				debug-print-section make
-				if [ "$UNSERMAKE" != "no" ] ; then
-					# Some apps use KSCM to state directories
-					if [ -z "$MODULE_DIR" -a -n "$KSCM_SUBDIR" ]; then
-						MODULE_DIR="$KSCM_SUBDIR"
-					fi
-
-					# unsermake expects to be called from within module directory, so ...
-					if [ -n "$MODULE_DIR" -a -d "$MODULE_DIR" ]; then
-						cd "$MODULE_DIR" || die "Cannot cd to $MODULE_DIR"
-					fi
-
-				fi
-				keepobj $(emake_cmd) || die "died running $(emake_cmd), $FUNCNAME:make"
+				emake || die "died running emake, $FUNCNAME:make"
 				;;
 			all)
 				debug-print-section all
@@ -212,11 +197,11 @@ kde_src_install() {
 		case $1 in
 			make)
 				debug-print-section make
-				keepobj $(make_cmd) install DESTDIR=${D} destdir=${D} || die "died running $(make_cmd) install, $FUNCNAME:make"
+				make install DESTDIR=${D} destdir=${D} || die "died running make install, $FUNCNAME:make"
 				;;
 	    	dodoc)
 				debug-print-section dodoc
-				for doc in AUTHORS ChangeLog* README* COPYING NEWS TODO; do
+				for doc in AUTHORS ChangeLog* README* NEWS TODO; do
 					[ -s "$doc" ] && dodoc $doc
 				done
 				;;
