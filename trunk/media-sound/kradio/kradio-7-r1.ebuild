@@ -3,7 +3,7 @@
 # $Header: $
 
 ESF_SUBDIR=kradio3
-inherit kde sourceforge
+inherit kde-sourceforge
 
 DESCRIPTION="kradio is a radio tuner application for KDE"
 HOMEPAGE="http://kradio.sourceforge.net/"
@@ -26,7 +26,7 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack $A
-	cvs_src_unpack
+	sourceforge_src_unpack
 	mv ${WORKDIR}/${ESF_SUBDIR} ${S}/
 }
 
