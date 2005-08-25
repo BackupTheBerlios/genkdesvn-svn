@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde sourceforge
+inherit kde-sourceforge
 
 
 DESCRIPTION="The open source answer to WhereIsIt and Google Desktop Search"
@@ -24,6 +24,7 @@ pkg_setup() {
 		eerror "Re-emerge poppler with qt use-flag enabled!"
 		die "You need poppler built with qt flag to compile ${PN}."
 	fi
+	kde-sourceforge_src_pkg
 }
 
 src_compile(){
