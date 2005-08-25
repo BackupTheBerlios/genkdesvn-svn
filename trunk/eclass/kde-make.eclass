@@ -167,7 +167,7 @@ function kde-make_pkg_setup {
 				rm -rf "${objdir}/${item}"
 			fi
 		done
-		ewarn "WARNING: object storage and reuse functionality has been enabled."
+		ewarn "WARNING: keepobj functionality has been enabled."
 	fi
 
 }
