@@ -21,6 +21,12 @@ DEPEND="kde? ( || ( ( kde-base/libkonq kde-base/kdebase-kioslaves )
 
 need-kde 3.3
 
+src_compile() {
+	use amd64 && append-flags -fPIC
+	myconf="$(use_with kde konqueror) $(use_with javascript)"
+	kde_src_compile
+}
+
 pkg_postinst() {
 	echo
 	einfo "Krusader can use various external applications, including:"
