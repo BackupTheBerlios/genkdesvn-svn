@@ -5,6 +5,7 @@
 KMSUBMODULES="
 	kig
 	kalzium
+	kgeography
 	khangman
 	kpercentage
 	kiten
