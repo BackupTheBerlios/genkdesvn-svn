@@ -2,8 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde-sourceforge
-
+KSCM_ROOT=playground
+KSCM_MODULE=base
+KSCM_SUBDIR="${PN}"
+inherit kde kde-source
 
 DESCRIPTION="The open source answer to WhereIsIt and Google Desktop Search"
 HOMEPAGE="http://kat.sourceforge.net/"
@@ -24,10 +26,10 @@ pkg_setup() {
 		eerror "Re-emerge poppler with qt use-flag enabled!"
 		die "You need poppler built with qt flag to compile ${PN}."
 	fi
-	kde-sourceforge_pkg_setup
+	kde-source_pkg_setup
 }
 
-src_compile(){
-    PREFIX="`kde-config --prefix`"
-    kde_src_compile
-}
+#src_compile(){
+#    PREFIX="`kde-config --prefix`"
+#    kde_src_compile
+#}
