@@ -19,7 +19,8 @@ KMSUBMODULES="
 	kregexpeditor
 	ksim
 	ktimer
-	kwalletmanager"
+	kwalletmanager
+	superkaramba"
 inherit kde-meta-parent
 
 DESCRIPTION="kdeutils - merge this to pull in all kdeutils-derived packages"
