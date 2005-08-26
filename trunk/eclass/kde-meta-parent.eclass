@@ -23,7 +23,6 @@ do
 	# Extract indicated use flag including ?
 	[ -z "${submodule##*\(*}" ] && useflag="${submodule%\(*)}" || useflag=""
 
-	echo useflag is $useflag
 	# Extract indicated dependency
 	dep="${submodule#$useflag\(}"
 	dep="${dep%)}"
