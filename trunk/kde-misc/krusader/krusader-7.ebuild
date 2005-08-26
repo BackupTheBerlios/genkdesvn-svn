@@ -1,10 +1,10 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-misc/krusader/krusader-1.60.0.ebuild,v 1.5 2005/06/14 01:31:20 weeve Exp $
+# $Header: $
 
 ESF_SUBDIR="krusader_kde3"
 
-inherit kde sourceforge
+inherit kde-sourceforge
 
 DESCRIPTION="An advanced twin-panel (commander-style) file-manager for KDE with many extras."
 HOMEPAGE="http://krusader.sourceforge.net/"
@@ -20,10 +20,6 @@ DEPEND="kde? ( || ( ( kde-base/libkonq kde-base/kdebase-kioslaves )
 		javascript? ( kde-base/kjsembed )"
 
 need-kde 3.3
-
-src_compile() {
-	kde_src_compile
-}
 
 pkg_postinst() {
 	echo
