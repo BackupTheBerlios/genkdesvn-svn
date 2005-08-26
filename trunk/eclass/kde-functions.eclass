@@ -146,6 +146,7 @@ kde-base/kdeedu kde-base/kalzium
 kde-base/kdeedu kde-base/kbruch
 kde-base/kdeedu kde-base/kdeedu-applnk
 kde-base/kdeedu kde-base/keduca
+kde-base/kdeedu kde-base/kgeography
 kde-base/kdeedu kde-base/khangman
 kde-base/kdeedu kde-base/kig
 kde-base/kdeedu kde-base/kiten
