@@ -76,7 +76,7 @@ kde_src_compile() {
 	[ -z "$1" ] && kde_src_compile all
 
 	# Ugly, ugly, ugly hack to make apps use qt-7
-	#has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
+	has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
 
 	cd ${S}
 	export kde_widgetdir="$KDEDIR/$(get_libdir)/kde3/plugins/designer"
