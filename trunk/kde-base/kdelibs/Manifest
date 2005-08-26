@@ -1,4 +1,4 @@
 MD5 e996b035359320fbb425b1ab9d7e8a94 kdelibs-7-r2.ebuild 3201
 MD5 78336b49db10ef5f4280c861ef777f31 ChangeLog 634
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdelibs-7-r2 0
-MD5 6b1d180da9a0d8e04c27e9a355572d29 files/kdelibs-7-knotify-noarts.patch 6365
+MD5 73337d4deb7ad7c552361b925fd29bf3 files/kdelibs-7-knotify-noarts.patch 7042
