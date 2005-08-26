@@ -131,7 +131,8 @@ fi
 
 # --- end configurable settings --- #
 
-inherit kde-repo
+# Must inherit kde-make after kde-repo as kde-make needs ${S}
+inherit kde-repo kde-make
 
 function collect_translations {
 	
