@@ -23,6 +23,7 @@ KMCOPYLIB="libkcddb libkcddb"
 KMEXTRACTONLY="akode/configure.in.in"
 KMCOMPILEONLY="kscd/"
 KMCFGONLY="libkcddb/"
+KMUIONLY="libkcddb/"
 
 src_compile() {
 	myconf="--with-cdparanoia --enable-cdparanoia"
@@ -33,9 +34,9 @@ src_compile() {
 	fi
 
 	# hack: create ui file
-	einfo "created cdinfodialogbase.h"
-	cd "libkcddb/"
-	uic cdinfodialogbase.ui -o cdinfodialogbase.h
+	#einfo "created cdinfodialogbase.h"
+	#cd "libkcddb/"
+	#uic cdinfodialogbase.ui -o cdinfodialogbase.h
 
 	kde-meta_src_compile
 }
