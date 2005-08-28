@@ -161,8 +161,18 @@ fi
 
 # ====================================================
 
+function set_target_arrays {
+
+	for ((index=0; index < ${#KMTARGETSONLY[*]}; index++))
+	do
+		read targetdirs[index] targets[index] < <(echo ${KMTARGETSONLY[index]})
+	done
+
+}
+
 # create a full path vars, and remove ALL the endings "/"
 function create_fullpaths() {
+	set_target_arrays
 	for item in $KMMODULE; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMMODULEFULLPATH="$KMMODULEFULLPATH ${S}/$tmp"
@@ -171,17 +181,9 @@ function create_fullpaths() {
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMEXTRAFULLPATH="$KMEXTRAFULLPATH ${S}/$tmp"
 	done
-	for item in $KMCOMPILEONLY; do
+	for item in $KMCOMPILEONLY ${targetdirs[*]}; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
 		KMCOMPILEONLYFULLPATH="$KMCOMPILEONLYFULLPATH ${S}/$tmp"
-	done
-	for item in $KMCFGONLY; do
-		tmp=`echo $item | sed -e "s/\*$//g"`
-		KMCFGONLYFULLPATH="$KMCFGONLYFULLPATH ${S}/$tmp"
-	done
-	for item in $KMUIONLY; do
-		tmp=`echo $item | sed -e "s/\*$//g"`
-		KMUIONLYFULLPATH="$KMUIONLYFULLPATH ${S}/$tmp"
 	done
 	for item in $KMEXTRACTONLY; do
 		tmp=`echo $item | sed -e "s/\/*$//g"`
@@ -204,7 +206,7 @@ function change_makefiles() {
 	# check if the dir is defined as KMEXTRACTONLY or if it was defined is KMEXTRACTONLY in the parent dir, this is valid only if it's not also defined as KMMODULE, KMEXTRA or KMCOMPILEONLY. They will ovverride KMEXTRACTONLY, but only in the current dir.
 	isextractonly="false"
 	if ( ( hasq "$1" $KMEXTRACTONLYFULLPATH || [ $2 = "true" ] ) && \
-		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH $KMUIONLYFULLPATH $KMCFGONLYFULLPATH ) ); then
+		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH ) ); then
 		isextractonly="true"
 	fi
 	debug-print "isextractonly = $isextractonly"
@@ -253,6 +255,7 @@ function change_makefiles() {
 }
 
 function set_common_variables() {
+	set_target_arrays
 	# Overridable module (subdirectory) name, with default value
 	if [ "$KMNOMODULE" != "true" ] && [ -z "$KMMODULE" ]; then
 		KMMODULE=$PN
@@ -274,34 +277,17 @@ function sort_subdirs {
 		exec < subdirs
 		while read subdir
 		do
-			local subdir="${subdir}/"
-			local children=""
 			for module in ${modules}
 			do
-				module="$(strip_duplicate_slashes ${module}/)"
+				slashed="$(strip_duplicate_slashes ${module}/)"
 
-				if [ -z "${module##${subdir}}" ]
+				if [ -z "${slashed##${subdir}/*}" ]
 				then
 					sorted="${sorted} ${module}"
-				elif [ -z "${module##${subdir}*}" ]
-				then
-					children="${children} ${module##${subdir}}"
 				fi
 				
 			done
 			
-			if [ -n "${children}" ]
-			then
-				#pushd ${subdir} >/dev/null
-				#sorted="${sorted} $(sort_subdirs ${children})"
-				#popd >/dev/null
-				local sorted_children=""
-				for child in ${children}
-				do
-					sorted_children="${sorted_children} ${subdir}${child}"
-				done
-				sorted="${sorted} ${sorted_children}"
-			fi
 		done
 		echo ${sorted}
 	else
@@ -334,7 +320,7 @@ function kde-meta_src_unpack() {
 		# recursively fetched in cvs
 		deeplist="admin Makefile.am Makefile.am.in configure.in.in configure.in.bot configure.in.mid
 		acinclude.m4 aclocal.m4 AUTHORS COPYING INSTALL README NEWS ChangeLog
-		$KMMODULE $KMEXTRA $KMCFGONLY $KMUIONLY $KMCOMPILEONLY $KMEXTRACTONLY $DOCS"
+		$KMMODULE $KMEXTRA $KMCOMPILEONLY ${targetdirs[*]} $KMEXTRACTONLY $DOCS"
 
 	;;
 	unpack)
@@ -467,73 +453,58 @@ function kde-meta_src_compile() {
 			myconf="$EXTRA_ECONF $myconf"
 		fi
 
-		# Handle these special cases before performing full make:
-		# 1. Make config headers for folders indicated in $KMCFGONLY
-		# 2. Make compile-only folders in order given in $KMCOMPILEONLY
 		if [ "$section" == "make" ]; then
 
-			# Note: this was added during experiments to correct compilation
-			# failures. It may in fact be the case that if a config header is used,
-			# then a library in the same folder would be needed as well.
-
-			# If in make section, create necessary headers to satisfy
-			# interdependencies before actually making.
-
-			for dir in $KMUIONLYFULLPATH
+			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS} po"
+			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})
 			do
-				
-				# Go to indicated directory
-				pushd $dir >/dev/null
-				debug-print "Generating config headers in `pwd`"
-
-				# Transform all .ui files in it into .h files
-				for ui in *.ui
-				do
-					emake "$(basename $ui .ui).h" || die
-					debug-print "Generated ui header `pwd`/$ui"
-				done
-
-				# Return to original directory
-				popd >/dev/null
-
-			done
-
-			# For every dir listed in $KMCFGONLY
-			for dir in $KMCFGONLYFULLPATH
-			do
-
-				# Go to indicated directory
-				pushd $dir >/dev/null
-				debug-print "Generating config headers in `pwd`"
-
-				# Transform all .kcfgc files in it into .h files
-				for kcfgc in *.kcfgc
-				do
-					emake "`basename $kcfgc .kcfgc`.h" || die
-					debug-print "Generated config header `pwd`/$kcfgc"
-				done
-
-				# Return to original directory
-				popd >/dev/null
-
-			done
-
-			for dir in $KMCFGONLYFULLPATH $KMUIONLYFULLPATH
-			do
-
-				# Clean makefile as this directory is exclusively used for
-				# compilation of config headers
-	            echo 'all:' > $dir/Makefile.am
-	            echo 'install:' >> $dir/Makefile.am
-	            echo '.PHONY: all' >> $dir/Makefile.am
-
-			done
-
-			for dir in $(sort_subdirs ${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS} po)
-			do
-				einfo "Making ${dir}"
 				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
-				emake || die "died running emake, $FUNCNAME:make"
+				# If directory is marked for complete compilation
+				if ( hasq "${dir}" ${compiledirs} )
+				then
+					einfo "Making ${dir}"
+					emake || die "died running emake, $FUNCNAME:make"
+				# If directory is marked for specific targets
+				else
+					for ((index=0; index< ${#targetdirs[*]}; index++))
+					do
+						if [ "${targetdirs[index]}" == "${dir}" ]
+						then
+							for target in ${targets[index]}
+							do
+								if [ "${target:0:1}" == "." ]
+								then
+									einfo "Making ${target:1} headers in ${dir}"
+									for src in *${target}
+									do
+										dest="$(basename ${src} ${target}).h"
+										output="$(emake ${dest} 2>&1)"
+										
+										if [ ! ${?} -eq 0 ]
+										then
+											if [ "${target}" == ".ui" ]
+											then
+												ewarn "Manually creating ${dest} in ${dir}"
+												${QTDIR}/bin/uic -o ${dest} ${src} || die
+											else
+												printf "${output}\n"
+												die "unable to create ${target:1} headers in ${dir}"
+											fi
+										else
+											printf "${output}\n"
+										fi
+									done
+								else
+									einfo "Making ${target} in ${dir}"
+									emake ${target} || die "unable to make ${target} in ${dir}"
+								fi
+							done
+						fi
+					done
+					echo 'all:' > Makefile.am
+					echo 'install:' >> Makefile.am
+					echo '.PHONY: all' >> Makefile.am
+				fi
 				popd >/dev/null
 			done
 			
