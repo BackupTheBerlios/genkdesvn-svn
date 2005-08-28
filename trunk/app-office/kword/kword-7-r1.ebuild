@@ -11,7 +11,7 @@ HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
 
 SLOT="$PV"
-KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
@@ -34,17 +34,11 @@ KMCOPYLIB="
     libkowmf lib/kwmf
     libkstore lib/store
     libkspreadcommon kspread"
-
 KMEXTRACTONLY="
     lib/
     kspread/"
-
 KMCOMPILEONLY="filters/liboofilter"
-
-KMUIONLY="lib/kotext"
-KMCFGONLY="lib/kotext"
-
+KMTARGETSONLY=('lib/kotext .ui')
 KMEXTRA="filters/kword"
 
 need-kde 3.3
-
