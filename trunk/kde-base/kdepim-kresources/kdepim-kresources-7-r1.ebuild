@@ -10,7 +10,7 @@ KMNODOCS="true"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE PIM groupware plugin collection"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkcal)
 $(deprange $PV $MAXKDEVER kde-base/libkpimexchange)
@@ -33,11 +33,11 @@ KMEXTRACTONLY="
 	kmail/kmailicalIface.h
 	libkdenetwork/
 	libemailfunctions/ "
-
 KMCOMPILEONLY="
-    libkcal/libical/src/libical/
-    knotes/
     kaddressbook/interfaces/
-    kaddressbook/common/
-    "	
+    kaddressbook/common/"
+KMTARGETSONLY=(
+	'knotes libknotesresources.la'
+	'libkcal/libical/src/libical ical.h')
+
 PATCHES="$FILESDIR/use-installed-kode.diff  $FILESDIR/icaltimezone.c.diff"

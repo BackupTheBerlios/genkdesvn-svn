@@ -8,7 +8,7 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE CD player"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 OLDDEPEND="~kde-base/libkcddb-3.3.1"
 DEPEND="
@@ -17,6 +17,4 @@ $(deprange $PV $MAXKDEVER kde-base/libkcddb)"
 KMCOPYLIB="libkcddb libkcddb"
 KMEXTRACTONLY="
 	mpeglib_artsplug/configure.in.in"
-
-KMUIONLY="libkcddb"
-KMCFGONLY="libkcddb"
+KMTARGETSONLY=('libkcddb .ui .kcfgc')

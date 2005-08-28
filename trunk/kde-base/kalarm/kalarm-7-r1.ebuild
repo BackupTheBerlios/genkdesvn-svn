@@ -1,5 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# $Header: $
 
 KMNAME=kdepim
 MAXKDEVER=$PV
@@ -7,7 +8,7 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="Personal alarm message, command and email scheduler for KDE"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 OLDDEPEND="~kde-base/libkdepim-$PV
 	~kde-base/libkdenetwork-$PV
@@ -29,9 +30,9 @@ KMEXTRACTONLY="
 	libkdenetwork/
 	libkpimidentities/
 	libkmime/"
-KMCOMPILEONLY="
-	libkcal/libical/src/libical/
-	libkcal/libical/src/libicalss/"
+KMTARGETSONLY=(
+	'libkcal/libical/src/libical ical.h'
+	'libkcal/libical/src/libicalss icalss.h')
 
 PATCHES="$FILESDIR/icaltimezone.c.diff"
 

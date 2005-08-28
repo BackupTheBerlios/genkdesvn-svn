@@ -7,11 +7,10 @@ KMMODULE=wizards
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KMNODOCS="true"
-UNSERMAKE=no
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDEPIM wizards"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 OLDDEPEND="~kde-base/libkdepim-$PV
 	~kde-base/libkcal-$PV
@@ -51,8 +50,8 @@ KMEXTRACTONLY="
 	kmail"
 KMCOMPILEONLY="
 	libemailfunctions"
-KMCFGONLY="
-	kresources/slox
-	kresources/lib
-	kresources/egroupware
-	kresources/groupwise"
+KMTARGETSONLY=(
+	'kresources/slox .kcfgc'
+	'kresources/lib .kcfgc'
+	'kresources/egroupware .kcfgc'
+	'kresources/groupwise .kcfgc')

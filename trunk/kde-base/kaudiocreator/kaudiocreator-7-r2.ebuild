@@ -8,7 +8,7 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE CD ripper and audio encoder frontend"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="encode flac mp3 vorbis"
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkcddb)
     media-sound/cdparanoia"
@@ -22,5 +22,4 @@ RDEPEND="$DEPEND
 
 KMCOPYLIB="libkcddb libkcddb"
 KMCOMPILEONLY="kscd"
-KMCFGONLY="libkcddb"
-KMUIONLY="libkcddb"
+KMTARGETSONLY=('libkcddb .ui .kcfgc')
