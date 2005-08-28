@@ -13,11 +13,9 @@ from optparse import OptionParser
 err_closed = re.compile(".*Connection closed unexpectedly.*")
 err_timeout = re.compile(".*Connection timed out.*")
 err_malformed = re.compile(".*Malformed.*")
-err_notversioned = re.compile(".*Not a versioned resource.*")
-err_notfound = re.compile(".*File not found.*")
-err_notwc = re.compile(".*is not a working copy.*")
 err_validate = re.compile("$Error validating server certificate for.*")
 err_locked = re.compile(".*Working copy.*locked.*")
+err_nonexistent = re.compile("(.*Not a versioned resource.*)|(.*Not a valid URL.*)|(.*File not found.*)|(.*is not a working copy.*)")
 sleep_time=30
 
 def einfo(message):
@@ -56,14 +54,14 @@ class item_info:
 			
 		def on_output(line, tags=tags):
 			line=line.strip()
-			if err_notversioned.match(line):
+			if err_nonexistent.match(line):
 				tags["Node Kind"] = "nonexistent"
 			elif line != "":
 				(tag, value) = line.split(":", 1)
 				tags[tag] = value.strip()
 
 		def on_error(line, tags=tags):
-			if err_notfound.match(line) or err_notwc.match(line):
+			if err_nonexistent.match(line):
 				tags["Node Kind"] = "nonexistent"
 		
 		if local and not exists(item):
