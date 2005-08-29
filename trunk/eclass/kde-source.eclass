@@ -202,9 +202,15 @@ function kde-source_src_unpack {
 
 	if [ -z "${KSCM_TRANS_MODULE}" ]
 	then
-
-		[ "${KSCM_ROOT}" == "trunk/extragear" ] && KSCM_TRANS_MODULE="extragear-${KSCM_MODULE}" || KSCM_TRANS_MODULE="${KSCM_MODULE}"
-
+		if [ "${KSCM_ROOT}" == "trunk/extragear" ]
+		then
+			KSCM_TRANS_MODULE="extragear-${KSCM_MODULE}"
+		elif [ "${KSCM_ROOT}" == "trunk/playground" ]
+		then
+			KSCM_TRANS_MODULE="playground-${KSCM_MODULE}"
+		else
+			KSCM_TRANS_MODULE="${KSCM_MODULE}"
+		fi
 	fi
 
 	# Add all translations for module for deep fetch and revision check
