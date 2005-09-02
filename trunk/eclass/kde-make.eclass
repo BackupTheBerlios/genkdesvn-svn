@@ -21,6 +21,8 @@ INHERITED="$INHERITED $ECLASS"
 
 [ "${UNSERMAKE}" != no ] && DEPEND="${DEPEND} >=kde-base/unsermake-7-r1"
 
+[ -z "${PORTAGE_OBJDIR}" ] && PORTAGE_OBJDIR="${ROOT}/var/tmp/portage/objects"
+
 function debug-print-function-context {
 	
 	debug-print "${1}: invoked in ${PWD}"
