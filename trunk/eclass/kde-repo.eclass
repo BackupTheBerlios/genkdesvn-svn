@@ -149,6 +149,9 @@ function kde-repo_src_unpack() {
 			# Add submodule directory to list of items to be fetched recursively
 			DEEPITEMS="${DEEPITEMS} ${KSCM_SUBDIR}"
 
+			# Add submodule directory to list of items for revision-check
+			CHECKITEMS="${DEEPITEMS} ${KSCM_SUBDIR}"
+
 			# Add module directory to list of items to be fetched
 			# non-recursively, which is needed for makefiles, etc.
 			SHALLOWITEMS="${SHALLOWITEMS} /"
