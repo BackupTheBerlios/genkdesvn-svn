@@ -13,7 +13,8 @@ HOMEPAGE="http://www.trolltech.com/"
 LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="${PV}"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
+#KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
+KEYWORDS="-*"
 IUSE="cups debug doc examples firebird gif ipv6 mysql nas odbc opengl postgres sqlite xinerama zlib"
 
 DEPEND="virtual/x11 virtual/xft
