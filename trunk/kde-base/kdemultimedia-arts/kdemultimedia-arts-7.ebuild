@@ -6,6 +6,7 @@ KMNAME=kdemultimedia
 KMMODULE=arts
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+KMNODOCS=true
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="aRts pipeline builder and other tools"
