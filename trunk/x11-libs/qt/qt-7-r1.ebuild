@@ -13,8 +13,7 @@ HOMEPAGE="http://www.trolltech.com/"
 LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="${PV}"
-#KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
-KEYWORDS="-*"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
 IUSE="cups debug doc examples firebird gif ipv6 mysql nas odbc opengl postgres sqlite xinerama zlib"
 
 DEPEND="virtual/x11 virtual/xft
@@ -29,7 +28,7 @@ DEPEND="virtual/x11 virtual/xft
 	postgres? ( dev-db/postgresql )
 	cups? ( net-print/cups )
 	zlib? ( sys-libs/zlib )"
-PDEPEND="odbc? ( ~dev-db/qt-unixODBC-3.3.4 )"
+PDEPEND="odbc? ( ~dev-db/qt-unixODBC-3.3.5)"
 
 QTBASE=/usr/qt/devel
 
@@ -171,7 +170,7 @@ src_install() {
 	else
 		dolib lib/lib{editor,qassistantclient,designercore}.a
 		dolib lib/libqt-mt.la
-		dolib lib/libqt-mt.so.3.3.4 lib/libqui.so.1.0.0
+		dolib lib/libqt-mt.so.3.3.5 lib/libqui.so.1.0.0
 		cd ${D}/${QTBASE}/$(get_libdir)
 
 		for x in libqui.so ; do
@@ -180,13 +179,13 @@ src_install() {
 			ln -s $x.1 $x
 		done
 
-		# version symlinks - 3.3.4->3.3->3->.so
-		ln -s libqt-mt.so.3.3.4 libqt-mt.so.3.3
+		# version symlinks - 3.3.5->3.3->3->.so
+		ln -s libqt-mt.so.3.3.5 libqt-mt.so.3.3
 		ln -s libqt-mt.so.3.3 libqt-mt.so.3
 		ln -s libqt-mt.so.3 libqt-mt.so
 
 		# libqt -> libqt-mt symlinks
-		ln -s libqt-mt.so.3.3.4 libqt.so.3.3.4
+		ln -s libqt-mt.so.3.3.5 libqt.so.3.3.5
 		ln -s libqt-mt.so.3.3 libqt.so.3.3
 		ln -s libqt-mt.so.3 libqt.so.3
 		ln -s libqt-mt.so libqt.so
