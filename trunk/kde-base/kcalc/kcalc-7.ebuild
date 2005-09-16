@@ -9,3 +9,7 @@ inherit kde-meta eutils kde-source
 DESCRIPTION="KDE Calculator"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
+
+DEPEND="dev-libs/gmp"
+
+RDEPEND="${DEPEND}"
