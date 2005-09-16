@@ -32,7 +32,8 @@ KMCOPYLIB="
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
-	libkstore lib/store"
+	libkstore lib/store
+	libkopalette lib/kopalette"
 
 KMEXTRACTONLY="lib/"
 
