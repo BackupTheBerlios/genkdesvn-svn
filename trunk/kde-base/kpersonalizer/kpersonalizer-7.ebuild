@@ -10,4 +10,6 @@ DESCRIPTION="KDE basic settings wizard"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
 
+KMEXTRACTONLY="libkonq"
+
 
