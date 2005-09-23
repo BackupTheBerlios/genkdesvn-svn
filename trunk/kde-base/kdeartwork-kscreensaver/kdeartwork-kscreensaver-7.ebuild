@@ -14,7 +14,6 @@ DEPEND="$(deprange $PV $MAXKDEVER kde-base/kscreensaver)
 	opengl? ( virtual/opengl )
 	!ppc64? ( xscreensaver? ( x11-misc/xscreensaver ) )"
 
-PATCHES="${FILESDIR}/kdeartwork-3.4.0-gl-kdesavers.patch"
 
 src_compile() {
 	myconf="$myconf --with-dpms $(use_with opengl gl)"

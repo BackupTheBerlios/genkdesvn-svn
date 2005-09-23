@@ -10,4 +10,3 @@ DESCRIPTION="KDE hex editor"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
 
-PATCHES="$FILESDIR/khexedit-configure-magic.diff"
