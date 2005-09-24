@@ -41,6 +41,6 @@ HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~ppc ~sparc ~ppc64"
+KEYWORDS="~x86 ~ppc ~sparc ~ppc64 ~amd64"
 IUSE=""
 
