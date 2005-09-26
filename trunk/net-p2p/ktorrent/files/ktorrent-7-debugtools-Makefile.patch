@@ -1,0 +1,18 @@
+--- ktorrent/debugtools/Makefile.am.orig	2005-09-26 22:27:39.667527750 +0200
++++ ktorrent/debugtools/Makefile.am	2005-09-26 22:28:15.457764500 +0200
+@@ -3,11 +3,11 @@
+ 
+ bin_PROGRAMS = kttorinfo ktcachecheck
+ kttorinfo_SOURCES = main.cpp
+-kttorinfo_LDADD = $(top_builddir)/libtorrent/libtorrent.la \
+-	$(top_builddir)/libutil/libutil.la $(LIB_KIO) $(LIB_KFILE)
++kttorinfo_LDADD = ../libtorrent/libtorrent.la \
++	../libutil/libutil.la $(LIB_KIO) $(LIB_KFILE)
+ 
+ ktcachecheck_SOURCES = cachecheck.cpp cachechecker.cpp singlecachechecker.cpp \
+ 	multicachechecker.cpp
+-ktcachecheck_LDADD = $(top_builddir)/libtorrent/libtorrent.la \
+-	$(top_builddir)/libutil/libutil.la $(LIB_KFILE) $(LIB_KIO)
++ktcachecheck_LDADD = ../libtorrent/libtorrent.la \
++	../libutil/libutil.la $(LIB_KFILE) $(LIB_KIO)
+ noinst_HEADERS = cachechecker.h singlecachechecker.h multicachechecker.h
