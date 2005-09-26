@@ -11,7 +11,7 @@ SRC_URI=""
 LICENSE="GPL-2 LGPL-2"
 SLOT="$PV"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="alsa arts cups doc jpeg2k kerberos openexr spell ssl tiff zeroconf"
+IUSE="acl alsa arts cups doc jpeg2k kerberos openexr spell ssl tiff zeroconf"
 
 # kde.eclass has kdelibs in DEPEND, and we can't have that in here.
 # so we recreate the entire DEPEND from scratch.
@@ -26,6 +26,7 @@ RDEPEND="$(qt_min_version 3.3.3)
 	media-libs/libart_lgpl
 	net-dns/libidn
 	virtual/utempter
+	acl? ( sys-apps/acl )
 	ssl? ( >=dev-libs/openssl-0.9.7d )
 	alsa? ( media-libs/alsa-lib )
 	cups? ( >=net-print/cups-1.1.19 )
@@ -47,13 +48,17 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	kde-source_src_unpack
 	! use arts && cd ${S} && epatch ${FILESDIR}/${P}-knotify-noarts.patch
+
+	# Configure checks for ACLs.
+	epatch "${FILESDIR}/${P}-configure-acl.patch"
 }
 
 src_compile() {
 	myconf="--with-distribution=Gentoo
 	        --enable-libfam $(use_enable kernel_linux dnotify)
 	        --with-libart --with-libidn --with-utempter
-	        $(use_with alsa) $(use_with arts) $(use_with ssl)
+	        $(use_with alsa) $(use_with arts) 
+			$(use_with acl) $(use_with ssl)
 	        $(use_with kerberos gssapi) $(use_with tiff)
 	        $(use_with jpeg2k jasper) $(use_with openexr)
 	        $(use_enable cups) $(use_enable zeroconf dnssd)"
