@@ -2,7 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde-sourceforge
+KSCM_ROOT=extragear
+KSCM_MODULE=multimedia
+KSCM_SUBDIR=kaffeine
+inherit kde eutils kde-source
 
 DESCRIPTION="Media player for KDE"
 HOMEPAGE="http://kaffeine.sourceforge.net/"
