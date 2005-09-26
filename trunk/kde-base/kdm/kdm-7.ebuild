@@ -22,6 +22,14 @@ DEPEND="$DEPEND
 	# so until we separate the kcontrol modules into separate ebuilds :-),
 	# there's a dep here
 
+src_unpack() {
+	kde-source_src_unpack
+
+	if has_version 'x11-base/xorg-server'; then
+		epatch "${FILESDIR}/${P}-xmkmf.patch"
+		einfo "Removed xmkmf configure check for modular X"
+	fi
+}
 
 src_compile() {
 	use pam \
