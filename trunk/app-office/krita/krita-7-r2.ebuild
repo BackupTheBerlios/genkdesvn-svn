@@ -39,4 +39,22 @@ KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/krita"
 
+KMHEADERS=( 'krita/plugins/colorsfilters/ wdg_brightness_contrast.h'
+	'krita/plugins/cimg/ wdg_cimg.h'
+	'krita/plugins/bumpmap/ wdgbumpmap.h'
+	'krita/plugins/convolutionfilters/ kis_custom_convolution_filter_configuration_base_widget.h'
+	'krita/plugins/colorrange/ wdg_colorrange.h'
+	'krita/plugins/imagesize/ wdg_imagesize.h wdg_layersize.h'
+	'krita/plugins/rotateimage/ wdg_rotateimage.h'
+	'krita/plugins/shearimage/ wdg_shearimage.h'
+	'krita/plugins/colorspaceconversion/ wdgconvertcolorspace.h'
+	'krita/plugins/tool_crop/ wdg_tool_crop.h'
+	'krita/plugins/tool_star/ wdg_tool_star.h'
+	'krita/plugins/tool_transform/ wdg_tool_transform.h'
+	'krita/plugins/histogram/ wdghistogram.h'
+	'krita/plugins/variations/ wdg_variations.h'
+	'krita/plugins/performancetest/ wdg_perftest.h'
+	'krita/plugins/separate_channels/ wdg_separations.h'
+)
+
 need-kde 3.3
