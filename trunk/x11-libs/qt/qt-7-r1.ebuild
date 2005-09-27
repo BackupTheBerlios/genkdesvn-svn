@@ -14,7 +14,7 @@ LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="${PV}"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
-IUSE="cups debug doc examples firebird gif ipv6 mysql nas odbc opengl postgres sqlite xinerama zlib"
+IUSE="cups debug doc examples firebird gif ipv6 mysql nas odbc opengl postgres sqlite symbol_visibility xinerama zlib"
 
 DEPEND="virtual/x11 virtual/xft
 	media-libs/libpng
@@ -74,6 +74,23 @@ src_unpack() {
 
 	# patches for gcc4
 	epatch "${FILESDIR}/${P}-gcc4.patch"
+
+	# patch for qt symbol visibilty support, if >=gcc-4.0.0
+	# see http://bugs.kde.org/show_bug.cgi?id=109386
+	if use symbol_visibility; then
+		if [[ "$(gcc-major-version)" == "4" ]]; then
+			epatch "${FILESDIR}/${P}-visibility.patch"
+			einfo "Symbol visibility support: auto"
+			USE_SYBMBOL_VISIBILITY="yes"
+		else
+			einfo "Symbol visibility support: disabled"
+			ewarn "You need >=sys-devel/gcc-4.0.0 for symbol visibility"
+			ewarn "Then recompile qt AND kdelibs with the rest of KDE"
+			ewarn "Dont try if you dont know what you're doing"
+		fi
+	else
+		einfo "Symbol visibility support: disabled"
+	fi
 
 	if use ppc-macos ; then
 		epatch ${FILESDIR}/${P}-macos.patch
@@ -293,4 +310,11 @@ pkg_postinst() {
 	einfo "kde-base/kdelibs, kde-base/kdeartwork and kde-base/kdeartwork-styles."
 	einfo "See http://doc.trolltech.com/3.3/plugins-howto.html for more infos."
 	echo
+	if [[ -n "${USE_SYMBOL_VISIBILITY}" ]]; then
+		einfo "You have symbol visibility patch enabled."
+		einfo "If this is a new compile of Qt, make sure you recompile the whole of KDE."
+		einfo "For bugs and info you can check out the thread at KDE bugtracker:"
+		einfo "http://bugs.kde.org/show_bug.cgi?id=109386"
+		echo
+	fi
 }

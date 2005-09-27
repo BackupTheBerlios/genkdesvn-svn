@@ -1,5 +1,6 @@
-MD5 502c4a165f1ec4cd95388b63698fd188 qt-7-r1.ebuild 8500
 MD5 c486b870a7d95d0151620673f6b564e2 ChangeLog 351
+MD5 ce1b0bf38ba658b568dbea8ba4683466 qt-7-r1.ebuild 9444
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-qt-7-r1 0
 MD5 41e88c93a4d4b74a456a619dbaee1f43 files/qt-7-gcc4.patch 920
 MD5 9f5e557d5ece29f236e21104925a66a3 files/qt-7-macos.patch 18793
+MD5 6f08f21d137f855dfac1fdae5e00801e files/qt-7-visibility.patch 2285
