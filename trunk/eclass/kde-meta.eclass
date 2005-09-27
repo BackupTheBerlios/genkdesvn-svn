@@ -168,6 +168,11 @@ function set_target_arrays {
 		read targetdirs[index] targets[index] < <(echo ${KMTARGETSONLY[index]})
 	done
 
+	for ((index=0; index < ${#KMHEADERS[*]}; index++))
+	do
+		read headerdirs[index] headers[index] < <(echo ${KMHEADERS[index]})
+	done
+
 }
 
 # create a full path vars, and remove ALL the endings "/"
@@ -454,6 +459,27 @@ function kde-meta_src_compile() {
 		fi
 
 		if [ "$section" == "make" ]; then
+
+			# KMHEADERS: create headers without touching Makefile.am
+			# syntax is different too: "dir/ file.h"
+			for dir in $(sort_subdirs ${headerdirs[*]})
+			do
+				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+					for ((index=0; index< ${#headerdirs[*]}; index++))
+					do
+						if [ "${headerdirs[index]}" == "${dir}" ]
+						then
+							for target in ${headers[index]}
+							do
+								einfo "Making ${target} in ${dir}"
+								dest="$(basename ${src} ${target})"
+								output="$(emake ${dest} 2>&1)"
+								printf "${output}\n"
+							done
+						fi
+					done
+				popd >/dev/null
+			done
 
 			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS} po"
 			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})
