@@ -27,3 +27,6 @@ KMEXTRA="
 	kontact/plugins/weather/"
 # We remove some plugins that are related to external kdepim's programs, because they needs also libs from korganizer, kpilot etc... so to emerge kontact we'll need also ALL the other programs, it's better to emerge the kontact's plugins in the ebuild of its program
 
+## fixes missing prefs.h bug ??
+KMHEADERS=( 'kontact/src/ prefs.h'
+)
