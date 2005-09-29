@@ -158,6 +158,13 @@ fi
 # KMCOPYLIB: Contains an even number of $IFS (i.e. whitespace) -separated words.
 # Each two consecutive words, libname and dirname, are considered. symlinks are created under $S/$dirname
 # pointing to $PREFIX/lib/libname*.
+#
+# KMTARGETSONLY: contains list of directories followed by targets. Those files, and those files alone, 
+# will be compiled in that directory. This is useful when apps link to ui or kcfgc file from other directory.
+# usage is 'path/to/dir/ .extension1 [.extension2 [.extension3 ...]]'
+#
+# KMHEADERS: contains list of directories followed by list fo files to create before compiling, syntax is:
+# 'path/to/dir/ header1.h [header2.h [header3.h ...]]' etc
 
 # ====================================================
 
