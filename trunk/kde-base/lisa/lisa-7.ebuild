@@ -5,12 +5,14 @@ KMNAME=kdenetwork
 KMMODULE=lanbrowsing
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+KMNODOCS="true" # there is no doc/lanbrowsing, only doc/lisa !!!
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE Lan Information Server - allows KDE desktops to share information over a network"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
-KMEXTRA="doc/kcontrol/lanbrowser"
+KMEXTRA="doc/kcontrol/lanbrowser
+	doc/lisa"
 
 src_install() {
 	kde-meta_src_install
