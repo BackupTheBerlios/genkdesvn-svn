@@ -55,7 +55,7 @@ src_compile() {
 	        --enable-libfam $(use_enable kernel_linux dnotify)
 	        --with-libart --with-libidn --with-utempter
 	        $(use_with alsa) $(use_with arts) 
-			$(use_with ssl)
+			$(use_with ssl) $(use_with acl)
 	        $(use_with kerberos gssapi) $(use_with tiff)
 	        $(use_with jpeg2k jasper) $(use_with openexr)
 	        $(use_enable cups) $(use_enable zeroconf dnssd)"
