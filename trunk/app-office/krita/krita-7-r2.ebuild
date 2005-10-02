@@ -55,6 +55,7 @@ KMHEADERS=( 'krita/plugins/colorsfilters/ wdg_brightness_contrast.h'
 	'krita/plugins/variations/ wdg_variations.h'
 	'krita/plugins/performancetest/ wdg_perftest.h'
 	'krita/plugins/separate_channels/ wdg_separations.h'
+	'krita/plugins/colorsfilters/ wdg_perchannel.h'
 )
 
 need-kde 3.3
