@@ -63,6 +63,14 @@ pkg_setup() {
 	kde-source_pkg_setup
 }
 
+src_unpack() {
+	kde-source_src_unpack
+
+	einfo "This patch fixes a stack overflow in the collection builder."
+	einfo "Source: http://kde-look.org/content/show.php?content=29672"
+	epatch "${FILESDIR}/collection-builder-stack.patch"
+}
+
 src_compile() {
 	# amarok does not respect kde coding standards, and makes a lot of
 	# assuptions regarding its installation directory. For this reason,

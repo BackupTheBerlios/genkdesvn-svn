@@ -1,0 +1,160 @@
+--- amarok.orig/src/collectionreader.cpp	2005-09-20 21:58:17.000000000 +0200
++++ amarok/src/collectionreader.cpp	2005-10-01 17:13:05.411484720 +0200
+@@ -150,7 +150,6 @@
+     return !isAborted();
+ }
+ 
+-
+ void
+ CollectionReader::readDir( const QString& dir, QStringList& entries )
+ {
+@@ -158,75 +157,82 @@
+     if ( dir == "/dev" || dir == "/sys" || dir == "/proc" )
+         return;
+ 
+-    QCString dir8Bit = QFile::encodeName( dir );
+-
+-    if ( m_processedDirs.contains( dir ) ) {
+-        debug() << "Skipping, already scanned: " << dir << endl;
+-        return;
+-    }
+-
+-    m_processedDirs << dir;
++    m_toScanDirs << dir;
+ 
+-    struct stat statBuf;
+-    //update dir statistics for rescanning purposes
+-    if ( stat( dir8Bit, &statBuf ) == 0 )
+-        CollectionDB::instance()->updateDirStats( dir, (long)statBuf.st_mtime, !m_incremental ? m_db : 0 );
+-    else {
+-        if ( m_incremental ) {
+-            CollectionDB::instance()->removeSongsInDir( dir );
+-            CollectionDB::instance()->removeDirFromCollection( dir );
++    while( !m_toScanDirs.isEmpty() ) {
++        QStringList::Iterator scannedDir = m_toScanDirs.begin();
++        QCString dir8Bit = QFile::encodeName( *scannedDir );
++
++        if ( m_processedDirs.contains( *scannedDir ) ) {
++            debug() << "Skipping, already scanned: " << *scannedDir << endl;
++            return;
+         }
+-        return;
+-    }
+-
+-
+-    DIR *d = opendir( dir8Bit );
+-    if( d == NULL ) {
+-        if( errno == EACCES )
+-            warning() << "Skipping, no access permissions: " << dir << endl;
+-        return;
+-    }
+ 
+-    for( dirent *ent; (ent = readdir( d )) && !isAborted(); ) {
+-        QCString entry = ent->d_name;
++        m_processedDirs << *scannedDir;
+ 
+-        if ( entry == "." || entry == ".." )
+-            continue;
+-
+-        entry.prepend( dir8Bit );
+-
+-        if ( stat( entry, &statBuf ) != 0 )
+-            continue;
+-
+-        if ( S_ISDIR( statBuf.st_mode ) && m_recursively )
+-        {
+-            const QString file = QFile::decodeName( entry );
+-            const QFileInfo info( file );
+-            const QString readLink = info.readLink();
++        struct stat statBuf;
++        //update dir statistics for rescanning purposes
++        if ( stat( dir8Bit, &statBuf ) == 0 )
++            CollectionDB::instance()->updateDirStats( dir, (long)statBuf.st_mtime, !m_incremental ? m_db : 0 );
++        else {
++            if ( m_incremental ) {
++                CollectionDB::instance()->removeSongsInDir( dir );
++                CollectionDB::instance()->removeDirFromCollection( dir );
++            }
++            return;
++        }
+ 
+-            if ( readLink == "/" || info.isSymLink() && m_processedDirs.contains( readLink ) )
+-                warning() << "Skipping symlink which points to: " << readLink << endl;
+ 
+-            else if( !m_incremental || !CollectionDB::instance()->isDirInCollection( file ) )
+-                // we MUST add a '/' after the dirname
+-                readDir( file + '/', entries );
++        DIR *d = opendir( dir8Bit );
++        if( d == NULL ) {
++            if( errno == EACCES )
++                warning() << "Skipping, no access permissions: " << dir << endl;
++            return;
+         }
++    
++        for( dirent *ent; (ent = readdir( d )) && !isAborted(); ) {
++            QCString entry = ent->d_name;
++    
++            if ( entry == "." || entry == ".." )
++                continue;
++    
++            entry.prepend( dir8Bit );
++    
++            if ( stat( entry, &statBuf ) != 0 )
++                continue;
++    
++            if ( S_ISDIR( statBuf.st_mode ) && m_recursively )
++            {
++                const QString file = QFile::decodeName( entry );
++                const QFileInfo info( file );
++                const QString readLink = info.readLink();
++    
++                if ( readLink == "/" || info.isSymLink() && m_processedDirs.contains( readLink ) )
++                    warning() << "Skipping symlink which points to: " << readLink << endl;
++    
++                else if( !m_incremental || !CollectionDB::instance()->isDirInCollection( file ) )
++                    // we MUST add a '/' after the dirname
++                    m_toScanDirs.prepend( file + '/' );
++            }
++    
++            else if( S_ISREG( statBuf.st_mode ) )
++            {
++                const QString file = QFile::decodeName( entry );
++    
++                if ( m_importPlaylists ) {
++                    QString ext = file.right( 4 ).lower();
++                    if ( ext == ".m3u" || ext == ".pls" )
++                        QApplication::postEvent( PlaylistBrowser::instance(), new PlaylistFoundEvent( file ) );
++                }
+ 
+-        else if( S_ISREG( statBuf.st_mode ) )
+-        {
+-            const QString file = QFile::decodeName( entry );
+-
+-            if ( m_importPlaylists ) {
+-                QString ext = file.right( 4 ).lower();
+-                if ( ext == ".m3u" || ext == ".pls" )
+-                    QApplication::postEvent( PlaylistBrowser::instance(), new PlaylistFoundEvent( file ) );
++                entries += file;
+             }
+ 
+-            entries += file;
+         }
++    
++        closedir( d );
++        m_toScanDirs.remove(scannedDir);
+     }
+-
+-    closedir( d );
+ }
+ 
+ void
+--- amarok.orig/src/collectionreader.h	2005-09-20 21:58:17.000000000 +0200
++++ amarok/src/collectionreader.h	2005-10-01 17:13:05.412484568 +0200
+@@ -49,6 +49,7 @@
+     bool m_incremental;
+ 
+     QStringList m_processedDirs;
++    QStringList m_toScanDirs;
+ 
+     std::ofstream log;
+ };

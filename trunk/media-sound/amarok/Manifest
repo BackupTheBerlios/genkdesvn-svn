@@ -1,3 +1,4 @@
-MD5 6b7f82214a35afdbf9ff86044af10b29 amarok-7-r3.ebuild 3029
 MD5 8f14c7c12f4d9bbdfed59092dc8e2f0e ChangeLog 994
+MD5 d626fbb4fe391935e8c767e664595101 amarok-7-r3.ebuild 3262
+MD5 2b991dddb0f2fc26e29e3448694762f2 files/collection-builder-stack.patch 5578
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-amarok-7-r3 0
