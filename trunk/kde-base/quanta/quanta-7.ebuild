@@ -22,11 +22,7 @@ tidy? ( app-text/htmltidy )"
 
 KMCOMPILEONLY=lib
 
-# TODO: check why this wasn't needed back in the monolithic ebuild
-src_compile () {
-	myconf="--with-extra-includes=$(xml2-config --cflags | sed -e 's:^-I::')"
+# LIBXML_LIBS is needed by quanta (parsers) by is set kxsldbg, so we extrac it
+# to let it set LIBXML_LIBS !!! The exports are no longer needed now ...
+KMEXTRACTONLY="kxsldbg/"
 
-	export LIBXML_LIBS="`xml2-config --libs`"
-	export LIBXSLT_LIBS="`xslt-config --libs`"
-	kde-meta_src_compile
-}
