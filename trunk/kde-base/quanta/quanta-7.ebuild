@@ -24,5 +24,5 @@ KMCOMPILEONLY=lib
 
 # LIBXML_LIBS is needed by quanta (parsers) by is set kxsldbg, so we extrac it
 # to let it set LIBXML_LIBS !!! The exports are no longer needed now ...
-KMEXTRACTONLY="kxsldbg/"
+#KMEXTRACTONLY="kxsldbg/"
 
