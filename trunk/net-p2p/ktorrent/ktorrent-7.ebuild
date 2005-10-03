@@ -19,8 +19,3 @@ need-kde 3
 
 KMEXTRA="ktorrent/libtorrent"
 
-src_unpack() {
-	kde-source_src_unpack
-
-	epatch "${FILESDIR}/${P}-debugtools-Makefile.patch"
-}
