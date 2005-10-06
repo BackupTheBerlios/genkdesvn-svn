@@ -37,12 +37,16 @@ pkg_postinst()
 {	
 	subversion_pkg_postinst
 	einfo
-	einfo "To enable kde builds with unsermake, add unsermake to your FEATURES in /etc/make.conf"
+	einfo "Unsermake is now the default tool for building KDE apps (ebuilds)."
+	einfo "If you want to disable building with unsermake, set"
+	einfo "UNSERMAKE=\"no\""
 	einfo
 	einfo "To manually build KDE applications with unsermake, call unsermake instead of make as follows:"
-	einfo "make -f Makefile.cvs"
+	einfo "unsermake -f Makefile.cvs"
 	einfo "./configure"
 	einfo "unsermake"
 	einfo
-	einfo "Unsermake builds are highly experimental; use at your own risk"
+	einfo "Unsermake builds are highly experimental; use at your own risk."
+	einfo "If build fails, try again with unsermake disabled."
+	echo
 }
