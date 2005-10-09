@@ -9,6 +9,7 @@ names = {
 		"external"
 	],
 	"distro": [
+		"kde-base/unsermake",
 		"kde-base/arts",
 		"kde-base/kdelibs",
 		"kdebase",
@@ -28,7 +29,8 @@ names = {
 		"kdebindings"
 	],
 	"external": [
-		"sourceforge"
+		"sourceforge",
+		"misc"
 	],
 	"kdebase": [
 		"kde-base/libkonq",
@@ -392,9 +394,13 @@ names = {
 		"app-antivirus/klamav",
 		"dev-util/kdbg",
 		"kde-misc/kat",
+		"kde-misc/krusader",
 		"media-sound/kradio",
 		"media-video/kaffeine",
 		"net-p2p/apollon"
+	],
+	"misc": [
+		"kde-misc/kcall"
 	],
 	"kioslaves": [
 		"kde-base/kdebase-kioslaves",
