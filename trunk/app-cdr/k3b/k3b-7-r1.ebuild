@@ -72,7 +72,7 @@ src_compile() {
 src_install() {
 	make DESTDIR=${D} install || die
 
-	dodoc AUTHORS ChangeLog COPYING FAQ INSTALL KNOWNBUGS PERMISSIONS README TODO
+	dodoc README
 
 	# install menu entry
 	dodir /usr/share/applications
