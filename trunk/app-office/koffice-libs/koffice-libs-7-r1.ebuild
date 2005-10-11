@@ -6,7 +6,6 @@ MAXKOFFICEVER=7
 KMNAME=koffice
 KMMODULE=lib
 KMNODOCS="true"
-UNSERMAKE=no
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="Shared KOffice libraries."
