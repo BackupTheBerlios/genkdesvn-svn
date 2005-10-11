@@ -79,12 +79,12 @@ src_unpack() {
 	# see http://bugs.kde.org/show_bug.cgi?id=109386
 	if use symbol_visibility; then
 		if [[ "$(gcc-major-version)" == "4" ]]; then
-			epatch "${FILESDIR}/${P}-visibility.patch"
+			epatch "${FILESDIR}/${P}-visibility-v2.patch"
 			einfo "Symbol visibility support: auto"
 			USE_SYBMBOL_VISIBILITY="yes"
 		else
 			einfo "Symbol visibility support: disabled"
-			ewarn "You need >=sys-devel/gcc-4.0.0 for symbol visibility"
+			ewarn "You need >=sys-devel/gcc-4.0.2-r1 for symbol visibility"
 			ewarn "Then recompile qt AND kdelibs with the rest of KDE"
 			ewarn "Dont try if you dont know what you're doing"
 		fi
