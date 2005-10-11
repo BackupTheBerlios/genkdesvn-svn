@@ -26,8 +26,8 @@ src_unpack() {
 	kde-source_src_unpack
 
 	if has_version 'x11-base/xorg-server'; then
-		epatch "${FILESDIR}/${P}-xmkmf.patch"
-		einfo "Removed xmkmf configure check for modular X"
+		#epatch "${FILESDIR}/${P}-xmkmf.patch"
+		epatch "${FILESDIR}/${PN}_imake_configure.patch"
 	fi
 }
 

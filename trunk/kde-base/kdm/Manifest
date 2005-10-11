@@ -1,3 +1,4 @@
-MD5 2cbb399d408051e4496612bc2edfcd9e kdm-7.ebuild 2581
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdm-7 0
 MD5 89c2e849e02c7a1ccab4bd1378ead6bb files/kdm-7-xmkmf.patch 1320
+MD5 cc5c2e37f44e2b2e4b18fe6294146562 files/kdm_imake_configure.patch 2651
+MD5 b06b48d2b7893eef99660b352f237ec4 kdm-7.ebuild 2579

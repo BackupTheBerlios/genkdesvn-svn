@@ -1,0 +1,75 @@
+--- kdm/configure.in.in.orig	2005-10-11 22:37:20.246324250 +0200
++++ kdm/configure.in.in	2005-10-11 22:39:43.727291250 +0200
+@@ -1,39 +1,39 @@
+-KDE_FIND_PATH(xmkmf, XMKMF, [], [AC_MSG_ERROR([xmkmf/imake not found. Please make sure it's in PATH!])])
++dnl KDE_FIND_PATH(xmkmf, XMKMF, [], [AC_MSG_ERROR([xmkmf/imake not found. Please make sure it's in PATH!])])
+ 
+ dnl ask imake about various X settings
+ AC_MSG_CHECKING([X paths])
+-imkv=8
+-test "$kde_cv_defines_imake_version" = $imkv || unset kde_cv_defines_imake
+-AC_CACHE_VAL(kde_cv_defines_imake, [
+-  rm -fr conftestdir
+-  if mkdir conftestdir; then
+-    cd conftestdir
+-    cat > Imakefile <<'EOF'[
+-
+-acimake:
+-	@echo "XBINDIR=\"$(BINDIR)\" XLIBDIR=\"$(LIBDIR)\""
+-
+-]EOF
+-    if $XMKMF >&5 2>&1 && test -f Makefile; then
+-	kde_cv_defines_imake=`${MAKE-make} acimake 2> /dev/null | grep -v "^make"`
+-	kde_cv_defines_imake_version=$imkv
+-    else
+-        AC_MSG_RESULT([failed])
+-	AC_MSG_ERROR([$XMKMF (imake) failed.
+-Make sure you have all necessary X development packages installed.
+-On some systems a missing /lib/cpp symlink is at fault.])
+-    fi
+-    cd ..
+-    rm -fr conftestdir
+-  else
+-    AC_MSG_RESULT([failed])
+-    AC_MSG_ERROR([cannot create temporary directory])
+-  fi
+-])
+-AC_MSG_RESULT([done])
+-eval "$kde_cv_defines_imake"
+-AC_DEFINE_UNQUOTED(XBINDIR, "$XBINDIR", [X binaries directory])
+-AC_DEFINE_UNQUOTED(XLIBDIR, "$XLIBDIR", [X libraries directory])
++dnl imkv=8
++dnl test "$kde_cv_defines_imake_version" = $imkv || unset kde_cv_defines_imake
++dnl AC_CACHE_VAL(kde_cv_defines_imake, [
++dnl   rm -fr conftestdir
++dnl   if mkdir conftestdir; then
++dnl     cd conftestdir
++dnl     cat > Imakefile <<'EOF'[
++dnl 
++dnl acimake:
++dnl 	@echo "XBINDIR=\"$(BINDIR)\" XLIBDIR=\"$(LIBDIR)\""
++dnl 
++dnl ]EOF
++dnl     if $XMKMF >&5 2>&1 && test -f Makefile; then
++dnl 	kde_cv_defines_imake=`${MAKE-make} acimake 2> /dev/null | grep -v "^make"`
++dnl 	kde_cv_defines_imake_version=$imkv
++dnl     else
++dnl         AC_MSG_RESULT([failed])
++dnl 	AC_MSG_ERROR([$XMKMF (imake) failed.
++dnl Make sure you have all necessary X development packages installed.
++dnl On some systems a missing /lib/cpp symlink is at fault.])
++dnl     fi
++dnl     cd ..
++dnl     rm -fr conftestdir
++dnl   else
++dnl     AC_MSG_RESULT([failed])
++dnl     AC_MSG_ERROR([cannot create temporary directory])
++dnl   fi
++dnl ])
++dnl AC_MSG_RESULT([done])
++dnl eval "$kde_cv_defines_imake"
++AC_DEFINE_UNQUOTED(XBINDIR, "/usr/bin", [X binaries directory])
++AC_DEFINE_UNQUOTED(XLIBDIR, "/usr/lib", [X libraries directory])
+ 
+ if test -f /etc/ttys; then
+   AC_DEFINE(BSD_INIT, 1, [Define if the system uses a BSD-style init])
