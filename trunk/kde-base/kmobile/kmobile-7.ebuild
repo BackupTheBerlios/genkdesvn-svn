@@ -4,6 +4,8 @@
 KMNAME=kdepim
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+KMNODOCS="true"
+KMEXTRA="doc/api"
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE mobile devices manager"
