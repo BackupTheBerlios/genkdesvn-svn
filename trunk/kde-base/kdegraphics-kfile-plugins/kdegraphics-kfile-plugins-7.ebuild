@@ -5,6 +5,7 @@ KMNAME=kdegraphics
 KMMODULE=kfile-plugins
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+UNSERMAKE=no #toplevel Makefile is all wrong so ...
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="kfile plugins from kdegraphics"

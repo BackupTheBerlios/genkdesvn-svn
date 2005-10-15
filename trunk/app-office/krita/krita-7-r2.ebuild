@@ -4,7 +4,6 @@
 
 MAXKOFFICEVER=${PV}
 KMNAME=koffice
-UNSERMAKE=no
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KOffice image manipulation program."
