@@ -79,7 +79,7 @@ src_unpack() {
 	# see http://bugs.kde.org/show_bug.cgi?id=109386
 	if use symbol_visibility; then
 		if [[ "$(gcc-major-version)" == "4" ]]; then
-			epatch "${FILESDIR}/${P}-visibility-v2.patch"
+			epatch "${FILESDIR}/${P}-visibility.patch"
 			einfo "Symbol visibility support: auto"
 			USE_SYBMBOL_VISIBILITY="yes"
 		else
