@@ -1,0 +1,20 @@
+- check if kaddressbook KMHEADERS is still necessary
+- certmanager :: gpgsm	
+- kontact: no unsermake + KMHEADERS still needed ??
+- kmail: gpgsm, --enable-indexlib ?
+- kaddressbook: gpgsm, KMHEADERS still needed ?
+- kopete: openSLP
+- libkcddb: akode (for arts)
+- kdemultimedia-kioslaves: akode (for arts)
+- konq-plugins: no unsermake
+- kpresenter: KMHEADERS needed ?
+- kexi: mysql/postgresql checks
+- kspread: no rule to make target: .c
+- krita: openexr support, makefile upates so KMHEADERS still needed ?
+- kword: KMHEADERS still needed ?
+- k3b: resmgr ?
+
+
+** structural changes
+- what if kdm/kdebase-kioslaves is compiled WITH openexr and kdelibs without ?? Make kde packages openexr dependent on kdelibs' openexr useflag (like arts) ?
+- provide way to set trunk or branch for KDE apps (would be useful when KDE4 starts)
