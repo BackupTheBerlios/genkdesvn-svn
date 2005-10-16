@@ -1,4 +1,4 @@
-MD5 dee2dd68a7438f8ece57222a29505858 kaddressbook-7-r1.ebuild 1249
 MD5 a4b4a4da98d7611a447792c6d74e792a ChangeLog 350
-MD5 e6ffd3c360ff1f1f56a8e0504264ed21 files/icaltimezone.c.diff 505
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kaddressbook-7-r1 0
+MD5 e6ffd3c360ff1f1f56a8e0504264ed21 files/icaltimezone.c.diff 505
+MD5 711bc597423012395135da5f0aded6d5 kaddressbook-7-r1.ebuild 1303

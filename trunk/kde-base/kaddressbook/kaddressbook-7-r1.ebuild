@@ -46,4 +46,6 @@ KMEXTRA="
 	kfile-plugins/vcf
 	kontact/plugins/kaddressbook"
 
+KMHEADERS=( 'kaddressbook/common/ kabprefs_base.h' )
+
 PATCHES="$FILESDIR/icaltimezone.c.diff"
