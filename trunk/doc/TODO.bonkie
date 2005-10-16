@@ -1,18 +1,19 @@
+** misc stuff
 - check if kaddressbook KMHEADERS is still necessary
 - certmanager :: gpgsm	
 - kontact: no unsermake + KMHEADERS still needed ??
 - kmail: gpgsm, --enable-indexlib ?
 - kaddressbook: gpgsm, KMHEADERS still needed ?
-- kopete: openSLP
-- libkcddb: akode (for arts)
-- kdemultimedia-kioslaves: akode (for arts)
 - konq-plugins: no unsermake
 - kpresenter: KMHEADERS needed ?
 - kexi: mysql/postgresql checks
-- kspread: no rule to make target: .c
-- krita: openexr support, makefile upates so KMHEADERS still needed ?
 - kword: KMHEADERS still needed ?
 - k3b: resmgr ?
+
+** ebuild changes
+- openslp switch in configure for kopete
+- openexr switch for app-office/krita
+- akode switch for kdemultimedia apps ??? (kioslaves, libkcddb, ...)
 
 
 ** structural changes

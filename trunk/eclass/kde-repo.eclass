@@ -143,6 +143,12 @@ function kde-repo_src_unpack() {
 			# Add submodule and extras to list of items for revision-check
 			CHECKITEMS="${CHECKITEMS} ${KMMODULE} ${KMEXTRA}"
 
+			# special cases: 
+			if [ "${PN}" == "kdebase-startkde" ]; then
+				# kdebase-startkde package is just a file
+				CHECKITEMS="${CHECKITEMS} kdm/kfrontend/sessions/kde.desktop.in"
+			fi
+
 		# If non-meta ebuilds are in use
 		else
 	
