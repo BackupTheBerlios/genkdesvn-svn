@@ -12,12 +12,13 @@ LICENSE="GPL-2 LGPL-2"
 
 SLOT="$PV"
 KEYWORDS="~amd64 ~x86"
-IUSE="javascript"
+IUSE="javascript openexr"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	>=media-gfx/imagemagick-5.5.2
 	media-libs/lcms
-	javascript? ( kde-base/kjsembed )"
+	javascript? ( kde-base/kjsembed )
+	openexr? ( >=media-libs/openexr-1.2 )"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
@@ -38,7 +39,8 @@ KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/krita"
 
-KMHEADERS=( 'krita/plugins/colorsfilters/ wdg_brightness_contrast.h'
+KMHEADERS=(
+	'krita/plugins/colorsfilters/ wdg_brightness_contrast.h'
 	'krita/plugins/cimg/ wdg_cimg.h'
 	'krita/plugins/bumpmap/ wdgbumpmap.h'
 	'krita/plugins/convolutionfilters/ kis_custom_convolution_filter_configuration_base_widget.h'
@@ -54,7 +56,7 @@ KMHEADERS=( 'krita/plugins/colorsfilters/ wdg_brightness_contrast.h'
 	'krita/plugins/variations/ wdg_variations.h'
 	'krita/plugins/performancetest/ wdg_perftest.h'
 	'krita/plugins/separate_channels/ wdg_separations.h'
-	'krita/plugins/colorsfilters/ wdg_perchannel.h'
+#	'krita/plugins/colorsfilters/ wdg_perchannel.h'
 )
 
 need-kde 3.3
