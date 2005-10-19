@@ -11,3 +11,7 @@ KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
 
 DEPEND="x86? ( dev-util/callgrind )"
+
+RDEPEND="${DEPEND}
+    media-gfx/graphviz"
+
