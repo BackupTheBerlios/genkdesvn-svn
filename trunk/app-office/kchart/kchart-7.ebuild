@@ -37,4 +37,6 @@ KMEXTRACTONLY="lib/
 
 KMEXTRA="filters/kchart"
 
+KMCOMPILEONLY="filters/libdialogfilter"
+
 need-kde 3.1

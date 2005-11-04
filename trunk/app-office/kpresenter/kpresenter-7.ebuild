@@ -30,7 +30,8 @@ KMCOPYLIB="
 	libkowmf lib/kwmf
 	libkstore lib/store"
 KMEXTRACTONLY="lib/"
-KMCOMPILEONLY="filters/liboofilter"
+KMCOMPILEONLY="filters/liboofilter
+	filters/libdialogfilter"
 KMTARGETSONLY=('lib/kotext .ui')
 KMEXTRA="filters/kpresenter"
 
