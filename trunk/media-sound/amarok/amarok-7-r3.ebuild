@@ -63,15 +63,6 @@ pkg_setup() {
 	kde-source_pkg_setup
 }
 
-src_unpack() {
-	kde-source_src_unpack
-
-	# UNCOMMENT LINE IF YOU WANT TO ENABLE THE STACK OVERFLOW PATCH
-	# FOR THE COLLECTION BUILDER, FOUND AT KDE-LOOK.ORG:
-	# http://kde-look.org/content/show.php?content=29672
-	# epatch "${FILESDIR}/collection-builder-stack.patch"
-}
-
 src_compile() {
 	# amarok does not respect kde coding standards, and makes a lot of
 	# assuptions regarding its installation directory. For this reason,
@@ -96,12 +87,3 @@ src_install() {
 		${D}/usr/share/applications/kde/amarok.desktop || die
 }
 
-pkg_postinst() {
-	subversion_pkg_postinst
-	
-	echo
-	einfo "If you experience trouble with amarok's collection builder,"
-	einfo "try enabling the patch included in this ebuild, which is turned off."
-	einfo "Uncomment the line with epatch, run ebuild digest and remerge!"
-	echo 
-}
