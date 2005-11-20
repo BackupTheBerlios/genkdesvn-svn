@@ -35,6 +35,7 @@ KMEXTRA="
 	doc/thesaurus/"
 
 KMEXTRACTONLY="
+	kexi/Makefile.global
 	kchart/kdchart/"
 # doc/api/
 
