@@ -13,7 +13,7 @@ LICENSE="GPL-2"
 
 SLOT="0"
 KEYWORDS="~amd64 ~ppc -sparc ~x86"
-IUSE="arts cdr flac gstreamer helix kde mp3 mysql noamazon opengl postgres sqlite xine xmms visualization vorbis"
+IUSE="arts cdr flac gstreamer helix ipod kde mp3 mysql noamazon opengl postgres sqlite xine xmms visualization vorbis"
 
 DEPEND="kde? ( ( || ( kde-base/konqueror kde-base/kdebase ) )
                ( || ( kde-base/kdemultimedia-kioslaves kde-base/kdemultimedia ) ) )
@@ -31,6 +31,7 @@ DEPEND="kde? ( ( || ( kde-base/konqueror kde-base/kdebase ) )
 	 opengl? ( virtual/opengl )
 	 xmms? ( >=media-sound/xmms-1.2 )
      cdr? ( >=app-cdr/k3b-0.11 )
+	 ipod? ( media-libs/libgpod )
 	 visualization? ( media-libs/libsdl
 			  >=media-plugins/libvisual-plugins-0.2 )"
 
@@ -63,6 +64,12 @@ pkg_setup() {
 	kde-source_pkg_setup
 }
 
+#src_unpack() {
+#	kde-source_src_unpack
+#
+#	epatch "${FILESDIR}/${P}-random_album_mode.patch"
+#}
+
 src_compile() {
 	# amarok does not respect kde coding standards, and makes a lot of
 	# assuptions regarding its installation directory. For this reason,
@@ -73,7 +80,8 @@ src_compile() {
 	              $(use_enable mysql) $(use_enable postgres postgresql) $(use_with !sqlite included-sqlite)
 	              $(use_with opengl) $(use_with xmms)
 	              $(use_with visualization libvisual)
-	              $(use_enable !noamazon amazon)"
+	              $(use_enable !noamazon amazon)
+				  $(use_with ipod libgpod)"
 
 	kde_src_compile
 }
