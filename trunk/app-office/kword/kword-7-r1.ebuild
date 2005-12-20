@@ -38,7 +38,10 @@ KMEXTRACTONLY="
     lib/
     kspread/"
 KMCOMPILEONLY="filters/liboofilter"
-KMTARGETSONLY=('lib/kotext .ui')
+KMTARGETSONLY=(
+	'lib/kotext .ui'
+	'lib/kofficeui .ui'
+)
 KMEXTRA="filters/kword"
 
 need-kde 3.3
