@@ -3,8 +3,13 @@
 # $Header: $
 
 KMNAME=kdenetwork
+KMNOMODULE=true
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+
+ESCM_EXTERNALS="branches/work/kopete/dev-0.12/kopete"
+KMEXTERNAL="kopete"
+
 inherit kde-meta eutils kde-source
 
 DESCRIPTION="KDE multi-protocol IM client"
@@ -36,13 +41,12 @@ pkg_postinst()
 {	
 	subversion_pkg_postinst
 	einfo
-	einfo "Please be aware: This IS kopete from KDE 3.5 !"
+	einfo "Please be aware: This is NOT kopete from KDE 3.5 !"
 	einfo
-	einfo "If you want to try kopete from the new kopete-0.12 branch,"
-	einfo "you can try the kopete-7-r2 ebuild !"
-	einfo "Otherwise you can mask the kopete-7-r2 ebuild:"
+	einfo "If you want to keep building kopete from the KDE 3.5 branch,"
+	einfo "you can mask this package:"
 	einfo "echo \"kde-base/kopete-7-r2\" >> /etc/portage/package.mask"
-	einfo "All changes in 3.5 branch kopete will be adjusted in this ebuild !"
+	einfo "All changes in 3.5 branch kopete will be adjusted in r1 ebuild !"
 	einfo
 	einfo "The kopete could not wait until KDE4, so instead they started"
 	einfo "a new branch for kopete development as trunk/ is reserved for"

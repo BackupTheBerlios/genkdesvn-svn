@@ -1,3 +1,5 @@
 MD5 108c7cb343995035a894fd984820b3dd ChangeLog 377
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kopete-7-r1 0
-MD5 b5222babde8b9c98031e704063e89879 kopete-7-r1.ebuild 981
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kopete-7-r2 0
+MD5 bae188fb9e56c0a1d2c54da3941ce63d kopete-7-r1.ebuild 1743
+MD5 4a3627b7c47b62e2efa7d9c8dfde5b77 kopete-7-r2.ebuild 1774

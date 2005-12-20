@@ -488,7 +488,7 @@ function kde-meta_src_compile() {
 				popd >/dev/null
 			done
 
-			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${DOCS} po"
+			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${KMEXTERNAL} ${DOCS} po"
 			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})
 			do
 				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
@@ -562,7 +562,7 @@ function kde-meta_src_install() {
 	while [ -n "$1" ]; do
 		case $1 in
 		    make)
-				for dir in $KMMODULE $KMEXTRA $DOCS po; do
+				for dir in $KMMODULE $KMEXTRA $KMEXTERNAL $DOCS po; do
 					if [ -d $S/$dir ]; then
 						cd $S/$dir
 						einfo "Installing ${dir}"
