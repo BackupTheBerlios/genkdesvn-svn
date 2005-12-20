@@ -36,7 +36,7 @@ pkg_postinst()
 {	
 	subversion_pkg_postinst
 	einfo
-	einfo "Please be aware: This IS kopete from KDE 3.5 !"
+	einfo "Please be aware: This is not the latest dev snapshot of kopete !"
 	einfo
 	einfo "If you want to try kopete from the new kopete-0.12 branch,"
 	einfo "you can try the kopete-7-r2 ebuild !"

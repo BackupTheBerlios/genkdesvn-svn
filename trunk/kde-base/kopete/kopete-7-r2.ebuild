@@ -41,7 +41,8 @@ pkg_postinst()
 {	
 	subversion_pkg_postinst
 	einfo
-	einfo "Please be aware: This is NOT kopete from KDE 3.5 !"
+	einfo "Please be aware: This is NOT kopete from KDE 3.5 itself !"
+	einfo "This is a newer branch to continue work after KDE 3.5."
 	einfo
 	einfo "If you want to keep building kopete from the KDE 3.5 branch,"
 	einfo "you can mask this package:"
