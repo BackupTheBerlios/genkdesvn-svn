@@ -357,7 +357,7 @@ if __name__ == "__main__":
 		sys.exit(17)
 		
 	if not values.offline:
-		einfo("Synchronizing with repository at " + repository)
+		einfo("Synchronizing with repository at " + repository + " in " + work_base)
 		if isdir(working_copy + "/.svn"):
 			if subversion.info().modifiedP():
 				subversion.update()

@@ -45,14 +45,14 @@ qt_min_version_list() {
 		3.1|3.1.0|3.2|3.2.0|3.3|3.3.0) 
 			for x in $QT3MAJORVERSIONS; do
 				if $(version_is_at_least $MINVER $x); then
-					VERSIONS="${VERSIONS} =${QTPKG}${x}*"
+					VERSIONS="${VERSIONS} >=${QTPKG}${x}*"
 				fi
 			done
 			;;
 		3*)
 			for x in $QT3VERSIONS; do
 				if $(version_is_at_least $MINVER $x); then
-					VERSIONS="${VERSIONS} =${QTPKG}${x}"
+					VERSIONS="${VERSIONS} >=${QTPKG}${x}"
 				fi
 			done
 			;;
