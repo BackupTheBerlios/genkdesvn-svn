@@ -51,6 +51,19 @@ src_unpack() {
 }
 
 src_compile() {
+	# apidox is broken with unsermake
+	if use doc; then
+		if [ -z "$UNSERMAKE" ]; then 
+			echo
+			ewarn "Apidox generation is broken with unsermake in 3.5 branch,"
+			ewarn "so unsermake is being disabled for building kdelibs."
+			ewarn "If you dont want this, remove the doc use flag."
+			echo 
+
+			UNSERMAKE="no"
+		fi
+	fi
+
 	myconf="--with-distribution=Gentoo
 	        --enable-libfam $(use_enable kernel_linux dnotify)
 	        --with-libart --with-libidn --with-utempter
