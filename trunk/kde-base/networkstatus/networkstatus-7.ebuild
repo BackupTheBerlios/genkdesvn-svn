@@ -4,7 +4,7 @@
 KMNAME=kdepim
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-UNSERMAKE="no"
+#UNSERMAKE="no"
 KMNODOCS="true"
 inherit kde-meta eutils kde-source
 
@@ -12,4 +12,4 @@ DESCRIPTION="KDE network connection status tracking daemon"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
 
-KMEXTRA="doc/api"
+#KMEXTRA="doc/api"
