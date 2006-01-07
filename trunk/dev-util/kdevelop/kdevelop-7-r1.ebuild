@@ -3,7 +3,7 @@
 # $Header: $
 
 KSCM_ROOT=branches/KDE/3.5
-UNSERMAKE=no
+#UNSERMAKE=no
 inherit kde eutils kde-source
 
 DESCRIPTION="Integrated Development Enviroment for Unix, supporting KDE/Qt, C/C++ and a many other languages."
@@ -22,7 +22,7 @@ DEPEND="dev-lang/perl
 
 need-kde 3.3
 
-PATCHES="${FILESDIR}/${P}-makefiles.patch"
+#PATCHES="${FILESDIR}/${P}-makefiles.patch"
 
 src_compile() {
 	local myconf="--with-kdelibsdoxy-dir=${KDEDIR}/share/doc/HTML/en/kdelibs-apidocs"
