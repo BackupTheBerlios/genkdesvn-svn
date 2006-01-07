@@ -16,3 +16,5 @@ IUSE=""
 
 DEPEND="dev-util/pkgconfig"
 need-kde 3.1
+
+PATCHES="${FILESDIR}/${P}-libkipi.patch"

@@ -1,0 +1,184 @@
+--- libkipi/libkipi/batchprogressdialog.cpp.old	2006-01-07 15:32:44.000000000 +0100
++++ libkipi/libkipi/batchprogressdialog.cpp	2006-01-07 15:32:55.000000000 +0100
+@@ -60,7 +60,7 @@
+ 
+ // Include files for libKipi.
+ 
+-#include "libkipi/version.h"
++#include "version.h"
+ 
+ // Local includes
+ 
+--- libkipi/libkipi/batchprogressdialog.h.old	2006-01-07 15:33:12.000000000 +0100
++++ libkipi/libkipi/batchprogressdialog.h	2006-01-07 15:33:21.000000000 +0100
+@@ -28,7 +28,7 @@
+ // Include files for KDE
+ 
+ #include <kdialogbase.h>
+-#include "libkipi/libkipi_export.h"
++#include "libkipi_export.h"
+ class KListView;
+ class KProgress;
+ 
+--- libkipi/libkipi/imagecollection.h.old	2006-01-07 15:28:36.000000000 +0100
++++ libkipi/libkipi/imagecollection.h	2006-01-07 15:28:42.000000000 +0100
+@@ -33,7 +33,7 @@
+ // KDE includes.
+ 
+ #include <kurl.h>
+-#include "libkipi/libkipi_export.h"
++#include "libkipi_export.h"
+ 
+ /** @namespace KIPI */
+ namespace KIPI
+--- libkipi/libkipi/imagecollectionselector.cpp.old	2006-01-07 15:33:41.000000000 +0100
++++ libkipi/libkipi/imagecollectionselector.cpp	2006-01-07 15:33:52.000000000 +0100
+@@ -40,7 +40,7 @@
+ 
+ // KIPI includes.
+ 
+-#include "libkipi/interface.h"
++#include "interface.h"
+ 
+ // Local includes.
+ 
+--- libkipi/libkipi/imagecollectionselector.h.old	2006-01-07 15:34:10.000000000 +0100
++++ libkipi/libkipi/imagecollectionselector.h	2006-01-07 15:34:21.000000000 +0100
+@@ -31,8 +31,8 @@
+ 
+ // KIPI includes.
+ 
+-#include "libkipi/imagecollection.h"
+-#include "libkipi/libkipi_export.h"
++#include "imagecollection.h"
++#include "libkipi_export.h"
+ 
+ class QListViewItem;
+ class KFileItem;
+--- libkipi/libkipi/imagecollectionshared.h.old	2006-01-07 15:30:09.000000000 +0100
++++ libkipi/libkipi/imagecollectionshared.h	2006-01-07 15:30:20.000000000 +0100
+@@ -35,7 +35,7 @@
+ // Local includes.
+ 
+ #include "imagecollection.h"
+-#include "libkipi/libkipi_export.h"
++#include "libkipi_export.h"
+ 
+ namespace KIPI
+ {
+--- libkipi/libkipi/imagedialog.cpp.old	2006-01-07 15:31:48.000000000 +0100
++++ libkipi/libkipi/imagedialog.cpp	2006-01-07 15:31:58.000000000 +0100
+@@ -45,7 +45,7 @@
+ 
+ // Include files for libKipi.
+ 
+-#include "libkipi/version.h"
++#include "version.h"
+ 
+ // Local includes.
+ 
+--- libkipi/libkipi/imagedialog.h.old	2006-01-07 15:30:40.000000000 +0100
++++ libkipi/libkipi/imagedialog.h	2006-01-07 15:30:54.000000000 +0100
+@@ -35,9 +35,9 @@
+ 
+ // LibKipi includes.
+ 
+-#include "libkipi/interface.h"
+-#include "libkipi/imagecollection.h"
+-#include "libkipi/libkipi_export.h"
++#include "interface.h"
++#include "imagecollection.h"
++#include "libkipi_export.h"
+ 
+ class QListViewItem;
+ 
+--- libkipi/libkipi/imageinfo.h.old	2006-01-07 15:29:06.000000000 +0100
++++ libkipi/libkipi/imageinfo.h	2006-01-07 15:29:11.000000000 +0100
+@@ -28,7 +28,7 @@
+ #include <qdatetime.h>
+ #include <qmap.h>
+ #include <qvariant.h>
+-#include "libkipi/libkipi_export.h"
++#include "libkipi_export.h"
+ 
+ namespace KIPI
+ {
+--- libkipi/libkipi/imageinfoshared.h.old	2006-01-07 15:29:44.000000000 +0100
++++ libkipi/libkipi/imageinfoshared.h	2006-01-07 15:29:52.000000000 +0100
+@@ -36,8 +36,8 @@
+ 
+ // LibKIPI includes.
+ 
+-#include "libkipi/imageinfo.h"
+-#include "libkipi/libkipi_export.h"
++#include "imageinfo.h"
++#include "libkipi_export.h"
+ 
+ namespace KIPI
+ {
+--- libkipi/libkipi/interface.h.old	2006-01-07 15:26:19.000000000 +0100
++++ libkipi/libkipi/interface.h	2006-01-07 15:26:32.000000000 +0100
+@@ -35,9 +35,9 @@
+ 
+ // Local includes.
+ 
+-#include "libkipi/imagecollection.h"
+-#include "libkipi/imageinfo.h"
+-#include "libkipi/libkipi_export.h"
++#include "imagecollection.h"
++#include "imageinfo.h"
++#include "libkipi_export.h"
+ 
+ /** @namespace KIPI */
+ namespace KIPI
+--- libkipi/libkipi/plugin.h.old	2006-01-07 15:27:04.000000000 +0100
++++ libkipi/libkipi/plugin.h	2006-01-07 15:27:15.000000000 +0100
+@@ -33,9 +33,9 @@
+ 
+ // Lib KIPI includes.
+ 
+-#include "libkipi/interface.h"
++#include "interface.h"
+ 
+-#include "libkipi/libkipi_export.h"
++#include "libkipi_export.h"
+ 
+ class KInstance;
+ 
+--- libkipi/libkipi/pluginloader.h.old	2006-01-07 15:25:08.000000000 +0100
++++ libkipi/libkipi/pluginloader.h	2006-01-07 15:25:25.000000000 +0100
+@@ -22,8 +22,8 @@
+ #ifndef KIPI_PLUGINLOADER_H
+ #define KIPI_PLUGINLOADER_H
+ 
+-#include "libkipi/interface.h"
+-#include "libkipi/libkipi_export.h"
++#include "interface.h"
++#include "libkipi_export.h"
+ #include <qwidget.h>
+ #include <qscrollview.h>
+ 
+--- libkipi/libkipi/uploadwidget.cpp.old	2006-01-07 15:32:13.000000000 +0100
++++ libkipi/libkipi/uploadwidget.cpp	2006-01-07 15:32:21.000000000 +0100
+@@ -45,7 +45,7 @@
+ // Local includes.
+ 
+ #include "uploadwidget.h"
+-#include "libkipi/imagecollection.h"
++#include "imagecollection.h"
+ 
+ 
+ struct KIPI::UploadWidget::Private
+--- libkipi/libkipi/uploadwidget.h.old	2006-01-07 15:31:10.000000000 +0100
++++ libkipi/libkipi/uploadwidget.h	2006-01-07 15:31:31.000000000 +0100
+@@ -35,8 +35,8 @@
+ 
+ // LibKIPI includes.
+ 
+-#include "libkipi/interface.h"
+-#include "libkipi/libkipi_export.h"
++#include "interface.h"
++#include "libkipi_export.h"
+ 
+ class QListViewItem;
+ 
