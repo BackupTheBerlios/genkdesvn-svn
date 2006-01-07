@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KMNAME=kdetoys
+KMNODOCS="true"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta kde-source
