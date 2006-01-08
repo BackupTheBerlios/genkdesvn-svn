@@ -70,8 +70,9 @@
 
 # ECVS_TOP_DIR -- The directory under which CVS modules are checked
 # out.
+# ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
 
-[ -z "$ECVS_TOP_DIR" ] && ECVS_TOP_DIR="${DISTDIR}/cvs-src"
+[ -z "$ECVS_TOP_DIR" ] && ECVS_TOP_DIR="${PORTAGE_ACTUAL_DISTDIR}/cvs-src"
 
 # ECVS_SERVER -- CVS path
 #

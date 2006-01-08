@@ -17,7 +17,8 @@ DEPEND="$DEPEND
 	>=dev-util/subversion-1.2.0"
 
 ## ESVN_STORE_DIR: Central repository for working copies
-[ -z "${ESVN_STORE_DIR}" ] && ESVN_STORE_DIR="${DISTDIR}/svn-src"
+## ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
+[ -z "${ESVN_STORE_DIR}" ] && ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR}/svn-src"
 
 ## ESVN_REPO_URI: Repository URL
 [ -z "${ESVN_REPO_URI}" ]  && ESVN_REPO_URI=""
@@ -29,7 +30,8 @@ DEPEND="$DEPEND
 function subversion_obtain_certificates() {
 	debug-print-function $FUNCNAME $*
 
-	_DISTDIR=$DISTDIR
+	## ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
+	_DISTDIR=$PORTAGE_ACTUAL_DISTDIR
 	DISTDIR="$HOME/.subversion/auth/svn.ssl.server"
 	for URI in $ESVN_CERTIFICATES
 	do

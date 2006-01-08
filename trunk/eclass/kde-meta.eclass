@@ -348,21 +348,22 @@ function kde-meta_src_unpack() {
 
 		# xdeltas require us to uncompress to a tar file first.
 		# $KMTARPARAMS is also available for an ebuild to use; currently used by kturtle
+		# ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
 		if useq kdexdeltas && [ -n "$XDELTA_BASE" ]; then
 			echo ">>> Base archive + xdelta patch mode enabled."
 			echo ">>> Uncompressing base archive..."
 			cd $T
 			RAWTARBALL=${TARBALL//.bz2}
-			bunzip2 -dkc ${DISTDIR}/${XDELTA_BASE/*\//} > $RAWTARBALL
+			bunzip2 -dkc ${PORTAGE_ACTUAL_DISTDIR}/${XDELTA_BASE/*\//} > $RAWTARBALL
 			for delta in $XDELTA_DELTA; do
 				deltafile="${delta/*\//}"
 				echo ">>> Applying xdelta: $deltafile"
-				xdelta patch ${DISTDIR}/$deltafile $RAWTARBALL $RAWTARBALL.1
+				xdelta patch ${PORTAGE_ACTUAL_DISTDIR}/$deltafile $RAWTARBALL $RAWTARBALL.1
 				mv $RAWTARBALL.1 $RAWTARBALL
 			done
 			TARFILE=$T/$RAWTARBALL
 		else
-			TARFILE=$DISTDIR/$TARBALL
+			TARFILE=$PORTAGE_ACTUAL_DISTDIR/$TARBALL
 			KMTARPARAMS="$KMTARPARAMS -j"
 		fi
 		cd $WORKDIR
