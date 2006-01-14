@@ -14,5 +14,6 @@ OLDDEPEND="~kde-base/libkdeedu-$PV"
 
 KMEXTRACTONLY="libkdeedu/extdate libkdeedu/kdeeduplot"
 KMCOPYLIB="libextdate libkdeedu/extdate
+		libkdeeduui libkdeedu/kdeeduui
 	    libkdeeduplot libkdeedu/kdeeduplot"
 
