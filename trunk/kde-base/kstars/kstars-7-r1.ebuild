@@ -17,3 +17,8 @@ KMCOPYLIB="libextdate libkdeedu/extdate
 		libkdeeduui libkdeedu/kdeeduui
 	    libkdeeduplot libkdeedu/kdeeduplot"
 
+KMHEADERDIRS=(
+	'kstars/kstars/ .ui'
+	'kstars/kstars/ .kcfgc'
+	'kstars/kstars/tools/ .ui'
+)
