@@ -1,2 +1,3 @@
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kchart-7 0
-MD5 d351da18171aa17d5c6463bbdd4d42e6 kchart-7.ebuild 813
+MD5 2c8b38ba8be156cf5a785d08d92aa3cc files/kchart-7-kdchart.patch 328
+MD5 6165a034dd75895431875f30a0cfeb43 kchart-7.ebuild 870

@@ -25,7 +25,6 @@ KMCOPYLIB="
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
 	libkopainter lib/kopainter
-	libkoscript lib/koscript
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
@@ -36,7 +35,3 @@ KMEXTRACTONLY="lib/"
 
 need-kde 3.3
 
-#src_compile() {
-#	export LIBPYTHON="`python-config --libs`"
-#	kde-meta_src_compile
-#}

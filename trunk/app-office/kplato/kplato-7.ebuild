@@ -27,7 +27,6 @@ KMCOPYLIB="
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
 	libkopainter lib/kopainter
-	libkoscript lib/koscript
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
