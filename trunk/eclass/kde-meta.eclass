@@ -163,8 +163,11 @@ fi
 # will be compiled in that directory. This is useful when apps link to ui or kcfgc file from other directory.
 # usage is 'path/to/dir/ .extension1 [.extension2 [.extension3 ...]]'
 #
-# KMHEADERS: contains list of directories followed by list fo files to create before compiling, syntax is:
+# KMHEADERS: contains list of directories followed by list of files to create before compiling, syntax is:
 # 'path/to/dir/ header1.h [header2.h [header3.h ...]]' etc
+#
+# KMHEADERDIRS: contains list of directories followed by list of file patterns to create before compiling, syntax is:
+# 'path/to/dir/ *.extension' etc
 
 # ====================================================
 
@@ -177,7 +180,12 @@ function set_target_arrays {
 
 	for ((index=0; index < ${#KMHEADERS[*]}; index++))
 	do
-		read headerdirs[index] headers[index] < <(echo ${KMHEADERS[index]})
+		read headers[index] headers[index] < <(echo ${KMHEADERS[index]})
+	done
+
+	for ((index=0; index < ${#KMHEADERDIRS[*]}; index++))
+	do
+		read headerdirs[index] headers[index] < <(echo ${KMHEADERDIRS[index]})
 	done
 
 }
@@ -470,7 +478,7 @@ function kde-meta_src_compile() {
 
 			# KMHEADERS: create headers without touching Makefile.am
 			# syntax is different too: "dir/ file.h"
-			for dir in $(sort_subdirs ${headerdirs[*]})
+			for dir in $(sort_subdirs ${headers[*]})
 			do
 				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
 					for ((index=0; index< ${#headerdirs[*]}; index++))
@@ -483,6 +491,31 @@ function kde-meta_src_compile() {
 								dest="$(basename ${src} ${target})"
 								output="$(emake ${dest} 2>&1)"
 								printf "${output}\n"
+							done
+						fi
+					done
+				popd >/dev/null
+			done
+
+			# KMHEADERDIRS: create headers without touching Makefile.am
+			# syntax is different too: "dir/ .xx"
+			for dir in $(sort_subdirs ${headerdirs[*]})
+			do
+				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+					for ((index=0; index< ${#headerdirs[*]}; index++))
+					do
+						if [ "${headerdirs[index]}" == "${dir}" ]
+						then
+							for target in ${headers[index]}
+							do
+								#einfo "Making *${target} in ${dir}"
+								for i in *${target};
+								do
+									dest="$(basename ${i} ${target}).h"
+									output="$(emake ${dest} 2>&1)"
+									ewarn "Manually creating ${dest}"
+									#printf "${output}\n"
+								done
 							done
 						fi
 					done
