@@ -476,51 +476,53 @@ function kde-meta_src_compile() {
 
 		if [ "$section" == "make" ]; then
 
-			# KMHEADERS: create headers without touching Makefile.am
-			# syntax is different too: "dir/ file.h"
-			for dir in $(sort_subdirs ${headers[*]})
-			do
-				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
-					for ((index=0; index< ${#headerdirs[*]}; index++))
-					do
-						if [ "${headerdirs[index]}" == "${dir}" ]
-						then
-							for target in ${headers[index]}
-							do
-								einfo "Making ${target} in ${dir}"
-								dest="$(basename ${src} ${target})"
-								output="$(emake ${dest} 2>&1)"
-								printf "${output}\n"
-							done
-						fi
-					done
-				popd >/dev/null
-			done
-
-			# KMHEADERDIRS: create headers without touching Makefile.am
-			# syntax is different too: "dir/ .xx"
-			for dir in $(sort_subdirs ${headerdirs[*]})
-			do
-				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
-					for ((index=0; index< ${#headerdirs[*]}; index++))
-					do
-						if [ "${headerdirs[index]}" == "${dir}" ]
-						then
-							for target in ${headers[index]}
-							do
-								#einfo "Making *${target} in ${dir}"
-								for i in *${target};
+			if [ "{$UNSERMAKE}" == "no" ]; then
+				# KMHEADERS: create headers without touching Makefile.am
+				# syntax is different too: "dir/ file.h"
+				for dir in $(sort_subdirs ${headers[*]})
+				do
+					pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+						for ((index=0; index< ${#headerdirs[*]}; index++))
+						do
+							if [ "${headerdirs[index]}" == "${dir}" ]
+							then
+								for target in ${headers[index]}
 								do
-									dest="$(basename ${i} ${target}).h"
+									einfo "Making ${target} in ${dir}"
+									dest="$(basename ${src} ${target})"
 									output="$(emake ${dest} 2>&1)"
-									ewarn "Manually creating ${dest}"
-									#printf "${output}\n"
+									printf "${output}\n"
 								done
-							done
-						fi
-					done
-				popd >/dev/null
-			done
+							fi
+						done
+					popd >/dev/null
+				done
+	
+				# KMHEADERDIRS: create headers without touching Makefile.am
+				# syntax is different too: "dir/ .xx"
+				for dir in $(sort_subdirs ${headerdirs[*]})
+				do
+					pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+						for ((index=0; index< ${#headerdirs[*]}; index++))
+						do
+							if [ "${headerdirs[index]}" == "${dir}" ]
+							then
+								for target in ${headers[index]}
+								do
+									#einfo "Making *${target} in ${dir}"
+									for i in *${target};
+									do
+										dest="$(basename ${i} ${target}).h"
+										output="$(emake ${dest} 2>&1)"
+										ewarn "Manually creating ${dest}"
+										#printf "${output}\n"
+									done
+								done
+							fi
+						done
+					popd >/dev/null
+				done
+			fi
 
 			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${KMEXTERNAL} ${DOCS} po"
 			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})
