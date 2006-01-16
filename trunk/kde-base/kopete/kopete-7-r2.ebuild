@@ -15,11 +15,15 @@ inherit kde-meta eutils kde-source
 DESCRIPTION="KDE multi-protocol IM client"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="sametime slp ssl xmms"
+IUSE="jingle sametime slp ssl xmms"
 
 DEPEND="dev-libs/libxslt
 	dev-libs/libxml2
 	>=dev-libs/glib-2
+	jingle? ( media-libs/speex 
+		dev-libs/expat
+		>=net-libs/ortp-0.7.1
+	)
 	sametime? ( >=net-libs/meanwhile-0.4.2 )
 	slp? ( net-libs/openslp )
 	xmms? ( media-sound/xmms )"
@@ -32,6 +36,7 @@ src_compile() {
     # Maybe we can enable it in the future.
     # The nowlistening plugin has xmms support.
 	local myconf="$(use_enable sametime sametime-plugin)
+				  $(use_enable jingle)
                   $(use_with xmms) --without-external-libgadu"
 
 	kde-meta_src_compile
@@ -49,7 +54,7 @@ pkg_postinst()
 	einfo "echo \"kde-base/kopete-7-r2\" >> /etc/portage/package.mask"
 	einfo "All changes in 3.5 branch kopete will be adjusted in r1 ebuild !"
 	einfo
-	einfo "The kopete could not wait until KDE4, so instead they started"
+	einfo "The kopete could devs not wait until KDE4, so instead they started"
 	einfo "a new branch for kopete development as trunk/ is reserved for"
 	einfo "KDE4 development. This is however still based on KDE 3.5 but"
 	einfo "it wont belong to an official KDE release."
