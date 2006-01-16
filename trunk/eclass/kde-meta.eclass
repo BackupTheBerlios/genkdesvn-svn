@@ -178,11 +178,6 @@ function set_target_arrays {
 		read targetdirs[index] targets[index] < <(echo ${KMTARGETSONLY[index]})
 	done
 
-	for ((index=0; index < ${#KMHEADERS[*]}; index++))
-	do
-		read headers[index] headers[index] < <(echo ${KMHEADERS[index]})
-	done
-
 	for ((index=0; index < ${#KMHEADERDIRS[*]}; index++))
 	do
 		read headerdirs[index] headers[index] < <(echo ${KMHEADERDIRS[index]})
@@ -476,28 +471,7 @@ function kde-meta_src_compile() {
 
 		if [ "$section" == "make" ]; then
 
-			if [ "{$UNSERMAKE}" == "no" ]; then
-				# KMHEADERS: create headers without touching Makefile.am
-				# syntax is different too: "dir/ file.h"
-				for dir in $(sort_subdirs ${headers[*]})
-				do
-					pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
-						for ((index=0; index< ${#headerdirs[*]}; index++))
-						do
-							if [ "${headerdirs[index]}" == "${dir}" ]
-							then
-								for target in ${headers[index]}
-								do
-									einfo "Making ${target} in ${dir}"
-									dest="$(basename ${src} ${target})"
-									output="$(emake ${dest} 2>&1)"
-									printf "${output}\n"
-								done
-							fi
-						done
-					popd >/dev/null
-				done
-	
+			#if [ "{$UNSERMAKE}" == "no" ]; then
 				# KMHEADERDIRS: create headers without touching Makefile.am
 				# syntax is different too: "dir/ .xx"
 				for dir in $(sort_subdirs ${headerdirs[*]})
@@ -505,24 +479,21 @@ function kde-meta_src_compile() {
 					pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
 						for ((index=0; index< ${#headerdirs[*]}; index++))
 						do
-							if [ "${headerdirs[index]}" == "${dir}" ]
-							then
-								for target in ${headers[index]}
+							for target in ${headers[index]}
+							do
+								#einfo "Making *${target} in ${dir}"
+								for i in *${target};
 								do
-									#einfo "Making *${target} in ${dir}"
-									for i in *${target};
-									do
-										dest="$(basename ${i} ${target}).h"
-										output="$(emake ${dest} 2>&1)"
-										ewarn "Manually creating ${dest}"
-										#printf "${output}\n"
-									done
+									dest="$(basename ${i} ${target}).h"
+									output="$(emake ${dest} 2>&1)"
+									ewarn "Manually creating ${dest}"
+									#printf "${output}\n"
 								done
-							fi
+							done
 						done
 					popd >/dev/null
 				done
-			fi
+			#fi
 
 			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${KMEXTERNAL} ${DOCS} po"
 			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})

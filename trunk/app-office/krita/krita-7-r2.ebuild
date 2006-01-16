@@ -38,7 +38,4 @@ KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/krita"
 
-KMHEADERS=(
-)
-
 need-kde 3.3
