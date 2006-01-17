@@ -219,6 +219,7 @@ kde-base/kdegraphics kde-base/kviewshell
 kde-base/kdegraphics kde-base/libkscan
 kde-base/kdegraphics kde-base/libksvg
 kde-base/kdemultimedia kde-base/akode
+kde-base/kdemultimedia kde-base/artsplugin-akode
 kde-base/kdemultimedia kde-base/artsplugin-audiofile
 kde-base/kdemultimedia kde-base/artsplugin-mpeglib
 kde-base/kdemultimedia kde-base/artsplugin-mpg123
