@@ -4,8 +4,8 @@
 
 KMNAME=kdenetwork
 KMNOMODULE=true
-MAXKDEVER=$PV
-KM_DEPRANGE="$PV $MAXKDEVER"
+#MAXKDEVER=$PV
+#KM_DEPRANGE="$PV $MAXKDEVER"
 
 ESCM_EXTERNALS="branches/work/kopete/dev-0.12/kopete"
 KMEXTERNAL="kopete"
@@ -31,6 +31,8 @@ RDEPEND="$DEPEND
 	ssl? ( app-crypt/qca-tls )
 	>=sys-kernel/linux-headers-2.6.11"
 
+need-kde 3.5
+
 src_compile() {
     # External libgadu support - doesn't work, kopete requires a specific development snapshot of libgadu.
     # Maybe we can enable it in the future.
@@ -54,7 +56,7 @@ pkg_postinst()
 	einfo "echo \"kde-base/kopete-7-r2\" >> /etc/portage/package.mask"
 	einfo "All changes in 3.5 branch kopete will be adjusted in r1 ebuild !"
 	einfo
-	einfo "The kopete could devs not wait until KDE4, so instead they started"
+	einfo "The kopete devs could not wait until KDE4, so instead they started"
 	einfo "a new branch for kopete development as trunk/ is reserved for"
 	einfo "KDE4 development. This is however still based on KDE 3.5 but"
 	einfo "it wont belong to an official KDE release."
