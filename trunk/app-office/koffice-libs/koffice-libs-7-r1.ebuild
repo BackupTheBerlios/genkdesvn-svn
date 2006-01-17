@@ -27,12 +27,12 @@ KMEXTRA="
 	interfaces/
 	plugins/
 	tools/
-	filters/olefilters/
 	filters/xsltfilter/
 	filters/generic_wrapper/
 	kounavail/
 	doc/koffice/
 	doc/thesaurus/"
+#	filters/olefilters/ is empty ?
 
 KMEXTRACTONLY="
 	kexi/Makefile.global
