@@ -32,7 +32,9 @@ KMCOPYLIB="
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
 	libkstore lib/store
-	libkopalette lib/kopalette"
+	libkopalette lib/kopalette
+	libkrossmain lib/kross/main
+	libkrossapi lib/kross/api"
 
 KMEXTRACTONLY="lib/"
 

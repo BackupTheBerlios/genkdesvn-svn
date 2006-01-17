@@ -685,9 +685,13 @@ need-kde() {
 		if [ -n "${KM_DEPRANGE}" ]; then
 			DEPEND="${DEPEND} $(deprange ${KM_DEPRANGE} kde-base/kdelibs)"
 			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} $(deprange ${KM_DEPRANGE} kde-base/kdelibs)"
-		else
+		elif [ -z "${KDEVER}" ]; then
 			DEPEND="${DEPEND} ~kde-base/kdelibs-$PV"
 			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} ~kde-base/kdelibs-${PV}"
+		else
+			min-kde-ver ${KDEVER}
+			DEPEND="${DEPEND} >=kde-base/kdelibs-${selected_version}"
+			[ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} >=kde-base/kdelibs-${selected_version}"
 		fi
 	else
 		# Things outside kde-base only need a minimum version
@@ -863,6 +867,7 @@ min-kde-ver() {
 		3.2*)			selected_version="3.2";;
 		3.3*)			selected_version="3.3";;
 		3.4*)			selected_version="3.4";;
+		3.5*)			selected_version="3.5";;
 		3*)			selected_version="3.0";;
 		5)			selected_version="5";;
 		7)			selected_version="7";;
