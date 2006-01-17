@@ -170,10 +170,10 @@ names = {
 		"kde-base/kdemultimedia-arts",
 		"kde-base/artsplugin-audiofile",
 		"kde-base/mpeglib",
+		"kde-base/artsplugin-akode",
 		"kde-base/artsplugin-mpeglib",
 		"kde-base/artsplugin-mpg123",
 		"kde-base/artsplugin-xine",
-		"kde-base/akode",
 		"kde-base/juk",
 		"kde-base/kaboodle",
 		"kde-base/kaudiocreator",
@@ -400,7 +400,8 @@ names = {
 		"net-p2p/apollon"
 	],
 	"misc": [
-		"kde-misc/kcall"
+		"kde-misc/kcall",
+		"dev-util/kdevelop"
 	],
 	"kioslaves": [
 		"kde-base/kdebase-kioslaves",
@@ -439,6 +440,7 @@ names = {
 		"kde-base/indexlib",
 		"kde-base/mimelib"
 		"media-libs/taglib",
+		"media-libs/akode",
 		"kde-base/libkcddb",
 		"kde-base/mpeglib",
 		"kde-base/libkscan",
