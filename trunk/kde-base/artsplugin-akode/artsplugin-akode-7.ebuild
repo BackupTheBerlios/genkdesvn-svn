@@ -11,8 +11,7 @@ inherit kde-meta eutils kde-source
 DESCRIPTION="akode arts plugin"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="media-libs/akode
-	$(deprange $PV $MAXKDEVER kde-base/kdemultimedia-arts)
+DEPEND="$(deprange $PV $MAXKDEVER kde-base/kdemultimedia-arts)
 	$(deprange $PV $MAXKDEVER media-libs/akode)"
 
 KMCOPYLIB="libartsbuilder arts/runtime"
