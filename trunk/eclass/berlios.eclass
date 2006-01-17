@@ -7,6 +7,8 @@
 # Purpose: 
 #
 
+inherit kde-make
+
 ECLASS="berlios"
 INHERITED="$INHERITED $ECLASS"
 
