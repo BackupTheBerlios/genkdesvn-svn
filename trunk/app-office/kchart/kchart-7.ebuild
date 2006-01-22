@@ -38,10 +38,4 @@ KMEXTRA="filters/kchart"
 
 KMCOMPILEONLY="filters/libdialogfilter"
 
-src_unpack() {
-	kde-source_src_unpack
-
-	epatch "${FILESDIR}/${P}-kdchart.patch"
-}
-
 need-kde 3.1
