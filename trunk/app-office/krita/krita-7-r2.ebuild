@@ -40,4 +40,8 @@ KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/krita"
 
+KMTARGETSONLY=(
+	'lib/kross/main/ .ui'
+)
+
 need-kde 3.3
