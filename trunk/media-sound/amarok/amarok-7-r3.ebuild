@@ -13,7 +13,7 @@ LICENSE="GPL-2"
 
 SLOT="0"
 KEYWORDS="~amd64 ~ppc -sparc ~x86"
-IUSE="arts cdr flac gstreamer helix ipod kde mp3 mysql noamazon opengl postgres sqlite xine xmms visualization vorbis"
+IUSE="arts cdr flac gstreamer helix ipod kde mp3 mysql noamazon opengl postgres ruby sqlite xine xmms visualization vorbis"
 
 DEPEND="kde? ( ( || ( kde-base/konqueror kde-base/kdebase ) )
                ( || ( kde-base/kdemultimedia-kioslaves kde-base/kdemultimedia ) ) )
@@ -40,6 +40,7 @@ RDEPEND="${DEPEND}
 	             vorbis? ( >=media-plugins/gst-plugins-ogg-0.8.6
 	                       >=media-plugins/gst-plugins-vorbis-0.8.6 )
 	             flac? ( >=media-plugins/gst-plugins-flac-0.8.6 ) )
+	ruby? ( dev-lang/ruby )
 	helix? ( || ( media-video/helixplayer >=media-video/realplayer-10 ) )"
 
 DEPEND="${DEPEND}
@@ -59,6 +60,12 @@ pkg_setup() {
 		eerror "amaroK needs either aRts (deprecated), Xine, GStreamer or Helix to work,"
 		eerror "please try again with USE=\"arts\", USE=\"xine\", USE=\"gstreamer\" or USE=\"helix\"."
 		die
+	fi
+
+	if use ruby; then
+		einfo Ruby is used now for the lyrics tab in the context manager
+		einfo If you dont need the lyrics tab, you dont need ruby
+		einfo
 	fi
 
 	kde-source_pkg_setup
