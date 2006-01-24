@@ -6,6 +6,7 @@ names = {
 		"distro",
 		"koffice",
 		"extragear",
+		"playground",
 		"external"
 	],
 	"distro": [
@@ -393,15 +394,18 @@ names = {
 	"sourceforge": [
 		"app-antivirus/klamav",
 		"dev-util/kdbg",
-		"kde-misc/kat",
 		"kde-misc/krusader",
 		"media-sound/kradio",
 		"media-video/kaffeine",
 		"net-p2p/apollon"
 	],
 	"misc": [
-		"kde-misc/kcall",
 		"dev-util/kdevelop"
+	],
+	"playground": [
+		"kde-misc/kat",
+		"kde-misc/kcall",
+		"kde-misc/okular"
 	],
 	"kioslaves": [
 		"kde-base/kdebase-kioslaves",

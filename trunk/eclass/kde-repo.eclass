@@ -105,7 +105,11 @@ function wrap_root() {
 SRC_URI=""
 
 # Set source directory
-S="$(strip_duplicate_slashes ${WORKDIR}/$(wrap_root ${KSCM_MODULE}))"
+if [ "${KSCM_MODULE_IS_ROOT}" == "true" ]; then
+	S="$(strip_duplicate_slashes ${WORKDIR}/$(wrap_root ${KSCM_MODULE}/${KSCM_SUBDIR}))"
+else
+	S="$(strip_duplicate_slashes ${WORKDIR}/$(wrap_root ${KSCM_MODULE}))"
+fi
 
 # --- begin exportable functions --- #
 
