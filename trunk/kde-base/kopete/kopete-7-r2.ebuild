@@ -15,11 +15,12 @@ inherit kde-meta eutils kde-source
 DESCRIPTION="KDE multi-protocol IM client"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="jingle sametime slp ssl xmms"
+IUSE="ilbc jingle sametime slp ssl xmms"
 
 DEPEND="dev-libs/libxslt
 	dev-libs/libxml2
 	>=dev-libs/glib-2
+	ilbc? ( dev-libs/ilbc-rfc3951 )
 	jingle? ( media-libs/speex 
 		dev-libs/expat
 		>=net-libs/ortp-0.7.1
@@ -38,7 +39,7 @@ src_compile() {
     # Maybe we can enable it in the future.
     # The nowlistening plugin has xmms support.
 	local myconf="$(use_enable sametime sametime-plugin)
-				  $(use_enable jingle)
+				  $(use_enable jingle) $(use_with ilbc)
                   $(use_with xmms) --without-external-libgadu"
 
 	kde-meta_src_compile
@@ -64,3 +65,32 @@ pkg_postinst()
 	einfo "KDE 3.5.x should only contain bugfixes."
 	echo
 }
+
+# client_iface_stub.h is not generated through ui or kcfgc
+KMHEADERS=(
+	'kopete/libkopete clientiface_stub.h'
+)
+
+KMHEADERDIRS=(
+	'kopete/libkopete .kcfgc'
+	'kopete/libkopete/ui .ui'
+	'kopete/kopete/addaccountwizard .ui'
+	'kopete/kopete/addcontactwizard .ui'
+	'kopete/kopete/contactlist .ui'
+	'kopete/kopete/config/accounts .ui'
+	'kopete/kopete/config/behavior .ui'
+	'kopete/kopete/config/appearance .ui'
+	'kopete/kopete/config/identity .ui .kcfgc'
+	'kopete/kopete/config/avdevice .ui'
+	'kopete/protocols/testbed .ui'
+	'kopete/protocols/groupwise/ui .ui'
+	'kopete/protocols/msn/ui .ui'
+	'kopete/protocols/msn/config .ui'
+	'kopete/protocols/irc/ui .ui'
+	'kopete/protocols/oscar .ui'
+	'kopete/protocols/oscar/aim/ui .ui'
+	'kopete/protocols/oscar/icq/ui .ui'
+	'kopete/protocols/yahoo/ui .ui'
+	'kopete/protocols/jabber/ui .ui'
+#	'kopete/protocols/jabber/libiris/iris/xmpp-core '
+)
