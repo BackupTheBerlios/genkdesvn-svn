@@ -12,5 +12,3 @@ IUSE=""
 DEPEND="media-sound/cdparanoia"
 
 myconf="--with-cdparanoia --enable-cdparanoia"
-
-PATCHES="${FILESDIR}/kdemultimedia-3.4.0-amd64.patch"
