@@ -18,7 +18,7 @@ IUSE="arts cdr flac gstreamer helix ipod kde mp3 mysql noamazon opengl postgres 
 DEPEND="kde? ( ( || ( kde-base/konqueror kde-base/kdebase ) )
                ( || ( kde-base/kdemultimedia-kioslaves kde-base/kdemultimedia ) ) )
 	 arts? ( kde-base/arts
-		 || ( ( kde-base/kdemultimedia-arts kde-base/akode )
+		 || ( ( kde-base/kdemultimedia-arts kde-base/artsplugin-akode )
 		 	kde-base/kdemultimedia ) )
 	 xine? ( >=media-libs/xine-lib-1_rc4 )
 	 gstreamer? ( >=media-libs/gstreamer-0.8.8

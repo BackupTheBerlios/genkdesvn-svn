@@ -14,7 +14,7 @@ IUSE="flac gstreamer mad oggvorbis"
 DEPEND="media-libs/taglib
 	media-libs/tunepimp
 	gstreamer? ( >=media-libs/gstreamer-0.8 )
-	$(deprange $PV $MAXKDEVER kde-base/akode)"
+	$(deprange $PV $MAXKDEVER media-libs/akode)"
 
 RDEPEND="${DEPEND}
 	gstreamer? ( >=media-libs/gst-plugins-0.8

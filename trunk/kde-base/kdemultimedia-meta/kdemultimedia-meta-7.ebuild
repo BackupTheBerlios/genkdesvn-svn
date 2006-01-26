@@ -3,13 +3,13 @@
 # $Header: $
 
 KMSUBMODULES="
+	arts?(artsplugin-akode)
 	arts?(artsplugin-mpeglib)
 	arts?(artsplugin-mpg123)
 	arts?(artsplugin-xine)
 	arts?(juk)
 	arts?(kaboodle)
 	arts?(kaudiocreator)
-	arts?(akode)
 	arts?(kdemultimedia-arts)
 	arts?(krec)
 	arts?(noatun)
