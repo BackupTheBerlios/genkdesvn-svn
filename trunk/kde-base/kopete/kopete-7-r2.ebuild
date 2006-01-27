@@ -32,6 +32,8 @@ RDEPEND="$DEPEND
 	ssl? ( app-crypt/qca-tls )
 	>=sys-kernel/linux-headers-2.6.11"
 
+PATCHES="$FILESDIR/gcc4.patch"
+
 need-kde 3.5
 
 src_compile() {
@@ -39,8 +41,12 @@ src_compile() {
     # Maybe we can enable it in the future.
     # The nowlistening plugin has xmms support.
 	local myconf="$(use_enable sametime sametime-plugin)
-				  $(use_enable jingle) $(use_with ilbc)
+				  $(use_enable jingle)
                   $(use_with xmms) --without-external-libgadu"
+
+	if use ilbc; then
+		myconf="${myconf} --with-ilbc=/usr"
+	fi
 
 	kde-meta_src_compile
 }
@@ -66,9 +72,10 @@ pkg_postinst()
 	echo
 }
 
-# client_iface_stub.h is not generated through ui or kcfgc
+# these files are not generated through ui or kcfgc
 KMHEADERS=(
 	'kopete/libkopete clientiface_stub.h'
+	'kopete/protocols/jabber/libiris/iris/xmpp-core securestream.moc'
 )
 
 KMHEADERDIRS=(
@@ -92,5 +99,18 @@ KMHEADERDIRS=(
 	'kopete/protocols/oscar/icq/ui .ui'
 	'kopete/protocols/yahoo/ui .ui'
 	'kopete/protocols/jabber/ui .ui'
-#	'kopete/protocols/jabber/libiris/iris/xmpp-core '
+	'kopete/protocols/jabber/jingle .ui'
+	'kopete/plugins/latex .ui .kcfgc'
+	'kopete/plugins/autoreplace .ui'
+	'kopete/plugins/history .ui .kcfgc'
+	'kopete/plugins/cryptography .ui'
+	'kopete/plugins/translator .ui'
+	'kopete/plugins/nowlistening .ui .kcfgc'
+	'kopete/plugins/webpresence .ui'
+	'kopete/plugins/texteffect .ui'
+	'kopete/plugins/highlight .ui'
+	'kopete/plugins/alias .ui'
+	'kopete/plugins/netmeeting .ui'
+	'kopete/plugins/addbookmarks .ui'
+	'kopete/plugins/statistics .ui'
 )
