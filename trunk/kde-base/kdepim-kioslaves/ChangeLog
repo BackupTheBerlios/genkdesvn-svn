@@ -1,9 +1,0 @@
-# ChangeLog for kde-base/kdepim-kioslaves
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*kdepim-kioslaves-7-r1 (28 May 2005)
-
-  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kdepim-kioslaves-7-r1.ebuild files/digest-kdepim-kioslaves-7-r1
-  Weekly revision bump; bugs 101463
-
