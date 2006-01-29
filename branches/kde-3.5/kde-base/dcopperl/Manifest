@@ -1,4 +1,0 @@
-MD5 96b38fe6301010012fdb4758270c311c dcopperl-7.ebuild 906
-MD5 d793eee91b4c53d85e826da7e98ed495 files/installdirs-vendor.diff 574
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-dcopperl-7 0
-MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625

@@ -1,9 +1,0 @@
-# ChangeLog for kde-base/ark
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*ark-7-r1 (28 May 2005)
-
-  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  ark-7-r1.ebuild files/digest-ark-7-r1
-  Weekly revision bump; bugs 105398, 105787
-
