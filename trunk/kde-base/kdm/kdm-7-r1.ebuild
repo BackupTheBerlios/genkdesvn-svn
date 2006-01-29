@@ -17,8 +17,8 @@ KMCOMPILEONLY="kcontrol/background"
 DEPEND="$DEPEND
 	pam? ( sys-libs/pam >=kde-base/kdebase-pam-5 )
 	openexr? ( media-libs/openexr )
-	|| ( virtual/x11 
-		&& ( x11-misc/imake x11-misc/xmkmf )
+	|| ( x11-misc/imake 
+		virtual/x11 
 	)
 	$(deprange $PV $MAXKDEVER kde-base/kcontrol)"
 	# Requires the desktop background settings and kdm modules,
@@ -62,13 +62,4 @@ pkg_postinst() {
 		cp "${ROOT}${KDEDIR}/share/apps/kdm/pics/users/root1.png" \
 			"${ROOT}${KDEDIR}/share/apps/kdm/faces/root.face.icon"
 	fi
-
-	einfo
-	einfo "If you are running modular X, make sure there is a symlink"
-	einfo "in /usr name X11R6 pointing to /usr:"
-	einfo "ln -s /usr /usr/X11R6"
-	einfo "or kdm/gdm will not work !"
-	einfo "No modular xorg package creates that symlink yet."
-	einfo
-
 }
