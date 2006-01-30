@@ -41,6 +41,8 @@ RDEPEND="${DEPEND}
 
 need-kde 3.3
 
+PATCHES="$FILESDIR/no_dvd+rw-tools_build.patch"
+
 pkg_setup() {
 	use hal && if ! built_with_use dbus qt ; then
 		eerror "You are trying to compile ${CATEGORY}/${P} with the \"hal\" USE flag enabled,"
