@@ -7,7 +7,8 @@ KMNOMODULE=true
 #MAXKDEVER=$PV
 #KM_DEPRANGE="$PV $MAXKDEVER"
 
-ESCM_EXTERNALS="branches/work/kopete/dev-0.12/kopete"
+ESCM_EXTERNALS="branches/kopete/0.12/kopete"
+ESCM_CHECKITEMS="${ESCM_CHECKITEMS} ${ESCM_EXTERNALS}"
 KMEXTERNAL="kopete"
 
 inherit kde-meta eutils kde-source
