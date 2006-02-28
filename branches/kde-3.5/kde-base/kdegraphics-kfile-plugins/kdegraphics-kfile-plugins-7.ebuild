@@ -13,8 +13,7 @@ KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE="tiff openexr"
 DEPEND="tiff? ( media-libs/tiff )
 	openexr? ( media-libs/openexr )"
-RDEPEND="${DEPEND}
-	app-text/xpdf" # needed for "pdfinfo"
+RDEPEND="${DEPEND}"
 
 # ps installed with kghostview, pdf installed with kpdf
 KMEXTRACTONLY="kfile-plugins/ps kfile-plugins/pdf"
