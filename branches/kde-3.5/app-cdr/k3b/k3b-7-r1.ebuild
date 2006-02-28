@@ -41,7 +41,8 @@ RDEPEND="${DEPEND}
 
 need-kde 3.3
 
-PATCHES="$FILESDIR/no_dvd+rw-tools_build.patch"
+# dvd+rw-tools is no longer built by default
+#PATCHES="$FILESDIR/no_dvd+rw-tools_build.patch"
 
 pkg_setup() {
 	use hal && if ! built_with_use dbus qt ; then
