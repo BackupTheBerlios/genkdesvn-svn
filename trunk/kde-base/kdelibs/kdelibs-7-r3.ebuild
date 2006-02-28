@@ -26,7 +26,7 @@ RDEPEND="$(qt-copy_min_version 3.3.3)
 	media-libs/libart_lgpl
 	net-dns/libidn
 	virtual/utempter
-	acl? ( sys-apps/acl )
+	acl? ( kernel_linux? ( sys-apps/acl ) )
 	ssl? ( >=dev-libs/openssl-0.9.7d )
 	alsa? ( media-libs/alsa-lib )
 	cups? ( >=net-print/cups-1.1.19 )
@@ -47,10 +47,14 @@ DEPEND="${RDEPEND}
 
 src_unpack() {
 	kdesvn-source_src_unpack
-	! use arts && cd ${S} && epatch ${FILESDIR}/${P}-knotify-noarts.patch
+	#! use arts && cd ${S} && epatch ${FILESDIR}/${P}-knotify-noarts.patch
 }
 
 src_compile() {
+	# hspell is disabled because it requires version 0.9 of hspell that
+	# is not in portage yet; leaving it to auto-detection tries to use it
+	# and then fails because of missing required functions.
+
 	# apidox is broken with unsermake
 	if use doc; then
 		if [ -z "$UNSERMAKE" ]; then 
@@ -71,7 +75,8 @@ src_compile() {
 			$(use_with ssl) $(use_with acl)
 	        $(use_with kerberos gssapi) $(use_with tiff)
 	        $(use_with jpeg2k jasper) $(use_with openexr)
-	        $(use_enable cups) $(use_enable zeroconf dnssd)"
+	        $(use_enable cups) $(use_enable zeroconf dnssd)
+			--without-hspell"
 
 	if use spell && has_version app-text/aspell; then
 		myconf="${myconf} --with-aspell"
@@ -79,20 +84,23 @@ src_compile() {
 		myconf="${myconf} --without-aspell"
 	fi
 
-	use x86 && myconf="${myconf} --enable-fast-malloc=full"
+	myconf="${myconf} --disable-fast-malloc"
+	#use x86 && myconf="${myconf} --enable-fast-malloc=full"
 
 	# fix bug 58179, bug 85593
 	# kdelibs-3.4.0 needed -fno-gcse; 3.4.1 needs -mminimal-toc; this needs a
 	# closer look... - corsair
 	use ppc64 && append-flags "-mminimal-toc"
 
+	export BINDNOW_FLAGS="$(bindnow-flags)"
+
 	kdesvn_src_compile
 
-	if ! use arts; then
-		cd arts/knotify
-		make || die
-		cd ${OLDPWD}
-	fi
+	#if ! use arts; then
+	#	cd arts/knotify
+	#	make || die
+	#	cd ${OLDPWD}
+	#fi
 
 	if use doc; then
 		make apidox || die
@@ -102,18 +110,18 @@ src_compile() {
 src_install() {
 	kdesvn_src_install
 
-	if ! use arts; then
-		cd arts/knotify
-		make DESTDIR="${D}" install || die
-		cd ${OLDPWD}
-	fi
+	#if ! use arts; then
+	#	cd arts/knotify
+	#	make DESTDIR="${D}" install || die
+	#	cd ${OLDPWD}
+	#fi
 
 	if use doc; then
 		make DESTDIR="${D}" install-apidox || die
 	fi
 
 	# needed to fix lib64 issues on amd64, see bug #45669
-	use amd64 && ln -s ${KDEDIR}/lib ${D}/${KDEDIR}/lib64
+	#use amd64 && ln -s ${KDEDIR}/lib ${D}/${KDEDIR}/lib64
 
 	# Needed to create lib -> lib64 symlink for amd64 2005.0 profile
 	if [ "${SYMLINK_LIB}" = "yes" ]; then
@@ -137,4 +145,17 @@ CONFIG_PROTECT="${PREFIX}/share/config ${PREFIX}/env ${PREFIX}/shutdown"
 EOF
 	fi
 
+}
+
+pkg_postinst() {
+	if use zeroconf; then
+		echo 
+		einfo "To make zeroconf support available in KDE"
+		einfo "make sure that the 'mdnsd' daemon is running."
+		einfo "Make sure also that multicast dns lookups are"
+		einfo "enabled by editing the 'hosts:' line in "
+		einfo "/etc/nsswitch.conf to include 'mdns', e.g.:"
+		einfo "hosts: files mdns dns"
+		echo 
+	fi
 }
