@@ -1,0 +1,46 @@
+diff -Nur KDE/kdebase.orig/startkde KDE/kdebase/startkde
+--- KDE/kdebase.orig/startkde	2005-03-04 12:20:04.000000000 +0100
++++ KDE/kdebase/startkde	2005-05-11 14:56:43.000000000 +0200
+@@ -14,6 +14,42 @@
+ 	exit 1
+ fi
+ 
++# Gentoo part:
++export PATH="/usr/kde/devel/bin:${PATH}"
++
++cd ${HOME}
++if [ -L .kde -o ! -d .kde ]; then
++	# handle ~/.kde* dirs - separate ones for separate KDEs
++	[ -d .kde/ ] cp -r .kde/ .kde.backup
++	rm -f .kde
++	if [ ! -e .kdedevel ]; then
++		# migrate old config files
++		if [ -e .kde3.4 ]; then
++			cp -r .kde3.4 .kdedevel
++		elif [ -e .kde3.3 ]; then
++			cp -r .kde3.3 .kdedevel
++		elif [ -e .kde3.2 ]; then
++			cp -r .kde3.2 .kdedevel
++		else
++			mkdir .kdedevel
++		fi
++		cd .kdedevel
++		for file in share/apps/kdevdocumentation/search/htdig.conf \
++			    share/apps/kalarmd/clients \
++			    share/config/kresources/calendar/stdrc \
++			    share/config/*rc; do
++			if [ -e "${file}" ]; then
++				sed -i -e "s:$HOME/\.kde3\.[234]:$HOME/\.kdedevel:g" \
++				       -e 's:$HOME/\.kde3\.[234]:$HOME/\.kdedevel:g' \
++				       -e 's:/usr/kde/3\.[234]/:/usr/kde/devel/:g' \
++					"${file}"
++			fi
++		done
++	fi
++	ln -sf .kdedevel .kde
++fi
++# Gentoo part ends
++
+ # Set the background to plain grey.
+ # The standard X background is nasty, causing moire effects and exploding
+ # people's heads. We use colours from the standard KDE palette for those with
