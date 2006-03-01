@@ -5,10 +5,9 @@
 KMNAME=kdenetwork
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE multi-protocol IM client"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="sametime slp ssl xmms"
 
@@ -20,16 +19,17 @@ DEPEND="dev-libs/libxslt
 	xmms? ( media-sound/xmms )"
 RDEPEND="$DEPEND
 	ssl? ( app-crypt/qca-tls )
-	>=sys-kernel/linux-headers-2.6.11"
+	>=sys-kernel/linux-headers-2.6.11
+    !net-im/kopete"
 
 src_compile() {
-    # External libgadu support - doesn't work, kopete requires a specific development snapshot of libgadu.
-    # Maybe we can enable it in the future.
-    # The nowlistening plugin has xmms support.
+	# External libgadu support - doesn't work, kopete requires a specific development snapshot of libgadu.
+	# Maybe we can enable it in the future.
+	# The nowlistening plugin has xmms support.
 	local myconf="$(use_enable sametime sametime-plugin)
                   $(use_with xmms) --without-external-libgadu"
 
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
 
 pkg_postinst()

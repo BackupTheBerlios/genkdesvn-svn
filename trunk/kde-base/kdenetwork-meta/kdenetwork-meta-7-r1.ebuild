@@ -20,13 +20,13 @@ KMSUBMODULES="
 	kdenetwork-kfile-plugins
 	lisa
 	wifi?(kwifimanager)"
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdenetwork - merge this to pull in all kdenetwork-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="wifi"
 

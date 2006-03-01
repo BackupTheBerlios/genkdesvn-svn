@@ -4,14 +4,14 @@
 KMNAME=kdenetwork
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="VNC-compatible server to share KDE desktops"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="slp"
 DEPEND="slp? ( net-libs/openslp )"
 
 src_compile() {
 	myconf="$myconf `use_enable slp`"
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }

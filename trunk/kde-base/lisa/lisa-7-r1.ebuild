@@ -6,16 +6,23 @@ KMMODULE=lanbrowsing
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KMNODOCS="true" # there is no doc/lanbrowsing, only doc/lisa !!!
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE Lan Information Server - allows KDE desktops to share information over a network"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 KMEXTRA="doc/kcontrol/lanbrowser
 	doc/lisa"
 
+#PATCHES="${FILESDIR}/${PN}-bindnow.patch"
+
+#src_compile() {
+#	export BINDNOW_FLAGS="$(bindnow-flags)"
+#	kdesvn-meta_src_compile
+#}
+
 src_install() {
-	kde-meta_src_install
+	kdesvn-meta_src_install
 
 	chmod u+s ${D}/${KDEDIR}/bin/reslisa
 

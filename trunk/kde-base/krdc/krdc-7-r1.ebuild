@@ -4,17 +4,17 @@
 KMNAME=kdenetwork
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE remote desktop connection (RDP and VNC) cient"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="rdesktop slp"
 DEPEND=">=dev-libs/openssl-0.9.6b
 	slp? ( net-libs/openslp )"
 RDEPEND="${DEPEND}
-	rdesktop? ( >=net-misc/rdesktop-1.3.1-r1 )"
+	rdesktop? ( >=net-misc/rdesktop-1.4.1 )"
 
 src_compile() {
 	myconf="$myconf `use_enable slp`"
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }

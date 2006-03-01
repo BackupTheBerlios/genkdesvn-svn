@@ -2,10 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KMNAME=kdenetwork
+KMMODULE=filesharing
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="An advanced download manager for KDE"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="kcontrol filesharing config module for NFS, SMB etc"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""

@@ -4,13 +4,14 @@
 KMNAME=kdenetwork
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE: RSS server and client for DCOP"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="kicker plugin: rss news ticker"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="$(deprange $PV $MAXKDEVER kde-base/librss)"
-OLDDEPEND="~kde-base/librss-$PV"
+
+DEPEND="
+$(deprange $PV $MAXKDEVER kde-base/librss)"
 
 KMCOPYLIB="librss librss"
 KMEXTRACTONLY="librss"

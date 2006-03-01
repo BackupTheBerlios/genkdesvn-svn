@@ -5,10 +5,11 @@ KMNAME=kdenetwork
 KMMODULE=wifi
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+KMNODOCS="true"
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE wifi (wireless network) gui"
-KEYWORDS="~x86 ~amd64 ~ppc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND=">=net-wireless/wireless-tools-25"
+DEPEND="net-wireless/wireless-tools"
 KMEXTRA="doc/kwifimanager"

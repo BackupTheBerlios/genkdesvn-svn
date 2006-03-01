@@ -11,10 +11,9 @@ ESCM_EXTERNALS="branches/kopete/0.12/kopete"
 ESCM_CHECKITEMS="${ESCM_EXTERNALS}"
 KMEXTERNAL="kopete"
 
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE multi-protocol IM client"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="ilbc jingle sametime slp ssl xmms"
 
@@ -24,23 +23,24 @@ DEPEND="dev-libs/libxslt
 	ilbc? ( dev-libs/ilbc-rfc3951 )
 	jingle? ( media-libs/speex 
 		dev-libs/expat
-		>=net-libs/ortp-0.7.1
+		=net-libs/ortp-0.7*
 	)
-	sametime? ( >=net-libs/meanwhile-0.4.2 )
+	sametime? ( =net-libs/meanwhile-0.4* )
 	slp? ( net-libs/openslp )
 	xmms? ( media-sound/xmms )"
 RDEPEND="$DEPEND
 	ssl? ( app-crypt/qca-tls )
-	>=sys-kernel/linux-headers-2.6.11"
+	>=sys-kernel/linux-headers-2.6.11
+    !net-im/kopete"
 
 PATCHES="$FILESDIR/gcc4.patch"
 
-need-kde 3.5
+need-kdesvn 3.5
 
 src_compile() {
-    # External libgadu support - doesn't work, kopete requires a specific development snapshot of libgadu.
-    # Maybe we can enable it in the future.
-    # The nowlistening plugin has xmms support.
+	# External libgadu support - doesn't work, kopete requires a specific development snapshot of libgadu.
+	# Maybe we can enable it in the future.
+	# The nowlistening plugin has xmms support.
 	local myconf="$(use_enable sametime sametime-plugin)
 				  $(use_enable jingle)
                   $(use_with xmms) --without-external-libgadu"
@@ -49,7 +49,7 @@ src_compile() {
 		myconf="${myconf} --with-ilbc=/usr"
 	fi
 
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
 
 pkg_postinst()
