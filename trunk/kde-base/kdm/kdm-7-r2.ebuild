@@ -21,7 +21,7 @@ DEPEND="$DEPEND
 	# Requires the desktop background settings and kdm modules,
 
 # Avoid using imake (kde bug 114466)
-PATCHES="${WORKDIR}/patches/kdebase-3.5.0_beta2-noimake.patch"
+PATCHES="${FILESDIR}/no-imake.patch"
 
 src_compile() {
 	local myconf="--with-x-binaries-dir=/usr/bin"

@@ -31,7 +31,7 @@ KMEXTRACTONLY="libkonq
 	kdm/kfrontend/themer/"
 KMCOMPILEONLY="kdmlib/"
 
-PATCHES="${FILESDIR}/kdebase-kicker.patch"
+#PATCHES="${FILESDIR}/kdebase-kicker.patch"
 
 src_compile() {
 	myconf="$myconf $(use_with xcomposite composite)"

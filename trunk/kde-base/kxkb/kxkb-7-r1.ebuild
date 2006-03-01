@@ -16,5 +16,4 @@ RDEPEND="${RDEPEND}
             x11-apps/setxkbmap
         ) virtual/x11 )"
 
-PATCHES="${FILESDIR}/kxkb3.5.1.xx_XX_layouts.patch"
 

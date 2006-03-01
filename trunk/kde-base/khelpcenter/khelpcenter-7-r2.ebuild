@@ -4,7 +4,7 @@
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inhert kdesvn-meta eutils kdesvn-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="The KDE Help Center"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"

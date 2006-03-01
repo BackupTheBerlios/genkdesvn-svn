@@ -38,8 +38,7 @@ src_compile() {
 
 src_install() {
 	# startkde script
-	#epatch ${FILESDIR}/${PF}-gentoo.patch
-	epatch "${WORKDIR}/patches/kdebase-3.5-startkde-gentoo.patch"
+	epatch ${FILESDIR}/${PN}-gentoo.patch
 	exeinto ${KDEDIR}/bin
 	doexe startkde
 
