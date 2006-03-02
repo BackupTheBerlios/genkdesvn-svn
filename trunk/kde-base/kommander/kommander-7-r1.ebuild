@@ -4,10 +4,10 @@
 KMNAME=kdewebdev
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="A KDE KPart Application for xsldbg, an XSLT debugger"
-KEYWORDS="~x86 ~amd64 ~ppc"
+DESCRIPTION="KDE dialog system for scripting"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 

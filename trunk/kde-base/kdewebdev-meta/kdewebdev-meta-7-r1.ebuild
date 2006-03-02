@@ -9,13 +9,13 @@ KMSUBMODULES="
 	kommander
 	kxsldbg
 	quanta"
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdewebdev - merge this to pull in all kdewebdev-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 

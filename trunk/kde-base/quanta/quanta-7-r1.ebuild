@@ -5,24 +5,21 @@
 KMNAME=kdewebdev
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE: Quanta Plus Web Development Environment"
-KEYWORDS="~x86 ~amd64 ~ppc"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc tidy"
-DEPEND="doc? ( app-doc/quanta-docs )
-	dev-libs/libxml2"
+DEPEND="dev-libs/libxslt
+    dev-libs/libxml2"
 RDEPEND="$DEPEND
 $(deprange $PV $MAXKDEVER kde-base/kfilereplace)
 $(deprange $PV $MAXKDEVER kde-base/kimagemapeditor)
 $(deprange $PV $MAXKDEVER kde-base/klinkstatus)
 $(deprange $PV $MAXKDEVER kde-base/kommander)
 $(deprange $PV $MAXKDEVER kde-base/kxsldbg)
-tidy? ( app-text/htmltidy )"
+tidy? ( app-text/htmltidy )
+doc? ( app-doc/quanta-docs )"
 
 KMCOMPILEONLY=lib
-
-# LIBXML_LIBS is needed by quanta (parsers) by is set kxsldbg, so we extrac it
-# to let it set LIBXML_LIBS !!! The exports are no longer needed now ...
-#KMEXTRACTONLY="kxsldbg/"
 

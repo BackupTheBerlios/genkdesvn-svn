@@ -4,10 +4,8 @@
 KMNAME=kdewebdev
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE dialog system for scripting"
-KEYWORDS="~x86 ~amd64 ~ppc"
+DESCRIPTION="KDE: An HTML imagemap editor"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND=""
-
