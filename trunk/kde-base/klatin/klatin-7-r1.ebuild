@@ -4,12 +4,11 @@
 KMNAME=kdeedu
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE: KLatin - a program to help revise Latin"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-OLDDEPEND="~kde-base/libkdeedu-3.3.1"
 DEPEND="
 $(deprange $PV $MAXKDEVER kde-base/libkdeedu)"
 

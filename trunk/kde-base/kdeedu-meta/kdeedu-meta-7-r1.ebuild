@@ -3,10 +3,12 @@
 # $Header: $
 
 KMSUBMODULES="
-	kig
+	blinken
+	kanagram
 	kalzium
 	kgeography
 	khangman
+	kig
 	kpercentage
 	kiten
 	kvoctrain
@@ -15,22 +17,20 @@ KMSUBMODULES="
 	kdeedu-applnk
 	kbruch
 	keduca
-	kmessedwords
 	klatin
 	kmplot
 	kstars
 	ktouch
 	klettres
-	kmathtool
 	kwordquiz"
 
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdeedu - merge this to pull in all kdeedu-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 

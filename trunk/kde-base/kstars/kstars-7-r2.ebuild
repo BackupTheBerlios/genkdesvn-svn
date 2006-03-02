@@ -4,15 +4,17 @@
 KMNAME=kdeedu
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE Desktop Planetarium"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkdeedu)"
-OLDDEPEND="~kde-base/libkdeedu-$PV"
 
-KMEXTRACTONLY="libkdeedu/extdate libkdeedu/kdeeduplot"
+KMEXTRACTONLY="libkdeedu/extdate
+	libkdeedu/kdeeduplot
+	libkdeedu/kdeeduui"
 KMCOPYLIB="libextdate libkdeedu/extdate
+		libkdeeduui libkdeedu/kdeeduui
 	    libkdeeduplot libkdeedu/kdeeduplot"
 

@@ -2,13 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KMNAME=kdeedu
-KMMODULE=applnk
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="applnk files for kdeedu-derived apps"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE Japanese dictionary and reference"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 
