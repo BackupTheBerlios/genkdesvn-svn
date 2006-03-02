@@ -5,17 +5,19 @@ KMMODULE=kscreensaver
 KMNAME=kdeartwork
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="Extra screensavers for kde"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="opengl xscreensaver"
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/kscreensaver)
+    media-libs/libart_lgpl
 	opengl? ( virtual/opengl )
-	!ppc64? ( xscreensaver? ( x11-misc/xscreensaver ) )"
+	xscreensaver? ( x11-misc/xscreensaver )"
 
 
 src_compile() {
-	myconf="$myconf --with-dpms $(use_with opengl gl)"
-	kde-meta_src_compile
+	local myconf="$myconf --with-dpms --with-libart
+	                  $(use_with opengl gl) $(use_with xscreensaver)"
+	kdesvn-meta_src_compile
 }
