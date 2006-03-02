@@ -4,9 +4,9 @@
 KMNAME=kdetoys
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE: Amusing Misuse Of Resources - desktop-dwelling creature"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="kicker applet: eyes following the movement of the mouse pointer"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""

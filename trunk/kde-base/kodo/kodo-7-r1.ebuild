@@ -4,9 +4,9 @@
 KMNAME=kdetoys
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE: screensaver featuring the Space-Faring Tux"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE: measure the desktop mileage of your mouse pointer"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
