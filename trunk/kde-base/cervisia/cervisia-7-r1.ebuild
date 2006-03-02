@@ -4,8 +4,11 @@
 KMNAME=kdesdk
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE: Umbrello UML Modeller"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="Cervisia - A KDE CVS frontend"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE=""
+
+RDEPEND="$DEPEND
+	dev-util/cvs"

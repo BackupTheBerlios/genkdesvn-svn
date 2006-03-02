@@ -4,11 +4,8 @@
 KMNAME=kdesdk
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="Cervisia - A KDE CVS frontend"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KUIViewer - Displays Designer's UI files"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-
-RDEPEND="$DEPEND
-	dev-util/cvs"

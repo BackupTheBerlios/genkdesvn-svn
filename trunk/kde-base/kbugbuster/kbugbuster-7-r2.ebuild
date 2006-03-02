@@ -5,13 +5,12 @@
 KMNAME=kdesdk
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KBugBuster - A tool for checking and reporting KDE apps' bugs"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="kcal"
 
-DEPEND="kcal? ( $(deprange $PV $MAXKDEVER kde-base/libkcal) )
-	$(deprange $PV $MAXKDEVER kde-base/libkdepim)"
+DEPEND="kcal? ( $(deprange $PV $MAXKDEVER kde-base/libkcal) )"
 
 #TODO tell configure about the optional kcal support, or something
