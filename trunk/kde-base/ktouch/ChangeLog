@@ -1,0 +1,9 @@
+# ChangeLog for kde-base/ktouch
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*ktouch-7-r1 (04 Jul 2005)
+
+  04 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  ktouch-7-r1.ebuild files/digest-ktouch-7-r1
+  Introduce dependency on libkdeedu
+
