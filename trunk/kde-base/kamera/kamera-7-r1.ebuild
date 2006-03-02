@@ -4,9 +4,9 @@
 KMNAME=kdegraphics
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE scanner library"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc"
+DESCRIPTION="KDE digital camera manager"
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="media-gfx/sane-backends"
+DEPEND="media-gfx/gphoto2"

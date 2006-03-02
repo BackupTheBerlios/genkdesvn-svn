@@ -4,8 +4,9 @@
 KMNAME=kdegraphics
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="Paint Program for KDE"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE: A fast and versatile image viewer"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
+DEPEND="media-libs/imlib"

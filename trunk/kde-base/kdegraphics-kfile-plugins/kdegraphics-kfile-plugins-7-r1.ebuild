@@ -6,14 +6,15 @@ KMMODULE=kfile-plugins
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 UNSERMAKE=no #toplevel Makefile is all wrong so ...
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="kfile plugins from kdegraphics"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
-IUSE="tiff openexr"
-DEPEND="tiff? ( media-libs/tiff )
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="openexr"
+DEPEND="media-libs/tiff
 	openexr? ( media-libs/openexr )"
-RDEPEND="${DEPEND}"
 
 # ps installed with kghostview, pdf installed with kpdf
 KMEXTRACTONLY="kfile-plugins/ps kfile-plugins/pdf"
+
+myconf="$myconf $(use_with openexr)"

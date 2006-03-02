@@ -5,13 +5,14 @@
 KMNAME=kdegraphics
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="SVG viewer library and embeddable kpart"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
-DEPEND="media-libs/libart_lgpl
-	media-libs/lcms
-	dev-libs/fribidi"
+DEPEND=">=media-libs/freetype-2
+    media-libs/fontconfig
+    media-libs/libart_lgpl
+    media-libs/lcms
+    dev-libs/fribidi"

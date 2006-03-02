@@ -4,13 +4,16 @@
 KMNAME=kdegraphics
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="Kooka is a KDE application which provides access to scanner hardware"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkscan)"
-OLDDEPEND="~kde-base/libkscan-$PV"
+DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkscan)
+	media-libs/tiff"
 
 KMCOPYLIB="libkscan libkscan"
 KMEXTRACTONLY="libkscan"
+
+# There's no ebuild for kadmos, and likely will never be since it isn't free.
+myconf="$myconf --without-kadmos"

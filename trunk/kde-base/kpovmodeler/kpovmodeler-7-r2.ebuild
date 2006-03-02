@@ -4,11 +4,12 @@
 KMNAME=kdegraphics
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE: Modeler for POV-Ray Scenes"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="virtual/opengl"
+DEPEND="virtual/opengl
+	>=media-libs/freetype-2"
 RDEPEND="${DEPEND}
 	media-gfx/povray"

@@ -4,8 +4,8 @@
 KMNAME=kdegraphics
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="kde image viwer"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE color selector/editor"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
