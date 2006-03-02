@@ -4,11 +4,8 @@
 KMNAME=kdeutils
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE gpg keyring manager"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE Archiving tool"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-
-RDEPEND="$DEPEND
-	app-crypt/gnupg"

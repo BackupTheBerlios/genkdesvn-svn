@@ -4,8 +4,11 @@
 KMNAME=kdeutils
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE: Editor for Regular Expressions"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDElirc - KDE Frontend to lirc"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86"
 IUSE=""
+
+RDEPEND="$DEPEND
+	app-misc/lirc"

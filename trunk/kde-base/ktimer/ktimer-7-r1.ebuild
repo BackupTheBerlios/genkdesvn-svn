@@ -4,11 +4,8 @@
 KMNAME=kdeutils
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDElirc - KDE Frontend to lirc"
-KEYWORDS="~x86 ~amd64 ~ppc ~ppc64"
+DESCRIPTION="KDE Timer"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-
-RDEPEND="$DEPEND
-	app-misc/lirc"

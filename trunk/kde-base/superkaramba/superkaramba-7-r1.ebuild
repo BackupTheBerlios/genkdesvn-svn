@@ -5,19 +5,12 @@
 KMNAME=kdeutils
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="A tool to create interactive applets for the KDE desktop."
 HOMEPAGE="http://netdragon.sourceforge.net/"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE=""
 
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="doc xmms"
+RDEPEND="!x11-misc/superkaramba"
 
-DEPEND="dev-lang/python
-	xmms? ( media-sound/xmms )
-	!x11-misc/superkaramba"
-
-src_compile() {
-	myconf="$myconf $(use_with xmms)"
-	kde-meta_src_compile
-}

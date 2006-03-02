@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KMNAME=kdeutils
-KMMODULE=kwallet
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE Wallet Management Tool"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE: very simple text editor"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""

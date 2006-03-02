@@ -4,9 +4,11 @@
 KMNAME=kdeutils
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="klaptopdaemon - KDE battery monitoring and management for laptops"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
+# Fix output of klaptopdaemon (kde bug 103437).
+PATCHES="${FILESDIR}/kdeutils-3.4.3-klaptopdaemon.patch"
