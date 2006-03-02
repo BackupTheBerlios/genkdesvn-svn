@@ -4,11 +4,11 @@
 KMNAME=kdeadmin
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE user (/etc/passwd and other methods) manager"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE LiLo kcontrol module"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 DEPEND=""
 
-# TODO add NIS support
+PATCHES="$FILESDIR/never-disable.diff"

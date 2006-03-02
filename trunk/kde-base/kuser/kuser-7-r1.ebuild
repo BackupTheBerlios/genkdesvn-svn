@@ -4,11 +4,11 @@
 KMNAME=kdeadmin
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE: Display PAM security policies"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE user (/etc/passwd and other methods) manager"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 
-# NOTE TODO some dep is missing here - check on empty install
+# TODO add NIS support

@@ -11,13 +11,13 @@ KMSUBMODULES="
 	secpolicy"
 # NOTE: kpackage, ksysv are useless on a normal gentoo system and so aren't included
 # in the above list. However, packages do nominally exist for them.
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdeadmin - merge this to pull in all kdeadmin-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 

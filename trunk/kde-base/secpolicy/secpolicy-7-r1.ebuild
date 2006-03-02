@@ -6,8 +6,9 @@ MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta kde-source
 
-DESCRIPTION="tar-based DAT archiver for KDE"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE: Display PAM security policies"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 
+# NOTE TODO some dep is missing here - check on empty install
