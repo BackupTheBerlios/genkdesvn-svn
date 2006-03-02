@@ -6,16 +6,13 @@ KMNOMODULE=true
 KMEXTRA="kicker-applets doc/kicker-applets"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="kicker applets"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="xmms"
-OLDDEPEND="~kde-base/kicker-$PV
-	xmms? ( media-sound/xmms )"
 DEPEND="xmms? ( media-sound/xmms )
 $(deprange-dual $PV $MAXKDEVER kde-base/kicker)"
 
-use xmms || export ac_cv_have_xmms=no
-
+myconf="$(use_with xmms)"
 

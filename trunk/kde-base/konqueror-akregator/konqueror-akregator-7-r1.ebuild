@@ -6,12 +6,13 @@ KMNOMODULE=true
 KMEXTRA="konq-plugins/akregator"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="konqueror's akregator plugin"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="$(deprange $PV $MAXKDEVER kde-base/konqueror)
-$(deprange $PV $MAXKDEVER kde-base/kdeaddons-docs-konq-plugins)"
-RDEPEND="$(deprange $PV $MAXKDEVER kde-base/akregator)"
+DEPEND="$(deprange $PV $MAXKDEVER kde-base/konqueror)"
+RDEPEND="${DEPEND}
+$(deprange $PV $MAXKDEVER kde-base/kdeaddons-docs-konq-plugins)
+$(deprange $PV $MAXKDEVER kde-base/akregator)"
 

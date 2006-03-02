@@ -3,13 +3,13 @@
 
 KMNAME=kdeaddons
 KMNOMODULE=true
-KMEXTRA="renamedlgplugins/audio"
+KMEXTRA="doc/konq-plugins"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE RenameDlg plugin for audio files"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="Documentation for the konqueror plugins from kdeaddons"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 

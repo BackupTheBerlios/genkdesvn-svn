@@ -6,8 +6,6 @@ KMSUBMODULES="
 	arts?(noatun-plugins)
 	atlantikdesigner
 	knewsticker-scripts
-	ksig
-	vimpart
 	kaddressbook-plugins
 	kate-plugins
 	kicker-applets
@@ -17,12 +15,12 @@ KMSUBMODULES="
 	kdeaddons-docs-konq-plugins
 	renamedlg-audio
 	renamedlg-images"
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdeaddons - merge this to pull in all kdeaddons-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
-
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="arts"

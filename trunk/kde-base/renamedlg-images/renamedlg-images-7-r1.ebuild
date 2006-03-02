@@ -3,13 +3,13 @@
 
 KMNAME=kdeaddons
 KMNOMODULE=true
-KMEXTRA="doc/konq-plugins"
+KMEXTRA="renamedlgplugins/images"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="Documentation for the konqueror plugins from kdeaddons"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="renamedlg plugin for image files"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 

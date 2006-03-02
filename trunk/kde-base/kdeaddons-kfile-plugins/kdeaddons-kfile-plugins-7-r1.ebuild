@@ -6,12 +6,16 @@ KMNOMODULE=true
 KMEXTRA="kfile-plugins/"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="kdeaddons kfile plugins"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
-IUSE=""
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="ssl"
 DEPEND="ssl? (dev-libs/openssl)"
 
 # kfile-cert requires ssl
 
+src_compile() {
+	myconf="$(use_with ssl)"
+	kdesvn-meta_src_compile
+}

@@ -3,13 +3,12 @@
 
 KMNAME=kdeaddons
 KMNOMODULE=true
-KMEXTRA="renamedlgplugins/images"
+KMEXTRA="kate"
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="renamedlg plugin for image files"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="kate plugins and docs"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND=""
-
+DEPEND="$(deprange $PV $MAXKDEVER kde-base/kate)"

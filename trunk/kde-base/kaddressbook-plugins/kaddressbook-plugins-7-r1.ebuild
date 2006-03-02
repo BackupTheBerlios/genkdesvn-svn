@@ -6,10 +6,9 @@ KMNOMODULE=true
 KMEXTRA=kaddressbook-plugins/
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="Plugins for KAB"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/kaddressbook)"
-OLDDEPEND="~kde-base/kaddressbook-$PV"

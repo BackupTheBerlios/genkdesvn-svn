@@ -6,14 +6,15 @@ KMNAME=kdeaddons
 KMNODOCS=true
 MAXKDEVER=$PV
 UNSERMAKE=no
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="Various plugins for konqueror"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-DEPEND="
-$(deprange $PV $MAXKDEVER kde-base/konqueror)
-$(deprange $PV $MAXKDEVER kde-base/kdeaddons-docs-konq-plugins)"
+DEPEND="$(deprange-dual $PV $MAXKDEVER kde-base/konqueror)
+    !kde-misc/metabar"
+RDEPEND="${DEPEND}
+$(deprange 3.5.0 $MAXKDEVER kde-base/kdeaddons-docs-konq-plugins)"
 
 # Don't install the akregator plugin, since it depends on akregator, which is
 # a heavy dep.
