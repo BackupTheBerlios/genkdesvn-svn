@@ -4,10 +4,10 @@
 KMNAME=kdemultimedia
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="aRts mixer gui"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="alsa"
 DEPEND="alsa? ( media-libs/alsa-lib )"
 KMEXTRACTONLY="kscd/configure.in.in"
@@ -16,5 +16,5 @@ src_compile() {
 	# alsa 0.9 not supported
 	use alsa && myconf="$myconf --with-alsa --with-arts-alsa" || myconf="$myconf --without-alsa --disable-alsa"
 
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }

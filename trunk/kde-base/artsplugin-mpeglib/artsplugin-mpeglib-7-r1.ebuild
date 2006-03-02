@@ -6,13 +6,12 @@ KMNAME=kdemultimedia
 KMMODULE=mpeglib_artsplug
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="mpeglib plugin for arts"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/mpeglib)"
-OLDDEPEND="~kde-base/mpeglib-$PV"
 KMCOPYLIB="libmpeg mpeglib/lib/"
 KMEXTRACTONLY="mpeglib/"
 
@@ -21,5 +20,5 @@ pkg_setup() {
 		eerror "${PN} needs the USE=\"arts\" enabled and also the kdelibs compiled with the USE=\"arts\" enabled"
 		die
 	fi
-	kde-source_pkg_setup
+	kdesvn-source_pkg_setup
 }

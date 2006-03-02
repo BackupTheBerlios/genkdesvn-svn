@@ -4,8 +4,7 @@
 
 KMSUBMODULES="
 	arts?(artsplugin-akode)
-	arts?(artsplugin-mpeglib)
-	arts?(artsplugin-mpg123)
+	arts?(artsplugin-audiofile)
 	arts?(artsplugin-xine)
 	arts?(juk)
 	arts?(kaboodle)
@@ -19,15 +18,20 @@ KMSUBMODULES="
 	kmid
 	kmix
 	kscd
-	libkcddb
-	mpeglib"
-inherit kde-meta-parent
+	libkcddb"
+
+## scheduled to be removed
+#	mpeglib
+#	artsplugin-mpeglib
+#	artsplugin-mpg123
+
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdemultimedia - merge this to pull in all kdemultimedia-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="arts"
 

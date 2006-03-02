@@ -3,22 +3,21 @@
 # $Header: $
 
 KMNAME=kdemultimedia
-KMMODULE=arts
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-KMNODOCS=true
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="aRts pipeline builder and other tools"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
-IUSE="oggvorbis encode"
-KMEXTRACTONLY="mpeglib_artsplug/configure.in.in" # needed because the artsc-config call is here
-KMEXTRA="doc/artsbuilder"
+DESCRIPTION="KDE media player"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE=""
+RDEPEND="$(deprange $PV $MAXKDEVER kde-base/kdemultimedia-arts)"
+
+KMCOMPILEONLY="arts/"
 
 pkg_setup() {
 	if ! useq arts; then
 		eerror "${PN} needs the USE=\"arts\" enabled and also the kdelibs compiled with the USE=\"arts\" enabled"
 		die
 	fi
-	kde-source_pkg_setup
+	kdesvn-source_pkg_setup
 }

@@ -4,10 +4,10 @@
 KMNAME=kdemultimedia
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE mpeg library"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="media-sound/cdparanoia"
 

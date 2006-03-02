@@ -5,12 +5,11 @@
 KMNAME=kdemultimedia
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE CD player"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-OLDDEPEND="~kde-base/libkcddb-3.3.1"
 DEPEND="
 $(deprange $PV $MAXKDEVER kde-base/libkcddb)"
 

@@ -5,16 +5,16 @@ KMNAME=kdemultimedia
 KMMODULE=kfile-plugins
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="kfile plugins from kdemultimedia package"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
-IUSE="oggvorbis theora"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="vorbis theora"
 DEPEND="media-libs/taglib
-	oggvorbis? ( media-libs/libvorbis )
+	vorbis? ( media-libs/libvorbis )
 	theora? ( media-libs/libtheora )"
 
 src_compile() {
-	myconf="$myconf $(use_with oggvorbis vorbis)"
-	kde-meta_src_compile
+	myconf="$myconf $(use_with vorbis)"
+	kdesvn-meta_src_compile
 }

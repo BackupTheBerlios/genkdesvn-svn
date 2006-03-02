@@ -6,7 +6,7 @@ KMNAME=kdemultimedia
 KMMODULE=kioslave
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="kioslaves from kdemultimedia package"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
@@ -32,5 +32,5 @@ src_compile() {
 		myconf="$myconf --without-vorbis --without-flac"
 	fi
 
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }

@@ -2,10 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KMNAME=kdemultimedia
+KMMODULE=kappfinder-data
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KDE library for CDDB"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="kappfinder data from kdemultimedia"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""

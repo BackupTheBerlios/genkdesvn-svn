@@ -1,21 +1,22 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: $"
 
 KMNAME=kdemultimedia
-KMMODULE=mpg123_artsplugin
+KMMODULE=xine_artsplugin
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="aRts plugin for mpg123"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="arts xine plugin"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
+DEPEND=">=media-libs/xine-lib-1.0"
 
 pkg_setup() {
 	if ! useq arts; then
 		eerror "${PN} needs the USE=\"arts\" enabled and also the kdelibs compiled with the USE=\"arts\" enabled"
 		die
 	fi
-	kde-source_pkg_setup
+	kdesvn-source_pkg_setup
 }

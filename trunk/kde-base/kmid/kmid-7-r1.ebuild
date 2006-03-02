@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 KMNAME=kdemultimedia
-KMMODULE=kappfinder-data
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="kappfinder data from kdemultimedia"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="KDE midi player"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
