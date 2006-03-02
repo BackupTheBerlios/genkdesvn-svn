@@ -3,20 +3,20 @@
 # $Header: $
 
 KMSUBMODULES="
-	arts?(ksayit)
-	arts?(kttsd)
+	arts? ( ksayit )
+	arts? ( kttsd )
 	kmag
 	kdeaccessibility-iconthemes
 	kmousetool
 	kbstateapplet
 	kmouth"
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kdeaccessibility - merge this to pull in all kdeaccessiblity-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="arts"
 
