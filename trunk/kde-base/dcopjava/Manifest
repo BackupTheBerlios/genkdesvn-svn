@@ -1,3 +1,4 @@
-MD5 2ef82681af55488339bbff1ffea7ada1 dcopjava-7.ebuild 797
-MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
+MD5 50a2bd8550b732ce5a3905a3673da3e4 dcopjava-7-r1.ebuild 816
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-dcopjava-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-dcopjava-7-r1 0
+MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625

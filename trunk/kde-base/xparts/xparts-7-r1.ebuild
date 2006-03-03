@@ -7,10 +7,10 @@ KMCOPYLIB="libdcopc dcopc"
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="Allows embedding of generic XParts as KDE KParts"
-KEYWORDS="~x86 ~ppc" # broken according to upstream - 3.4a1 README
+KEYWORDS="~amd64 ~ppc ~x86" # broken according to upstream - 3.4a1 README
 IUSE="mozilla"
 DEPEND="=dev-libs/glib-1.2*
 	=x11-libs/gtk+-1.2*
@@ -18,7 +18,7 @@ DEPEND="=dev-libs/glib-1.2*
 PATCHES="$FILESDIR/no-gtk-glib-check.diff"
 
 src_unpack() {
-	kde-meta_src_unpack
+	kdesvn-meta_src_unpack
 
 	# Doesn't affect makefile tarballs.
 	# Real solution will be to split this further and make a separate

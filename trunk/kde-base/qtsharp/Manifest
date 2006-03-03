@@ -1,3 +1,4 @@
-MD5 e11db35d7e37a2d582e75f274d5356de qtsharp-7.ebuild 637
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-qtsharp-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-qtsharp-7-r1 0
 MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
+MD5 92ce6ce5de2c862b2c4ee3f60bd2056c qtsharp-7-r1.ebuild 653

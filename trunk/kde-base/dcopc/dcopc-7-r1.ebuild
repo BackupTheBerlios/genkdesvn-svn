@@ -4,7 +4,7 @@
 KMNAME=kdebindings
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="C bindings for DCOP"
 KEYWORDS="~x86 ~ppc" # broken according to upstream - 3.4a1 README=

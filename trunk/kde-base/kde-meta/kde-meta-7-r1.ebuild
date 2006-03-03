@@ -18,13 +18,13 @@ KMSUBMODULES="
 	kdeutils-meta
 	kdeartwork-meta
 	kdewebdev-meta"
-inherit kde-meta-parent
+inherit kdesvn-meta-parent
 
 DESCRIPTION="kde - merge this to pull in all kde packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~ppc ~sparc ~ppc64 ~amd64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="accessibility"
 

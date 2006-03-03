@@ -11,7 +11,7 @@ do
 		ESCM_DEEPITEMS="${ESCM_DEEPITEMS} ${I18N_PATH}/${lang}/messages/$file"
 	done
 done
-inherit kde-functions kde-source
+inherit kdesvn-functions kdesvn-source
 
 DESCRIPTION="KDE internationalization package"
 HOMEPAGE="http://i18n.kde.org/"

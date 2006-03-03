@@ -4,10 +4,10 @@
 KMNAME=kdeadmin
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="KDE: Editor for Sys-V like init configurations"
-KEYWORDS="~x86 ~amd64 ~ppc"
+DESCRIPTION="KDE package manager (deb, rpm etc support; rudimentary ebuild support)"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 DEPEND=""
 
