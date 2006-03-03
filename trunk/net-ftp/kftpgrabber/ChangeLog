@@ -1,0 +1,10 @@
+# ChangeLog for net-ftp/kftpgrabber
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*kftpgrabber-7 (27 Jul 2005)
+
+  27 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kftpgrabber-7.ebuild files/digest-kftpgrabber-7
+  Initial import thanks to ix@replic.net
+
+

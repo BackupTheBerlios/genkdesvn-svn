@@ -39,6 +39,8 @@ KMSUBMODULES="
 	networkstatus"
 # 	not compiled by default
 #	kmobile
+#	indexlib
+
 inherit kdesvn-meta-parent
 
 DESCRIPTION="kdepim - merge this to pull in all kdepim-derived packages"

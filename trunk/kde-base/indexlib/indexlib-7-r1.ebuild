@@ -6,7 +6,7 @@ KMNAME=kdepim
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 KMNODOCS=true
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDEPIM indexing library"
 HOMEPAGE="http://pim.kde.org/"
