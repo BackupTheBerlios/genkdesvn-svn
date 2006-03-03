@@ -13,6 +13,7 @@ KMSUBMODULES="
 	konq-plugins
 	konqueror-akregator
 	kdeaddons-docs-konq-plugins
+	ksig
 	renamedlg-audio
 	renamedlg-images"
 inherit kdesvn-meta-parent
