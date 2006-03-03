@@ -4,6 +4,7 @@
 
 KMSUBMODULES="
 	pda?(kpilot)
+	akregator
 	certmanager
 	kaddressbook
 	kalarm

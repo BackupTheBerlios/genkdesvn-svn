@@ -6,6 +6,7 @@ KMSUBMODULES="
 	kalyptus
 	kdejava
 	kjsembed
+	pykde
 	qtjava
 	smoke"
 inherit kdesvn-meta-parent
