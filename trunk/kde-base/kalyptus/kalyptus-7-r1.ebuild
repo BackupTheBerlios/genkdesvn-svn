@@ -5,10 +5,10 @@ KMNAME=kdebindings
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE bindings generator for C, ObjC and Java"
-KEYWORDS="~x86 ~ppc"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 DEPEND="dev-lang/perl"
 PATCHES="$FILESDIR/no-gtk-glib-check.diff"
@@ -17,7 +17,7 @@ PATCHES="$FILESDIR/no-gtk-glib-check.diff"
 # You're welcome to fix this in a better way --danarmak
 src_compile () {
 	export S=$S/kalyptus
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
 
 src_install() {

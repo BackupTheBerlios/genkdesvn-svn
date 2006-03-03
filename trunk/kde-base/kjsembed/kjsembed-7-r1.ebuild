@@ -5,15 +5,14 @@ KMNAME=kdebindings
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE javascript parser and embedder"
 HOMEPAGE="http://xmelegance.org/kjsembed/"
 
-KEYWORDS="~x86 ~ppc ~sparc"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange-dual $PV $MAXKDEVER kde-base/kwin)"
-OLDDEPEND="~kde-base/kwin-$PV"
 
 PATCHES="$FILESDIR/no-gtk-glib-check.diff"
 

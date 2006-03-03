@@ -5,10 +5,10 @@ KMNAME=kdebindings
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit perl-module kde-meta kde-source
+inherit perl-module kdesvn-meta kdesvn-source
 
 DESCRIPTION="Perl bindings for DCOP"
-KEYWORDS="~x86 ~ppc"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 DEPEND="dev-lang/perl"
 PATCHES="$FILESDIR/no-gtk-glib-check.diff
@@ -18,13 +18,13 @@ PATCHES="$FILESDIR/no-gtk-glib-check.diff
 # and it installs into /usr entirely
 SLOT="0"
 src_compile() {
-	kde_src_compile myconf
+	kdesvn_src_compile myconf
 	myconf="$myconf --prefix=/usr"
-	kde_src_compile configure make
+	kdesvn_src_compile configure make
 }
 
 src_install() {
-	kde-meta_src_install
+	kdesvn-meta_src_install
 	fixlocalpod
 }
 

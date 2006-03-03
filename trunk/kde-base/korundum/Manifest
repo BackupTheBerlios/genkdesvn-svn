@@ -1,3 +1,4 @@
-MD5 4739b132f60d5fc145677f28f50cf5a6 korundum-7.ebuild 994
-MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-korundum-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-korundum-7-r1 0
+MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
+MD5 9e73f7d59b1c0734b540f5a6a1a0f1f9 korundum-7-r1.ebuild 932

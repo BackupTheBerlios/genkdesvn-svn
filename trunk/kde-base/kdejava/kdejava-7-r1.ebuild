@@ -7,17 +7,16 @@ KMCOPYLIB="libqtjavasupport qtjava/javalib/qtjava"
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE java bindings"
-KEYWORDS="~x86 ~ppc"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 COMMONDEPEND="$(deprange-dual $PV $MAXKDEVER kde-base/kwin)
 	$(deprange-dual $PV $MAXKDEVER kde-base/kcontrol)
 	$(deprange $PV $MAXKDEVER kde-base/qtjava)"
 DEPEND="virtual/jdk $COMMONDEPEND"
 RDEPEND="virtual/jre $COMMONDEPEND"
-OLDDEPEND="~kde-base/kwin-$PV ~kde-base/kcontrol-$PV ~kde-base/qtjava-$PV virtual/jdk"
 
 PATCHES="$FILESDIR/no-gtk-glib-check.diff $FILESDIR/kdejava-3.4.0_rc1-classpath.diff"
 
@@ -28,7 +27,7 @@ PATCHES="$FILESDIR/no-gtk-glib-check.diff $FILESDIR/kdejava-3.4.0_rc1-classpath.
 # Someone who knows about java-in-gentoo should look at this and the
 # other java kdebindings, and fix the stupid thing
 src_unpack() {
-	kde-source_src_unpack
+	kdesvn-source_src_unpack
 
 	# $PREFIX-dependant, so don't go into the makefile tarballs
 	cd $S/kdejava/koala/org/kde/koala
@@ -41,5 +40,5 @@ src_unpack() {
 
 src_compile() {
 	myconf="$myconf --with-java=`java-config --jdk-home`"
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }

@@ -5,10 +5,10 @@ KMNAME=kdebindings
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE: Python bindings for DCOP"
-KEYWORDS="~x86 ~ppc"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 DEPEND="virtual/python"
 PATCHES="$FILESDIR/no-gtk-glib-check.diff"
@@ -17,8 +17,8 @@ PATCHES="$FILESDIR/no-gtk-glib-check.diff"
 # and it installs into /usr entirely
 SLOT="0"
 src_compile() {
-	kde_src_compile myconf
+	kdesvn_src_compile myconf
 	myconf="$myconf --prefix=/usr"
-	kde_src_compile configure make
+	kdesvn_src_compile configure make
 }
 

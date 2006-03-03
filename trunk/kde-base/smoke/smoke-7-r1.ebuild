@@ -6,14 +6,18 @@ KMEXTRACTONLY="kalyptus/kalyptus kalyptus/*.pm"
 KM_MAKEFILESREV=1
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="Scripting Meta Object Kompiler Engine: a language-agnostic bindings generator for qt and kde"
 HOMEPAGE="http://developer.kde.org/language-bindings/smoke/"
 
-KEYWORDS="~x86 ~ppc ~amd64"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
-DEPEND="dev-lang/perl"
+DEPEND="dev-lang/perl
+	dev-python/qscintilla" # QScintilla is an optional dep, there's a configure flag for it, but I don't want
+				# to introduce a local noqscintilla use flag as it's a light dep.
+				# Of course it'd be nice if someone told me what the difference is between a smoke
+				# compiled with and without qscintilla support. --danarmak
 PATCHES="$FILESDIR/no-gtk-glib-check.diff"
 
 
@@ -21,8 +25,12 @@ PATCHES="$FILESDIR/no-gtk-glib-check.diff"
 # so it's best to turn it off here. (I don't have that much RAM, so can't estimate
 # how much would be enough, but it's at least that much... --danarmak)
 src_compile() {
-	kde-meta_src_compile myconf
+	kdesvn-meta_src_compile myconf
 	# override myconf's setting of enable-final
 	myconf="$myconf --disable-final"
-	kde-meta_src_compile configure make
+
+	# Needs patch to fix paralell building again
+	MAKEOPTS="$MAKEOPTS -j1"
+
+	kdesvn-meta_src_compile configure make
 }
