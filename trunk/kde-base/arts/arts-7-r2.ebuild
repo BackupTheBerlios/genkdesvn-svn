@@ -2,8 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde flag-o-matic eutils kde-source
-set-kdedir 7
+ESCM_EXTERNALS="branches/KDE/3.5/kdelibs/libltdl"
+inherit kdesvn flag-o-matic eutils kdesvn-source
+set-kdesvndir 7
 
 KSCM_ROOT=branches/arts/1.5
 DESCRIPTION="aRts, the KDE sound (and all-around multimedia) server/output manager"
@@ -12,46 +13,55 @@ SRC_URI=""
 
 LICENSE="GPL-2 LGPL-2"
 SLOT="$PV"
-KEYWORDS="~x86 ~amd64 ~sparc ~ppc ~ppc64"
-IUSE="alsa oggvorbis esd artswrappersuid jack mad hardened"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="alsa esd artswrappersuid jack mp3 nas vorbis"
 
-DEPEND="alsa? ( media-libs/alsa-lib virtual/alsa )
-	oggvorbis? ( media-libs/libvorbis media-libs/libogg )
-	esd? ( media-sound/esound )
-	jack? ( media-sound/jack-audio-connection-kit )
-	mad? ( media-libs/libmad media-libs/libid3tag )
-	media-libs/audiofile
+RDEPEND="$(qt-copy_min_version 3.3)
 	>=dev-libs/glib-2
-	>=x11-libs/qt-3.3"
+	alsa? ( media-libs/alsa-lib )
+	vorbis? ( media-libs/libvorbis 
+			  media-libs/libogg )
+	esd? ( media-sound/esound )
+	jack? ( >=media-sound/jack-audio-connection-kit-0.90 )
+	mp3? ( media-libs/libmad )
+	nas? ( media-libs/nas )
+	media-libs/audiofile"
 
-KMCOMPILEONLY="branches/KDE/3.5/kdelibs/libltdl"
+PATCHES="${FILESDIR}/arts-1.3.2-alsa-bigendian.patch
+    ${FILESDIR}/arts-1.5.0-bindnow.patch"
+
+DEPEND="${RDEPEND}
+	dev-util/pkgconfig"
 
 src_compile() {
-
-	# Allow for choice between 3 and 7, depending on what's installed
-	has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
-
-	if (is-flag -fstack-protector || is-flag -fstack-protector-all || use hardened); then
-		epatch ${FILESDIR}/arts-1.4-mcopidl.patch
-	fi
+	myconf="$(use_enable alsa) $(use_enable vorbis)
+   			$(use_enable mp3 libmad) $(use_with jack)
+			$(use_with esd) $(use_with nas)
+			--with-audiofile --without-mas"
 
 	#fix bug 13453
 	filter-flags -foptimize-sibling-calls
 
-	#fix bug 41980
-	use sparc && filter-flags -fomit-frame-pointer
+	# breaks otherwise <gustavoz>
+	use sparc && export CFLAGS="-O1" && export CXXFLAGS="-O1"
 
-	myconf="$myconf $(use_enable alsa) $(use_enable oggvorbis vorbis) $(use_enable mad libmad) $(use_enable jack)"
+	export BINDNOW_FLAGS="$(bindnow-flags)"
 
-	kde_src_compile
+	kdesvn_src_compile
 }
 
 src_install() {
-	kde_src_install
+	kdesvn_src_install
 	dodoc ${S}/doc/{NEWS,README,TODO}
 
 	# moved here from kdelibs so that when arts is installed
 	# without kdelibs it's still in the path.
+	# List all the multilib libdirs
+	local libdirs
+	for libdir in $(get_all_libdirs); do
+		libdirs="${libdirs}:${PREFIX}/${libdir}"
+	done
+
 	dodir /etc/env.d
 echo "PATH=${PREFIX}/bin
 ROOTPATH=${PREFIX}/sbin:${PREFIX}/bin

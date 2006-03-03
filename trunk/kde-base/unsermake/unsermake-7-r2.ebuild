@@ -3,7 +3,7 @@
 # $Header: $
 
 KSCM_ROOT=trunk/kdenonbeta
-inherit python kde-repo
+inherit python kdesvn-repo
 
 IUSE=""
 DESCRIPTION="Unsermake - Advanced KDE build system"

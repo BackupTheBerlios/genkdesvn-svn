@@ -1,14 +1,13 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-KMNAME=kdegames
-KM_MAKEFILESREV=1
+KMNAME=kdeedu
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
-DESCRIPTION="library common to many KDE games"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+DESCRIPTION="common library for kde educational apps"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND=""
 

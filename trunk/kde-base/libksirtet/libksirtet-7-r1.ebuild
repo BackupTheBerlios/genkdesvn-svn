@@ -4,13 +4,12 @@
 KMNAME=kdegames
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE library used by several games"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkdegames)"
-OLDDEPEND="~kde-base/libkdegames-$PV"
 
 KMEXTRACTONLY=libkdegames
 KMCOPYLIB="libkdegames libkdegames"

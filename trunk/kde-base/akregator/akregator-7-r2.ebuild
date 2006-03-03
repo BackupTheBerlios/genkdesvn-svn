@@ -5,10 +5,10 @@
 KMNAME=kdepim
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE news feed aggregator"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkdepim)
 $(deprange $PV $MAXKDEVER kde-base/kontact)
