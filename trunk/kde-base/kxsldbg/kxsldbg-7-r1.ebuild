@@ -7,7 +7,7 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="A KDE KPart Application for xsldbg, an XSLT debugger"
-EYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 DEPEND="dev-libs/libxslt
