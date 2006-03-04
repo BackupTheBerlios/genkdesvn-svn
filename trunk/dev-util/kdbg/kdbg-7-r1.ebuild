@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde-sourceforge
+inherit kdesvn-sourceforge
 
 DESCRIPTION="A Graphical Debugger Interface to gdb"
 HOMEPAGE="http://members.nextra.at/johsixt/kdbg.html"
@@ -13,4 +13,4 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND=">=sys-devel/gdb-5.0"
-need-kde 3
+need-kdesvn 3.5

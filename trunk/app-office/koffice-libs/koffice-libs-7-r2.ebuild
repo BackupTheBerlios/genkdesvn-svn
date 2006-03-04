@@ -44,7 +44,7 @@ KMEXTRACTONLY="
 need-kdesvn 3.4
 
 src_unpack() {
-	kdesvn-source_src_unpack unpack
+	kdesvn-source_src_unpack
 
 	# Force the compilation of libkopainter.
 	sed -i 's:$(KOPAINTERDIR):kopainter:' $S/lib/Makefile.am

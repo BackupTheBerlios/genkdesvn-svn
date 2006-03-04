@@ -15,6 +15,7 @@
 inherit base eutils kde kdesvn-functions
 ECLASS=kdesvn
 INHERITED="$INHERITED $ECLASS"
+SLOT="0"
 
 # Touch all files for a given extension, so that the
 # makefile regenerates any (.cpp and/or .h) files depending on them
@@ -30,9 +31,13 @@ kdesvn_touch_files() {
     # done in two stages, because touch doens't have a silent/force mode
     if [ -n "$FILES" ]; then
         debug-print "$FUNCNAME: touching ${EXTENSION} files..."
-		einfo "${FILES}"
         touch $FILES
     fi
+}
+
+kdesvn_touch_all_files() {
+	kdesvn_touch_files ".ui"
+	kdesvn_touch_files ".kcfgc"
 }
 
 # checks for arts support if arts USE flag is set
@@ -46,7 +51,7 @@ kdesvn_src_unpack() {
 	debug-print-function $FUNCNAME $*
 	kde_src_unpack
 
-	kdesvn_touch_files ".ui"
+	kdesvn_touch_all_files
 }
 
 # compiles the code for the KDE app
@@ -67,7 +72,7 @@ kdesvn_src_compile() {
 				kde_src_compile myconf
 
 				# KDESVN specific stuff:
-				# myconf="${myconf} --host=${CHOST}" # set somewhere else ??
+				myconf="${myconf} --host=${CHOST}" # set somewhere else ??
 
                 debug-print "$FUNCNAME: myconf: set to ${myconf}"
 				;;

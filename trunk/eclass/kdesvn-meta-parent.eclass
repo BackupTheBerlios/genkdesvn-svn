@@ -12,7 +12,7 @@
 
 MAXKDEVER=$PV
 
-inherit kde-meta-parent kdesvn-functions eutils
+inherit kdesvn-functions eutils
 
 ECLASS="kdesvn-meta-parent"
 INHERITED="$INHERITED $ECLASS"

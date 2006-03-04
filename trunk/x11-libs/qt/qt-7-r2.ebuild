@@ -14,25 +14,50 @@ LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="${PV}"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
-IUSE="cups debug doc examples firebird gif ipv6 mysql nas odbc opengl postgres sqlite symbol_visibility xinerama zlib"
+IUSE="cups debug doc examples firebird gif immqt immqt-bc ipv6 mysql nas odbc opengl postgres sqlite symbol_visibility xinerama zlib"
 
-DEPEND="virtual/x11 virtual/xft
-	media-libs/libpng
-	media-libs/jpeg
-	media-libs/libmng
-	>=media-libs/freetype-2
-	nas? ( >=media-libs/nas-1.5 )
-	mysql? ( dev-db/mysql )
-	firebird? ( dev-db/firebird )
-	opengl? ( virtual/opengl virtual/glu )
-	postgres? ( dev-db/postgresql )
-	cups? ( net-print/cups )
-	zlib? ( sys-libs/zlib )"
+DEPEND="|| ( ( x11-libs/libXcursor
+            x11-libs/libXi
+            x11-libs/libXrandr
+            x11-libs/libSM
+            x11-proto/inputproto
+            x11-proto/xextproto
+            xinerama? ( x11-proto/xineramaproto x11-libs/libXinerama )
+
+        )
+        virtual/x11
+    )
+    virtual/xft
+    media-libs/libpng
+    media-libs/jpeg
+    media-libs/libmng
+    >=media-libs/freetype-2
+    nas? ( >=media-libs/nas-1.5 )
+    mysql? ( dev-db/mysql )
+    firebird? ( dev-db/firebird )
+    opengl? ( virtual/opengl virtual/glu )
+    postgres? ( dev-db/postgresql )
+    cups? ( net-print/cups )
+    zlib? ( sys-libs/zlib )"
 PDEPEND="odbc? ( ~dev-db/qt-unixODBC-3.3.5)"
 
 QTBASE=/usr/qt/devel
 
 pkg_setup() {
+    if use immqt && use immqt-bc ; then
+        ewarn
+        ewarn "immqt and immqt-bc are exclusive. You cannot set both."
+        ewarn "Please specify either immqt or immqt-bc."
+        ewarn
+        die
+    elif use immqt ; then
+        ewarn
+        ewarn "You are going to compile binary imcompatible immodule for Qt. This means"
+        ewarn "you have to recompile everything depending on Qt after you install it."
+        ewarn "Be aware."
+        ewarn
+    fi
+
 	export QTDIR=${S}
 
 	CXX=$(tc-getCXX)
@@ -92,6 +117,11 @@ src_unpack() {
 		einfo "Symbol visibility support: disabled"
 	fi
 
+    if use immqt || use immqt-bc ; then
+        epatch ../${IMMQT_P}.diff
+        sh make-symlinks.sh || die "make symlinks failed"
+    fi
+
 	if use ppc-macos ; then
 		epatch ${FILESDIR}/${P}-macos.patch
 	fi
@@ -134,6 +164,9 @@ src_compile() {
 	use xinerama    && myconf="${myconf} -xinerama" || myconf="${myconf} -no-xinerama"
 	use zlib	&& myconf="${myconf} -system-zlib" || myconf="${myconf} -qt-zlib"
 	use ipv6        && myconf="${myconf} -ipv6" || myconf="${myconf} -no-ipv6"
+    use immqt-bc    && myconf="${myconf} -inputmethod"
+    use immqt   && myconf="${myconf} -inputmethod -inputmethod-ext"
+
 
 	if use ppc-macos ; then
 		myconf="${myconf} -no-sql-ibase -no-sql-mysql -no-sql-psql -no-cups -lresolv -shared"
@@ -166,6 +199,12 @@ src_compile() {
 	../../bin/qmake
 	emake
 
+    # Make the qembed utility (not made by default)
+    cd ${S}/tools/qembed
+    ../../bin/qmake
+    emake
+
+
 }
 
 src_install() {
@@ -173,6 +212,7 @@ src_install() {
 	into ${QTBASE}
 	dobin bin/*
 	dobin tools/msg2qm/msg2qm
+	dobin tools/qembed/qembed
 
 	# libraries
 	if use ppc-macos; then
@@ -311,6 +351,7 @@ pkg_postinst() {
 	einfo "See http://doc.trolltech.com/3.3/plugins-howto.html for more infos."
 	echo
 	if [[ -n "${USE_SYMBOL_VISIBILITY}" ]]; then
+		echo
 		einfo "You have symbol visibility patch enabled."
 		einfo "If this is a new compile of Qt, make sure you recompile the whole of KDE."
 		einfo "For bugs and info you can check out the thread at KDE bugtracker:"

@@ -232,7 +232,7 @@ function kdesvn-source_src_unpack {
 
 	# Make sure to perform set of patches and other functions
 	# in case meta ebuilds are in use
-	[ -n "$KMNAME" ] && symlinks && kde-meta_src_unpack makefiles
+	[ -n "$KMNAME" ] && symlinks && kdesvn-meta_src_unpack makefiles
 
 	# Set up translations directory, even if no translations are to be used
 	mkdir -p "${S}/po"

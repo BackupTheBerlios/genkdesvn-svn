@@ -13,7 +13,16 @@
 # ALL functions are prefixed with "kdesvn_" so that we can still use the official eclass functions,
 # except for the src_* functions; they have the kdesvn-meta_ prefix
 
-inherit kde-meta kdesvn multilib
+inherit kdesvn multilib
+
+if [ "$KDEBASE" = "true" ]; then
+    need-kdesvn $PV
+
+    SLOT="$KDEMAJORVER.$KDEMINORVER"
+fi
+
+## TODO: inherit kde-meta
+
 ECLASS=kdesvn-meta
 INHERITED="$INHERITED $ECLASS"
 
@@ -87,13 +96,138 @@ function kdesvn_sort_subdirs {
 	sort_subdirs
 }
 
-# This has function sections now. Call unpack, apply any patches not in $PATCHES,
-# then call makefiles.
+# This function differs from kde-meta_src_unpack() as it fetches the source code
+# from the subversion repository
 function kdesvn-meta_src_unpack() {
-	kde-meta_src_unpack
+	debug-print-function $FUNCNAME $*
+
+	#set_common_variables
+
+	sections="$@"
+	[[ -z "$sections" ]] && sections="unpack makefiles"
+	for section in $sections; do
+	case $section in
+	prepare)
+
+		# kdepim packages all seem to rely on libkdepim/kdepimmacros.h
+		# also, all kdepim Makefile.am's reference doc/api/Doxyfile.am
+		if [ "$KMNAME" == "kdepim" ]; then
+			KMEXTRACTONLY="$KMEXTRACTONLY libkdepim/kdepimmacros.h doc/api"
+		fi
+
+		# deeplist stores common items in cvs and non-cvs meta-ebuilds
+		# It is named deeplist because this list also represents items to be
+		# recursively fetched in cvs
+		deeplist="admin Makefile.am Makefile.am.in configure.in.in configure.in.bot configure.in.mid
+		acinclude.m4 aclocal.m4 AUTHORS COPYING INSTALL README NEWS ChangeLog
+		$KMMODULE $KMEXTRA $KMCOMPILEONLY ${targetdirs[*]} $KMEXTRACTONLY $DOCS"
+
+	;;
+	unpack)
+
+		kde-meta_src_unpack "prepare"
+
+		# Create final list of stuff to extract
+		extractlist=""
+		for item in Makefile.am configure.in.mid acinclude.m4 aclocal.m4 $deeplist
+		do
+			extractlist="$extractlist $KMNAME-$TARBALLDIRVER/$item"
+		done
+
+		# xdeltas require us to uncompress to a tar file first.
+		# $KMTARPARAMS is also available for an ebuild to use; currently used by kturtle
+		# ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
+		if useq kdexdeltas && [ -n "$XDELTA_BASE" ]; then
+			echo ">>> Base archive + xdelta patch mode enabled."
+			echo ">>> Uncompressing base archive..."
+			cd $T
+			RAWTARBALL=${TARBALL//.bz2}
+			bunzip2 -dkc ${PORTAGE_ACTUAL_DISTDIR}/${XDELTA_BASE/*\//} > $RAWTARBALL
+			for delta in $XDELTA_DELTA; do
+				deltafile="${delta/*\//}"
+				echo ">>> Applying xdelta: $deltafile"
+				xdelta patch ${PORTAGE_ACTUAL_DISTDIR}/$deltafile $RAWTARBALL $RAWTARBALL.1
+				mv $RAWTARBALL.1 $RAWTARBALL
+			done
+			TARFILE=$T/$RAWTARBALL
+		else
+			TARFILE=$PORTAGE_ACTUAL_DISTDIR/$TARBALL
+			KMTARPARAMS="$KMTARPARAMS -j"
+		fi
+		cd $WORKDIR
+
+		echo ">>> Extracting from tarball..."
+		# Note that KMTARPARAMS is also used by an ebuild
+		tar -xpf $TARFILE $KMTARPARAMS $extractlist	2> /dev/null
+
+		# Avoid syncing if possible
+		# No idea what the above comment means...
+		if [ -n "$RAWTARBALL" ]; then
+			rm -f $T/$RAWTARBALL
+		fi
+
+		# Default $S is based on $P not $myP; rename the extracted dir to fit $S
+		mv $KMNAME-$TARBALLDIRVER $P || die
+		S=$WORKDIR/$P
+
+		# Copy over KMCOPYLIB items
+		libname=""
+		for x in $KMCOPYLIB; do
+			if [ "$libname" == "" ]; then
+				libname=$x
+			else
+				dirname=$x
+				cd $S
+				mkdir -p ${dirname}
+				cd ${dirname}
+				if [ ! "$(find ${PREFIX}/$(get_libdir)/ -name "${libname}*")" == "" ]; then
+					echo "Symlinking library ${libname} under ${PREFIX}/$(get_libdir)/ in source dir"
+					ln -s ${PREFIX}/$(get_libdir)/${libname}* .
+				else
+					die "Can't find library ${libname} under ${PREFIX}/$(get_libdir)/"
+				fi
+				libname=""
+			fi
+		done
+
+		# apply any patches
+		kde_src_unpack autopatch
+
+		# kdebase: Remove the installation of the "startkde" script.
+		if [ "$KMNAME" == "kdebase" ]; then
+			sed -i -e s:"bin_SCRIPTS = startkde"::g ${S}/Makefile.am.in
+		fi
+
+		# Visiblity stuff is way broken! Just disable it when it's present
+		# until upstream finds a way to have it working right.
+		if grep KDE_ENABLE_HIDDEN_VISIBILITY configure.in &> /dev/null || ! [[ -f configure ]]; then
+			find ${S} -name configure.in.in | xargs sed -i -e \
+				's:KDE_ENABLE_HIDDEN_VISIBILITY::g'
+			rm -f configure
+		fi
+
+		# for ebuilds with extended src_unpack
+		cd $S
+
+	;;
+	makefiles)
+
+		# Create Makefile.am files
+		create_fullpaths
+		change_makefiles $S "false"
+
+		# for ebuilds with extended src_unpack
+		cd $S
+
+	;;
+	esac
+	done
 }
 
 function kdesvn-meta_src_compile() {
+	# update timestamp for certain file-extensions that need to be generated
+	kdesvn_touch_all_files
+
 	kde-meta_src_compile
 }
 

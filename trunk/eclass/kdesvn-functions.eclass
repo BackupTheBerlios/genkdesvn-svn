@@ -78,8 +78,8 @@ need-kdesvn() {
     debug-print-function $FUNCNAME $*
     KDEVER="$1"
     # ask for autotools
-    case "${KDEVER}" in
-        7*)
+    #case "${KDEVER}" in
+        #7*)
 			# determine install locations
 			set-kdesvndir ${KDEVER}
 
@@ -89,21 +89,34 @@ need-kdesvn() {
 			# Things outside kde-base only need a minimum version
 			if [ -z "${KDEBASE}" ]; then
 				min-kdesvn-ver ${KDEVER}
+				SLOT="0"
+			else
+				SLOT="$KDEMAJORVER.$KDEMINORVER"
 			fi
 		
 			# Set Qt versions
 			qtver-from-kdesvnver ${KDEVER}
-			need-qt ${selected_version}
-            ;;
-		*)
-			# portage's kde-functions eclass stuff
-			need-kde ${KDEVER}
-			;;
-    esac
+			kdesvn_need-qt ${selected_version}
+            #;;
+    #esac
 }
 
 set-kdesvndir() {
     debug-print-function $FUNCNAME $*
+
+    # get version elements
+    IFSBACKUP="$IFS"
+    IFS=".-_"
+    for x in $1; do
+        if [ -z "$KDEMAJORVER" ]; then KDEMAJORVER=$x
+        else if [ -z "$KDEMINORVER" ]; then KDEMINORVER=$x
+        else if [ -z "$KDEREVISION" ]; then KDEREVISION=$x
+        fi; fi; fi
+    done
+    [ -z "$KDEMINORVER" ] && KDEMINORVER="0"
+    [ -z "$KDEREVISION" ] && KDEREVISION="0"
+    IFS="$IFSBACKUP"
+    debug-print "$FUNCNAME: version breakup: KDEMAJORVER=$KDEMAJORVER KDEMINORVER=$KDEMINORVER KDEREVISION=$KDEREVISION"
 
     # install prefix
     if [ -n "$KDEPREFIX" ]; then
@@ -111,9 +124,13 @@ set-kdesvndir() {
     elif [ "$KDEMAJORVER" == "2" ]; then
         export PREFIX="/usr/kde/2"
     else
-        if [ -z "$KDEBASE" ]; then
+        if [ -n "$KDEBASE" ]; then
+			# kde-base ebuilds must always use the exact version of kdelibs they came with
             case $KDEMAJORVER.$KDEMINORVER in
-                7.0) export PREFIX="/usr/kde/devel";;
+                7.0) 
+					export PREFIX="/usr/kde/devel"
+					export KDEPREFIX="/usr/kde/devel"
+					;;
             esac
 		fi
     fi
@@ -127,7 +144,10 @@ set-kdesvndir() {
         if [ -n "$KDEBASE" ]; then
             # kde-base ebuilds must always use the exact version of kdelibs they came with
             case $KDEMAJORVER.$KDEMINORVER in
-                7.0) export KDEDIR="/usr/kde/devel";;
+                7.0) 
+					export KDEDIR="/usr/kde/devel"
+					export KDELIBSDIR="/usr/kde/devel"
+					;;
             esac
         fi
     fi
@@ -140,9 +160,26 @@ set-kdesvndir() {
     debug-print "$FUNCNAME: Will use the kdelibs installed in $KDEDIR, and install into $PREFIX."
 }
 
-#kdesvn_need-qt() {
-#	need-qt "$@"
-#}
+kdesvn_need-qt() {
+    debug-print-function $FUNCNAME $*
+    QTVER="$1"
+
+    QT=qt
+
+    if [ "${RDEPEND-unset}" != "unset" ] ; then
+        x_DEPEND="${RDEPEND}"
+    else
+        x_DEPEND="${DEPEND}"
+    fi
+
+    #case ${QTVER} in
+        #7*)
+            DEPEND="${DEPEND} $(qt-copy_min_version ${QTVER})"
+            RDEPEND="${x_DEPEND} $(qt-copy_min_version ${QTVER})"
+            #;;
+        #*)  need-qt "$@"
+    #esac
+}
 
 #kdesvn_set-qtdir() {
 #	set-qtdir "$@"
@@ -155,7 +192,8 @@ qtver-from-kdesvnver() {
     local ver
 
     case $1 in
-        7)  ver=3.3;; # subversion
+        7)  ver=7.0;; # subversion
+			#ver=3.3
     esac
 
     selected_version="$ver"

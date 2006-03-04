@@ -1,31 +1,34 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 KSCM_ROOT=branches/KDE/3.5
-#UNSERMAKE=no
-inherit kde eutils kde-source
+
+inherit kdesvn eutils kdesvn-source
 
 DESCRIPTION="Integrated Development Enviroment for Unix, supporting KDE/Qt, C/C++ and a many other languages."
 HOMEPAGE="http://www.kdevelop.org"
 LICENSE="GPL-2"
 
 SLOT="3"
-KEYWORDS="~amd64 ~ppc ~sparc x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="ada clearcase fortran haskell java pascal perforce perl php python ruby sql subversion"
 
-DEPEND="dev-lang/perl
-	sys-devel/flex
-	sys-devel/gdb
-	subversion? ( dev-util/subversion )
+DEPEND="sys-devel/gdb
+	=sys-libs/db-4.1*
 	|| ( kde-base/cervisia kde-base/kdesdk )"
 
-need-kde 3.3
+RDEPEND="${DEPEND}
+	subversion? ( || ( kde-base/kdesdk-kioslaves kde-base/kdesdk ) )"
 
-#PATCHES="${FILESDIR}/${P}-makefiles.patch"
+DEPEND="${RDEPEND}
+	dev-lang/perl
+	sys-devel/flex"
+
+need-kdesvn 3.3
 
 src_compile() {
-	local myconf="--with-kdelibsdoxy-dir=${KDEDIR}/share/doc/HTML/en/kdelibs-apidocs"
+	local myconf="--with-kdelibsdoxy-dir=$(kde-config --prefix)/share/doc/HTML/en/kdelibs-apidocs"
 
 	# languages
 	myconf="${myconf} $(use_enable java) $(use_enable python)
@@ -44,6 +47,7 @@ src_compile() {
 }
 
 pkg_postinst() {
+	subversion_pkg_postinst
 	einfo "kdevelop can use a wide range of apps for extra functionality. This is an almost"
 	einfo "complete list. All these packages can be emerged after kdevelop."
 	einfo
@@ -54,7 +58,7 @@ pkg_postinst() {
 	einfo "dev-java/ant:                   support projects using the ant build tool"
 	einfo "dev-util/ctags:                 faster and more powerful code browsing logic"
 	einfo "app-doc/doxygen:                generate KDE-style documentation for your project"
-	einfo "net-www/htdig:                  index and search your project's documentation"
+	einfo "www-misc/htdig:                  index and search your project's documentation"
 	einfo "app-arch/rpm:                   support creating RPMs of your project"
 	einfo "app-emulation/visualboyadvance: create and run projects for this gameboy"
 	einfo

@@ -4,28 +4,21 @@
 
 ESF_SUBDIR="krusader_kde3"
 
-inherit kde-sourceforge
+inherit kdesvn-sourceforge
 
 DESCRIPTION="An advanced twin-panel (commander-style) file-manager for KDE with many extras."
 HOMEPAGE="http://krusader.sourceforge.net/"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ia64"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="javascript kde"
-# kde: adds support for Konqueror's right-click actions
 
 DEPEND="kde? ( || ( ( kde-base/libkonq kde-base/kdebase-kioslaves )
 		>=kde-base/kdebase-7 ) )
 		javascript? ( kde-base/kjsembed )"
 
-need-kde 3.3
-
-src_compile() {
-	use amd64 && append-flags -fPIC
-	myconf="$(use_with kde konqueror) $(use_with javascript)"
-	kde_src_compile
-}
+need-kdesvn 3.4
 
 pkg_postinst() {
 	echo
@@ -45,4 +38,14 @@ pkg_postinst() {
 	einfo "- app-arch/unzip"
 	einfo "- app-arch/unace"
 	echo
+	ewarn "IMPORTANT: Please remove your ~/.kde/share/apps/krusader/krusaderui.rc file"
+	ewarn "after installation!!! (Else you won't see new menu entries. But please note:"
+	ewarn "This will also reset all your changes on toolbars and shortcuts!)"
+	echo
 }
+
+src_compile() {
+	local myconf="$(use_with kde konqueror) $(use_with javascript) --with-kiotar"
+	kdesvn_src_compile
+}
+
