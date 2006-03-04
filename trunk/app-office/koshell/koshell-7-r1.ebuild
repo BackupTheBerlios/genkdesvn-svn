@@ -1,15 +1,15 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-KMNAME=koffice
 MAXKOFFICEVER=$PV
-inherit kde-meta eutils kde-source
+KMNAME=koffice
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KOffice: Report viewer(generator)"
+DESCRIPTION="KOffice Workspace"
 HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE=""
 SLOT="$PV"
@@ -20,7 +20,6 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 KMCOPYLIB="
-	libkoproperty lib/koproperty
 	libkformula lib/kformula
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
@@ -32,6 +31,4 @@ KMCOPYLIB="
 
 KMEXTRACTONLY="lib/"
 
-KMEXTRA="filters/kugar"
-
-need-kde 3.3
+need-kdesvn 3.4

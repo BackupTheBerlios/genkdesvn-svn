@@ -3,19 +3,21 @@
 
 MAXKOFFICEVER=$PV
 KMNAME=koffice
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KOffice Flowchart And Diagram Tool"
 HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE=""
 SLOT="$PV"
 
-DEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
-	>=dev-lang/python-2.2.1
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+	dev-lang/python"
+
+DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 KMCOPYLIB="
@@ -23,7 +25,7 @@ KMCOPYLIB="
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
 	libkopainter lib/kopainter
-	libkoscript lib/koscript
+    libkopalette lib/kopalette
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
@@ -31,9 +33,5 @@ KMCOPYLIB="
 
 KMEXTRACTONLY="lib/"
 
-need-kde 3.1
+need-kdesvn 3.4
 
-src_compile() {
-	export LIBPYTHON="`python-config --libs`"
-	kde-meta_src_compile
-}

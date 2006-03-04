@@ -3,13 +3,13 @@
 
 MAXKOFFICEVER=$PV
 
-inherit kde-functions
+inherit kdesvn-functions
 DESCRIPTION="koffice - merge this to pull in all koffice-derived packages"
 HOMEPAGE="http://www.kde.org/"
 
 LICENSE="GPL-2"
 SLOT="$PV"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~amd64 ~ppc64 ~sparc ~x86"
 IUSE=""
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/karbon)

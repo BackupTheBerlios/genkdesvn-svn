@@ -4,17 +4,20 @@
 
 KMNAME=koffice
 MAXKOFFICEVER=$PV
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KOffice Presentation Tool"
+DESCRIPTION="KOffice Spreadsheet Application"
 HOMEPAGE="http://www.koffice.org/"
+
 LICENSE="GPL-2 LGPL-2"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+PATCHES="$FILESDIR/gcc41.patch"
 
-SLOT="$PV"
-KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
+SLOT="$PV"
 
-RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)"
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
+	$(deprange $PV $MAXKOFFICEVER app-office/kchart)"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
@@ -27,11 +30,14 @@ KMCOPYLIB="
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
-	libkstore lib/store"
-KMEXTRACTONLY="lib/"
-KMCOMPILEONLY="filters/liboofilter
-	filters/libdialogfilter"
-KMTARGETSONLY=('lib/kotext .ui')
-KMEXTRA="filters/kpresenter"
+	libkstore lib/store
+	libkochart interfaces"
 
-need-kde 3.3
+KMEXTRACTONLY="lib/
+	interfaces/"
+
+KMCOMPILEONLY="filters/liboofilter"
+
+KMEXTRA="filters/kspread"
+
+need-kdesvn 3.4

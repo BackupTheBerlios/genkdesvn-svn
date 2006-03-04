@@ -6,13 +6,13 @@ MAXKOFFICEVER=$PV
 KMNAME=koffice
 KMMODULE=
 KMNOMODULE="true"
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="shared koffice data files"
 HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE=""
 SLOT="$PV"
@@ -28,4 +28,4 @@ KMEXTRA="
 	templates/
 	autocorrect/"
 
-need-kde 3.3
+need-kdesvn 3.4

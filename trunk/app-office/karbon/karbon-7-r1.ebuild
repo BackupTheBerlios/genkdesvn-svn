@@ -1,23 +1,24 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-KMNAME=koffice
 MAXKOFFICEVER=$PV
-inherit kde-meta eutils kde-source
+KMNAME=koffice
+inherit kdesvn-meta eutils kdesvn-source
 
-DESCRIPTION="KOffice Spreadsheet Application"
+DESCRIPTION="KOffice: Yet another vector graphics application."
 HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc amd64"
-PATCHES="$FILESDIR/gcc41.patch"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE=""
 SLOT="$PV"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
-	$(deprange $PV $MAXKOFFICEVER app-office/kchart)"
+	>=media-gfx/imagemagick-5.5.2
+	>=media-libs/freetype-2
+    media-libs/fontconfig
+	media-libs/libart_lgpl"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
@@ -27,17 +28,17 @@ KMCOPYLIB="
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
 	libkopainter lib/kopainter
+    libkopalette lib/kopalette
 	libkotext lib/kotext
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
-	libkstore lib/store
-	libkochart interfaces"
+	libkstore lib/store"
 
-KMEXTRACTONLY="lib/
-	interfaces/"
+KMEXTRACTONLY="lib/"
 
 KMCOMPILEONLY="filters/liboofilter"
 
-KMEXTRA="filters/kspread"
+KMEXTRA="filters/karbon"
 
-need-kde 3.3
+need-kdesvn 3.1
+

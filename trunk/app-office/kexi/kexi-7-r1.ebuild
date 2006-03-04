@@ -3,13 +3,13 @@
 
 MAXKOFFICEVER=$PV
 KMNAME=koffice
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KOffice integrated environment for managing data"
 HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="x86 ~ppc amd64"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE="mysql postgres"
 SLOT="$PV"
@@ -18,9 +18,7 @@ RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	sys-libs/readline
 	mysql? ( dev-db/mysql )
 	postgres? ( dev-libs/libpqxx )
-	dev-db/sqlite
-	dev-lang/python
-	!dev-db/kdexi"
+	dev-lang/python"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
@@ -40,12 +38,11 @@ KMCOPYLIB="
 
 KMEXTRACTONLY="lib/"
 
-src_compile() {
-	myconf="${myconf} $(use_enable postgres pgsql) $(use_enable mysql)"
-	#kde_src_compile
-	kde-meta_src_compile
-}
-
 # Kexi requires Qextmdi
-need-kde 3.2
+need-kdesvn 3.2
 
+src_compile() {
+	local myconf="$(use_enable mysql) $(use_enable postgres pgsql) --enable-kexi-reports"
+
+	kdesvn-meta_src_compile
+}

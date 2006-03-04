@@ -4,7 +4,7 @@
 
 KMNAME=koffice
 MAXKOFFICEVER=$PV
-inherit kde-meta eutils kde-source
+inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KOffice Word Processor"
 HOMEPAGE="http://www.koffice.org/"
@@ -18,7 +18,7 @@ RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	$(deprange $PV $MAXKOFFICEVER app-office/kspread)
 	>=app-text/wv2-0.1.8
 	>=media-gfx/imagemagick-5.5.2
-	>=app-text/libwpd-0.8"
+	>=app-text/libwpd-0.8.2"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
@@ -33,14 +33,13 @@ KMCOPYLIB="
     libkowmf lib/kwmf
     libkstore lib/store
     libkspreadcommon kspread"
+
 KMEXTRACTONLY="
     lib/
     kspread/"
+
 KMCOMPILEONLY="filters/liboofilter"
-KMTARGETSONLY=(
-	'lib/kotext .ui'
-	'lib/kofficeui .ui'
-)
+
 KMEXTRA="filters/kword"
 
-need-kde 3.3
+need-kdesvn 3.4
