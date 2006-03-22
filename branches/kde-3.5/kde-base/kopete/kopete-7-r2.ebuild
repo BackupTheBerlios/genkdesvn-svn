@@ -33,7 +33,7 @@ RDEPEND="$DEPEND
 	ssl? ( app-crypt/qca-tls )
 	>=sys-kernel/linux-headers-2.6.11"
 
-PATCHES="$FILESDIR/gcc4.patch"
+#PATCHES="$FILESDIR/gcc4.patch"
 
 need-kde 3.5
 
