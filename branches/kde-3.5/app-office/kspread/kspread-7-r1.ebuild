@@ -11,7 +11,6 @@ HOMEPAGE="http://www.koffice.org/"
 
 LICENSE="GPL-2 LGPL-2"
 KEYWORDS="x86 ~ppc amd64"
-PATCHES="$FILESDIR/gcc41.patch"
 
 IUSE=""
 SLOT="$PV"
