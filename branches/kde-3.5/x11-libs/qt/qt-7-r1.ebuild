@@ -16,7 +16,17 @@ SLOT="${PV}"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
 IUSE="cups debug doc examples firebird gif ipv6 mysql nas odbc opengl postgres sqlite symbol_visibility xinerama zlib"
 
-DEPEND="virtual/x11 virtual/xft
+DEPEND="|| ( ( x11-libs/libXcursor
+			x11-libs/libXi
+			x11-libs/libXrandr
+			x11-libs/libSM
+			x11-proto/inputproto
+			x11-proto/xextproto
+			xinerama? ( x11-proto/xineramaproto x11-libs/libXinerama )
+		)
+		virtual/x11
+	)
+	virtual/xft
 	media-libs/libpng
 	media-libs/jpeg
 	media-libs/libmng
