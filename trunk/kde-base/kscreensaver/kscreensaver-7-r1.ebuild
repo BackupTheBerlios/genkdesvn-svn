@@ -13,5 +13,5 @@ DEPEND="opengl? ( virtual/opengl )"
 
 src_compile() {
 	myconf="$myconf `use_with opengl gl`"
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
