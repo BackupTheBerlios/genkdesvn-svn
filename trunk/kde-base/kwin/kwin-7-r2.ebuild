@@ -21,6 +21,8 @@ DEPEND="${RDEPEND}
             ) <=x11-base/xorg-x11-6.9 )
         )"
 
+#PATCHES="${FILESDIR}/${P}-systray.patch"
+
 src_compile() {
 	myconf="$myconf $(use_with xcomposite composite)"
 	kdesvn-meta_src_compile

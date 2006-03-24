@@ -16,6 +16,6 @@ src_compile() {
 	local myconf="$(use_with lm_sensors sensors)
 				  $(use_enable zeroconf dnssd)"
 
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
 
