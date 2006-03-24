@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+UNSERMAKE=no
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
@@ -42,13 +43,13 @@ KMNODOCS=true
 
 src_compile() {
 	myconf="${myconf} $(use_with xscreensaver)"
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
 
 
 src_install() {
 	# ugly, needs fixing: don't install kcontrol/background
-	kde-meta_src_install
+	kdesvn-meta_src_install
 
 	rmdir ${D}/${PREFIX}/share/templates/.source/emptydir
 }

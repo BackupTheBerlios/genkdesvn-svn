@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+UNSERMAKE=no
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
@@ -35,13 +36,13 @@ src_compile() {
 	# openEXR check
 	myconf="${myconf} $(use_enable openexr)"
 
-	kde-meta_src_compile myconf configure
+	kdesvn-meta_src_compile myconf configure
 	kde_remove_flag kdm/kfrontend -fomit-frame-pointer
-	kde-meta_src_compile make
+	kdesvn-meta_src_compile make
 }
 
 src_install() {
-	kde-meta_src_install
+	kdesvn-meta_src_install
 	cd ${S}/kdm && make DESTDIR=${D} GENKDMCONF_FLAGS="--no-old --no-backup --no-in-notice" install
 
 	# Customize the kdmrc configuration
