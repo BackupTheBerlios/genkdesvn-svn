@@ -7,7 +7,7 @@ KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="KDE Time tracker tool"
-EYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkcal)
 $(deprange $PV $MAXKDEVER kde-base/kdepim-kresources)
