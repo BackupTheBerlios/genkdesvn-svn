@@ -3,7 +3,7 @@
 # $Header: $
 
 inherit kdesvn flag-o-matic eutils multilib kdesvn-source
-set-kdesvndir 7
+set-kdedir
 
 DESCRIPTION="KDE libraries needed by all kde programs"
 HOMEPAGE="http://www.kde.org/"
