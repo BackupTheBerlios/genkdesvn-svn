@@ -10,4 +10,16 @@ DESCRIPTION="KDE: gui for su(1)"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
+#src_unpack() {
+#	unpack "kdebase-${PV}-patches-1.tar.bz2"
+#	kdesvn-meta_src_unpack
+#
+#	epatch "${WORKDIR}/patches/${P}-bindnow.patch"
+#}
+
+#src_compile() {
+#	export BINDNOW_FLAGS="$(bindnow-flags)"
+#
+#	kdesvn-meta_src_compile
+#}
 
