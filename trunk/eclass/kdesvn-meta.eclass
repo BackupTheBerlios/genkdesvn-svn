@@ -14,17 +14,36 @@
 # except for the src_* functions; they have the kdesvn-meta_ prefix
 
 inherit kdesvn multilib
+IUSE="kdexdeltas"
 
-if [ "$KDEBASE" = "true" ]; then
-    need-kdesvn $PV
-
-    SLOT="$KDEMAJORVER.$KDEMINORVER"
+# only broken-up ebuilds can use this eclass
+if [[ -z "$KMNAME" ]]; then
+	die "kde-meta.eclass inherited but KMNAME not defined - broken ebuild"
 fi
 
-## TODO: inherit kde-meta
+# BEGIN adapted from kde-dist.eclass, code for older versions removed for cleanness
+if [[ "$KDEBASE" = "true" ]]; then
+	unset SRC_URI
 
-ECLASS=kdesvn-meta
-INHERITED="$INHERITED $ECLASS"
+	need-kde
+
+	DESCRIPTION="KDE ${PV} - "
+	HOMEPAGE="http://www.kde.org/"
+	LICENSE="GPL-2"
+	SLOT="$KDEMAJORVER.$KDEMINORVER"
+
+fi
+
+debug-print "$ECLASS: finished, SRC_URI=$SRC_URI"
+
+# Add a blocking dep on the package we're derived from
+if [[ "${KMNAME}" != "koffice" ]]; then
+	DEPEND="${DEPEND} !=$(get-parent-package ${CATEGORY}/${PN})-${SLOT}*"
+	RDEPEND="${RDEPEND} !=$(get-parent-package ${CATEGORY}/${PN})-${SLOT}*"
+else
+	DEPEND="${DEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
+	RDEPEND="${RDEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
+fi
 
 # Set the following variables in the ebuild. Only KMNAME must be set, the rest are optional.
 # A directory or file can be a path with any number of components (eg foo/bar/baz.h).
@@ -70,13 +89,46 @@ INHERITED="$INHERITED $ECLASS"
 
 # ====================================================
 
-function kdesvn_set_target_arrays {
-	set_target_arrays
+function set_target_arrays {
+
+    for ((index=0; index < ${#KMTARGETSONLY[*]}; index++))
+    do
+        read targetdirs[index] targets[index] < <(echo ${KMTARGETSONLY[index]})
+    done
+
+    for ((index=0; index < ${#KMHEADERS[*]}; index++))
+    do
+        read newheaderdirs[index] newheaders[index] < <(echo ${KMHEADERS[index]})
+    done
+
+    for ((index=0; index < ${#KMHEADERDIRS[*]}; index++))
+    do
+        read headerdirs[index] headers[index] < <(echo ${KMHEADERDIRS[index]})
+    done
+
 }
 
 # create a full path vars, and remove ALL the endings "/"
-function kdesvn_create_fullpaths() {
-	create_fullpaths
+function create_fullpaths() {
+
+    set_target_arrays
+    for item in $KMMODULE; do
+        tmp=`echo $item | sed -e "s/\/*$//g"`
+        KMMODULEFULLPATH="$KMMODULEFULLPATH ${S}/$tmp"
+    done
+    for item in $KMEXTRA; do
+        tmp=`echo $item | sed -e "s/\/*$//g"`
+        KMEXTRAFULLPATH="$KMEXTRAFULLPATH ${S}/$tmp"
+    done
+    for item in $KMCOMPILEONLY ${targetdirs[*]}; do
+        tmp=`echo $item | sed -e "s/\/*$//g"`
+        KMCOMPILEONLYFULLPATH="$KMCOMPILEONLYFULLPATH ${S}/$tmp"
+    done
+    for item in $KMEXTRACTONLY; do
+        tmp=`echo $item | sed -e "s/\/*$//g"`
+        KMEXTRACTONLYFULLPATH="$KMEXTRACTONLYFULLPATH ${S}/$tmp"
+    done
+
 }
 
 # Creates Makefile.am files in directories where we didn't extract the originals.
@@ -84,16 +136,75 @@ function kdesvn_create_fullpaths() {
 # $2 = $isextractonly: true iff the parent dir was defined as KMEXTRACTONLY
 # Recurses through $S and all subdirs. Creates Makefile.am with SUBDIRS=<list of existing subdirs>
 # or just empty all:, install: targets if no subdirs exist.
-function kdesvn_change_makefiles() {
-	change_makefiles
+function change_makefiles() {
+	debug-print-function $FUNCNAME $*
+	local dirlistfullpath dirlist directory isextractonly
+
+	cd $1
+	debug-print "We are in `pwd`"
+
+	# check if the dir is defined as KMEXTRACTONLY or if it was defined is KMEXTRACTONLY in the parent dir, this is valid only if it's not also defined as KMMODULE, KMEXTRA or KMCOMPILEONLY. They will ovverride KMEXTRACTONLY, but only in the current dir.
+	isextractonly="false"
+	if ( ( hasq "$1" $KMEXTRACTONLYFULLPATH || [[ $2 = "true" ]] ) && \
+		 ( ! hasq "$1" $KMMODULEFULLPATH $KMEXTRAFULLPATH $KMCOMPILEONLYFULLPATH ) ); then
+		isextractonly="true"
+	fi
+	debug-print "isextractonly = $isextractonly"
+
+	dirlistfullpath=
+	for item in *; do
+		if [[ -d "$item" ]] && [[ "$item" != "CVS" ]] && [[ "$S/$item" != "$S/admin" ]]; then
+			# add it to the dirlist, with the FULL path and an ending "/"
+			dirlistfullpath="$dirlistfullpath ${1}/${item}"
+		fi
+	done
+	debug-print "dirlist = $dirlistfullpath"
+
+	for directory in $dirlistfullpath; do
+
+		if ( hasq "$1" $KMEXTRACTONLYFULLPATH || [[ $2 = "true" ]] ); then
+			change_makefiles $directory 'true'
+		else
+			change_makefiles $directory 'false'
+		fi
+		# come back to our dir
+		cd $1
+	done
+
+	cd $1
+	debug-print "Come back to `pwd`"
+	debug-print "dirlist = $dirlistfullpath"
+	if [[ $isextractonly = "true" ]] || [[ ! -f Makefile.am ]] ; then
+		# if this is a latest subdir
+		if [[ -z "$dirlistfullpath" ]]; then
+			debug-print "dirlist is empty => we are in the latest subdir"
+			echo 'all:' > Makefile.am
+			echo 'install:' >> Makefile.am
+			echo '.PHONY: all' >> Makefile.am
+		else # it's not a latest subdir
+			debug-print "We aren't in the latest subdir"
+			# remove the ending "/" and the full path"
+			for directory in $dirlistfullpath; do
+				directory=${directory%/}
+				directory=${directory##*/}
+				dirlist="$dirlist $directory"
+			done
+			echo "SUBDIRS=$dirlist" > Makefile.am
+		fi
+	fi
 }
 
-function kdesvn_set_common_variables() {
-	set_common_variables
-}
+function set_common_variables() {
+	# Overridable module (subdirectory) name, with default value
+	if [[ "$KMNOMODULE" != "true" ]] && [[ -z "$KMMODULE" ]]; then
+		KMMODULE=$PN
+	fi
 
-function kdesvn_sort_subdirs {
-	sort_subdirs
+	# Unless disabled, docs are also extracted, compiled and installed
+	DOCS=""
+	if [[ "$KMNOMODULE" != "true" ]] && [[ "$KMNODOCS" != "true" ]]; then
+		DOCS="doc/$KMMODULE"
+	fi
 }
 
 # This function differs from kde-meta_src_unpack() as it fetches the source code
@@ -101,7 +212,7 @@ function kdesvn_sort_subdirs {
 function kdesvn-meta_src_unpack() {
 	debug-print-function $FUNCNAME $*
 
-	#set_common_variables
+	set_common_variables
 
 	sections="$@"
 	[[ -z "$sections" ]] && sections="unpack makefiles"
@@ -125,7 +236,7 @@ function kdesvn-meta_src_unpack() {
 	;;
 	unpack)
 
-		kde-meta_src_unpack "prepare"
+		kdesvn-meta_src_unpack "prepare"
 
 		# Create final list of stuff to extract
 		extractlist=""
@@ -191,7 +302,7 @@ function kdesvn-meta_src_unpack() {
 		done
 
 		# apply any patches
-		kde_src_unpack autopatch
+		kdesvn_src_unpack autopatch
 
 		# kdebase: Remove the installation of the "startkde" script.
 		if [ "$KMNAME" == "kdebase" ]; then
@@ -225,14 +336,53 @@ function kdesvn-meta_src_unpack() {
 }
 
 function kdesvn-meta_src_compile() {
+	debug-print-function $FUNCNAME $*
+
 	# update timestamp for certain file-extensions that need to be generated
 	kdesvn_touch_all_files
 
-	kde-meta_src_compile
+	set_common_variables
+
+	if [[ "$KMNAME" == "kdebase" ]]; then
+		# bug 82032: the configure check for java is unnecessary as well as broken
+		myconf="$myconf --without-java"
+	fi
+
+	if [[ "$KMNAME" == "kdegames" ]]; then
+		# make sure games are not installed with setgid bit, as it is a security risk.
+		myconf="$myconf --disable-setgid"
+	fi
+
+	kdesvn_src_compile $*
 }
 
 function kdesvn-meta_src_install() {
-	kde-meta_src_install
+	debug-print-function $FUNCNAME $*
+
+	set_common_variables
+
+	if [[ "$1" == "" ]]; then
+		kdesvn-meta_src_install make dodoc
+	fi
+	while [[ -n "$1" ]]; do
+		case $1 in
+		    make)
+				for dir in $KMMODULE $KMEXTRA $DOCS; do
+					if [[ -d $S/$dir ]]; then
+						cd $S/$dir
+						make DESTDIR=${D} destdir=${D} install || die
+					fi
+				done
+				;;
+		    dodoc)
+				kdesvn_src_install dodoc
+				;;
+		    all)
+				kdesvn-meta_src_install make dodoc
+				;;
+		esac
+		shift
+	done
 }
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install

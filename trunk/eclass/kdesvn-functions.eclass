@@ -22,92 +22,61 @@ inherit qt-copy kde-functions
 KDE_DERIVATION_MAP="${KDE_DERIVATION_MAP}
 "
 
-# accepts 1 parameter, the name of a split ebuild; echoes the name of its mother package
-#kdesvn_get-parent-package () {
-#	get-parent-package "$@"
-#}
-
-# accepts 1 parameter, the name of a monolithic package; echoes the names of all ebuilds derived from it
-#kdesvn_get-child-packages () {
-#	get-child-packages "$@"
-#}
-
-# convinience functions for requesting autotools versions
-#kdesvn_need-automake() {
-#	need-automake "$@"
-#}
-
-#kdesvn_need-autoconf() {
-#	need-autoconf "$@"
-#}
-
-
-#kdesvn_deprange() {
-#	deprange "$@"
-#}
-
-#kdesvn_deprange-list() {
-#	deprange-list "$@"
-#}
-
-# This internal function iterates over simple ranges where only a numerical suffix changes
-# Parameters: base name, lower bound, upper bound
-#kdesvn_deprange-iterate-numbers() {
-	#deprange-iterate-numbers "$@"
-#}
-
-# This internal function iterates over ranges with the same base version and different suffixes.
-# If the lower bound has a revision number, this function won't mention the lower bound in its output.
-# Parameters: base name, lower version suffix, upper version suffix
-# eg: deprange-iterate-suffixes ~kde-base/libkonq-3.4.0 alpha8 beta2
-#kdesvn_deprange-iterate-suffixes() {
-#	deprange-iterate-suffixes "$@"
-#}
-
-# Wrapper around deprange() used for deps between split ebuilds.
-# It adds the parent monolithic ebuild of the dep as an alternative dep.
-#kdesvn_deprange-dual() {
-#	deprange-dual "$@"
-#}
-
 # ---------------------------------------------------------------
 # kde/qt directory management etc. functions, was kde-dirs.ebuild
 # ---------------------------------------------------------------
+# these functions overwrite the ones in kde-functions.eclass
+# ---------------------------------------------------------------
 
-need-kdesvn() {
+need-kde() {
     debug-print-function $FUNCNAME $*
-    KDEVER="$1"
-    # ask for autotools
-    #case "${KDEVER}" in
-        #7*)
-			# determine install locations
-			set-kdesvndir ${KDEVER}
+    KDEVER="7"
 
-            need-autoconf 2.5
-            need-automake 1.7
+	# determine install locations
+	set-kdedir
 
-			# Things outside kde-base only need a minimum version
-			if [ -z "${KDEBASE}" ]; then
-				min-kdesvn-ver ${KDEVER}
-				SLOT="0"
-			else
-				SLOT="$KDEMAJORVER.$KDEMINORVER"
-			fi
-		
-			# Set Qt versions
-			qtver-from-kdesvnver ${KDEVER}
-			kdesvn_need-qt ${selected_version}
-            #;;
-    #esac
+	need-autoconf 2.5
+	need-automake 1.7
+
+    if [ -n "${KDEBASE}" ]; then
+        if [ -n "${KM_DEPRANGE}" ]; then
+            DEPEND="${DEPEND} $(deprange ${KM_DEPRANGE} kde-base/kdelibs)"
+            [ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} $(deprange ${KM_DEPRANGE} kde-base/kdelibs)"
+        elif [ -z "${KDEVER}" ]; then
+            DEPEND="${DEPEND} ~kde-base/kdelibs-$PV"
+            [ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} ~kde-base/kdelibs-${PV}"
+        else
+            min-kde-ver ${KDEVER}
+            DEPEND="${DEPEND} >=kde-base/kdelibs-${selected_version}"
+            [ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} >=kde-base/kdelibs-${selected_version}"
+        fi
+    else
+        # Things outside kde-base only need a minimum version
+        min-kde-ver ${KDEVER}
+        DEPEND="${DEPEND} >=kde-base/kdelibs-${selected_version}"
+        [ "${RDEPEND-unset}" != "unset" ] && RDEPEND="${RDEPEND} >=kde-base/kdelibs-${selected_version}"
+    fi
+
+
+	# Set Qt versions
+	qtver-from-kdever ${KDEVER}
+	need-qt ${selected_version}
+
+    if [ -n "${KDEBASE}" ]; then
+        SLOT="$KDEMAJORVER.$KDEMINORVER"
+		#SLOT="7.0"
+    else
+        SLOT="0"
+    fi
 }
 
-set-kdesvndir() {
+set-kdedir() {
     debug-print-function $FUNCNAME $*
 
     # get version elements
     IFSBACKUP="$IFS"
     IFS=".-_"
-    for x in $1; do
+    for x in "7"; do
         if [ -z "$KDEMAJORVER" ]; then KDEMAJORVER=$x
         else if [ -z "$KDEMINORVER" ]; then KDEMINORVER=$x
         else if [ -z "$KDEREVISION" ]; then KDEREVISION=$x
@@ -121,46 +90,30 @@ set-kdesvndir() {
     # install prefix
     if [ -n "$KDEPREFIX" ]; then
         export PREFIX="$KDEPREFIX"
-    elif [ "$KDEMAJORVER" == "2" ]; then
-        export PREFIX="/usr/kde/2"
     else
-        if [ -n "$KDEBASE" ]; then
-			# kde-base ebuilds must always use the exact version of kdelibs they came with
-            case $KDEMAJORVER.$KDEMINORVER in
-                7.0) 
-					export PREFIX="/usr/kde/devel"
-					export KDEPREFIX="/usr/kde/devel"
-					;;
-            esac
+        if [ -z "$KDEBASE" ]; then
+			# install in /usr if this is not a kde-base package
+			export PREFIX="/usr"
+			export KDEPREFIX="/usr"
+		else
+			export PREFIX="/usr/kde/devel"
+			export KDEPREFIX="/usr/kde/devel"
 		fi
     fi
 
     # kdelibs location
     if [ -n "$KDELIBSDIR" ]; then
         export KDEDIR="$KDELIBSDIR"
-    elif [ "$KDEMAJORVER" == "2" ]; then
-        export KDEDIR="/usr/kde/2"
     else
-        if [ -n "$KDEBASE" ]; then
-            # kde-base ebuilds must always use the exact version of kdelibs they came with
-            case $KDEMAJORVER.$KDEMINORVER in
-                7.0) 
-					export KDEDIR="/usr/kde/devel"
-					export KDELIBSDIR="/usr/kde/devel"
-					;;
-            esac
-        fi
+		# all packages inheriting this eclass should link against the kdelibs from SVN
+		export KDEDIR="/usr/kde/devel"
+		export KDELIBSDIR="/usr/kde/devel"
     fi
-
-    # check that we've set everything
-    if [ -z "$PREFIX" ] || [ -z "$KDEDIR" ]; then
-		set-kdedir $*
-	fi
 
     debug-print "$FUNCNAME: Will use the kdelibs installed in $KDEDIR, and install into $PREFIX."
 }
 
-kdesvn_need-qt() {
+need-qt() {
     debug-print-function $FUNCNAME $*
     QTVER="$1"
 
@@ -172,21 +125,12 @@ kdesvn_need-qt() {
         x_DEPEND="${DEPEND}"
     fi
 
-    #case ${QTVER} in
-        #7*)
-            DEPEND="${DEPEND} $(qt-copy_min_version ${QTVER})"
-            RDEPEND="${x_DEPEND} $(qt-copy_min_version ${QTVER})"
-            #;;
-        #*)  need-qt "$@"
-    #esac
+	DEPEND="${DEPEND} $(qt-copy_min_version ${QTVER})"
+	RDEPEND="${x_DEPEND} $(qt-copy_min_version ${QTVER})"
 }
 
-#kdesvn_set-qtdir() {
-#	set-qtdir "$@"
-#}
-
 # returns minimal qt version needed for specified kde version
-qtver-from-kdesvnver() {
+qtver-from-kdever() {
     debug-print-function $FUNCNAME $*
 
     local ver
@@ -197,40 +141,10 @@ qtver-from-kdesvnver() {
     esac
 
     selected_version="$ver"
-
-	if [ -z "$ver" ]; then
-		qtver-from-kdever $1
-	fi
 }
 
-min-kdesvn-ver() {
+min-kde-ver() {
     debug-print-function $FUNCNAME $*
 
-    case $1 in
-        7)          selected_version="7";;
-    esac
-
-	if [ -z "$selected_version" ]; then
-		min-kde-ver $1
-	fi
-}
-
-
-#kdesvn_sandbox_patch() {
-#	kde_sandbox_patch "$@"
-#}
-
-
-kdesvn_remove_flag() {
-    debug-print-function $FUNCNAME $*
-
-    [ -z "${objdir}" ] && objdir=${S}
-    cd ${objdir}/${1} || die
-    [ -n "$2" ] || die
-
-    cp Makefile Makefile.orig
-    sed -e "/CFLAGS/ s/${2}//g
-/CXXFLAGS/ s/${2}//g" Makefile.orig > Makefile
-
-    cd $OLDPWD
+	selected_version="7"
 }

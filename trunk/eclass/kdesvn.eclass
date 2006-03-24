@@ -73,6 +73,7 @@ kdesvn_src_compile() {
 
 				# KDESVN specific stuff:
 				myconf="${myconf} --host=${CHOST}" # set somewhere else ??
+				[ -n "$KDEBASE" ] && myconf="${myconf} $(use_with arts)" # kde.eclass' code relies on $KDEMINORVER eg 3 :(
 
                 debug-print "$FUNCNAME: myconf: set to ${myconf}"
 				;;
