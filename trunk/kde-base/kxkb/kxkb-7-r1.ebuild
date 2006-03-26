@@ -16,4 +16,4 @@ RDEPEND="${RDEPEND}
             x11-apps/setxkbmap
         ) virtual/x11 )"
 
-
+PATCHES="${FILESDIR}/${P}-xlibdir.patch"
