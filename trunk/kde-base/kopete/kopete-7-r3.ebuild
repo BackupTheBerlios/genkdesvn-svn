@@ -33,9 +33,7 @@ RDEPEND="$DEPEND
 	>=sys-kernel/linux-headers-2.6.11
     !net-im/kopete"
 
-PATCHES="$FILESDIR/gcc4.patch"
-
-need-kdesvn 3.5
+need-kde 3.5
 
 src_compile() {
 	# External libgadu support - doesn't work, kopete requires a specific development snapshot of libgadu.
