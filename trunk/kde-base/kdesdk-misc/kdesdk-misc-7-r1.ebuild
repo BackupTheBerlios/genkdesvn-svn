@@ -1,6 +1,7 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
+UNSERMAKE=no # kdepalettes fails to build with unsermake
 KMNAME=kdesdk
 KMNOMODULE="true"
 KMNODOCS="true"
