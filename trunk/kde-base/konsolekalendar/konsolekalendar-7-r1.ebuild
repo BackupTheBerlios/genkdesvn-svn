@@ -13,15 +13,15 @@ DEPEND="$(deprange $PV $MAXKDEVER kde-base/libkcal)
 $(deprange $PV $MAXKDEVER kde-base/libkdepim)"
 
 KMCOPYLIB="libkcal libkcal
-	libkdepim libkdepim"
-KMEXTRACTONLY="libkdepim/"
-KMCOMPILEONLY="libkcal"
+	libkdepim libkdepim
+	libktnef ktnef/lib"
+KMEXTRACTONLY="libkdepim/
+	ktnef/"
+KMCOMPILEONLY="libkcal
+	libemailfunctions"
 
-src_compile() {
-	export DO_NOT_COMPILE="libkcal"
-	kdesvn-meta_src_compile myconf configure
-	cd $S/libkcal; make htmlexportsettings.h
-	kdesvn-meta_src_compile make
-}
+KMTARGETSONLY=(
+	'libkcal .kcfgc'
+)
 
 
