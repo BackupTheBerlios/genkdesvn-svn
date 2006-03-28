@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+UNSERMAKE=no # kscd or libkcddb's makefile is broken ?
 KMNAME=kdemultimedia
 KMMODULE=kioslave
 MAXKDEVER=$PV
@@ -20,9 +21,10 @@ RDEPEND="${DEPEND}
 	encode? ( mp3? ( media-sound/lame ) )"
 
 KMCOPYLIB="libkcddb libkcddb"
-KMEXTRACTONLY="akode/configure.in.in"
+KMEXTRACTONLY="akode/configure.in.in
+libkcddb"
 KMCOMPILEONLY="kscd/"
-KMTARGETSONLY=('libkcddb .ui .kcfgc')
+KMTARGETSONLY=('libkcddb .kcfgc .ui')
 
 src_compile() {
 	myconf="--with-cdparanoia --enable-cdparanoia"

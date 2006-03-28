@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+UNSERMAKE=no # libkcddb's Makefile is broken for unsermake
 KMNAME=kdemultimedia
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
@@ -15,5 +16,6 @@ $(deprange $PV $MAXKDEVER kde-base/libkcddb)"
 
 KMCOPYLIB="libkcddb libkcddb"
 KMEXTRACTONLY="
+	libkcddb
 	mpeglib_artsplug/configure.in.in"
 KMTARGETSONLY=('libkcddb .ui .kcfgc')
