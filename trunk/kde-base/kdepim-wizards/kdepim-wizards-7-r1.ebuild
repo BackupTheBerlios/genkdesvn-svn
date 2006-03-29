@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+UNSERMAKE=no # kresources/groupwise's Makefile is broken for unsermake
 KMNAME=kdepim
 KMMODULE=wizards
 MAXKDEVER=$PV
