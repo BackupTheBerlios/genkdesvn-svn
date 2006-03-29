@@ -4,7 +4,7 @@
 
 ESCM_EXTERNALS="branches/KDE/3.5/kdelibs/libltdl"
 inherit kdesvn flag-o-matic eutils kdesvn-source
-set-kdesvndir 7
+set-kdedir 7
 
 KSCM_ROOT=branches/arts/1.5
 DESCRIPTION="aRts, the KDE sound (and all-around multimedia) server/output manager"
