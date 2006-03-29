@@ -207,6 +207,34 @@ function set_common_variables() {
 	fi
 }
 
+function sort_subdirs {
+
+	local modules="${*}"
+	if [ -f subdirs ]
+	then
+		local sorted=""
+		exec < subdirs
+		while read subdir
+		do
+			for module in ${modules}
+			do
+				slashed="$(strip_duplicate_slashes ${module}/)"
+
+				if [ -z "${slashed##${subdir}/*}" ]
+				then
+					sorted="${sorted} ${module}"
+				fi
+				
+			done
+			
+		done
+		echo ${sorted}
+	else
+		echo ${modules}
+	fi
+
+}
+
 # This function differs from kde-meta_src_unpack() as it fetches the source code
 # from the subversion repository
 function kdesvn-meta_src_unpack() {
@@ -353,7 +381,126 @@ function kdesvn-meta_src_compile() {
 		myconf="$myconf --disable-setgid"
 	fi
 
-	kdesvn_src_compile $*
+	callsections="$*"
+	[ -z "$callsections" -o "$callsections" == "all" ] && callsections="myconf configure make"
+	for section in $callsections; do
+		debug-print "$FUNCNAME: now in section $section"
+		if [ "$section" == "configure" ]; then
+			[ ! -f "Makefile.in" ] && make -f admin/Makefile.common
+			myconf="$EXTRA_ECONF $myconf"
+		fi
+
+		if [ "$section" == "make" ]; then
+
+			if [ "${UNSERMAKE}" == "no" ]; then
+
+				# KMHEADERS: create headers without touching Makefile.am
+				# syntax is different too: "path/to/dir file.h"
+				for dir in $(sort_subdirs ${newheaderdirs[*]})
+				do
+					einfo "Creating headers in ${dir}"
+					pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+					for ((index=0; index< ${#newheaderdirs[*]}; index++))
+					do
+						if [ "${newheaderdirs[index]}" == "${dir}" ]
+						then
+							for target in ${newheaders[index]}
+							do
+								output="$(emake ${target} 2>&1)"
+								ewarn "Manually creating ${target}"
+							done
+						fi
+					done
+					popd >/dev/null
+				done
+
+				# KMHEADERDIRS: create headers without touching Makefile.am
+				# syntax is different too: "path/to/dir .extension"
+				for dir in $(sort_subdirs ${headerdirs[*]})
+				do
+					einfo "Creating headers in ${dir}"
+					pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+					for ((index=0; index< ${#headerdirs[*]}; index++))
+					do
+						if [ "${headerdirs[index]}" == "${dir}" ]
+						then
+							for target in ${headers[index]}
+							do
+								for i in *${target};
+								do
+									if [ "${i}" != "*${target}" ]; then
+										dest="$(basename ${i} ${target}).h"
+										output="$(emake ${dest} 2>&1)"
+										ewarn "Manually creating ${dest}"
+									fi
+								done
+							done
+						fi
+					done
+					popd >/dev/null
+				done
+
+			fi
+
+			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${KMEXTERNAL} ${DOCS} po"
+			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})
+			do
+				pushd ${S}/${dir} >/dev/null || die "${FUNCNAME}: unable to change directory to {S}/${dir}"
+				# If directory is marked for complete compilation
+				if ( hasq "${dir}" ${compiledirs} )
+				then
+					einfo "Making ${dir}"
+					emake || die "died running emake, $FUNCNAME:make"
+				# If directory is marked for specific targets
+				else
+					for ((index=0; index< ${#targetdirs[*]}; index++))
+					do
+						if [ "${targetdirs[index]}" == "${dir}" ]
+						then
+							for target in ${targets[index]}
+							do
+								if [ "${target:0:1}" == "." ]
+								then
+									einfo "Making ${target:1} headers in ${dir}"
+									for src in *${target}
+									do
+										dest="$(basename ${src} ${target}).h"
+										output="$(emake ${dest} 2>&1)"
+										
+										if [ ! ${?} -eq 0 ]
+										then
+											if [ "${target}" == ".ui" ]
+											then
+												ewarn "Manually creating ${dest} in ${dir}"
+												${QTDIR}/bin/uic -o ${dest} ${src} || die
+											else
+												printf "${output}\n"
+												die "unable to create ${target:1} headers in ${dir}"
+											fi
+										else
+											printf "${output}\n"
+										fi
+									done
+								else
+									einfo "Making ${target} in ${dir}"
+									emake ${target} || die "unable to make ${target} in ${dir}"
+								fi
+							done
+						fi
+					done
+					echo 'all:' > Makefile.am
+					echo 'install:' >> Makefile.am
+					echo '.PHONY: all' >> Makefile.am
+				fi
+				popd >/dev/null
+			done
+			
+		else
+			kdesvn_src_compile $section
+		fi
+	done
+
+	#kdesvn_src_compile $*
 }
 
 function kdesvn-meta_src_install() {
@@ -367,9 +514,10 @@ function kdesvn-meta_src_install() {
 	while [[ -n "$1" ]]; do
 		case $1 in
 		    make)
-				for dir in $KMMODULE $KMEXTRA $DOCS; do
+				for dir in $KMMODULE $KMEXTRA $KMEXTERNAL $DOCS; do
 					if [[ -d $S/$dir ]]; then
 						cd $S/$dir
+						einfo "Installing ${dir}"
 						make DESTDIR=${D} destdir=${D} install || die
 					fi
 				done
