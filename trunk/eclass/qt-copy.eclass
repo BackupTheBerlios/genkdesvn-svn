@@ -34,6 +34,10 @@ QTPKG="${QTPKG}"
 QT3MAJORVERSIONS="${QT3MAJORVERSIONS}"
 QT3VERSIONS="${QT3VERSIONS}"
 
+qt_min_version() {
+    qt-copy_min_version "$@"
+}
+
 qt-copy_min_version() {
     echo "|| ( "
     qt-copy_min_version_list "$@"
