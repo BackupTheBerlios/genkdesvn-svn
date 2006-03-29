@@ -23,7 +23,7 @@ KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 RESTRICT="nostrip"
-need-kdesvn ${PV}
+need-kde ${PV}
 
 S=${WORKDIR}/${I18N_PATH}
 
