@@ -16,6 +16,6 @@ SHA256 f2f9adca33d71f4b27763a07251cf6f2e0be75613e92449a816b7efc9ef3e734 files/kd
 MD5 4026cf79c0ab737af64f215f1abf9319 files/qslider-X11-define-conflict.diff 381
 RMD160 6a73d2030918bd4fad843a3371ac9a436624b816 files/qslider-X11-define-conflict.diff 381
 SHA256 d837839cd85b3b8b437d2694aaa92f2d696a4859396cc4d8e4b3491adc2021e5 files/qslider-X11-define-conflict.diff 381
-MD5 599cb6a580793759a6a84055925c2d35 kicker-7-r2.ebuild 985
-RMD160 acffd513dc6c9e889a5c334ab58f6fc4b80383dc kicker-7-r2.ebuild 985
-SHA256 7b5d251975b3f6f9202fabe669020b20af32fdcfd6d52d629195cae02e8ef4a9 kicker-7-r2.ebuild 985
+MD5 61f4e86cf2493126fdd83f272c56fb3c kicker-7-r2.ebuild 972
+RMD160 eb28e2b71f80c9c2ee00ab0e8beb93acce88cddc kicker-7-r2.ebuild 972
+SHA256 de1df305218f9d99193684cab7eb8c4575d5d9362923ab7f9de193894a0add68 kicker-7-r2.ebuild 972

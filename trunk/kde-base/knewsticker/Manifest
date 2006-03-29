@@ -4,6 +4,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-knewsticker-7-r1 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-knewsticker-7-r1 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-knewsticker-7-r1 0
-MD5 7342d1a9da0141d7b56ce46c0a792571 knewsticker-7-r1.ebuild 430
-RMD160 50836a82c386de0435ab25dd34c8b70e2f32eb17 knewsticker-7-r1.ebuild 430
-SHA256 9e4205180d24ccfa5bb5de8f7f100bd8c40cc949bc500691f854b8def883bc6e knewsticker-7-r1.ebuild 430
+MD5 e053c0e76aecfe08e02855add6dae933 knewsticker-7-r1.ebuild 417
+RMD160 927ba8e99c5d4c3fcd7afb41e26c7f9c2e49ec5d knewsticker-7-r1.ebuild 417
+SHA256 acc16923fbab90d5938544207e8ce1a7b5f7578eeeef069cada42d20fbe790d6 knewsticker-7-r1.ebuild 417

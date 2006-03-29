@@ -10,6 +10,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-konqueror-7-r2 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-konqueror-7-r2 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-konqueror-7-r2 0
-MD5 11e56c277aea39babbe27101505797e2 konqueror-7-r2.ebuild 603
-RMD160 61e321d00918dea337806387d88bd5d489bde8c2 konqueror-7-r2.ebuild 603
-SHA256 3d762ded3bddbffa9a7e6853dbce3b36871e41b460bfe26c823db92f86b2f2aa konqueror-7-r2.ebuild 603
+MD5 ad4acd9dbffcb987894cd64f0cc0ffaf konqueror-7-r2.ebuild 590
+RMD160 bf7780c819e68f4fd5dc574f6882027987b86a59 konqueror-7-r2.ebuild 590
+SHA256 f3ebe45d063a1d39c3a906af671becf7c3baa72becc6467b40fcda8410f247a8 konqueror-7-r2.ebuild 590
