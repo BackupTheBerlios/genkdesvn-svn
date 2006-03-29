@@ -14,7 +14,7 @@ IUSE=""
 DEPEND="$(deprange-dual $PV $MAXKDEVER kde-base/konqueror)
     !kde-misc/metabar"
 RDEPEND="${DEPEND}
-$(deprange 3.5.0 $MAXKDEVER kde-base/kdeaddons-docs-konq-plugins)"
+$(deprange $PV $MAXKDEVER kde-base/kdeaddons-docs-konq-plugins)"
 
 # Don't install the akregator plugin, since it depends on akregator, which is
 # a heavy dep.
