@@ -18,7 +18,7 @@ DEPEND="kde? ( || ( ( kde-base/libkonq kde-base/kdebase-kioslaves )
 		>=kde-base/kdebase-7 ) )
 		javascript? ( kde-base/kjsembed )"
 
-need-kdesvn 3.4
+need-kde 3.4
 
 pkg_postinst() {
 	echo

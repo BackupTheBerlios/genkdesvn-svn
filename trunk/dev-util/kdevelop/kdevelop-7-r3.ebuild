@@ -25,7 +25,7 @@ DEPEND="${RDEPEND}
 	dev-lang/perl
 	sys-devel/flex"
 
-need-kdesvn 3.3
+need-kde 3.3
 
 src_compile() {
 	local myconf="--with-kdelibsdoxy-dir=$(kde-config --prefix)/share/doc/HTML/en/kdelibs-apidocs"
