@@ -3,6 +3,7 @@
 
 KMNAME=kdenetwork
 KMMODULE=wifi
+KMNODOCS=true
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
 inherit kde-meta eutils kde-source
