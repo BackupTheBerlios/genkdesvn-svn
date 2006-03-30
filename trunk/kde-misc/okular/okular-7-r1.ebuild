@@ -22,7 +22,7 @@ DEPEND="${RDEPEND}
 	chm? ( app-doc/chmlib )
 	gs? ( x11-libs/qt )"
 
-need-kdesvn 3.5
+need-kde 3.5
 
 src_compile() {
 	local myconf="$(use_with gs libqgs)"
