@@ -13,4 +13,4 @@ KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
 RDEPEND=">=sys-devel/gdb-5.0"
-need-kdesvn 3.5
+need-kde 3.5
