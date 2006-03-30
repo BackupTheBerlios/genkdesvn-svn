@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+UNSERMAKE=no
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
@@ -37,19 +38,19 @@ KMEXTRACTONLY="kwin/kwinbindings.cpp
         kdesktop/kdesktopbindings.cpp
         klipper/klipperbindings.cpp
         kxkb/kxkbbindings.cpp
-        kicker/taskmanager"
+        kicker/taskmanager
+		kicker/libkicker
+		kicker/taskbar"
 
 KMEXTRA="doc/kinfocenter"
-
-# The order of these dependencies is important
-#KMCOMPILEONLY="kicker/libkicker kicker/taskbar"
 
 KMCOPYLIB="libkonq libkonq
 	libkicker kicker/libkicker
 	libtaskbar kicker/taskbar
 	libtaskmanager kicker/taskmanager"
 
-KMTARGETSONLY=( 'kicker/libkicker .kcfgc' 
+KMTARGETSONLY=( 
+	'kicker/libkicker .kcfgc' 
 	'kicker/taskbar .kcfgc'
 )
 
@@ -57,5 +58,5 @@ src_compile() {
 	myconf="$myconf `use_with ssl` `use_with arts` `use_with opengl gl`
 			`use_with ieee1394 libraw1394` `use_with logitech-mouse libusb`
 			--with-usbids=/usr/share/misc/usb.ids"
-	kde-meta_src_compile
+	kdesvn-meta_src_compile
 }
