@@ -10,4 +10,4 @@ DESCRIPTION="Kicker applet for management of X keymaps"
 KEYWORDS="~x86 ~amd64 ~ppc ~sparc ~ppc64"
 IUSE=""
 
-
+PATCHES="${FILESDIR}/${P}-xlibdir.patch"
