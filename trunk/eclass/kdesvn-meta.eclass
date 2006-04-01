@@ -37,13 +37,8 @@ fi
 debug-print "$ECLASS: finished, SRC_URI=$SRC_URI"
 
 # Add a blocking dep on the package we're derived from
-if [[ "${KMNAME}" != "koffice" ]]; then
-	DEPEND="${DEPEND} !=$(get-parent-package ${CATEGORY}/${PN})-${SLOT}*"
-	RDEPEND="${RDEPEND} !=$(get-parent-package ${CATEGORY}/${PN})-${SLOT}*"
-else
-	DEPEND="${DEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
-	RDEPEND="${RDEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
-fi
+DEPEND="${DEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
+RDEPEND="${RDEPEND} !$(get-parent-package ${CATEGORY}/${PN})"
 
 # Set the following variables in the ebuild. Only KMNAME must be set, the rest are optional.
 # A directory or file can be a path with any number of components (eg foo/bar/baz.h).
