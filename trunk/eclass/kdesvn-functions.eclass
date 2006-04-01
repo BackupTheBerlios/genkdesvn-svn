@@ -31,6 +31,10 @@ kde-base/kdegames kde-base/blinken
 # these functions overwrite the ones in kde-functions.eclass
 # ---------------------------------------------------------------
 
+need-kdesvn() {
+	need-kde "$@"
+}
+
 need-kde() {
     debug-print-function $FUNCNAME $*
     KDEVER="7"
