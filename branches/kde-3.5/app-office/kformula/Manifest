@@ -1,2 +1,6 @@
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kformula-7 0
-MD5 4fd36bf6d8d2e372fae4309634337d15 kformula-7.ebuild 700
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-kformula-7 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-kformula-7 0
+MD5 994c5b45121b69cbe15e94653494a21d kformula-7.ebuild 763
+RMD160 96d3b22535ee0034019cf2887d898d8cb33fc8e0 kformula-7.ebuild 763
+SHA256 bd206f5c53f4aa8ccec1d7b2d321f772c1c9ee9eaa21ad519d96526c1bb8d9f6 kformula-7.ebuild 763

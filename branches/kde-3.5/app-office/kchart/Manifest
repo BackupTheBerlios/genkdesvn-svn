@@ -1,2 +1,6 @@
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kchart-7 0
-MD5 1f80c1e4bc255bac98aebcdd50ca56f7 kchart-7.ebuild 787
+RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-kchart-7 0
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-kchart-7 0
+MD5 f5c56feff0bfc276e8ed9fac53f96b68 kchart-7.ebuild 850
+RMD160 95f4366e291780a51a019930d36c24ad6f7c831d kchart-7.ebuild 850
+SHA256 a0239a9888fd6e80135974cc038bf2ae83d060d6399b1afcb0635d9751de20bf kchart-7.ebuild 850
