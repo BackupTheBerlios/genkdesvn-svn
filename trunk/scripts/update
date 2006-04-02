@@ -363,7 +363,8 @@ names = {
 		"app-office/krita",
 		"app-office/kplato",
 		"app-office/kword",
-		"app-office/datakiosk"
+		"app-office/datakiosk",
+		"app-office/keximdb"
 	],
 	"extragear": [
 		"app-admin/kconfigeditor",
