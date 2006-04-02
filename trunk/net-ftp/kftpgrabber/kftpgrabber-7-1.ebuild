@@ -5,7 +5,7 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=kftpgrabber
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="A graphical FTP client for KDE."
 HOMEPAGE="http://kftpgrabber.sourceforge.net/"
@@ -18,4 +18,12 @@ IUSE=""
 DEPEND="dev-libs/openssl"
 	
 need-kde 3.3
+
+src_unpack() {
+	kdesvn_src_unpack
+
+	epatch "${FILESDIR}/${PN}-uic.patch"
+	epatch "${FILESDIR}/${PN}-gcc4.patch"
+	epatch "${FILESDIR}/${PN}-gcc41.patch"
+}
 
