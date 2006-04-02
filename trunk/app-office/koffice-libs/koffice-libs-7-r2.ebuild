@@ -2,28 +2,24 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-MAXKOFFICEVER=7
-KMNAME=koffice
+UNSERMAKE=no # doc/api is broken
 KMMODULE=lib
 KMNODOCS="true"
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn eutils
 
 DESCRIPTION="Shared KOffice libraries."
 HOMEPAGE="http://www.koffice.org/"
-
 LICENSE="GPL-2 LGPL-2"
+
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="doc python ruby"
 
-IUSE="doc"
-SLOT="$PV"
-
-RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-data)
-    virtual/python
-    dev-lang/ruby"
+RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-data)"
 
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )
-	dev-util/pkgconfig"
+	python? ( virtual/python )
+    ruby? ( dev-lang/ruby )"
 
 KMEXTRA="
 	interfaces/
@@ -41,10 +37,8 @@ KMEXTRACTONLY="
 	kexi/Makefile.global
 	kchart/kdchart/"
 
-need-kdesvn 3.4
-
 src_unpack() {
-	kdesvn-source_src_unpack
+	kofficesvn_src_unpack
 
 	# Force the compilation of libkopainter.
 	sed -i 's:$(KOPAINTERDIR):kopainter:' $S/lib/Makefile.am
@@ -53,15 +47,27 @@ src_unpack() {
 }
 
 src_compile() {
-	local myconf="--enable-scripting --with-pythonfir=${ROOT}/usr/$(get_libdir)/python${PYVER}/site-packages"
-	kdesvn-meta_src_compile
+	# enable scripting if one of the script USE flags is set
+	if use python || use ruby; then
+		myconf="$myconf--enable-scripting"
+	else
+		myconf="$myconf --disable-scripting"
+	fi
+
+	# dis/enable python
+	use python && myconf="$myconf --with-pythondir=${ROOT}/usr/$(get_libdir)/python${PYVER}/site-packages"
+
+	# TODO: 
+	# Ruby gets picked up if it's installed so nothing else to do then make it a dep for koffice
+
+	kofficesvn_src_compile
 	if use doc; then
 		make apidox || die
 	fi
 }
 
 src_install() {
-	kdesvn-meta_src_install
+	kofficesvn_src_install
 	if use doc; then
 		make DESTDIR=${D} install-apidox || die
 	fi

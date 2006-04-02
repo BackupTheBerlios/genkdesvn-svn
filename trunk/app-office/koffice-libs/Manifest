@@ -7,6 +7,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-koffice-libs-7-r2 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-koffice-libs-7-r2 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-koffice-libs-7-r2 0
-MD5 d6b397df76bc62eb3841b323527f95bc koffice-libs-7-r2.ebuild 1286
-RMD160 7d22ab037211fc17e325a9379966911cc1cb55fd koffice-libs-7-r2.ebuild 1286
-SHA256 9ad5978cfb385fcb1f962981d3a6338e71d0d0b058b5893e80c89e4b2e0163a0 koffice-libs-7-r2.ebuild 1286
+MD5 dbfd8f0c3cd7a7c237c4c3e56d240b33 koffice-libs-7-r2.ebuild 1552
+RMD160 279f04a53c377f7481d78e62bc0a3d8fcfca1ee1 koffice-libs-7-r2.ebuild 1552
+SHA256 b57c481cba5e6140588831193b6f3ac3ae91bda40f73100cb8051f1a3a232b51 koffice-libs-7-r2.ebuild 1552

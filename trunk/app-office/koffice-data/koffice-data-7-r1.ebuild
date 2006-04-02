@@ -2,24 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-office/koffice-data/koffice-data-1.3.5.ebuild,v 1.3 2005/04/09 12:59:37 josejx Exp $
 
-MAXKOFFICEVER=$PV
-KMNAME=koffice
+UNSERMAKE=no # mimetypes' Makefile is broken
 KMMODULE=
 KMNOMODULE="true"
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="shared koffice data files"
 HOMEPAGE="http://www.koffice.org/"
-
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-SLOT="$PV"
 
 RDEPEND=""
-
-DEPEND="dev-util/pkgconfig"
+DEPEND=""
 
 KMEXTRA="
 	mimetypes/
@@ -27,5 +23,3 @@ KMEXTRA="
 	pics/
 	templates/
 	autocorrect/"
-
-need-kdesvn 3.4

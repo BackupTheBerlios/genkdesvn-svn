@@ -4,6 +4,6 @@ SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/di
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-koffice-data-7-r1 0
 RMD160 9c1185a5c5e9fc54612808977ee8f548b2258d31 files/digest-koffice-data-7-r1 0
 SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 files/digest-koffice-data-7-r1 0
-MD5 ee86a15c92ea513b395b2d28ca32517c koffice-data-7-r1.ebuild 626
-RMD160 8ef7626461036906c6c182cbe86aa21f839c02b3 koffice-data-7-r1.ebuild 626
-SHA256 f90ee8fbab3d31540dc7fe58123597bde5d88284bac333c0e2a86013c058a014 koffice-data-7-r1.ebuild 626
+MD5 5bee42d87185489ce51f684f04c01726 koffice-data-7-r1.ebuild 568
+RMD160 a23349625e871ae0f51eac2b8b6f9e75771bb0ea koffice-data-7-r1.ebuild 568
+SHA256 8c992d33af23bc5a082c6f3c8508127aaa744344a8a2d7d4f8cf566bde0b63ba koffice-data-7-r1.ebuild 568

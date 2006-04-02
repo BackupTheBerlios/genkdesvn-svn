@@ -2,23 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-MAXKOFFICEVER=$PV
-KMNAME=koffice
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="KOffice Chart Generator"
 HOMEPAGE="http://www.koffice.org/"
-
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-SLOT="$PV"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)"
 
-DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+DEPEND="${RDEPEND}"
 
 KMCOPYLIB="
 	libkformula lib/kformula
@@ -37,5 +32,3 @@ KMEXTRACTONLY="lib/
 KMEXTRA="filters/kchart"
 
 KMCOMPILEONLY="filters/libdialogfilter"
-
-need-kdesvn 3.1

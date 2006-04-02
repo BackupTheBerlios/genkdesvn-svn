@@ -2,15 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KMNAME=koffice
-MAXKOFFICEVER=$PV
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="KOffice Word Processor"
 HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
 
-SLOT="$PV"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
@@ -20,8 +17,7 @@ RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	>=media-gfx/imagemagick-5.5.2
 	>=app-text/libwpd-0.8.2"
 
-DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+DEPEND="${RDEPEND}"
 
 KMCOPYLIB="
     libkformula lib/kformula
@@ -42,4 +38,7 @@ KMCOMPILEONLY="filters/liboofilter"
 
 KMEXTRA="filters/kword"
 
-need-kdesvn 3.4
+KMTARGETSONLY=(
+	'lib/kotext .ui'
+	'lib/kofficeui .ui'
+)

@@ -2,17 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-MAXKOFFICEVER=${PV}
-KMNAME=koffice
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="KOffice image manipulation program."
 HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
 
-SLOT="$PV"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="openexr"
+IUSE="opengl"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	>=media-gfx/imagemagick-5.5.2
@@ -38,5 +35,3 @@ KMCOPYLIB="
 KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/krita"
-
-need-kdesvn 3.4

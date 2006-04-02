@@ -3,23 +3,18 @@
 # $Headers: $
 
 ESCM_EXTERNALS="branches/KDE/3.5/kdepim/kdgantt"
-MAXKOFFICEVER=$PV
-KMNAME=koffice
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="KOffice integrated project management and planning tool."
 HOMEPAGE="http://www.koffice.org/"
-
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
-SLOT="$PV"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)"
 
-DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+DEPEND="${RDEPEND}"
 
 KMCOPYLIB="
 	libkofficecore lib/kofficecore
@@ -32,5 +27,5 @@ KMEXTRACTONLY="
 	kugar/"
 
 KMCOMPILEONLY="kdgantt"
-	
-need-kdesvn 3.4
+
+#KMEXTRA="kdgantt"

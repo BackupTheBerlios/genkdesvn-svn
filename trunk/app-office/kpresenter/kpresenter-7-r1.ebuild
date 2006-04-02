@@ -2,22 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KMNAME=koffice
-MAXKOFFICEVER=$PV
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="KOffice Presentation Tool"
 HOMEPAGE="http://www.koffice.org/"
 LICENSE="GPL-2 LGPL-2"
 
-SLOT="$PV"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)"
 
-DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+DEPEND="${RDEPEND}"
 
 KMCOPYLIB="
 	libkformula lib/kformula
@@ -33,7 +29,10 @@ KMEXTRACTONLY="lib/"
 
 KMCOMPILEONLY="filters/liboofilter"
 
-KMEXTRA="filters/kpresenter
-    filters/libdialogfilter"
+# libdialogfilter must be compiled before kpresenter filter 
+KMEXTRA="filters/libdialogfilter
+	filters/kpresenter"
 
-need-kdesvn 3.4
+KMTARGETSONLY=(
+	'lib/kotext .ui'
+)

@@ -2,25 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KMNAME=koffice
-MAXKOFFICEVER=$PV
-inherit kdesvn-meta eutils kdesvn-source
+inherit kofficesvn
 
 DESCRIPTION="KOffice Spreadsheet Application"
 HOMEPAGE="http://www.koffice.org/"
-
 LICENSE="GPL-2 LGPL-2"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-PATCHES="$FILESDIR/gcc41.patch"
 
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE=""
-SLOT="$PV"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	$(deprange $PV $MAXKOFFICEVER app-office/kchart)"
 
-DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+DEPEND="${RDEPEND}"
 
 KMCOPYLIB="
 	libkformula lib/kformula
@@ -40,4 +34,3 @@ KMCOMPILEONLY="filters/liboofilter"
 
 KMEXTRA="filters/kspread"
 
-need-kdesvn 3.4
