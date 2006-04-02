@@ -3,14 +3,14 @@
 # $Header: $
 
 ESF_SUBDIR=kradio3
-inherit kde-sourceforge
+inherit kdesvn-sourceforge
 
 DESCRIPTION="kradio is a radio tuner application for KDE"
 HOMEPAGE="http://kradio.sourceforge.net/"
 SRC_URI="http://download.berlios.de/genkdesvn/kradio-skel.tar.bz2"
+LICENSE="GPL-2"
 
 SLOT="0"
-LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 IUSE="lirc encode vorbis ogg"
 
@@ -26,7 +26,7 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack $A
-	sourceforge_src_unpack
+	kdesvn-sourceforge_src_unpack
 	mv ${WORKDIR}/${ESF_SUBDIR} ${S}/
 }
 
@@ -44,5 +44,5 @@ src_compile() {
 			-i configure.in.in
 	fi
 	myconf="$myconf $(use_with arts)"
-	kde_src_compile
+	kdesvn_src_compile
 }

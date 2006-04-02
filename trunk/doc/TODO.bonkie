@@ -1,0 +1,9 @@
+** ECLASSES
+- extend kdesvn-meta to include the directories from KMTARGETS, KMHEADERDIRS && KMHEADERS, so that they wont have be to listed again in KMEXTRACTONLY
+- remove kde-* eclasses when everyone has migrated to kdesvn-* eclasses
+
+** KDE
+
+
+** KOFFICE
+- krita has bug in combination with media-libs/lcms-1.14* 
