@@ -5,10 +5,7 @@
 KSCM_ROOT=trunk
 KSCM_MODULE=kdesupport
 KSCM_SUBDIR=${PN}
-inherit kde-source
-
-#MY_P="${P/_/}"
-#S="${WORKDIR}/${MY_P}"
+inherit kdesvn-source
 
 DESCRIPTION="A simple framework to decode the most common audio formats."
 HOMEPAGE="http://www.carewolf.com/akode/"

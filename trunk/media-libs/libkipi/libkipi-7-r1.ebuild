@@ -5,16 +5,18 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=libs
 KSCM_SUBDIR=$PN
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="A library for image plugins accross KDE applications."
 HOMEPAGE="http://digikam.sourceforge.net/"
-
 LICENSE="GPL-2"
+
+PATCHES="${FILESDIR}/${P}-libkipi.patch"
+
 KEYWORDS="~x86 ~ppc amd64 ~sparc"
 IUSE=""
 
 DEPEND="dev-util/pkgconfig"
+
 need-kde 3.1
 
-PATCHES="${FILESDIR}/${P}-libkipi.patch"

@@ -5,7 +5,7 @@
 KSCM_ROOT=trunk
 KSCM_MODULE=kdesupport
 KSCM_SUBDIR=${PN}
-inherit kde-source
+inherit kdesvn-source
 
 DESCRIPTION="A library for reading and editing audio meta data"
 HOMEPAGE="http://developer.kde.org/~wheeler/taglib.html"
