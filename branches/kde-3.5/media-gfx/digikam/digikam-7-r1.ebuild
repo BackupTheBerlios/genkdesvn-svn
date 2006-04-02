@@ -20,6 +20,7 @@ DEPEND=">=media-libs/libgphoto2-2
 	media-libs/libkipi
 	media-libs/imlib2
 	media-libs/tiff
+	media-gfx/exiv2
 	=dev-db/sqlite-3*"
 
 need-kde 3.2
