@@ -5,7 +5,7 @@
 KSCM_ROOT=playground
 KSCM_MODULE=pim
 KSCM_SUBDIR=${PN}
-inherit kde eutils kde-source
+inherit kdesvn eutils kdesvn-source
 
 DESCRIPTION="Telephony application of Kontact"
 HOMEPAGE="http://www.basyskom.de/index.pl/kcall"

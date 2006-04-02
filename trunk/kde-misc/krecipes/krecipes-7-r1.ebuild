@@ -5,7 +5,7 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=utils
 KSCM_SUBDIR=$PN
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="A KDE Recipe Tool"
 HOMEPAGE="http://krecipes.sourceforge.net"
@@ -28,11 +28,11 @@ pkg_setup() {
 		eerror please try again with USE=\"sqlite\", USE=\"mysql\" or USE=\"postgres\".
 		die
 	fi
-	kde-source_pkg_setup
+	kdesvn-source_pkg_setup
 }
 
 src_compile() {
 	myconf="$(use_with sqlite) $(use_with mysql) $(use_with postgres postgresql)"
 
-	kde_src_compile
+	kdesvn_src_compile
 }

@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde berlios
+inherit kdesvn berlios
 
 DESCRIPTION="A KDE fullscreen task manager."
 HOMEPAGE="http://kompose.berlios.de"
+LICENSE="GPL-2"
 
 SLOT="0"
-LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE=""
 
@@ -17,7 +17,7 @@ RDEPEND="media-libs/imlib2"
 need-kde 3.2
 
 function pkg_setup() {
-	# bug 94881
+	# gentoo bug 94881
 	if ! built_with_use media-libs/imlib2 X; then
 		eerror "This package requires imlib2 to be built with X11 support."
 		eerror "Please run USE=X emerge media-libs/imlib2, then try emerging kompose again."

@@ -3,15 +3,15 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=security
 KSCM_SUBDIR=pwmanager
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 need-kde 3
 
 DESCRIPTION="Password manager for KDE supporting chipcard access and encryption."
 HOMEPAGE="http://passwordmanager.sourceforge.net"
+LICENSE="GPL-2"
 
 SLOT="0"
-LICENSE="GPL-2"
 KEYWORDS="~x86 ~ppc ~amd64 hppa"
 IUSE="smartcard"
 
@@ -41,6 +41,6 @@ src_compile() {
 		myconf="${myconf} --disable-pwmanager-smartcard"
 	fi
 
-	kde_src_compile
+	kdesvn_src_compile
 }
 

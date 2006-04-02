@@ -5,12 +5,12 @@
 KSCM_ROOT=playground
 KSCM_MODULE=base
 KSCM_SUBDIR="${PN}"
-inherit flag-o-matic kde kde-source
+inherit flag-o-matic kdesvn kdesvn-source
 
 DESCRIPTION="The open source answer to WhereIsIt and Google Desktop Search"
 HOMEPAGE="http://kat.sourceforge.net/"
-
 LICENSE="GPL-2"
+
 SLOT="0"
 KEYWORDS="~x86 ~amd64 ~alpha ~ppc ~sparc"
 IUSE="ext-doc ext-gnumeric ext-html ext-kpresenter ext-kspread ext-kword ext-mail ext-openoffice ext-pdf ext-ppt ext-ps ext-rtf ext-tex ext-xls xattr"
@@ -44,7 +44,7 @@ src_compile() {
 	filter-flags -fvisibility-inlines-hidden -fvisibility=hidden 
 
 	PREFIX="`kde-config --prefix`"
-	kde_src_compile
+	kdesvn_src_compile
 }
 
 pkg_postinst() {
