@@ -5,28 +5,24 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=kmldonkey
-inherit kde eutils kde-source
+inherit kdesvn eutils kdesvn-source
 
 DESCRIPTION="Provides integration for the MLDonkey P2P software and KDE 3"
 HOMEPAGE="http://www.kmldonkey.org/"
+LICENSE="GPL-2"
 
 SLOT="0"
-LICENSE="GPL-2"
-KEYWORDS="x86 ~ppc ~amd64"
-IUSE="arts"
+KEYWORDS="~x86 ~ppc ~amd64"
+IUSE=""
 
 DEPEND="|| ( kde-base/kcontrol kde-base/kdebase )"
-RDEPEND="${DEPEND}"
 
 need-kde 3
+
 PATCHES="${FILESDIR}/${P}-sandbox.patch"
 
 pkg_postinst() {
 	echo
-	echo
 	einfo "To configure Kmldonkey use your KDE ControlCenter"
-	einfo "To load the Kmldonkey GUI interface, just add the"
-	einfo "MLDonkeyApplet miniprog to your taskbar"
-	echo
 	echo
 }

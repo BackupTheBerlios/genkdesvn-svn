@@ -43,7 +43,7 @@ src_compile() {
 	myconf="${myconf} $(use_enable clearcase) $(use_enable perforce)
 			$(use_enable subversion)"
 
-	kde_src_compile
+	kdesvn_src_compile
 }
 
 pkg_postinst() {

@@ -3,16 +3,16 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=multimedia
 KSCM_SUBDIR=kplayer
-inherit kde kde-source
-
-need-kde 3
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="KPlayer is a KDE media player based on mplayer."
 HOMEPAGE="http://kplayer.sourceforge.net/"
+LICENSE="GPL-2"
 
 SLOT="0"
-LICENSE="GPL-2"
 KEYWORDS="~x86 ~ppc ~amd64"
 IUSE=""
 
 DEPEND="media-video/mplayer"
+
+need-kde 3.1

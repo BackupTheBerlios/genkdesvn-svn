@@ -5,28 +5,29 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=multimedia
 KSCM_SUBDIR=$PN
-inherit kde eutils flag-o-matic kde-source
+inherit kdesvn eutils flag-o-matic kdesvn-source
 
 DESCRIPTION="K3b, KDE CD Writing Software"
 HOMEPAGE="http://www.k3b.org/"
-
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~ppc ~sparc ~x86"
-IUSE="css dvdr encode ffmpeg flac hal kde mp3 musepack vorbis"
+
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="alsa css dvdr encode ffmpeg flac hal kde mp3 musepack musicbrainz sndfile vcd vorbis"
 
 DEPEND="kde? ( || ( kde-base/kdesu kde-base/kdebase ) )
-	hal? ( >=sys-apps/dbus-0.23
-		>=sys-apps/hal-0.4 )
-	media-libs/libsndfile
+	hal? ( sys-apps/dbus sys-apps/hal )
 	media-libs/libsamplerate
 	media-libs/taglib
-	media-libs/musicbrainz
 	>=media-sound/cdparanoia-3.9.8
+	sndfile? ( media-libs/libsndfile )
 	ffmpeg? ( media-video/ffmpeg )
 	flac? ( media-libs/flac )
 	mp3? ( media-libs/libmad )
 	musepack? ( media-libs/libmpcdec )
-	vorbis? ( media-libs/libvorbis )"
+	vorbis? ( media-libs/libvorbis )
+	musicbrainz? ( media-libs/musicbrainz )
+	encode? ( media-sound/lame )
+	alsa? ( media-libs/alsa-lib )"
 
 RDEPEND="${DEPEND}
 	virtual/cdrtools
@@ -34,15 +35,14 @@ RDEPEND="${DEPEND}
 	media-sound/normalize
 	dvdr? ( app-cdr/dvd+rw-tools )
 	css? ( media-libs/libdvdcss )
-	encode? ( media-sound/lame
-		  media-sound/sox
-		  media-video/transcode
-		  media-video/vcdimager )"
+	encode? (  media-sound/sox
+		  media-video/transcode )
+	vcd? ( media-video/vcdimager )"
 
-need-kde 3.3
+DEPEND="${DEPEND}
+	dev-util/pkgconfig"
 
-# dvd+rw-tools is no longer built by default
-#PATCHES="$FILESDIR/no_dvd+rw-tools_build.patch"
+need-kde 3.4
 
 pkg_setup() {
 	use hal && if ! built_with_use dbus qt ; then
@@ -51,37 +51,38 @@ pkg_setup() {
 		die
 	fi
 
-	kde-source_pkg_setup
+	kdesvn-source_pkg_setup
 }
 
 src_compile() {
 
-	local myconf="--enable-libsuffix= --with-external-libsamplerate \
-			--without-resmgr --with-musicbrainz \
+	local myconf="--enable-libsuffix= \
+			--with-external-libsamplerate \
+			--without-resmgr \
 			$(use_with kde k3bsetup)	\
 			$(use_with hal)			\
 			$(use_with encode lame)		\
 			$(use_with ffmpeg)		\
 			$(use_with flac)		\
 			$(use_with vorbis oggvorbis)	\
+			$(use_with sndfile )	\
 			$(use_with mp3 libmad)		\
-			$(use_with musepack)"
+			$(use_with musepack)	\
+			$(use_with musicbrainz)		\
+			$(use_with alsa)"
 
 	# Build process of K3B
-	kde_src_compile
+	kdesvn_src_compile
 
 }
 
 src_install() {
-	make DESTDIR=${D} install || die
-
-	dodoc README
+	kdesvn_src_install
+	dodoc README FAQ KNOWNBUGS PERMISSIONS
 
 	# install menu entry
-	dodir /usr/share/applications
-	mv ${D}/usr/share/applnk/Multimedia/k3b.desktop ${D}/usr/share/applications
 	if use kde; then
-		mv ${D}/usr/share/applnk/Settings/System/k3bsetup2.desktop ${D}/usr/share/applications
+		mv ${D}/usr/share/applnk/Settings/System/k3bsetup2.desktop ${D}/usr/share/applications/kde/
 	fi
 	rm -fR ${D}/usr/share/applnk/
 }

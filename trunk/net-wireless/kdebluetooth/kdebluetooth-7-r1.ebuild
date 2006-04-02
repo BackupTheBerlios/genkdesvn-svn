@@ -3,28 +3,33 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=pim
 KSCM_SUBDIR=kdebluetooth
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 need-kde 3
 
 DESCRIPTION="KDE Bluetooth Framework"
 HOMEPAGE="http://kde-bluetooth.sourceforge.net/"
+LICENSE="GPL-2"
 
 SLOT="0"
-LICENSE="GPL-2"
-KEYWORDS="~x86 ~ppc ~amd64 hppa"
+KEYWORDS="~x86 ~ppc ~amd64 hppa sparc"
 IUSE="xmms irmc"
 
-DEPEND=">=dev-libs/openobex-1
+DEPEND="=dev-libs/openobex-1.0*
 	>=net-wireless/bluez-libs-2.15
 	>=media-libs/libvorbis-1.0
 	xmms? ( >=media-sound/xmms-1.2.10 )
-	irmc? ( || ( =kde-base/kitchensync-7) )"
+	irmc? ( || ( kde-base/kitchensync kde-base/kdepim ) )"
+
+RDEPEND="|| ( ( kde-base/kdialog kde-base/konqueror )  kde-base/kdebase )
+    net-wireless/bluez-utils"
+
+PATCHES="${FILESDIR}/${PN}-gcc41.patch"
 
 src_compile() {
-	kde_src_compile myconf
+	kdesvn_src_compile myconf
 	myconf="$myconf `use_with xmms` `use_enable irmc irmcsynckonnector`"
-	kde_src_compile configure make
+	kdesvn_src_compile configure make
 }
 
 pkg_postinst() {
