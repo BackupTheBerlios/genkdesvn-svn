@@ -4,11 +4,13 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=utils
 KSCM_SUBDIR=$PN
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="Application which allows direct editing of all aspects of the KDE desktop"
 HOMEPAGE="http://extragear.kde.org/apps/kconfigeditor/"
 LICENSE="GPL-2"
+
 KEYWORDS="~x86 ~ppc ~sparc ~amd64"
+IUSE=""
 
 need-kde 3.2

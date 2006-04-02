@@ -5,7 +5,7 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=office
 KSCM_SUBDIR=$PN
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="A Latex Editor and TeX shell for kde"
 HOMEPAGE="http://kile.sourceforge.net"
@@ -21,5 +21,6 @@ RDEPEND="dev-lang/perl
 	              kde-base/kdvi
 	              kde-base/kviewshell )
 	            kde-base/kdegraphics ) )"
+
 need-kde 3.2
 
