@@ -3,13 +3,13 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=office
 KSCM_SUBDIR=datakiosk
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="DataKiosk is a JuK-like database interface tool for generic SQL databases."
 HOMEPAGE="http://extragear.kde.org/apps/datakiosk/"
+LICENSE="GPL-2"
 
 SLOT="${PV}"
-LICENSE="GPL-2"
 KEYWORDS="~x86 ~ppc ~amd64"
 IUSE=""
 
