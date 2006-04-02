@@ -5,7 +5,7 @@
 KSCM_ROOT=extragear
 KSCM_MODULE=network
 KSCM_SUBDIR=konversation
-inherit kde kde-source
+inherit kdesvn kdesvn-source
 
 DESCRIPTION="A user friendly IRC Client for KDE3.x"
 HOMEPAGE="http://konversation.kde.org/"
@@ -18,6 +18,6 @@ IUSE="nls"
 need-kde 3
 
 src_install() {
-	kde_src_install
+	kdesvn_src_install
 	use nls || rm -rf "${D}"/usr/share/locale
 }
