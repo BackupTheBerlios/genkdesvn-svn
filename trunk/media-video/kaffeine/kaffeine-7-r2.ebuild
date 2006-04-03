@@ -39,9 +39,9 @@ DEPEND="${RDEPEND}
 
 # the dependency on xorg-x11 is meant to avoid gentoo bug #59746
 
-PATCHES="${FILESDIR}/${PN}-xinerama.patch
-    ${FILESDIR}/${PN}-respectflags.patch
-    ${FILESDIR}/${PN}-closedev.patch"
+#PATCHES="${FILESDIR}/${PN}-xinerama.patch
+#    ${FILESDIR}/${PN}-respectflags.patch
+#    ${FILESDIR}/${PN}-closedev.patch"
 
 need-kde 3.2
 
