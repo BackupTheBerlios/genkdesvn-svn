@@ -14,7 +14,7 @@
 # and functions (e.g. $P, src_compile() etc.)
 # ALL functions are prefixed with "kdesvn_" so that we can still use the official eclass functions
 
-inherit qt-copy kde-functions
+inherit qt3 kde-functions
 
 # map of the monolithic->split ebuild derivation; used to build deps describing
 # the relationships between them ...
@@ -132,8 +132,8 @@ need-qt() {
         x_DEPEND="${DEPEND}"
     fi
 
-	DEPEND="${DEPEND} $(qt-copy_min_version ${QTVER})"
-	RDEPEND="${x_DEPEND} $(qt-copy_min_version ${QTVER})"
+	DEPEND="${DEPEND} $(qt_min_version ${QTVER})"
+	RDEPEND="${x_DEPEND} $(qt_min_version ${QTVER})"
 }
 
 # returns minimal qt version needed for specified kde version

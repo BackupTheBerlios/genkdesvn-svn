@@ -15,7 +15,7 @@ IUSE="acl alsa arts cups doc jpeg2k kerberos openexr spell ssl tiff zeroconf"
 
 # kde.eclass has kdelibs in DEPEND, and we can't have that in here.
 # so we recreate the entire DEPEND from scratch.
-RDEPEND="$(qt-copy_min_version 3.3.3)
+RDEPEND="$(qt_min_version 3.3.3)
 	arts? ( ~kde-base/arts-${PV} )
 	app-arch/bzip2
 	>=media-libs/freetype-2

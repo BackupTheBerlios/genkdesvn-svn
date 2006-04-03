@@ -23,33 +23,32 @@
 
 inherit versionator
 
-# must be done before inheriting qt3 eclass
 if [[ -z $QTDIR ]]; then
 	[ -d ${ROOT}/var/db/pkg/x11-libs/qt-7* ] && QTDIR="/usr/qt/devel"
 fi
 
-inherit qt3
+QTPKG="x11-libs/qt-"
+QT3MAJORVERSIONS="3.3 3.2 3.1 3.0"
+QT3VERSIONS="3.3.6 3.3.5-r1 3.3.5 3.3.4-r9 3.3.4-r8 3.3.4-r7 3.3.4-r6 3.3.4-r5 3.3.4-r4 3.3.4-r3 3.3.4-r2 3.3.4-r1 3.3.4 3.3.3-r3 3.3.3-r2 3.3.3-r1 3.3.3 3.3.2 3.3.1-r2 3.3.1-r1 3.3.1 3.3.0-r1 3.3.0 3.2.3-r1 3.2.3 3.2.2-r1 3.2.2 3.2.1-r2 3.2.1-r1 3.2.1 3.2.0 3.1.2-r4 3.1.2-r3 3.1.2-r2 3.1.2-r1 3.1.2 3.1.1-r2 3.1.1-r1 3.1.1 3.1.0-r3 3.1.0-r2 3.1.0-r1 3.1.0"
 
-QTPKG="${QTPKG}"
-QT3MAJORVERSIONS="${QT3MAJORVERSIONS}"
-QT3VERSIONS="${QT3VERSIONS}"
+addwrite "${QTDIR}/etc/settings"
+addpredict "${QTDIR}/etc/settings"
 
 qt_min_version() {
-    qt-copy_min_version "$@"
+	qt3_min_version "$@"
 }
 
-qt-copy_min_version() {
-    echo "|| ( "
-    qt-copy_min_version_list "$@"
-    echo " )"
-
+qt3_min_version() {
+	echo "|| ( "
+	qt3_min_version_list "$@"
+	echo " )"
 }
 
-qt-copy_min_version_list() {
+qt3_min_version_list() {
 	local MINVER="$1"
 	local VERSIONS=""
 
-	VERSIONS="$(qt_min_version_list "${MINVER}") =${QTPKG}7*"
+	VERSIONS="|| ( =${QTPKG}3* =${QTPKG}7* )"
 
-    echo "$VERSIONS"
+	echo "$VERSIONS"
 }
