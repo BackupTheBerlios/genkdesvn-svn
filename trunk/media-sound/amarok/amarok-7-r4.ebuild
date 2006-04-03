@@ -22,7 +22,7 @@ DEPEND="
 		|| ( kde-base/kdemultimedia-arts kde-base/kode kde-base/kdemultimedia ) )
 	xine? ( >=media-libs/xine-lib-1_rc4 )
 	gstreamer? ( =media-libs/gstreamer-0.10*
-		=media-libs/gst-plugins-0.10* )
+		=media-libs/gst-plugins-base-0.10* )
 	musicbrainz? ( >=media-libs/tunepimp-0.3 )
 	>=media-libs/taglib-1.4
 	mysql? ( >=dev-db/mysql-4.0.16 )
