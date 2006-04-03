@@ -27,7 +27,8 @@ DEPEND="kde? ( || ( kde-base/kdesu kde-base/kdebase ) )
 	vorbis? ( media-libs/libvorbis )
 	musicbrainz? ( media-libs/musicbrainz )
 	encode? ( media-sound/lame )
-	alsa? ( media-libs/alsa-lib )"
+	alsa? ( media-libs/alsa-lib )
+	media-libs/libdvdread"
 
 RDEPEND="${DEPEND}
 	virtual/cdrtools
