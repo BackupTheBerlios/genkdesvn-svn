@@ -10,11 +10,11 @@
 # indicate these are koffice ebuilds to kdesvn-meta (must be set before kdesvn-meta inherit !!!)
 KMNAME=koffice
 
+# location of koffice in SVN
+[ -z "${KSCM_ROOT}" ] && KSCM_ROOT="branches/koffice/1.6/"
+
 inherit kdesvn-meta multilib eutils kdesvn-source
 IUSE=""
-
-# location of koffice in SVN
-KSCM_ROOT="branches/koffice/1.6/"
 
 # Add a blocking dep on the package we're derived from
 DEPEND="

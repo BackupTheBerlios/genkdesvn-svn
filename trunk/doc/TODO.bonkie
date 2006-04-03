@@ -5,6 +5,8 @@
 - fix qt3 eclass to properly assign other qt3 versions
 
 ** KDE
+- fix knetworkmanager; but its on top of (gnome) library: networkmanager
 - fix kdebindings, if possible
 
 ** KOFFICE
+- fix keximdb: upstream compiler error or not ??
