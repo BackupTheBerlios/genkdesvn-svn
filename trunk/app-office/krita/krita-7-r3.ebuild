@@ -13,7 +13,7 @@ IUSE="opengl"
 
 RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)
 	>=media-gfx/imagemagick-5.5.2
-	>=media-libs/lcms-1.14-r1
+	>=media-libs/lcms-1.15
 	opengl? ( virtual/opengl virtual/glu )"
 
 DEPEND="${RDEPEND}
