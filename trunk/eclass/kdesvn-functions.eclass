@@ -23,6 +23,7 @@ KDE_DERIVATION_MAP="${KDE_DERIVATION_MAP}
 kde-base/kdebindings kde-base/pykde
 kde-base/kdegames kde-base/kanagram
 kde-base/kdegames kde-base/blinken
+app-office/koffice app-office/keximdb
 "
 
 # ---------------------------------------------------------------
