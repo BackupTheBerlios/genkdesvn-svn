@@ -394,6 +394,7 @@ names = {
 	],
 	"sourceforge": [
 		"app-antivirus/klamav",
+		"app-portage/kuroo",
 		"dev-util/kdbg",
 		"kde-misc/krusader",
 		"media-sound/kradio",
