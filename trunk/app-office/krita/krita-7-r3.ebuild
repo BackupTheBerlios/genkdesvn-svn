@@ -35,3 +35,7 @@ KMCOPYLIB="
 KMEXTRACTONLY="lib/"
 
 KMEXTRA="filters/krita"
+
+KMTARGETSONLY=(
+	'lib/kross/main/ .ui'
+)
