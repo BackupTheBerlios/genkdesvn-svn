@@ -38,6 +38,10 @@ qt_min_version() {
 	qt3_min_version "$@"
 }
 
+qt-copy_min_version() {
+	qt3_min_version "$@"
+}
+
 qt3_min_version() {
 	echo "|| ( "
 	qt3_min_version_list "$@"
