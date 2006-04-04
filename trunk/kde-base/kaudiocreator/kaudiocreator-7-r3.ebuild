@@ -22,4 +22,5 @@ RDEPEND="$DEPEND
 
 KMCOPYLIB="libkcddb libkcddb"
 KMCOMPILEONLY="kscd"
+KMEXTRA="libkcddb"
 KMTARGETSONLY=('libkcddb .ui .kcfgc')
