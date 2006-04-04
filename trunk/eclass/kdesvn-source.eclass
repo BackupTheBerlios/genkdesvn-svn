@@ -257,7 +257,7 @@ function kdesvn-source_src_unpack {
 		else
 			[ ! ${KMNOMODULE} ] && translations="$translations $(collect_translations ${S}/${KSCM_SUBDIR})"
 
-			[ ! ${KMEXTERNAL} ] && translations="$translations $(collect_translations ${S}/${KMEXTERNAL})"
+			[ -n ${KMEXTERNAL} ] && translations="$translations $(collect_translations ${S}/${KMEXTERNAL})"
 
 			for item in ${KMEXTRA}
 			do
