@@ -23,7 +23,7 @@ DEPEND=">=media-libs/libgphoto2-2
 	media-gfx/exiv2
 	=dev-db/sqlite-3*"
 
-PATCHES="${FILESDIR}/gcc41.patch"
+#PATCHES="${FILESDIR}/gcc41.patch"
 
 need-kde 3.4
 
