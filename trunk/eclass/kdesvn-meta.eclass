@@ -387,8 +387,6 @@ function kdesvn-meta_src_compile() {
 
 		if [ "$section" == "make" ]; then
 
-			if [ "${UNSERMAKE}" == "no" ]; then
-
 				# KMHEADERS: create headers without touching Makefile.am
 				# syntax is different too: "path/to/dir file.h"
 				for dir in $(sort_subdirs ${newheaderdirs[*]})
@@ -434,8 +432,6 @@ function kdesvn-meta_src_compile() {
 					done
 					popd >/dev/null
 				done
-
-			fi
 
 			compiledirs="${KMCOMPILEONLY} ${KMMODULE} ${KMEXTRA} ${KMEXTERNAL} ${DOCS} po"
 			for dir in $(sort_subdirs ${compiledirs} ${targetdirs[*]})
