@@ -14,7 +14,7 @@
 # except for the src_* functions; they have the kdesvn-meta_ prefix
 
 inherit kdesvn multilib
-IUSE="kdexdeltas"
+IUSE=""
 
 # only broken-up ebuilds can use this eclass
 if [[ -z "$KMNAME" ]]; then
@@ -509,7 +509,7 @@ function kdesvn-meta_src_install() {
 	while [[ -n "$1" ]]; do
 		case $1 in
 		    make)
-				for dir in $KMMODULE $KMEXTRA $KMEXTERNAL $DOCS; do
+				for dir in $KMMODULE $KMEXTRA $KMEXTERNAL $DOCS po; do
 					if [[ -d $S/$dir ]]; then
 						cd $S/$dir
 						einfo "Installing ${dir}"
