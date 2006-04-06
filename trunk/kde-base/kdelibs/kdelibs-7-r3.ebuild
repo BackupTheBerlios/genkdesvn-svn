@@ -11,7 +11,7 @@ SRC_URI=""
 LICENSE="GPL-2 LGPL-2"
 SLOT="$PV"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="acl alsa arts cups doc jpeg2k kerberos openexr spell ssl tiff zeroconf"
+IUSE="acl alsa arts cups doc jpeg2k kerberos openexr pertty spell ssl tiff xgl zeroconf"
 
 # kde.eclass has kdelibs in DEPEND, and we can't have that in here.
 # so we recreate the entire DEPEND from scratch.
@@ -45,9 +45,46 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	dev-util/pkgconfig"
 
-src_unpack() {
-	kdesvn-source_src_unpack
-	#! use arts && cd ${S} && epatch ${FILESDIR}/${P}-knotify-noarts.patch
+RDEPEND="${RDEPEND}
+    || ( x11-apps/rgb virtual/x11 )"
+
+PATCHES="${FILESDIR}/${PN}-bindnow.patch
+    ${FILESDIR}/${PN}-kicker-crash.patch
+    ${FILESDIR}/${P}-xorg7-rgbtxt.patch"
+
+if ! use arts; then
+	PATCHES="${PATCHES}
+		${FILESDIR}/${PN}-knotify-noarts.patch"
+fi
+
+if use pertty; then
+    PATCHES="${PATCHES}
+        ${FILESDIR}/${PN}-pertty.patch"
+fi
+
+if use xgl; then
+	PATCHES="${PATCHES}
+		${FILESDIR}/${PN}-xgl-systray.patch"
+fi
+
+pkg_setup() {
+	if use xgl; then
+		echo
+		einfo "xgl use flag set which means kdelibs will be patched to improve KDE on Xgl."
+		einfo "Patches were provided by Ubuntu at:"
+		einfo "http://www.ubuntuforums.org/showpost.php?p=758925&postcount=21"
+		einfo "Enable and use at your own risk !"
+		echo
+	fi
+
+	if use pertty; then
+		echo
+		einfo "Patching KDE with the pertty patch as requested. The patch can be found at:"
+		einfo "http://forums.gentoo.org/viewtopic-t-236593.html"
+		echo
+	fi
+
+    kdesvn-source_pkg_setup
 }
 
 src_compile() {
@@ -84,6 +121,10 @@ src_compile() {
 		myconf="${myconf} --without-aspell"
 	fi
 
+    if has_version x11-apps/rgb; then
+        myconf="${myconf} --with-rgbfile=/usr/share/X11/rgb.txt"
+    fi
+
 	myconf="${myconf} --disable-fast-malloc"
 	#use x86 && myconf="${myconf} --enable-fast-malloc=full"
 
@@ -96,11 +137,12 @@ src_compile() {
 
 	kdesvn_src_compile
 
-	#if ! use arts; then
-	#	cd arts/knotify
-	#	make || die
-	#	cd ${OLDPWD}
-	#fi
+	# is this still needed ???
+	if ! use arts; then
+		cd arts/knotify
+		make || die
+		cd ${OLDPWD}
+	fi
 
 	if use doc; then
 		make apidox || die
@@ -110,11 +152,12 @@ src_compile() {
 src_install() {
 	kdesvn_src_install
 
-	#if ! use arts; then
-	#	cd arts/knotify
-	#	make DESTDIR="${D}" install || die
-	#	cd ${OLDPWD}
-	#fi
+	# is this still needed ???
+	if ! use arts; then
+		cd arts/knotify
+		make DESTDIR="${D}" install || die
+		cd ${OLDPWD}
+	fi
 
 	if use doc; then
 		make DESTDIR="${D}" install-apidox || die
