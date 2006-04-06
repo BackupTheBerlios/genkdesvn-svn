@@ -19,11 +19,7 @@ DEPEND="dev-libs/openssl"
 	
 need-kde 3.3
 
-src_unpack() {
-	kdesvn_src_unpack
-
-	epatch "${FILESDIR}/${PN}-uic.patch"
-	epatch "${FILESDIR}/${PN}-gcc4.patch"
-	epatch "${FILESDIR}/${PN}-gcc41.patch"
-}
+#PATCHES="${FILESDIR}/${PN}-uic.patch"
+#PATCHES="${PATCHES} ${FILESDIR}/${PN}-gcc4.patch"
+#PATCHES="${PATCHES} ${FILESDIR}/${PN}-gcc41.patch"
 
