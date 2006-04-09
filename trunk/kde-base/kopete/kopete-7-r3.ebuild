@@ -11,7 +11,7 @@ ESCM_EXTERNALS="branches/kopete/0.12/kopete"
 ESCM_CHECKITEMS="${ESCM_EXTERNALS}"
 KMEXTERNAL="kopete"
 
-inherit kdesvn-meta eutils kdesvn-source
+inherit kdesvn-meta flag-o-matic eutils kdesvn-source
 
 DESCRIPTION="KDE multi-protocol IM client"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
