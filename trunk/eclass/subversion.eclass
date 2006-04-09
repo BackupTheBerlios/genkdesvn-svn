@@ -16,6 +16,8 @@ INHERITED="$INHERITED $ECLASS"
 DEPEND="$DEPEND
 	>=dev-util/subversion-1.2.0"
 
+ESVN="subversion.eclass"
+
 ## ESVN_STORE_DIR: Central repository for working copies
 ## ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
 [ -z "${ESVN_STORE_DIR}" ] && ESVN_STORE_DIR="${PORTAGE_ACTUAL_DISTDIR}/svn-src"
@@ -26,6 +28,7 @@ DEPEND="$DEPEND
 ## ESVN_PROJECT: Project name 
 #[ -z "${ESVN_PROJECT}" ] && ESVN_PROJECT="${PN/-svn}"
 
+## -- subversion_obtain_certificates() ------------------------------------------------ #
 
 function subversion_obtain_certificates() {
 	debug-print-function $FUNCNAME $*
@@ -43,6 +46,8 @@ function subversion_obtain_certificates() {
 
 SCRIPT_DIR="$(dirname $(dirname $(dirname $FILESDIR)))/scripts"
 
+## -- subversion_deep_copy() ------------------------------------------------ #
+
 function subversion_deep_copy() {
 	debug-print-function $FUNCNAME $*
 
@@ -50,17 +55,15 @@ function subversion_deep_copy() {
 	local src="$2"
 	local dest="$3"
 
-	#einfo "Copying $item to working directory"
 	debug-print "$FUNCNAME: Deep-copying $item from $src to $dest, omitting .svn*"
-
-	## TODO; is finding .svn.eclass.mode important ??
 
 	pushd $src >/dev/null
 	debug-print `find $item \( -path "*.svn*" -type d ! -name . -prune \) -o \( -exec \cp -p --parents {} $dest/ \;  \) 2>&1`
-	#debug-print `find $item \( -path "*.svn*" ! -name . -prune \) -o \( -exec \cp -p --parents {} $dest/ \;  \) 2>&1`
 	popd >/dev/null
 
 }
+
+## -- subversion_src_fetch() ------------------------------------------------ #
 
 ESVN_CO_DIR="${ESVN_PROJECT}/${ESVN_REPO_URI##*/}"
 function subversion_src_fetch() {
@@ -68,9 +71,25 @@ function subversion_src_fetch() {
 
 	# Check for empty ESVN_REPO_URI
 	[ -z "${ESVN_REPO_URI}" ] && die "${ESVN}: ESVN_REPO_URI is empty."
+
+	# check for the protocol.
+	case ${ESVN_REPO_URI%%:*} in
+		http|https)
+			if built_with_use dev-util/subversion nowebdav; then
+				eerror "In order to emerge this package, you need to"
+				eerror "re-emerge subversion with USE=-nowebdav"
+				die "Please run 'USE=-nowebdav emerge subversion'"
+			fi
+			;;
+		svn)	;;
+		*)
+			die "${ESVN}: fetch from "${ESVN_REPO_URI%:*}" is not yet implemented."
+			;;
+	esac
 	
 	if [ ! -d "${ESVN_STORE_DIR}" ]; then
-		debug-print "${FUNCNAME}: Creating subversion storage directory"
+		debug-print "${FUNCNAME}: initial checkout. creating subversion directory"
+
 		addwrite /
 		mkdir -p "${ESVN_STORE_DIR}"      || die "${ESVN}: can't mkdir ${ESVN_STORE_DIR}."
 		chmod -f o+rw "${ESVN_STORE_DIR}" || die "${ESVN}: can't chmod ${ESVN_STORE_DIR}."
@@ -78,10 +97,17 @@ function subversion_src_fetch() {
 	fi
 
 
-	# Enable writes
+	# every time
 	addwrite "/etc/subversion"
 	addwrite "${ESVN_STORE_DIR}"
-	! has userpriv ${FEATURE} && addwrite "/root/.subversion"
+
+	if ! has userpriv ${FEATURES}; then
+		# -userpriv
+		addwrite "/root/.subversion"
+	else
+		# +userpriv
+		ESVN_OPTIONS="${ESVN_OPTIONS} --config-dir ${ESVN_STORE_DIR}/.subversion"
+	fi
 	
 	ARGUMENTS="$ARGUMENTS $ESVN_RUN_ARGS"
 	ARGUMENTS="$ARGUMENTS --repository=${ESVN_REPO_URI}"
@@ -139,37 +165,66 @@ function subversion_src_fetch() {
 	fi
 }
 
+## -- subversion_src_extract() ------------------------------------------------ #
+
 function subversion_src_extract() {
 	debug-print-function $FUNCNAME $*
 	src_to_workdir "$ESVN_STORE_DIR/$ESVN_CO_DIR" subversion_deep_copy
 }
 
+## -- subversion_src_bootstrap() ------------------------------------------------ #
+
 function subversion_src_bootstrap() {
 	debug-print-function $FUNCNAME $*
 
+	local patch lpatch
+
 	cd $S
-	for patch in ${ESVN_PATCHES}; do
-		[ -f "${patch}" ] && epatch ${patch}
-	done
+
+	if [ "${ESVN_PATCHES}" ]; then
+		for patch in ${ESVN_PATCHES}; do
+			if [ -f "${patch}" ]; then
+				epatch ${patch}
+
+			else
+				for lpatch in ${FILESDIR}/${patch}; do
+					if [ -f "${lpatch}" ]; then
+						epatch ${lpatch}
+
+					else
+						die "${ESVN}; ${patch} is not found"
+
+					fi
+				done
+			fi
+		done
+		echo
+	fi
 	
 	if [ "${ESVN_BOOTSTRAP}" ]
 	then
 		einfo "Bootstrapping with ${ESVN_BOOTSTRAP}"
-		if [ -x "${ESVN_BOOTSTRAP}" ]
-		then
-			./${ESVN_BOOTSTRAP} || die "${ESVN}: cannot execute $ESVN_BOOTSTRAP"
+
+		if [ -f "${ESVN_BOOTSTRAP}" -a -x "${ESVN_BOOTSTRAP}" ]; then
+			einfo "   bootstrap with a file: ${ESVN_BOOTSTRAP}"
+			eval "./${ESVN_BOOTSTRAP}" || die "${ESVN}: can't execute ESVN_BOOTSTRAP."
 		else
-			${ESVN_BOOTSTRAP} || die "${ESVN}: cannot execute $ESVN_BOOTSTRAP"
+			einfo "   bootstrap with commands: ${ESVN_BOOTSTRAP}"
+			eval "${ESVN_BOOTSTRAP}" || die "${ESVN}: can't eval ESVN_BOOTSTRAP."
 		fi
 	fi
 }
 
+## -- subversion_src_unpack() ------------------------------------------------ #
+
 function subversion_src_unpack() {
 	debug-print-function $FUNCNAME $*
-	subversion_src_fetch
-	subversion_src_extract
-	subversion_src_bootstrap
+	subversion_src_fetch || die "${ESVN}: unknown problem in subversion_src_fetch()."
+	subversion_src_extract || die "${ESVN}: unknown problem in ubversion_src_extract()."
+	subversion_src_bootstrap || die "${ESVN}: unknown problem in subversion_src_bootstrap()."
 }
+
+## -- subversion_pkg_postinst() ------------------------------------------------ #
 
 function subversion_pkg_postinst() {
 	debug-print-function $FUNCNAME $*

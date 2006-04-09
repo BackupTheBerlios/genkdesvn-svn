@@ -3,11 +3,10 @@
 # $Header: $
 
 ESVN_PROJECT="${PN}-svn"
-ESVN_REPO_URI="svn://kuroo.org/repos/kuroo"
-KSCM_ROOT="branches"
-KSCM_MODULE="0.80.0"
-UNSERMAKE=no # toplevel Makefile totally broken
-inherit kdesvn kdesvn-source
+ESVN_REPO_URI="svn://kuroo.org/repos/kuroo/branches/0.80.0"
+ESVN_STORE_DIR="${DISTDIR}/svn-src"
+ESVN_BOOTSTRAP="make -f Makefile.cvs"
+inherit kdesvn svn 
 
 DESCRIPTION="A KDE Portage frontend"
 HOMEPAGE="http://kuroo.org"
@@ -29,7 +28,7 @@ KMTARGETS=(
 need-kde 3.4
 
 src_compile() {
-	kdesvn_src_compile myconf configure
+	kde_src_compile myconf configure
 
 	einfo "generating headers in src/config"
 	cd ${S}/src/config && ${QTDIR}/bin/uic -o options1.h options1.ui
@@ -119,5 +118,5 @@ src_compile() {
 	cd ${S}/src && ${QTDIR}/bin/moc -o message.moc message.h
 
 	einfo "making kuroo"
-	kdesvn_src_compile make
+	kde_src_compile make
 }
