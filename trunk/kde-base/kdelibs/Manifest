@@ -19,6 +19,6 @@ SHA256 954c89dfeab77d4c37396bc0f3bed341095cd2869e7ab5111b5726cfd5b2ca7f files/kd
 MD5 073d3bf868dd8f07df2029d692308cb4 files/kdelibs-xorg7-rgbtxt.patch 633
 RMD160 778c7cbf959ec1ed49ced9c1883d77c178f5c7b5 files/kdelibs-xorg7-rgbtxt.patch 633
 SHA256 a16796bcda093dcbb51fb62c7e7bd0db1d174cc7b691a6bdbd863fd803d4ed25 files/kdelibs-xorg7-rgbtxt.patch 633
-MD5 1f721fd4f6bb402feb166cc74c824907 kdelibs-7-r4.ebuild 5287
-RMD160 cd5e121050b7896bf06127723f9cc765611d2b59 kdelibs-7-r4.ebuild 5287
-SHA256 9c90b3603b5e797471a28e68e0dd0d43209c1690ef8af252155bee325749d95c kdelibs-7-r4.ebuild 5287
+MD5 d7a2205d3887f7e12b89a19c9133cad7 kdelibs-7-r4.ebuild 5062
+RMD160 985a30ed60cc624513c79e4d5ce452f68ce9d539 kdelibs-7-r4.ebuild 5062
+SHA256 3c163c864de7c5e7ef4de13652e6c520192792bb086d7e2f5439e44f5c79c469 kdelibs-7-r4.ebuild 5062

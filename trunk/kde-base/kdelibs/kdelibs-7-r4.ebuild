@@ -137,13 +137,6 @@ src_compile() {
 
 	kdesvn_src_compile
 
-	# is this still needed ???
-	if ! use arts; then
-		cd arts/knotify
-		make || die
-		cd ${OLDPWD}
-	fi
-
 	if use doc; then
 		make apidox || die
 	fi
@@ -151,13 +144,6 @@ src_compile() {
 
 src_install() {
 	kdesvn_src_install
-
-	# is this still needed ???
-	if ! use arts; then
-		cd arts/knotify
-		make DESTDIR="${D}" install || die
-		cd ${OLDPWD}
-	fi
 
 	if use doc; then
 		make DESTDIR="${D}" install-apidox || die
