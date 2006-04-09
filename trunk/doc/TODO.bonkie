@@ -5,6 +5,7 @@
 - fix qt3 eclass to properly assign other qt3 versions
 - expand checks for UNSERMAKE; now if nothing set it will depend on unsermake, it should check for installed unsermake to use it or not !!
 - add STORE_DIR checks; older portage versions still use DISTDIR !!
+- switch subversion to svn, and svn to subversion :-)
 
 ** KDE
 - fix knetworkmanager; but its on top of (gnome) library: networkmanager
@@ -12,3 +13,6 @@
 
 ** KOFFICE
 - fix keximdb: upstream compiler error or not ??
+
+** EXTRA
+- see if k3b really REALLY depends upon libdvdread
