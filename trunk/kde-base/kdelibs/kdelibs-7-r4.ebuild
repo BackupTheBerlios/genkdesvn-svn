@@ -50,7 +50,7 @@ RDEPEND="${RDEPEND}
 
 PATCHES="${FILESDIR}/${PN}-bindnow.patch
     ${FILESDIR}/${PN}-kicker-crash.patch
-    ${FILESDIR}/${P}-xorg7-rgbtxt.patch"
+    ${FILESDIR}/${PN}-xorg7-rgbtxt.patch"
 
 if ! use arts; then
 	PATCHES="${PATCHES}
