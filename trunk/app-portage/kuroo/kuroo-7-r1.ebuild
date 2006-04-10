@@ -6,7 +6,7 @@ ESVN_PROJECT="${PN}-svn"
 ESVN_REPO_URI="svn://kuroo.org/repos/kuroo/branches/0.80.0"
 ESVN_STORE_DIR="${DISTDIR}/svn-src"
 ESVN_BOOTSTRAP="make -f Makefile.cvs"
-inherit kdesvn svn 
+inherit kdesvn subversion
 
 DESCRIPTION="A KDE Portage frontend"
 HOMEPAGE="http://kuroo.org"
