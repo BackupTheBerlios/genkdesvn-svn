@@ -50,7 +50,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	subversion_pkg_postinst
+	svn_pkg_postinst
 
 	# set the default kdm face icon if it's not already set by the system admin
 	# because this is user-overrideable in that way, it's not in src_install

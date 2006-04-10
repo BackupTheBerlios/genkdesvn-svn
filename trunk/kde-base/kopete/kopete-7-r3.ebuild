@@ -52,7 +52,7 @@ src_compile() {
 
 pkg_postinst()
 {	
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	einfo
 	einfo "Please be aware: This is NOT kopete from KDE 3.5 itself !"
 	einfo "This is a newer branch to continue work after KDE 3.5."

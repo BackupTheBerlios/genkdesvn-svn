@@ -73,7 +73,7 @@ EOF
 }
 
 pkg_postinst () {
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	echo
 	einfo "To enable gpg-agent and/or ssh-agent in KDE sessions,"
 	einfo "edit ${KDEDIR}/env/agent-startup.sh and"

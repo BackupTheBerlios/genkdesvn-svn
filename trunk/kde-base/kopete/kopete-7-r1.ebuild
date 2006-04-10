@@ -34,7 +34,7 @@ src_compile() {
 
 pkg_postinst()
 {	
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	einfo
 	einfo "Please be aware: This is not the latest dev snapshot of kopete !"
 	einfo

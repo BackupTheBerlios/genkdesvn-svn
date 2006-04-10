@@ -28,7 +28,7 @@ need-kde ${PV}
 S=${WORKDIR}/${I18N_PATH}
 
 src_unpack() {
-	[ -n "$LINGUAS" ] && subversion_src_unpack
+	[ -n "$LINGUAS" ] && svn_src_unpack
 }
 
 src_install() {
@@ -44,7 +44,7 @@ src_install() {
 pkg_postinst() {
 	if [ -n "$LINGUAS" ]
 	then
-		subversion_pkg_postinst
+		svn_pkg_postinst
 	else
 		ewarn "This package was installed with no data, since LINGUAS has not been defined."
 		ewarn "Thus you will be unable to switch languages from the KDE control center"

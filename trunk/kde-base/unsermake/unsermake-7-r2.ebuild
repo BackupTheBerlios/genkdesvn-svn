@@ -35,7 +35,7 @@ src_install()
 
 pkg_postinst()
 {	
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	einfo
 	einfo "Unsermake is now the default tool for building KDE apps (ebuilds)."
 	einfo "If you want to disable building with unsermake, set"

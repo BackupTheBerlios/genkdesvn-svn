@@ -54,6 +54,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	mkdir -p ${PREFIX}/share/templates/.source/emptydir
 }

@@ -340,7 +340,7 @@ EOF
 }
 
 pkg_postinst() {
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	echo
 	einfo "After a rebuild of Qt, it can happen that Qt plugins (such as Qt/KDE styles,"
 	einfo "or widgets for the Qt designer) are no longer recognized.  If this situation"

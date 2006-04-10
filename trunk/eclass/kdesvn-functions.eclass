@@ -144,7 +144,7 @@ qtver-from-kdever() {
     local ver
 
     case $1 in
-        7)  ver=7.0;; # subversion
+        7)  ver=7.0;; # svn
 			#ver=3.3
     esac
 

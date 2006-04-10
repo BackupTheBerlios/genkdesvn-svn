@@ -10,13 +10,13 @@
 
 inherit scm libtool
 
-ECLASS="subversion"
+ECLASS="svn"
 INHERITED="$INHERITED $ECLASS"
 
 DEPEND="$DEPEND
 	>=dev-util/subversion-1.2.0"
 
-ESVN="subversion.eclass"
+ESVN="svn.eclass"
 
 ## ESVN_STORE_DIR: Central repository for working copies
 ## ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
@@ -28,9 +28,9 @@ ESVN="subversion.eclass"
 ## ESVN_PROJECT: Project name 
 #[ -z "${ESVN_PROJECT}" ] && ESVN_PROJECT="${PN/-svn}"
 
-## -- subversion_obtain_certificates() ------------------------------------------------ #
+## -- svn_obtain_certificates() ------------------------------------------------ #
 
-function subversion_obtain_certificates() {
+function svn_obtain_certificates() {
 	debug-print-function $FUNCNAME $*
 
 	## ${DISTDIR} is no longer used in portage; we must now use ${PORTAGE_ACTUAL_DISTDIR}
@@ -46,9 +46,9 @@ function subversion_obtain_certificates() {
 
 SCRIPT_DIR="$(dirname $(dirname $(dirname $FILESDIR)))/scripts"
 
-## -- subversion_deep_copy() ------------------------------------------------ #
+## -- svn_deep_copy() ------------------------------------------------ #
 
-function subversion_deep_copy() {
+function svn_deep_copy() {
 	debug-print-function $FUNCNAME $*
 
 	local item="$1"
@@ -63,10 +63,10 @@ function subversion_deep_copy() {
 
 }
 
-## -- subversion_src_fetch() ------------------------------------------------ #
+## -- svn_src_fetch() ------------------------------------------------ #
 
 ESVN_CO_DIR="${ESVN_PROJECT}/${ESVN_REPO_URI##*/}"
-function subversion_src_fetch() {
+function svn_src_fetch() {
 	debug-print-function $FUNCNAME $*
 
 	# Check for empty ESVN_REPO_URI
@@ -165,16 +165,16 @@ function subversion_src_fetch() {
 	fi
 }
 
-## -- subversion_src_extract() ------------------------------------------------ #
+## -- svn_src_extract() ------------------------------------------------ #
 
-function subversion_src_extract() {
+function svn_src_extract() {
 	debug-print-function $FUNCNAME $*
-	src_to_workdir "$ESVN_STORE_DIR/$ESVN_CO_DIR" subversion_deep_copy
+	src_to_workdir "$ESVN_STORE_DIR/$ESVN_CO_DIR" svn_deep_copy
 }
 
-## -- subversion_src_bootstrap() ------------------------------------------------ #
+## -- svn_src_bootstrap() ------------------------------------------------ #
 
-function subversion_src_bootstrap() {
+function svn_src_bootstrap() {
 	debug-print-function $FUNCNAME $*
 
 	local patch lpatch
@@ -215,18 +215,18 @@ function subversion_src_bootstrap() {
 	fi
 }
 
-## -- subversion_src_unpack() ------------------------------------------------ #
+## -- svn_src_unpack() ------------------------------------------------ #
 
-function subversion_src_unpack() {
+function svn_src_unpack() {
 	debug-print-function $FUNCNAME $*
-	subversion_src_fetch || die "${ESVN}: unknown problem in subversion_src_fetch()."
-	subversion_src_extract || die "${ESVN}: unknown problem in ubversion_src_extract()."
-	subversion_src_bootstrap || die "${ESVN}: unknown problem in subversion_src_bootstrap()."
+	svn_src_fetch || die "${ESVN}: unknown problem in svn_src_fetch()."
+	svn_src_extract || die "${ESVN}: unknown problem in svn_src_extract()."
+	svn_src_bootstrap || die "${ESVN}: unknown problem in svn_src_bootstrap()."
 }
 
-## -- subversion_pkg_postinst() ------------------------------------------------ #
+## -- svn_pkg_postinst() ------------------------------------------------ #
 
-function subversion_pkg_postinst() {
+function svn_pkg_postinst() {
 	debug-print-function $FUNCNAME $*
 	cp $T/SVNREVS "${ROOT}/var/db/pkg/${CATEGORY}/${PF}/"
 }

@@ -30,6 +30,6 @@ src_install() {
 
 # note uses perl-module_pkg_postinst for more local.pod magic, was bug 83520
 pkg_postinst() {
-	subversion_pkg_postinst
+	svn_pkg_postinst
 	perl-module_pkg_postinst
 }
