@@ -49,8 +49,7 @@ RDEPEND="${RDEPEND}
     || ( x11-apps/rgb virtual/x11 )"
 
 PATCHES="${FILESDIR}/${PN}-bindnow.patch
-    ${FILESDIR}/${PN}-kicker-crash.patch
-    ${FILESDIR}/${PN}-xorg7-rgbtxt.patch"
+    ${FILESDIR}/${PN}-kicker-crash.patch"
 
 if ! use arts; then
 	PATCHES="${PATCHES}
