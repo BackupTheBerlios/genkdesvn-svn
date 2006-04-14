@@ -12,7 +12,7 @@ HOMEPAGE="http://www.trolltech.com/"
 
 LICENSE="|| ( QPL-1.0 GPL-2 )"
 
-SLOT="${PV}"
+SLOT="3"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
 IUSE="cups debug doc examples firebird gif immqt immqt-bc ipv6 mysql nas odbc opengl postgres sqlite symbol_visibility xinerama zlib"
 
@@ -98,13 +98,13 @@ src_unpack() {
 		sed -i -e 's:QMAKE_RPATH.*:QMAKE_RPATH =:'
 
 	# patches for gcc4
-	epatch "${FILESDIR}/${P}-gcc4.patch"
+	epatch "${FILESDIR}/${PN}-gcc4.patch"
 
 	# patch for qt symbol visibilty support, if >=gcc-4.0.0
 	# see http://bugs.kde.org/show_bug.cgi?id=109386
 	if use symbol_visibility; then
 		if [[ "$(gcc-major-version)" == "4" ]]; then
-			epatch "${FILESDIR}/${P}-visibility.patch"
+			epatch "${FILESDIR}/${PN}-visibility.patch"
 			einfo "Symbol visibility support: auto"
 			USE_SYBMBOL_VISIBILITY="yes"
 		else
@@ -123,7 +123,7 @@ src_unpack() {
     fi
 
 	if use ppc-macos ; then
-		epatch ${FILESDIR}/${P}-macos.patch
+		epatch ${FILESDIR}/${PN}-macos.patch
 	fi
 
 	# known working flags wrt #77623
@@ -282,7 +282,7 @@ src_install() {
 
 	# environment variables
 	if use ppc-macos; then
-		cat <<EOF > ${T}/30qt7
+		cat <<EOF > ${T}/30qt-copy
 PATH=${QTBASE}/bin
 ROOTPATH=${QTBASE}/bin
 DYLD_LIBRARY_PATH=${libdirs:1}
@@ -290,7 +290,7 @@ QMAKESPEC=${PLATFORM}
 MANPATH=${QTBASE}/doc/man
 EOF
 	else
-		cat <<EOF > ${T}/30qt7
+		cat <<EOF > ${T}/30qt-copy
 PATH=${QTBASE}/bin
 ROOTPATH=${QTBASE}/bin
 LDPATH=${libdirs:1}
@@ -298,11 +298,11 @@ QMAKESPEC=${PLATFORM}
 MANPATH=${QTBASE}/doc/man
 EOF
 	fi
-	cat <<EOF > ${T}/33qtdir7
+	cat <<EOF > ${T}/33qt-copy-dir
 QTDIR=${QTBASE}
 EOF
 	insinto /etc/env.d
-	doins ${T}/30qt7 ${T}/33qtdir7
+	doins ${T}/30qt-copy ${T}/33qt-copy-dir
 
 	if [ "${SYMLINK_LIB}" = "yes" ]; then
 		dosym $(get_abi_LIBDIR ${DEFAULT_ABI}) ${QTBASE}/lib
@@ -341,6 +341,13 @@ EOF
 
 pkg_postinst() {
 	svn_pkg_postinst
+	echo
+	ewarn "Please uninstall qt-7*, because I switched the ebuild to a different"
+	ewarn "slot, the same as the qt-3* ebuilds. All ebuilds in portage should"
+	ewarn "now correctly depend on Qt-copy. Qt-7* will not be uninstalled"
+	ewarn "automatically as it is in another slot..."
+	echo
+
 	echo
 	einfo "After a rebuild of Qt, it can happen that Qt plugins (such as Qt/KDE styles,"
 	einfo "or widgets for the Qt designer) are no longer recognized.  If this situation"
