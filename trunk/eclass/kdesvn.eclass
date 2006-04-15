@@ -59,8 +59,8 @@ kdesvn_src_compile() {
     debug-print-function $FUNCNAME $*
     [ -z "$1" ] && kdesvn_src_compile all
 
-   # Ugly, ugly, ugly hack to make apps use qt-7
-    has_version '>=x11-libs/qt-7' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
+   # Ugly, ugly, ugly hack to make apps use qt-copy
+    has_version '=x11-libs/qt-3.99*' && export QTDIR="/usr/qt/devel" || export QTDIR="/usr/qt/3"
 
     while [ "$1" ]; do
 
