@@ -24,7 +24,7 @@ DEPEND="=dev-libs/openobex-1.0*
 RDEPEND="|| ( ( kde-base/kdialog kde-base/konqueror )  kde-base/kdebase )
     net-wireless/bluez-utils"
 
-PATCHES="${FILESDIR}/${PN}-gcc41.patch"
+#PATCHES="${FILESDIR}/${PN}-gcc41.patch"
 
 src_compile() {
 	kdesvn_src_compile myconf
