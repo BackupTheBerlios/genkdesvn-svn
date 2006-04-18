@@ -1,9 +1,0 @@
-# ChangeLog for x11-libs/qt
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*qt-7-r1 (30 Aug 2005)
-
-  30 Aug 2005; Mario Tanev <mtanev@csua.berkeley.edu>  qt-7-r1.ebuild files/30qt7-r1 files/33qtdir7-r1 files/digest-qt-7-r1
-  New revision to try to correct 64-bit issues and bring ebuild closer to portage version
-

@@ -1,9 +1,0 @@
-# ChangeLog for kde-base/kcalc
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*kcalc-7 (16 Sep 2005)
-
-  16 Sep 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kcalc-7.ebuild files/digest-kcalc-7
-  Add dependency on gmp
-

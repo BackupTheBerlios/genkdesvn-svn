@@ -1,9 +1,0 @@
-# ChangeLog for app-office/kword
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*kword-7-r1 (28 May 2005)
-
-  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kword-7-r1.ebuild files/digest-kword-7-r1
-  Weekly revision bump; bugs 48794, 75206, 57298, 62360, 84678, 106029, 106187
-
