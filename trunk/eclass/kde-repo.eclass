@@ -81,7 +81,7 @@ INHERITED="$INHERITED $ECLASS"
 
 ##### --- end configurable settings --- #####
 
-inherit subversion
+inherit svn
 
 # --- begin helper functions  --- #
 
@@ -202,7 +202,7 @@ function kde-repo_src_unpack() {
 	fi
 
 	# Perform subversion fetch
-	subversion_src_unpack
+	svn_src_unpack
 
 }
 
