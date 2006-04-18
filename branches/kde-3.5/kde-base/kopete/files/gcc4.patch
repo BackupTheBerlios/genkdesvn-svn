@@ -1,0 +1,44 @@
+--- kopete/protocols/jabber/jingle/libjingle/talk/base/base64.h.old	2006-01-27 01:12:10.000000000 +0100
++++ kopete/protocols/jabber/jingle/libjingle/talk/base/base64.h	2006-01-27 01:12:29.000000000 +0100
+@@ -22,8 +22,8 @@
+   static string decode(const string & data);
+   static string encodeFromArray(const char * data, size_t len);
+ private:
+-  static const string Base64::Base64Table;
+-  static const string::size_type Base64::DecodeTable[];
++  static const string Base64Table;
++  static const string::size_type DecodeTable[];
+ };
+ 
+ #endif
+--- kopete/protocols/jabber/jingle/libjingle/talk/base/stringutils.h.old	2006-01-27 01:13:18.000000000 +0100
++++ kopete/protocols/jabber/jingle/libjingle/talk/base/stringutils.h	2006-01-27 01:14:48.000000000 +0100
+@@ -244,7 +244,7 @@
+ template<>
+ struct Traits<char> {
+   typedef std::string string;
+-  inline static const char* Traits<char>::empty_str() { return ""; }
++  inline static const char* empty_str() { return ""; }
+ };
+ 
+ ///////////////////////////////////////////////////////////////////////////////
+@@ -256,7 +256,7 @@
+ template<>
+ struct Traits<wchar_t> {
+   typedef std::wstring string;
+-  inline static const wchar_t* Traits<wchar_t>::empty_str() { return L""; }
++  inline static const wchar_t* empty_str() { return L""; }
+ };
+ 
+ #endif  // WIN32
+--- kopete/protocols/jabber/jingle/libjingle/talk/xmpp/xmppclient.h.old	2006-01-27 01:17:18.000000000 +0100
++++ kopete/protocols/jabber/jingle/libjingle/talk/xmpp/xmppclient.h	2006-01-27 01:17:35.000000000 +0100
+@@ -133,7 +133,7 @@
+     }
+   }
+ 
+-  std::string XmppClient::GetStateName(int state) const {
++  std::string GetStateName(int state) const {
+     switch (state) {
+       case STATE_PRE_XMPP_LOGIN:      return "PRE_XMPP_LOGIN";
+       case STATE_START_XMPP_LOGIN:  return "START_XMPP_LOGIN";

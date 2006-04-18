@@ -1,0 +1,9 @@
+# ChangeLog for kde-misc/krecipes
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*krecipes-7 (27 Jul 2005)
+
+  27 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  krecipes-7.ebuild files/digest-krecipes-7
+  Initial import
+

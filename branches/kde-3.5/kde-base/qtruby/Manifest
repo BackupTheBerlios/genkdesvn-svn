@@ -1,0 +1,4 @@
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-qtruby-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-qtruby-7-r1 0
+MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
+MD5 6bb60435e5ff2bb6fdb328eef65faab8 qtruby-7-r1.ebuild 848

@@ -1,0 +1,4 @@
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kjsembed-7 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kjsembed-7-r1 0
+MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
+MD5 e0d2b979a579955fa23a567a6b3682d0 kjsembed-7-r1.ebuild 493

@@ -1,0 +1,11 @@
+--- /usr/portage/distfiles/cvs-src/kde/kdebase/kicker/extensions/kasbar/kasprefsdlg.cpp	2005-03-24 09:19:16.000000000 -0800
++++ kicker/extensions/kasbar/kasprefsdlg.cpp	2005-05-03 19:54:26.000000000 -0700
+@@ -57,6 +57,8 @@
+ #include <qgrid.h>
+ #include <qgroupbox.h>
+ #include <qlabel.h>
++#undef Above
++#undef Below
+ #include <qslider.h>
+ #include <qspinbox.h>
+ #include <qvbox.h>

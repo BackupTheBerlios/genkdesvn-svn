@@ -1,0 +1,9 @@
+# ChangeLog for kde-base/kjots
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*kjots-7-r1 (28 May 2005)
+
+  28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kjots-7-r1.ebuild files/digest-kjots-7-r1
+  Weekly revision bump; bugs 106059, 79534, 93852, 78403, 94290, 98271
+

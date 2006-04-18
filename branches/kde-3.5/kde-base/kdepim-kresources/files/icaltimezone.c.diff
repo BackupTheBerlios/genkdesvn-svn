@@ -1,0 +1,11 @@
+--- libkcal/libical/src/libical/icaltimezone.c	2005-05-02 17:18:21.000000000 -0700
++++ libkcal/libical/src/libical/icaltimezone.c	2005-05-02 17:38:40.000000000 -0700
+@@ -45,7 +45,7 @@
+ #endif
+ 
+ /** This is the toplevel directory where the timezone data is installed in. */
+-#define ZONEINFO_DIRECTORY	PACKAGE_DATA_DIR "/zoneinfo"
++#define ZONEINFO_DIRECTORY	"/usr/kde/devel/share/apps/libical/zoneinfo"
+ 
+ /** The prefix we use to uniquely identify TZIDs. */
+ #define TZID_PREFIX		"/softwarestudio.org/"

@@ -1,0 +1,689 @@
+#!/usr/bin/python
+
+names = {
+	"all": [
+		"=x11-libs/qt-3.99",
+		"distro",
+		"koffice",
+		"extragear",
+		"playground",
+		"external"
+	],
+	"distro": [
+		"kde-base/unsermake",
+		"kde-base/arts",
+		"kde-base/kdelibs",
+		"kdebase",
+		"kdepim",
+		"kdenetwork",
+		"kdegraphics",
+		"kdemultimedia",
+		"kdeutils",
+		"kdetoys",
+		"kdegames",
+		"kdeaddons",
+		"kdeartwork",
+		"kdeedu",
+		"kdeaccessibility",
+		"kdewebdev",
+		"kdesdk",
+		"kdebindings"
+	],
+	"external": [
+		"sourceforge",
+		"misc"
+	],
+	"kdebase": [
+		"kde-base/libkonq",
+		"kde-base/kcminit",
+		"kde-base/kdebase-data",
+		"kde-base/kxkb",
+		"kde-base/kdesktop",
+		"kde-base/kwin",
+		"kde-base/kicker",
+		"kde-base/kcontrol",
+		"kde-base/kdm",
+		"kde-base/kdebase-startkde",
+		"kde-base/kappfinder",
+		"kde-base/konsole",
+		"kde-base/drkonqi",
+		"kde-base/kate",
+		"kde-base/kcheckpass",
+		"kde-base/kdcop",
+		"kde-base/kdialog",
+		"kde-base/ksplashml",
+		"kde-base/kdebase-kioslaves",
+		"kde-base/kdebugdialog",
+		"kde-base/kdepasswd",
+		"kde-base/kdeprint",
+		"kde-base/kdesu",
+		"kde-base/kfind",
+		"kde-base/khelpcenter",
+		"kde-base/khotkeys",
+		"kde-base/klipper",
+		"kde-base/konqueror",
+		"kde-base/nsplugins",
+		"kde-base/kmenuedit",
+		"kde-base/kpager",
+		"kde-base/knetattach",
+		"kde-base/kreadconfig",
+		"kde-base/kpersonalizer",
+		"kde-base/kscreensaver",
+		"kde-base/ksmserver",
+		"kde-base/kstart",
+		"kde-base/ksysguard",
+		"kde-base/ksystraycmd",
+		"kde-base/ktip"
+	],
+	"kdenetwork": [
+		"kde-base/librss",
+		"kde-base/dcoprss",
+		"kde-base/kdenetwork-filesharing",
+		"kde-base/kdenetwork-kfile-plugins",
+		"kde-base/kdict",
+		"kde-base/kdnssd",
+		"kde-base/kget",
+		"kde-base/knewsticker",
+		"kde-base/kopete",
+		"kde-base/kpf",
+		"kde-base/kppp",
+		"kde-base/krdc",
+		"kde-base/krfb",
+		"kde-base/ksirc",
+		"kde-base/ktalkd",
+		"kde-base/kwifimanager",
+		"kde-base/lisa"
+	],
+	"kdepim": [
+		"kde-base/libkdenetwork",
+		"kde-base/libkdepim",
+		"kde-base/ktnef",
+		"kde-base/libkcal",
+		"kde-base/libkpimexchange",
+		"kde-base/libkholidays",
+		"kde-base/libkmime",
+		"kde-base/libkpgp",
+		"kde-base/certmanager",
+		"kde-base/libkpimidentities",
+		"kde-base/libksieve",
+		"kde-base/mimelib",
+		"kde-base/kdepim-kioslaves",
+		"kde-base/kontact",
+		"kde-base/networkstatus",
+		"kde-base/akregator",
+		"kde-base/kmailcvt",
+		"kde-base/korganizer",
+		"kde-base/kmail",
+		"kde-base/kode",
+		"kde-base/kdepim-kresources",
+		"kde-base/kaddressbook",
+		"kde-base/kontact-specialdates",
+		"kde-base/kdepim-wizards",
+		"kde-base/knotes",
+		"kde-base/kdgantt",
+		"kde-base/kalarm",
+		"kde-base/kandy",
+		"kde-base/karm",
+		"kde-base/kitchensync",
+		"kde-base/kmobile",
+		"kde-base/knode",
+		"kde-base/konsolekalendar",
+		"kde-base/korn",
+		"kde-base/kpilot",
+		"kde-base/ksync"
+	],
+	"kdeadmin": [
+		"kde-base/kdeadmin-kfile-plugins",
+		"kde-base/kcmlinuz",
+		"kde-base/kcron",
+		"kde-base/kdat",
+		"kde-base/kpackage",
+		"kde-base/ksysv",
+		"kde-base/kuser",
+		"kde-base/lilo-config",
+		"kde-base/secpolicy"
+	],
+	"kdeutils": [
+		"kde-base/ark",
+		"kde-base/kcalc",
+		"kde-base/kcardtools",
+		"kde-base/kcharselect",
+		"kde-base/kdelirc",
+		"kde-base/kdf",
+		"kde-base/kedit",
+		"kde-base/kfloppy",
+		"kde-base/kgpg",
+		"kde-base/khexedit",
+		"kde-base/kjots",
+		"kde-base/klaptopdaemon",
+		"kde-base/kmilo",
+		"kde-base/kregexpeditor",
+		"kde-base/ksim",
+		"kde-base/ktimer",
+		"kde-base/kwalletmanager",
+		"kde-base/superkaramba"
+	],
+	"kdemultimedia": [
+		"kde-base/libkcddb",
+		"kde-base/kdemultimedia-kioslaves",
+		"kde-base/kdemultimedia-kfile-plugins",
+		"kde-base/kdemultimedia-kappfinder-data",
+		"kde-base/kdemultimedia-arts",
+		"kde-base/artsplugin-audiofile",
+		"kde-base/mpeglib",
+		"kde-base/artsplugin-akode",
+		"kde-base/artsplugin-mpeglib",
+		"kde-base/artsplugin-mpg123",
+		"kde-base/artsplugin-xine",
+		"kde-base/juk",
+		"kde-base/kaboodle",
+		"kde-base/kaudiocreator",
+		"kde-base/kmid",
+		"kde-base/kmix",
+		"kde-base/krec",
+		"kde-base/kscd",
+		"kde-base/noatun"
+	],
+	"kdegraphics": [
+		"kde-base/kdegraphics-kfile-plugins",
+		"kde-base/libkscan",
+		"kde-base/kamera",
+		"kde-base/kcoloredit",
+		"kde-base/kviewshell",
+		"kde-base/kdvi",
+		"kde-base/kfax",
+		"kde-base/kgamma",
+		"kde-base/kghostview",
+		"kde-base/kiconedit",
+		"kde-base/kmrml",
+		"kde-base/kolourpaint",
+		"kde-base/kooka",
+		"kde-base/kpdf",
+		"kde-base/kpovmodeler",
+		"kde-base/kruler",
+		"kde-base/ksnapshot",
+		"kde-base/ksvg",
+		"kde-base/kuickshow",
+		"kde-base/kview"
+	],
+	"kdeaccessibility": [
+		"kde-base/kbstateapplet",
+		"kde-base/kdeaccessibility-iconthemes",
+		"kde-base/kmag",
+		"kde-base/kmousetool",
+		"kde-base/kmouth",
+		"kde-base/kttsd",
+		"kde-base/ksayit"
+	],
+	"kdetoys": [
+		"kde-base/amor",
+		"kde-base/eyesapplet",
+		"kde-base/fifteenapplet",
+		"kde-base/kmoon",
+		"kde-base/kodo",
+		"kde-base/kteatime",
+		"kde-base/ktux",
+		"kde-base/kweather",
+		"kde-base/kworldwatch"
+	],
+	"kdewebdev": [
+		"kde-base/kfilereplace",
+		"kde-base/kimagemapeditor",
+		"kde-base/klinkstatus",
+		"kde-base/kommander",
+		"kde-base/kxsldbg",
+		"kde-base/quanta"
+	],
+	"kdesdk": [
+		"kde-base/kdesdk-kfile-plugins",
+		"kde-base/kdesdk-kioslaves",
+		"kde-base/kdesdk-misc",
+		"kde-base/kdesdk-scripts",
+		"kde-base/cervisia",
+		"kde-base/kapptemplate",
+		"kde-base/kbabel",
+		"kde-base/kbugbuster",
+		"kde-base/kcachegrind",
+		"kde-base/kmtrace",
+		"kde-base/kompare",
+		"kde-base/kspy",
+		"kde-base/kuiviewer",
+		"kde-base/umbrello"
+	],
+	"kdeedu": [
+		"kde-base/libkdeedu",
+		"kde-base/kalzium",
+		"kde-base/kbruch",
+		"kde-base/keduca",
+		"kde-base/khangman",
+		"kde-base/kig",
+		"kde-base/kiten",
+		"kde-base/klatin",
+		"kde-base/klettres",
+		"kde-base/kmathtool",
+		"kde-base/kmessedwords",
+		"kde-base/kmplot",
+		"kde-base/kpercentage",
+		"kde-base/kstars",
+		"kde-base/ktouch",
+		"kde-base/kturtle",
+		"kde-base/kverbos",
+		"kde-base/kvoctrain",
+		"kde-base/kwordquiz"
+	],
+	"kdegames": [
+		"kde-base/libkdegames",
+		"kde-base/atlantik",
+		"kde-base/kasteroids",
+		"kde-base/katomic",
+		"kde-base/kbackgammon",
+		"kde-base/kbattleship",
+		"kde-base/kblackbox",
+		"kde-base/kbounce",
+		"kde-base/kenolaba",
+		"kde-base/libksirtet",
+		"kde-base/kfouleggs",
+		"kde-base/kgoldrunner",
+		"kde-base/kjumpingcube",
+		"kde-base/klickety",
+		"kde-base/klines",
+		"kde-base/kmahjongg",
+		"kde-base/kmines",
+		"kde-base/kolf",
+		"kde-base/konquest",
+		"kde-base/kpat",
+		"kde-base/kpoker",
+		"kde-base/kreversi",
+		"kde-base/ksame",
+		"kde-base/kshisen",
+		"kde-base/ksirtet",
+		"kde-base/ksmiletris",
+		"kde-base/ksnake",
+		"kde-base/ksokoban",
+		"kde-base/kspaceduel",
+		"kde-base/ktron",
+		"kde-base/ktuberling",
+		"kde-base/kwin4",
+		"kde-base/lskat"
+	],
+	"kdeaddons": [
+		"kde-base/atlantikdesigner",
+		"kde-base/kaddressbook-plugins",
+		"kde-base/kate-plugins",
+		"kde-base/kdeaddons-docs-konq-plugins",
+		"kde-base/kdeaddons-kfile-plugins",
+		"kde-base/kicker-applets",
+		"kde-base/knewsticker-scripts",
+		"kde-base/konq-plugins",
+		"kde-base/konqueror-akregator",
+		"kde-base/ksig",
+		"kde-base/noatun-plugins",
+		"kde-base/renamedlg-audio",
+		"kde-base/renamedlg-images",
+		"kde-base/vimpart"
+	],
+	"kdebindings": [
+		"kde-base/dcopc",
+		"kde-base/dcopjava",
+		"kde-base/dcopperl",
+		"kde-base/dcoppython",
+		"kde-base/kalyptus",
+		"kde-base/kdejava",
+		"kde-base/kjsembed",
+		"kde-base/smoke",
+		"kde-base/qtruby",
+		"kde-base/korundum",
+		"kde-base/qtjava",
+		"kde-base/qtsharp",
+		"kde-base/xparts"
+	],
+	"kdeartwork": [
+		"kde-base/kdeartwork-emoticons",
+		"kde-base/kdeartwork-icewm-themes",
+		"kde-base/kdeartwork-iconthemes",
+		"kde-base/kdeartwork-kscreensaver",
+		"kde-base/kdeartwork-kwin-styles",
+		"kde-base/kdeartwork-kworldclock",
+		"kde-base/kdeartwork-sounds",
+		"kde-base/kdeartwork-styles",
+		"kde-base/kdeartwork-wallpapers"
+	],
+	"koffice": [
+		"app-office/koffice-data",
+		"app-office/koffice-libs",
+		"app-office/karbon",
+		"app-office/kchart",
+		"app-office/kformula",
+		"app-office/kivio",
+		"app-office/koshell",
+		"app-office/kpresenter",
+		"app-office/kspread",
+		"app-office/kugar",
+		"app-office/kexi",
+		"app-office/krita",
+		"app-office/kplato",
+		"app-office/kword",
+		"app-office/datakiosk",
+		"app-office/keximdb"
+	],
+	"extragear": [
+		"app-admin/kconfigeditor",
+		"app-admin/kiosktool",
+		"app-cdr/k3b",
+		"app-editors/kile",
+		"app-office/datakiosk",
+		"dev-util/kcfgcreator",
+		"kde-misc/krecipes",
+		"kde-misc/pwmanager",
+		"media-gfx/digikam",
+		"media-gfx/kst",
+		"media-gfx/showimg",
+		"media-libs/libkexif",
+		"media-libs/libkipi",
+		"media-plugins/digikamimageplugins",
+		"media-plugins/kipi-plugins",
+		"media-sound/amarok",
+		"media-tv/kdetv",
+		"media-video/kplayer",
+		"media-video/kmplayer",
+		"net-ftp/kftpgrabber",
+		"net-irc/konversation",
+		"net-p2p/ktorrent",
+		"net-p2p/mldonkey",
+		"net-wireless/kdebluetooth"
+	],
+	"sourceforge": [
+		"app-antivirus/klamav",
+		"app-portage/kuroo",
+		"dev-util/kdbg",
+		"kde-misc/krusader",
+		"media-sound/kradio",
+		"media-video/kaffeine",
+		"net-p2p/apollon"
+	],
+	"misc": [
+		"dev-util/kdevelop"
+	],
+	"playground": [
+		"kde-misc/kat",
+		"kde-misc/kcall",
+		"kde-misc/okular"
+	],
+	"kioslaves": [
+		"kde-base/kdebase-kioslaves",
+		"kde-base/kdepim-kioslaves",
+		"kde-base/kdemultimedia-kioslaves",
+		"kde-base/kdesdk-kioslaves"
+	],
+	"kfile-plugins": [
+		"kde-base/kdenetwork-kfile-plugins",
+		"kde-base/kdeadmin-kfile-plugins",
+		"kde-base/kdemultimedia-kfile-plugins",
+		"kde-base/kdegraphics-kfile-plugins",
+		"kde-base/kdesdk-kfile-plugins",
+		"kde-base/kdeaddons-kfile-plugins"
+	],
+	"data": [
+		"kde-base/kdebase-data",
+		"kde-base/kdemultimedia-kappfinder-data",
+		"app-office/koffice-data"
+	],
+	"libs": [
+		"x11-libs/qt",
+		"kde-base/arts",
+		"kde-base/kdelibs",
+		"kde-base/libkonq",
+		"kde-base/librss",
+		"kde-base/libkdenetwork",
+		"kde-base/libkdepim",
+		"kde-base/libkcal",
+		"kde-base/libkpimexchange",
+		"kde-base/libkholidays",
+		"kde-base/libkmime",
+		"kde-base/libkpgp",
+		"kde-base/libkpimidentities",
+		"kde-base/libksieve",
+		"kde-base/indexlib",
+		"kde-base/mimelib"
+		"media-libs/taglib",
+		"media-libs/akode",
+		"kde-base/libkcddb",
+		"kde-base/mpeglib",
+		"kde-base/libkscan",
+		"kde-base/libkdeedu",
+		"kde-base/libkdegames",
+		"kde-base/libksirtet",
+		"app-office/koffice-libs"
+	]
+}
+
+# Need signal interception
+import signal
+
+# Need path management
+import sys 
+
+# Need external process execution
+import os
+
+# Need colorized output
+import output
+
+# Need gentoolkit to query for installed packages
+sys.path.insert(0, "/usr/lib/gentoolkit/pym")
+import gentoolkit
+
+# Need regular expressions
+import re
+
+# Need sleep
+import time
+
+# Need command line option parser
+from optparse import OptionParser
+
+#
+from os import path, remove
+
+
+def einfo(message):
+	sys.stdout.write(output.green(" * ") + message + "\n")
+
+def ewarn(message):
+	sys.stderr.write(output.yellow(" * ") + message + "\n")
+
+def eerror(message):
+	sys.stderr.write(output.red(" * ") + message + "\n")
+
+def unmerge(package):
+	if package.meta:
+		meta = output.blue("(" + str(package.meta) + ") ")
+	else:
+		meta = ""
+	if not package.ismeta:
+		einfo(meta + "Unmerging package " + output.green(package.fullname) + output.red(" (" + str(package.number) + " of " + str(package.total) + ")"))
+		code = os.spawnlpe(os.P_WAIT, "emerge", "unmerge", "=" + package.fullname, os.environ)
+
+def update(package):
+	if package.meta:
+		meta = output.blue("(" + str(package.meta) + ") ")
+	else:
+		meta = ""
+
+	if not package.ismeta:
+		status = ""
+		if package.isprocessed:
+			if package.isskipped:
+				status = output.yellow(" (skipped)")
+			elif package.issuccessful:
+				if package.isuptodate:
+					status = output.blue(" (up to date)")
+				else:
+					status = output.blue(" (completed)")
+			else:
+				status = output.red(" (failed)")
+		einfo(meta + "Updating package " + output.green(package.fullname) + " (" + str(package.number) + " of " + str(package.total) + ")" + status)
+		if not package.isprocessed:
+			(cat, p) = package.fullname.split("/")
+			upfile = "/tmp/.svn.uptodate." + cat + "." + p
+			if path.isfile(upfile):
+				remove(upfile)
+			code = os.spawnlpe(os.P_WAIT, "emerge", "-1", "=" + package.fullname, environ)
+			package.isprocessed = True
+			package.issuccessful = code == 0 or path.isfile(upfile)
+			package.isuptodate = code == 1 and path.isfile(upfile)
+	else:
+		einfo(meta + "Updating packages in group " + output.blue(package.fullname) + ":")
+
+def list(package):
+	if package.ismeta:
+		print " "*package.depth + output.blue(package.fullname) + ":"
+	else:
+		print " "*package.depth + output.green(package.fullname)
+	
+def installed(item):
+	if item.startswith('='):
+		itemversion = item[1:] + ".*"
+	else:
+		itemversion = item + "-7.*"
+	matches = gentoolkit.find_all_installed_packages(lambda x: re.match(itemversion, x))
+	number = len(matches)
+	return number > 0 and matches[number - 1].get_cpv()
+
+def expand_names(unexpanded, parent=None, depth=0, expanded=[]):
+	for name in unexpanded:
+		if name not in [package.name for package in expanded]:
+			if name in names:
+				expanded = expand_names(names[name], name, depth + 1, expanded + [Package(name, name, parent, depth)])
+			else:
+				fullname = installed(name)
+				if fullname:
+					expanded.append(Package(name, fullname, parent, depth, False))
+	return expanded
+
+def signal_handler(signal, frame):
+	eerror("KDE SVN ebuild updater has been interrupted!")
+	eerror("To resume the last operation, pass it the --resume flag")
+	eerror("If you also wish to skip the first package, pass it the --skipfirst flag")
+	store(packages)
+	sys.exit(0)
+
+def store(packages):
+	resumefile = file("/tmp/kde-svn-update.tmp", "w")
+	for package in packages:
+		resumefile.writelines(package.name + ":" + package.fullname + ":" + str(package.meta) + ":" + str(package.depth) + ":" + str(package.ismeta) + ":" + str(package.isprocessed) + ":" + str(package.isskipped) + ":" + str(package.issuccessful) + ":" + str(package.isuptodate) + "\n")
+	resumefile.close()
+
+def load():
+	def tobool(str):
+		return {"True":True, "False":False}[str]
+	skipped = 0
+	packages = []
+	resumefile = file("/tmp/kde-svn-update.tmp", "r")
+	for line in resumefile:
+		(name, fullname, meta, depth, ismeta, isprocessed, isskipped, issuccessful, isuptodate) = line.strip().split(":")
+		packages.append(Package(name, fullname, {"None":None}.get(meta, meta), int(depth), tobool(ismeta), tobool(isprocessed), tobool(isskipped), tobool(issuccessful), tobool(isuptodate)))
+	resumefile.close()
+	return packages
+
+class Package:
+
+	# Total number of packages
+	total = 0
+	
+	def __init__(self, name, fullname, meta=None, depth=0, ismeta=True, isprocessed=False, isskipped=False, issuccessful=False, isuptodate=False):
+		self.name = name
+		self.fullname = fullname
+		self.meta = meta
+		self.depth = depth
+		self.ismeta = ismeta
+		self.isprocessed = isprocessed
+		self.issuccessful = issuccessful
+		self.isskipped = isskipped
+		self.isuptodate = isuptodate
+		if not ismeta:
+			Package.total += 1
+			self.number = Package.total
+
+if __name__ == "__main__":
+	
+	parser = OptionParser()
+	#parser.add_option("-l", "--changelog", action="store_true", dest="changelog", help="display changelogs since last merge")
+	parser.add_option("-p", "--pretend", action="store_true", dest="pretend")
+	parser.add_option("--offline", action="store_true", dest="offline", help="operate in offline mode")
+	#parser.add_option("--noupdate", action="store_true", dest="noupdate", help="check items out only when they are missing; operate in offline mode otherwise")
+	parser.add_option("--resume", action="store_true", dest="resume", help="resume interrupted session")
+	parser.add_option("--skipfirst", action="store_true", dest="skipfirst", help="skip first package, useful for resume")
+	parser.add_option("--skip", action="store", type="int", dest="skip", help="skip package, useful for resume")
+	parser.add_option("--reinstall", action="store_true", dest="reinstall", help="reinstall indicated packages, even if no updates are detected")
+	(values, args) = parser.parse_args()
+
+	# If no package names listed, use all
+	if len(args) == 0:
+		args = [ "all" ]
+
+	if values.pretend:
+		handler = list
+	else:
+		signal.signal(signal.SIGINT, signal_handler)
+		handler = update
+	
+	if values.resume:
+		packages = load()
+	else:
+		packages = expand_names(args)
+
+	if values.skipfirst:
+		skip = 1
+	elif values.skip:
+		skip = values.skip
+	else:
+		skip = 0
+	
+	pkgs = packages
+	while skip > 0:
+		package = pkgs[0]
+		if package.isprocessed or package.ismeta:
+			pkgs = pkgs[1:]
+		else:
+			package.isprocessed = True
+			package.isskipped = True
+			skip -= 1
+		
+	environ = os.environ.copy()
+	environ["ESVN_RUN_ARGS"] = {True:""}.get(values.reinstall, "--checkrevs") + {True:" --offline"}.get(values.offline, "")
+	signal_handler.packages = packages
+	for package in packages:
+		handler(package)
+
+	skipped_packages = [package for package in packages if package.isprocessed and package.isskipped]
+	uptodate_packages = [package for package in packages if package.isprocessed and package.isuptodate]
+	completed_packages = [package for package in packages if package.isprocessed and package.issuccessful and not package.isuptodate]
+	failed_packages = [package for package in packages if package.isprocessed and not package.ismeta and not package.issuccessful and not package.isskipped]
+	
+	def metaout(meta):
+		if not meta == None:
+			return output.blue("(" + meta + ")\t")
+		else:
+			return "\t\t"
+
+	if len(completed_packages) > 0:
+		print output.green("******Completed******: ")
+		for package in completed_packages:
+			print "\t" + metaout(package.meta) + output.green(package.fullname)
+			
+	if len(uptodate_packages) > 0:
+		print output.green("******Up to date******: ")
+		for package in uptodate_packages:
+			print "\t" + metaout(package.meta) + output.green(package.fullname)
+	
+	if len(skipped_packages) > 0:
+		print output.yellow("******Skipped******: ")
+		for package in skipped_packages:
+			print "\t" + metaout(package.meta) + output.yellow(package.fullname)
+	
+	if len(failed_packages) > 0:
+		print output.yellow("******Failed******: ")
+		for package in failed_packages:
+			print "\t" + metaout(package.meta) + output.red(package.fullname)
+	

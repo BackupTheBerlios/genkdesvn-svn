@@ -1,0 +1,8 @@
+--- k3b/Makefile.am.old	2006-02-12 12:47:13.000000000 +0100
++++ k3b/Makefile.am	2006-02-12 12:47:20.000000000 +0100
+@@ -8,4 +8,4 @@
+ 
+ #include admin/deps.am
+ 
+-SUBDIRS = libk3bdevice libk3b src kioslaves plugins $(K3BSETUPDIR) dvd+rw-tools
++SUBDIRS = libk3bdevice libk3b src kioslaves plugins $(K3BSETUPDIR)
