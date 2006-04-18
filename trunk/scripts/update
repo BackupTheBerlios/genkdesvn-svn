@@ -2,7 +2,7 @@
 
 names = {
 	"all": [
-		"x11-libs/qt",
+		"=x11-libs/qt-3.99",
 		"distro",
 		"koffice",
 		"extragear",
@@ -542,7 +542,11 @@ def list(package):
 		print " "*package.depth + output.green(package.fullname)
 	
 def installed(item):
-	matches = gentoolkit.find_all_installed_packages(lambda x: re.match(item + "-7.*", x))
+	if item.startswith('='):
+		itemversion = item[1:] + ".*"
+	else:
+		itemversion = item + "-7.*"
+	matches = gentoolkit.find_all_installed_packages(lambda x: re.match(itemversion, x))
 	number = len(matches)
 	return number > 0 and matches[number - 1].get_cpv()
 
