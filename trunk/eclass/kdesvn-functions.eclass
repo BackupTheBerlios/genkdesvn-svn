@@ -20,6 +20,7 @@ inherit qt3 kde-functions
 # the relationships between them ...
 # we can add our extra ebuilds to the list here
 KDE_DERIVATION_MAP="${KDE_DERIVATION_MAP}
+kde-base/kdepim kde-base/indexlib
 kde-base/kdebindings kde-base/pykde
 kde-base/kdegames kde-base/kanagram
 kde-base/kdegames kde-base/blinken
