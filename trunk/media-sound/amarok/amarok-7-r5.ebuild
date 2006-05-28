@@ -13,7 +13,7 @@ LICENSE="GPL-2"
 
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="aac exscalibar flac kde mysql noamazon opengl postgres xmms visualization musicbrainz ipod ifp real"
+IUSE="aac exscalibar flac ipod ifp kde musicbrainz mysql noamazon opengl postgres helix visualization xmms"
 
 DEPEND="kde? ( || ( kde-base/konqueror kde-base/kdebase ) )
     >=media-libs/xine-lib-1_rc4
@@ -29,7 +29,7 @@ DEPEND="kde? ( || ( kde-base/konqueror kde-base/kdebase ) )
     aac? ( media-libs/libmp4v2 )
     exscalibar? ( media-libs/exscalibar )
     ifp? ( media-libs/libifp )
-    real? ( media-video/realplayer )"
+    helix? ( media-video/realplayer )"
 
 RDEPEND="${DEPEND}
     dev-lang/ruby"
@@ -52,7 +52,7 @@ src_compile() {
                   $(use_with ipod libgpod)
                   $(use_with aac mp4v2)
                   $(use_with ifp)
-                  $(use_with real helix)
+                  $(use_with helix)
                   --with-xine
                   --without-mas
                   --without-nmm"
