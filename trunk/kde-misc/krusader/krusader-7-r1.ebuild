@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+ESF_SERVER="krusader.cvs.sourceforge.net"
 ESF_SUBDIR="krusader_kde3"
 
 inherit kdesvn-sourceforge
