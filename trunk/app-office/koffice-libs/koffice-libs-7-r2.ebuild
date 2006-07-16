@@ -25,13 +25,13 @@ KMEXTRA="
 	interfaces/
 	plugins/
 	tools/
-    filters/olefilters/
 	filters/xsltfilter/
 	filters/generic_wrapper/
 	kounavail/
-	doc/api
 	doc/koffice/
 	doc/thesaurus/"
+#	doc/api => broken
+#	filters/olefilters/ => broken
 
 KMEXTRACTONLY="
 	kexi/Makefile.global

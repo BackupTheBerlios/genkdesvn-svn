@@ -16,6 +16,8 @@ RDEPEND="$(deprange $PV $MAXKOFFICEVER app-office/koffice-libs)"
 
 DEPEND="${RDEPEND}"
 
+PATCHES="${FILESDIR}/gcc41.patch"
+
 KMCOPYLIB="
 	libkofficecore lib/kofficecore
 	libkofficeui lib/kofficeui
