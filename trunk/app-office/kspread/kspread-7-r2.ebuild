@@ -25,7 +25,9 @@ KMCOPYLIB="
 	libkwmf lib/kwmf
 	libkowmf lib/kwmf
 	libkstore lib/store
-	libkochart interfaces"
+	libkochart interfaces
+	libkrossmain lib/kross/main
+	libkrossapi lib/kross/api"
 
 KMEXTRACTONLY="lib/
 	interfaces/"
