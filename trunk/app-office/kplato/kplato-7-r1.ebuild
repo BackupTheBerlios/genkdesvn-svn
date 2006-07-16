@@ -29,5 +29,3 @@ KMEXTRACTONLY="
 	kugar/"
 
 KMCOMPILEONLY="kdgantt"
-
-#KMEXTRA="kdgantt"
