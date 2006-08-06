@@ -27,8 +27,8 @@ RDEPEND="$(qt-copy_min_version 3.3)
 	nas? ( media-libs/nas )
 	media-libs/audiofile"
 
-PATCHES="${FILESDIR}/arts-1.3.2-alsa-bigendian.patch
-    ${FILESDIR}/arts-1.5.0-bindnow.patch"
+#PATCHES="${FILESDIR}/arts-1.3.2-alsa-bigendian.patch
+#    ${FILESDIR}/arts-1.5.0-bindnow.patch"
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
