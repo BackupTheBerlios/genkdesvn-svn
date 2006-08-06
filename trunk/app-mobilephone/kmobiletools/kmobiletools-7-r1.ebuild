@@ -1,7 +1,10 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-KSCM_ROOT=trunk/kdenonbeta
+KSCM_ROOT=playground
+KSCM_MODULE=pim
+KSCM_SUBDIR=$PN
+
 inherit kdesvn kdesvn-source
 
 DESCRIPTION="KMobiletools is a KDE-based application that allows to control mobile phones with your PC."
