@@ -1,4 +1,4 @@
-# Copyright 1999-2004 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 #
@@ -25,6 +25,7 @@ kde-base/kdebindings kde-base/pykde
 kde-base/kdegames kde-base/kanagram
 kde-base/kdegames kde-base/blinken
 app-office/koffice app-office/keximdb
+kde-base/kdepim kde-base/kmobile
 "
 
 # ---------------------------------------------------------------

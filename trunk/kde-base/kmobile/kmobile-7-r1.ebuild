@@ -14,3 +14,5 @@ DEPEND="app-mobilephone/gnokii
 $(deprange $PV $MAXKDEVER kde-base/libkcal)"
 
 KMCOPYLIB="libkcal libkcal"
+
+PATCHES="${FILESDIR}/${PN}-recurrence.patch"
