@@ -5,7 +5,7 @@
 KMNAME=kdegames
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
-inherit kde-meta kde-source
+inherit kdesvn-meta kdesvn-source
 
 DESCRIPTION="KDE Space Game"
 KEYWORDS="~x86 -amd64 ~ppc ~sparc ~ppc64"
@@ -21,5 +21,5 @@ pkg_setup() {
 		eerror "${PN} needs the USE=\"arts\" enabled and also the kdelibs compiled with the USE=\"arts\" enabled"
 		die
 	fi
-	kde-source_pkg_setup
+	kdesvn-source_pkg_setup
 }
