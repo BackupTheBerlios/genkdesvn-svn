@@ -21,7 +21,8 @@ DEPEND=">=media-libs/libgphoto2-2
 	media-libs/imlib2
 	media-libs/tiff
 	media-gfx/exiv2
-	=dev-db/sqlite-3*"
+	=dev-db/sqlite-3*
+	>=media-gfx/dcraw-8.03"	
 
 #PATCHES="${FILESDIR}/gcc41.patch"
 

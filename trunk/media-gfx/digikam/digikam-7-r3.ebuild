@@ -21,7 +21,8 @@ DEPEND=">=media-libs/libgphoto2-2
     >=media-libs/libkipi-0.1.1
     media-libs/imlib2
     media-libs/tiff
-    sys-libs/gdbm"
+    sys-libs/gdbm
+    >=media-gfx/dcraw-8.03"
 
 RDEPEND="${DEPEND}
     || ( ( kde-base/kgamma kde-base/kamera ) kde-base/kdegraphics )"

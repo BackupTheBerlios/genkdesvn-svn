@@ -7,3 +7,6 @@
   11 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  digikam-7-r1.ebuild files/digest-digikam-7-r1
   Introducing dependency on sqlite3 and removing dependency on gdbm
 
+* digikam-7-r2 / -r3 (07 Aug 2008)
+  07 Aug 2008; Wulf C. Krueger <wk@mailstation.de>
+  Fixed bug 0000108 by adding dependencies on media-gfx/dcraw.
