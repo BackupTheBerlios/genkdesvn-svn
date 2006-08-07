@@ -7,3 +7,6 @@
   02 Aug 2005; Mario Tanev <mtanev@csua.berkeley.edu>  gtk-engines-qt-7-r1.ebuild files/digest-gtk-qt-engine-7-r1
   Move from gtk-qt-engine
 
+* gtk-engines-qt-7-r1 (07 Aug 2008)
+  07 Aug 2006; Wulf C. Krueger <wk@mailstation.de>
+  Fixed bug 116. Compiles now but I can't test this.

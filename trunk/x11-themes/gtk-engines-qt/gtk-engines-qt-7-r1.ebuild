@@ -4,7 +4,7 @@
 
 EFDO_MODULE="gtk-qt"
 EFDO_SUBDIR="gtk-qt-engine"
-inherit eutils kde-functions freedesktop kde-make
+inherit eutils kdesvn-functions kdesvn-make freedesktop
 
 DESCRIPTION="GTK+2 Qt Theme Engine"
 HOMEPAGE="http://www.freedesktop.org/Software/gtk-qt"
@@ -27,6 +27,7 @@ src_unpack() {
 	cd $S
 	rm -r admin
 	unpack $A
+	epatch ${FILESDIR}/${PN}-autotools26.patch
 }
 
 src_compile() {

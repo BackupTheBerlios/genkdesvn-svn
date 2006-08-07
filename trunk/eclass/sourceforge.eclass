@@ -22,7 +22,7 @@ ECVS_MODULE="$ESF_SUBDIR"
 ECVS_USER="$ESF_USER"
 
 # If no server indicated in ebuild, assume cvs.sourceforge.net
-[ -z $ESF_SERVER ] && ESF_SERVER="cvs.sourceforge.net"
+[ -z $ESF_SERVER ] && ESF_SERVER="${PN}.cvs.sourceforge.net"
 ECVS_SERVER="$ESF_SERVER:/cvsroot/${ESF_MODULE}"
 
 # 
