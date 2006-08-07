@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~x86 ~ppc ~amd64 hppa sparc"
 IUSE="xmms irmc"
 
-DEPEND="=dev-libs/openobex-1.0*
+DEPEND=">=dev-libs/openobex-1.2-r1
 	>=net-wireless/bluez-libs-2.15
 	>=media-libs/libvorbis-1.0
 	xmms? ( >=media-sound/xmms-1.2.10 )
