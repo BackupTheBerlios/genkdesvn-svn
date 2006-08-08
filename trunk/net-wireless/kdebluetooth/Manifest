@@ -6,6 +6,13 @@ EBUILD kdebluetooth-7-r1.ebuild 1326 RMD160 b28ba72c13e5968a07f947d89b3c81483a06
 MD5 83830c4b321b3c60854a632b3516b7ed kdebluetooth-7-r1.ebuild 1326
 RMD160 b28ba72c13e5968a07f947d89b3c81483a062fea kdebluetooth-7-r1.ebuild 1326
 SHA256 32bcb7588cab19195553c4e3b7898aafddcb82107ec3033f36852f784f504b10 kdebluetooth-7-r1.ebuild 1326
+EBUILD kdebluetooth-7-r2.ebuild 1326 RMD160 b28ba72c13e5968a07f947d89b3c81483a062fea SHA1 19cbe1dec680f8cbf27200ac72c12b3f8ffa2c49 SHA256 32bcb7588cab19195553c4e3b7898aafddcb82107ec3033f36852f784f504b10
+MD5 83830c4b321b3c60854a632b3516b7ed kdebluetooth-7-r2.ebuild 1326
+RMD160 b28ba72c13e5968a07f947d89b3c81483a062fea kdebluetooth-7-r2.ebuild 1326
+SHA256 32bcb7588cab19195553c4e3b7898aafddcb82107ec3033f36852f784f504b10 kdebluetooth-7-r2.ebuild 1326
 MD5 68b329da9893e34099c7d8ad5cb9c940 files/digest-kdebluetooth-7-r1 1
 RMD160 c0da025038ed83c687ddc430da9846ecb97f3998 files/digest-kdebluetooth-7-r1 1
 SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b files/digest-kdebluetooth-7-r1 1
+MD5 68b329da9893e34099c7d8ad5cb9c940 files/digest-kdebluetooth-7-r2 1
+RMD160 c0da025038ed83c687ddc430da9846ecb97f3998 files/digest-kdebluetooth-7-r2 1
+SHA256 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b files/digest-kdebluetooth-7-r2 1
