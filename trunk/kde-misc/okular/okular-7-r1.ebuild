@@ -13,7 +13,13 @@ HOMEPAGE="http://developer.kde.org/summerofcode/okular.html"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+#KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~sparc ~x86"
+
+# Masked by Philantrop <wk@mailstation.de> because KDE3's oKular doesn't
+# exist in the current repository anymore.
+# okular is now KDE4 only.
+
+KEYWORDS="-*"
 IUSE="chm gs"
 
 RDEPEND=""
