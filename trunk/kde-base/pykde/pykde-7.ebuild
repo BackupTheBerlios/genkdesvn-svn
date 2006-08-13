@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/kde-base/pykde/pykde-3.5.0.ebuild,v 1.3 2006/01/22 22:53:10 danarmak Exp $
 
@@ -22,7 +22,7 @@ DEPEND="~dev-python/sip-4.2.1
 	!dev-python/pykde"
 
 src_unpack() {
-	kdesvn-meta_src_unpack
+	kdesvn-source_src_unpack
 	cd ${S}/python/pykde
 	epatch "${FILESDIR}/configure.py.diff"
 }
