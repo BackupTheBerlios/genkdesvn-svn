@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit kde-sourceforge
+inherit kdesvn-sourceforge
 
 DESCRIPTION="Baghira - an OS-X like style for KDE"
 HOMEPAGE="http://baghira.sourceforge.net/"
