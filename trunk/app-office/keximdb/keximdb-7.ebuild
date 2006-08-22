@@ -17,3 +17,9 @@ DEPEND="app-office/kexi
 
 need-kde 3.5
 
+src_compile() {
+	cd ${S}
+	touch NEWS COPYING
+	
+	kdesvn_src_compile
+}
