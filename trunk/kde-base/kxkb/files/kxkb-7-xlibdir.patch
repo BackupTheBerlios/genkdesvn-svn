@@ -7,6 +7,6 @@
 -        XLIBDIR,
 +        "/usr",
 +	"/usr/X11R6",
-         "/etc/X11/",
          "/usr/share/X11/",
+         "/etc/X11/",
          "/usr/local/share/X11/",
