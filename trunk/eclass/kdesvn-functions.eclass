@@ -45,8 +45,9 @@ need-kde() {
 	# determine install locations
 	set-kdedir
 
-	need-autoconf 2.5
-	need-automake 1.7
+    WANT_AUTOCONF="2.5"
+	WANT_AUTOMAKE="1.7"
+	inherit autotools
 
     if [ -n "${KDEBASE}" ]; then
         if [ -n "${KM_DEPRANGE}" ]; then
