@@ -17,7 +17,7 @@ DEPEND=">=media-libs/freetype-2.0.5
 	>=app-text/poppler-bindings-0.5.0"
 
 pkg_setup() {
-	if ! built_with_use app-text/poppler-bindings qt; then
+	if ! built_with_use app-text/poppler-bindings qt3; then
 		eerror "This package requires app-text/poppler-bindings compiled with Qt support."
 		eerror "Please reemerge app-text/poppler-bindings with USE=\"qt\"."
 		die "Please reemerge app-text/poppler-bindings with USE=\"qt\"."
