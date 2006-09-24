@@ -46,7 +46,7 @@ DEPEND="${DEPEND}
 need-kde 3.4
 
 pkg_setup() {
-	use hal && if ! built_with_use dbus qt ; then
+	use hal && if ! built_with_use dbus qt3 ; then
 		eerror "You are trying to compile ${CATEGORY}/${P} with the \"hal\" USE flag enabled,"
 		eerror "but sys-apps/dbus is not built with Qt support."
 		die
