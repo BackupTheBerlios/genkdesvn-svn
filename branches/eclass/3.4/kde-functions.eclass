@@ -645,32 +645,32 @@ need-kde() {
 	# ask for autotools
 	case "${KDEVER}" in
 		3.1.[234])	# Newer 3.1.x versions are built with automake 1.7, and have errors when using 1.6
-			need-automake 1.7
-			need-autoconf 2.5
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.7"
 			;;
 		3.1*)	# actually, newer 3.0.x stuff uses this too, but i want to make a clean switch
-			need-automake 1.6
-			need-autoconf 2.5
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.6"
 			;;
 		3.2*)
-			need-autoconf 2.5
-			need-automake 1.7
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.7"
 			;;
 		3.4*)
-			need-autoconf 2.5
-			need-automake 1.7
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.7"
 			;;
 		3*)	# a generic call for need-kde 3 - automake 1.4 works most often
-			need-autoconf 2.5
-			need-automake 1.4
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.4"
 			;;
 		5*)
-			need-autoconf 2.5
-			need-automake 1.7
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.7"
 			;;
 		7*)
-			need-autoconf 2.5
-			need-automake 1.7
+			WANT_AUTOCONF="2.5"
+			WANT_AUTOMAKE="1.7"
 			;;
 	esac
 
