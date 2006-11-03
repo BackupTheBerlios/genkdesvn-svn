@@ -2,6 +2,11 @@
 # Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*kopete-7-r4 (03 Nov 2006)
+
+  03 Nov 2006; Timo Gurr <timo.gurr@gmail.com>  kopete-7-r4.ebuild files/digest-kopete-7-r4
+  Kopete 0.12 is now in KDE 3.5
+
 *kopete-7-r1 (28 May 2005)
 
   28 May 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kopete-7-r1.ebuild files/digest-kopete-7-r1
