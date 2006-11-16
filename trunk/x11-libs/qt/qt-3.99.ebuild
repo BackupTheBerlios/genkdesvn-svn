@@ -7,81 +7,86 @@ KSCM_MODULE="qt-copy"
 inherit eutils flag-o-matic toolchain-funcs kdesvn-repo
 
 SRCTYPE="free"
-DESCRIPTION="QT version ${PV}"
+DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework."
 HOMEPAGE="http://www.trolltech.com/"
 
 LICENSE="|| ( QPL-1.0 GPL-2 )"
 
 SLOT="3"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86"
-IUSE="cups debug doc examples firebird gif immqt immqt-bc ipv6 mysql nas odbc opengl postgres sqlite symbol_visibility xinerama zlib"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~mips ~ppc ~ppc-macos ~ppc64 ~sparc ~x86 ~x86-fbsd"
+IUSE="cups debug doc examples firebird gif ipv6 mysql nas nis odbc opengl postgres sqlite xinerama immqt immqt-bc symbol_visibility"
 
 DEPEND="|| ( ( x11-libs/libXcursor
-            x11-libs/libXi
-            x11-libs/libXrandr
-            x11-libs/libSM
-            x11-proto/inputproto
-            x11-proto/xextproto
-            xinerama? ( x11-proto/xineramaproto x11-libs/libXinerama )
+                        x11-libs/libXi
+                        x11-libs/libXrandr
+                        x11-libs/libSM
+                        x11-proto/inputproto
+                        x11-proto/xextproto
+                        xinerama? ( x11-proto/xineramaproto x11-libs/libXinerama )
 
+                )
+                <virtual/x11-7
         )
-        virtual/x11
-    )
-    virtual/xft
-    media-libs/libpng
-    media-libs/jpeg
-    media-libs/libmng
-    >=media-libs/freetype-2
-    nas? ( >=media-libs/nas-1.5 )
-    mysql? ( dev-db/mysql )
-    firebird? ( dev-db/firebird )
-    opengl? ( virtual/opengl virtual/glu )
-    postgres? ( dev-db/postgresql )
-    cups? ( net-print/cups )
-    zlib? ( sys-libs/zlib )"
-PDEPEND="odbc? ( ~dev-db/qt-unixODBC-3.3.5)"
+        virtual/xft
+        media-libs/libpng
+        media-libs/jpeg
+        >=media-libs/libmng-1.0.9
+        >=media-libs/freetype-2
+        sys-libs/zlib
+        nas? ( >=media-libs/nas-1.5 )
+        mysql? ( dev-db/mysql )
+        firebird? ( dev-db/firebird )
+        opengl? ( virtual/opengl virtual/glu )
+        postgres? ( dev-db/postgresql )
+        cups? ( net-print/cups )"
+PDEPEND="odbc? ( ~dev-db/qt-unixODBC-3.3.6 )"
 
 QTBASE=/usr/qt/devel
 
 pkg_setup() {
-    if use immqt && use immqt-bc ; then
-        ewarn
-        ewarn "immqt and immqt-bc are exclusive. You cannot set both."
-        ewarn "Please specify either immqt or immqt-bc."
-        ewarn
-        die
-    elif use immqt ; then
-        ewarn
-        ewarn "You are going to compile binary imcompatible immodule for Qt. This means"
-        ewarn "you have to recompile everything depending on Qt after you install it."
-        ewarn "Be aware."
-        ewarn
-    fi
+        if use immqt && use immqt-bc ; then
+                ewarn
+                ewarn "immqt and immqt-bc are exclusive. You cannot set both."
+                ewarn "Please specify either immqt or immqt-bc."
+                ewarn
+                die
+        elif use immqt ; then
+                ewarn
+                ewarn "You are going to compile binary imcompatible immodule for Qt. This means"
+                ewarn "you have to recompile everything depending on Qt after you install it."
+                ewarn "Be aware."
+                ewarn
+        fi
 
 	export QTDIR=${S}
 
 	CXX=$(tc-getCXX)
-	if [[ ${CXX/g++/} != ${CXX} ]]; then
-		PLATCXX="g++"
-	elif [[ ${CXX/icc/} != ${CXX} ]]; then
-		PLATCXX="icc"
-	else
-		die "Unknown compiler ${CXX}."
-	fi
+        if [[ ${CXX/g++/} != ${CXX} ]]; then
+                PLATCXX="g++"
+        elif [[ ${CXX/icpc/} != ${CXX} ]]; then
+                PLATCXX="icc"
+        else
+                die "Unknown compiler ${CXX}."
+        fi
 
-	if use kernel_linux; then
-		PLATNAME="linux"
-	elif use kernel_FreeBSD && use elibc_FreeBSD; then
-		PLATNAME="freebsd"
-	elif use kernel_Darwin && use elibc_Darwin; then
-		PLATNAME="darwin"
-	else
-		die "Unknown platform."
-	fi
+        case ${CHOST} in
+                *-freebsd*|*-dragonfly*)
+                        PLATNAME="freebsd" ;;
+                *-openbsd*)
+                        PLATNAME="openbsd" ;;
+                *-netbsd*)
+                        PLATNAME="netbsd" ;;
+                *-darwin*)
+                        PLATNAME="darwin" ;;
+                *-linux-*|*-linux)
+                        PLATNAME="linux" ;;
+                *)
+                        die "Unknown CHOST, no platform choosed."
+        esac
 
-	# probably this should be '*-64' for 64bit archs
-	# in a fully multilib environment (no compatibility symlinks)
-	export PLATFORM="${PLATNAME}-${PLATCXX}"
+        # probably this should be '*-64' for 64bit archs
+        # in a fully multilib environment (no compatibility symlinks)
+        export PLATFORM="${PLATNAME}-${PLATCXX}"
 }
 
 src_unpack() {
@@ -93,148 +98,150 @@ src_unpack() {
 
 	sed -i -e 's:read acceptance:acceptance=yes:' configure
 
-	# Do not link with -rpath. See bug #75181.
-	find ${S}/mkspecs -name qmake.conf | xargs \
-		sed -i -e 's:QMAKE_RPATH.*:QMAKE_RPATH =:'
+        # Do not link with -rpath. See bug #75181.
+        find ${S}/mkspecs -name qmake.conf | xargs \
+                sed -i -e 's:QMAKE_RPATH.*:QMAKE_RPATH =:'
 
-	# patches for gcc4
-	epatch "${FILESDIR}/${PN}-gcc4.patch"
+        # Patch for uic includehint errors (aseigo patch)
+        epatch ${FILESDIR}/qt-uic-fix.patch
 
-	# patch for qt symbol visibilty support, if >=gcc-4.0.0
-	# see http://bugs.kde.org/show_bug.cgi?id=109386
-	if use symbol_visibility; then
-		if [[ "$(gcc-major-version)" == "4" ]]; then
-			epatch "${FILESDIR}/${PN}-visibility.patch"
-			einfo "Symbol visibility support: auto"
-			USE_SYBMBOL_VISIBILITY="yes"
-		else
-			einfo "Symbol visibility support: disabled"
-			ewarn "You need >=sys-devel/gcc-4.0.2-r1 for symbol visibility"
-			ewarn "Then recompile qt AND kdelibs with the rest of KDE"
-			ewarn "Dont try if you dont know what you're doing"
-		fi
-	else
-		einfo "Symbol visibility support: disabled"
-	fi
+        # ulibc patch (bug #100246)
+        epatch ${FILESDIR}/qt-ulibc.patch
 
-    if use immqt || use immqt-bc ; then
-        epatch ../${IMMQT_P}.diff
-        sh make-symlinks.sh || die "make symlinks failed"
-    fi
+        # bug #151838
+        #epatch "${FILESDIR}/qt-CVE-2006-4811-bis.patch"
 
-	if use ppc-macos ; then
-		epatch ${FILESDIR}/${PN}-macos.patch
-	fi
+        # Visibility patch, apply only on GCC 4.1 and later for safety
+        [[ $(gcc-major-version)$(gcc-minor-version) -ge 41 ]] && \
+                epatch "${FILESDIR}/qt-visibility.patch"
 
-	# known working flags wrt #77623
-	use sparc && export CFLAGS="-O1" && export CXXFLAGS="${CFLAGS}"
-	# set c/xxflags and ldflags
-	strip-flags
-	sed -i -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
-	       -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
-	       -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-		${S}/mkspecs/${PLATFORM}/qmake.conf || die
+        if use immqt || use immqt-bc ; then
+                epatch ../${IMMQT_P}.diff
+                sh make-symlinks.sh || die "make symlinks failed"
+        fi
 
-	if [ $(get_libdir) != "lib" ] ; then
-		sed -i -e "s:/lib$:/$(get_libdir):" \
-			${S}/mkspecs/${PLATFORM}/qmake.conf || die
-	fi
+        if use ppc-macos ; then
+                epatch "${FILESDIR}/qt-macos.patch"
+        fi
+
+        # known working flags wrt #77623
+        use sparc && export CFLAGS="-O1" && export CXXFLAGS="${CFLAGS}"
+        # set c/xxflags and ldflags
+        strip-flags
+        append-flags -fno-strict-aliasing
+        sed -i -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
+               -e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
+               -e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+                   -e "s:\<QMAKE_CC\>.*=.*:QMAKE_CC=$(tc-getCC):" \
+                   -e "s:\<QMAKE_CXX\>.*=.*:QMAKE_CXX=$(tc-getCXX):" \
+                   -e "s:\<QMAKE_LINK\>.*=.*:QMAKE_LINK=$(tc-getCXX):" \
+                   -e "s:\<QMAKE_LINK_SHLIB\>.*=.*:QMAKE_LINK_SHLIB=$(tc-getCXX):" \
+                ${S}/mkspecs/${PLATFORM}/qmake.conf || die
+
+        if [ $(get_libdir) != "lib" ] ; then
+                sed -i -e "s:/lib$:/$(get_libdir):" \
+                        ${S}/mkspecs/${PLATFORM}/qmake.conf || die
+        fi
 }
 
 src_compile() {
 	export SYSCONF=${D}${QTBASE}/etc/settings
 
-	# Let's just allow writing to these directories during Qt emerge
-	# as it makes Qt much happier.
-	addwrite "${QTBASE}/etc/settings"
-	addwrite "${HOME}/.qt"
+        # Let's just allow writing to these directories during Qt emerge
+        # as it makes Qt much happier.
+        addwrite "${QTBASE}/etc/settings"
+        addwrite "${HOME}/.qt"
 
 	[ $(get_libdir) != "lib" ] && myconf="${myconf} -L/usr/$(get_libdir)"
 
-	# unixODBC support is now a PDEPEND on dev-db/qt-unixODBC; see bug 14178.
-	use nas		&& myconf="${myconf} -system-nas-sound"
-	use gif		&& myconf="${myconf} -qt-gif" || myconf="${myconf} -no-gif"
-	use mysql	&& myconf="${myconf} -plugin-sql-mysql -I/usr/include/mysql -L/usr/$(get_libdir)/mysql" || myconf="${myconf} -no-sql-mysql"
-	use postgres	&& myconf="${myconf} -plugin-sql-psql -I/usr/include/postgresql/server -I/usr/include/postgresql/pgsql -I/usr/include/postgresql/pgsql/server" || myconf="${myconf} -no-sql-psql"
-	use firebird    && myconf="${myconf} -plugin-sql-ibase" || myconf="${myconf} -no-sql-ibase"
-	use sqlite	&& myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
-	use cups	&& myconf="${myconf} -cups" || myconf="${myconf} -no-cups"
-	use opengl	&& myconf="${myconf} -enable-module=opengl" || myconf="${myconf} -disable-opengl"
-	use debug	&& myconf="${myconf} -debug" || myconf="${myconf} -release -no-g++-exceptions"
-	use xinerama    && myconf="${myconf} -xinerama" || myconf="${myconf} -no-xinerama"
-	use zlib	&& myconf="${myconf} -system-zlib" || myconf="${myconf} -qt-zlib"
-	use ipv6        && myconf="${myconf} -ipv6" || myconf="${myconf} -no-ipv6"
-    use immqt-bc    && myconf="${myconf} -inputmethod"
-    use immqt   && myconf="${myconf} -inputmethod -inputmethod-ext"
+        # unixODBC support is now a PDEPEND on dev-db/qt-unixODBC; see bug 14178.
+        use nas         && myconf="${myconf} -system-nas-sound"
+        use nis         && myconf="${myconf} -nis" || myconf="${myconf} -no-nis"
+        use gif         && myconf="${myconf} -qt-gif" || myconf="${myconf} -no-gif"
+        use mysql       && myconf="${myconf} -plugin-sql-mysql -I/usr/include/mysql -L/usr/$(get_libdir)/mysql" || myconf="${myconf} -no-sql-mysql"
+        use postgres    && myconf="${myconf} -plugin-sql-psql -I/usr/include/postgresql/server -I/usr/include/postgresql/pgsql -I/usr/include/postgresql/pgsql/server" || myconf="${myconf} -no-sql-psql"
+        use firebird    && myconf="${myconf} -plugin-sql-ibase" || myconf="${myconf} -no-sql-ibase"
+        use sqlite      && myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
+        use cups        && myconf="${myconf} -cups" || myconf="${myconf} -no-cups"
+        use opengl      && myconf="${myconf} -enable-module=opengl" || myconf="${myconf} -disable-opengl"
+        use debug       && myconf="${myconf} -debug" || myconf="${myconf} -release -no-g++-exceptions"
+        use xinerama    && myconf="${myconf} -xinerama" || myconf="${myconf} -no-xinerama"
 
+	myconf="${myconf} -system-zlib"
 
-	if use ppc-macos ; then
-		myconf="${myconf} -no-sql-ibase -no-sql-mysql -no-sql-psql -no-cups -lresolv -shared"
-		myconf="${myconf} -I/usr/X11R6/include -L/usr/X11R6/lib"
-		myconf="${myconf} -L${S}/lib -I${S}/include"
-		sed -i -e "s,#define QT_AOUT_UNDERSCORE,," mkspecs/${PLATFORM}/qplatformdefs.h || die
-	fi
+        use ipv6        && myconf="${myconf} -ipv6" || myconf="${myconf} -no-ipv6"
+        use immqt-bc    && myconf="${myconf} -inputmethod"
+        use immqt       && myconf="${myconf} -inputmethod -inputmethod-ext"
 
-	export YACC='byacc -d'
+        if use ppc-macos ; then
+                myconf="${myconf} -no-sql-ibase -no-sql-mysql -no-sql-psql -no-cups -lresolv -shared"
+                myconf="${myconf} -I/usr/X11R6/include -L/usr/X11R6/lib"
+                myconf="${myconf} -L${S}/lib -I${S}/include"
+                sed -i -e "s,#define QT_AOUT_UNDERSCORE,," mkspecs/${PLATFORM}/qplatformdefs.h || die
+        fi
 
-	./configure -sm -thread -stl -system-libjpeg -verbose -largefile \
-		-qt-imgfmt-{jpeg,mng,png} -tablet -system-libmng \
-		-system-libpng -xft -platform ${PLATFORM} -xplatform \
-		${PLATFORM} -xrender -prefix ${QTBASE} -libdir ${QTBASE}/$(get_libdir) \
-		-fast -no-sql-odbc ${myconf} -dlopen-opengl || die
+        export YACC='byacc -d'
+        tc-export CC CXX
+        export LINK="$(tc-getCXX)"
+
+        ./configure -sm -thread -stl -system-libjpeg -verbose -largefile \
+                -qt-imgfmt-{jpeg,mng,png} -tablet -system-libmng \
+                -system-libpng -xft -platform ${PLATFORM} -xplatform \
+                ${PLATFORM} -xrender -prefix ${QTBASE} -libdir ${QTBASE}/$(get_libdir) \
+                -fast -no-sql-odbc ${myconf} -dlopen-opengl || die
 
 	emake src-qmake src-moc sub-src || die
 
-	export DYLD_LIBRARY_PATH="${S}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
-	export LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
+        export DYLD_LIBRARY_PATH="${S}/lib:/usr/X11R6/lib:${DYLD_LIBRARY_PATH}"
+        export LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
 
-	emake sub-tools || die
+        emake sub-tools || die
 
-	if use examples; then
-		emake sub-tutorial sub-examples || die
-	fi
+        if use examples; then
+                emake sub-tutorial sub-examples || die
+        fi
 
-	# Make the msg2qm utility (not made by default)
-	cd ${S}/tools/msg2qm
-	../../bin/qmake
-	emake
+        # Make the msg2qm utility (not made by default)
+        cd ${S}/tools/msg2qm
+        ../../bin/qmake
+        emake
 
-    # Make the qembed utility (not made by default)
-    cd ${S}/tools/qembed
-    ../../bin/qmake
-    emake
-
+        # Make the qembed utility (not made by default)
+        cd ${S}/tools/qembed
+        ../../bin/qmake
+        emake
 
 }
 
+
 src_install() {
-	# binaries
-	into ${QTBASE}
-	dobin bin/*
-	dobin tools/msg2qm/msg2qm
-	dobin tools/qembed/qembed
+        # binaries
+        into ${QTBASE}
+        dobin bin/*
+        dobin tools/msg2qm/msg2qm
+        dobin tools/qembed/qembed
 
-	# libraries
-	if use ppc-macos; then
-		# dolib is broken on BSD because of missing readlink(1)
-		dodir ${QTBASE}/$(get_libdir)
-		cp -fR lib/*.{dylib,la,a} ${D}/${QTBASE}/$(get_libdir) || die
+        # libraries
+        if use ppc-macos; then
+                # dolib is broken on BSD because of missing readlink(1)
+                dodir ${QTBASE}/$(get_libdir)
+                cp -fR lib/*.{dylib,la,a} ${D}/${QTBASE}/$(get_libdir) || die
 
-		cd ${D}/${QTBASE}/$(get_libdir)
-		for lib in libqt-mt* ; do
-			ln -s ${lib} ${lib/-mt/}
-		done
-	else
-		dolib lib/lib{editor,qassistantclient,designercore}.a
-		dolib lib/libqt-mt.la
-		dolib lib/libqt-mt.so.3.3.6 lib/libqui.so.1.0.0
-		cd ${D}/${QTBASE}/$(get_libdir)
+                cd ${D}/${QTBASE}/$(get_libdir)
+                for lib in libqt-mt* ; do
+                        ln -s ${lib} ${lib/-mt/}
+                done
+        else
+                dolib.so lib/lib{editor,qassistantclient,designercore}.a
+                dolib.so lib/libqt-mt.la
+                dolib.so lib/libqt-mt.so.3.3.6 lib/libqui.so.1.0.0
+                cd ${D}/${QTBASE}/$(get_libdir)
 
-		for x in libqui.so ; do
-			ln -s $x.1.0.0 $x.1.0
-			ln -s $x.1.0 $x.1
-			ln -s $x.1 $x
-		done
+                for x in libqui.so ; do
+                        ln -s $x.1.0.0 $x.1.0
+                        ln -s $x.1.0 $x.1
+                        ln -s $x.1 $x
+                done
 
 		# version symlinks - 3.3.6->3.3->3->.so
 		ln -s libqt-mt.so.3.3.6 libqt-mt.so.3.3
@@ -248,16 +255,16 @@ src_install() {
 		ln -s libqt-mt.so libqt.so
 	fi
 
-	# plugins
-	cd ${S}
-	local plugins=$(find plugins -name "lib*.so" -print)
-	for x in ${plugins}; do
-		exeinto ${QTBASE}/$(dirname ${x})
-		doexe ${x}
-	done
+        # plugins
+        cd ${S}
+        local plugins=$(find plugins -name "lib*.so" -print)
+        for x in ${plugins}; do
+                exeinto ${QTBASE}/$(dirname ${x})
+                doexe ${x}
+        done
 
-	# Past this point just needs to be done once
-	is_final_abi || return 0
+        # Past this point just needs to be done once
+        is_final_abi || return 0
 
 	# includes
 	cd ${S}
@@ -265,79 +272,93 @@ src_install() {
 	cp include/* ${D}/${QTBASE}/include/
 	cp include/private/* ${D}/${QTBASE}/include/private/
 
-	# prl files
-	sed -i -e "s:${S}:${QTBASE}:g" ${S}/lib/*.prl
-	insinto ${QTBASE}/$(get_libdir)
-	doins ${S}/lib/*.prl
+        # prl files
+        sed -i -e "s:${S}:${QTBASE}:g" ${S}/lib/*.prl
+        insinto ${QTBASE}/$(get_libdir)
+        doins ${S}/lib/*.prl
 
-	# pkg-config file
-	insinto ${QTBASE}/$(get_libdir)/pkgconfig
-	doins ${S}/lib/*.pc
+        # pkg-config file
+        insinto ${QTBASE}/$(get_libdir)/pkgconfig
+        doins ${S}/lib/*.pc
 
-	# List all the multilib libdirs
-	local libdirs
-	for libdir in $(get_all_libdirs); do
-		libdirs="${libdirs}:${QTBASE}/${libdir}"
-	done
+        # List all the multilib libdirs
+        local libdirs
+        for libdir in $(get_all_libdirs); do
+                libdirs="${libdirs}:${QTBASE}/${libdir}"
+        done
 
-	# environment variables
-	if use ppc-macos; then
-		cat <<EOF > ${T}/30qt-copy
+        # environment variables
+        if use ppc-macos; then
+                cat <<EOF > ${T}/45qt3-copy
 PATH=${QTBASE}/bin
 ROOTPATH=${QTBASE}/bin
 DYLD_LIBRARY_PATH=${libdirs:1}
 QMAKESPEC=${PLATFORM}
 MANPATH=${QTBASE}/doc/man
+PKG_CONFIG_PATH=${QTBASE}/$(get_libdir)/pkgconfig
 EOF
-	else
-		cat <<EOF > ${T}/30qt-copy
+        else
+                cat <<EOF > ${T}/45qt3-copy
 PATH=${QTBASE}/bin
 ROOTPATH=${QTBASE}/bin
 LDPATH=${libdirs:1}
 QMAKESPEC=${PLATFORM}
 MANPATH=${QTBASE}/doc/man
+PKG_CONFIG_PATH=${QTBASE}/$(get_libdir)/pkgconfig
 EOF
-	fi
-	cat <<EOF > ${T}/33qt-copy-dir
+        fi
+	cat <<EOF > ${T}/50qtdir3-copy
 QTDIR=${QTBASE}
 EOF
-	insinto /etc/env.d
-	doins ${T}/30qt-copy ${T}/33qt-copy-dir
 
-	if [ "${SYMLINK_LIB}" = "yes" ]; then
-		dosym $(get_abi_LIBDIR ${DEFAULT_ABI}) ${QTBASE}/lib
-	fi
+        cat <<EOF > ${T}/50-qt3-revdep
+SEARCH_DIRS="${QTBASE}"
+EOF
 
-	insinto ${QTBASE}/tools/designer
-	doins -r tools/designer/templates
+        insinto /etc/revdep-rebuild
+        doins ${T}/50-qt3-revdep-copy
 
-	insinto ${QTBASE}
-	doins -r translations
+        insinto /etc/env.d
+        doins ${T}/45qt3-copy ${T}/50qtdir3-copy
 
-	keepdir ${QTBASE}/etc/settings
+        if [ "${SYMLINK_LIB}" = "yes" ]; then
+                dosym $(get_abi_LIBDIR ${DEFAULT_ABI}) ${QTBASE}/lib
+        fi
 
-	if use doc; then
-		insinto ${QTBASE}
-		doins -r ${S}/doc
-	fi
+        insinto ${QTBASE}/tools/designer
+        doins -r tools/designer/templates
 
-	if use examples; then
-		find ${S}/examples ${S}/tutorial -name Makefile | \
-			xargs sed -i -e "s:${S}:${QTBASE}:g"
+        insinto ${QTBASE}
+        doins -r translations
 
-		cp -r ${S}/examples ${D}${QTBASE}/
-		cp -r ${S}/tutorial ${D}${QTBASE}/
-	fi
+        keepdir ${QTBASE}/etc/settings
 
-	# misc build reqs
-	insinto ${QTBASE}/mkspecs
-	doins -r ${S}/mkspecs/${PLATFORM}
+        if use doc; then
+                insinto ${QTBASE}
+                doins -r ${S}/doc
+        fi
 
-	sed -e "s:${S}:${QTBASE}:g" \
-		${S}/.qmake.cache > ${D}${QTBASE}/.qmake.cache
+        if use examples; then
+                find ${S}/examples ${S}/tutorial -name Makefile | \
+                        xargs sed -i -e "s:${S}:${QTBASE}:g"
 
-	dodoc FAQ README README-QT.TXT changes*
+                cp -r ${S}/examples ${D}${QTBASE}/
+                cp -r ${S}/tutorial ${D}${QTBASE}/
+        fi
+
+        # misc build reqs
+        insinto ${QTBASE}/mkspecs
+        doins -r ${S}/mkspecs/${PLATFORM}
+
+        sed -e "s:${S}:${QTBASE}:g" \
+                ${S}/.qmake.cache > ${D}${QTBASE}/.qmake.cache
+
+        dodoc FAQ README README-QT.TXT changes*
+        if use immqt || use immqt-bc ; then
+                dodoc ${S}/README.immodule
+        fi
 }
+
 
 pkg_postinst() {
 	svn_pkg_postinst
