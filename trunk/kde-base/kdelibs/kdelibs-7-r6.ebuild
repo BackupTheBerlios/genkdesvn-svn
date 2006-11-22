@@ -151,6 +151,11 @@ src_install() {
                 dosym $(get_abi_LIBDIR ${DEFAULT_ABI}) ${KDEDIR}/lib
         fi
 
+        # Get rid of the disabled version of the kdnsd libraries
+        if use zeroconf && use avahi; then
+                rm -rf "${D}/${PREFIX}"/$(get_libdir)/libkdnssd.*
+        fi
+
 	dodir /etc/env.d
 
         # List all the multilib libdirs
