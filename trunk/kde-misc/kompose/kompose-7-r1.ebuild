@@ -16,6 +16,10 @@ DEPEND="media-libs/imlib2"
 RDEPEND="media-libs/imlib2"
 need-kde 3.2
 
+# unsermake breaks this package.
+UNSERMAKE=no
+
+
 function pkg_setup() {
 	# gentoo bug 94881
 	if ! built_with_use media-libs/imlib2 X; then
