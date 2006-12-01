@@ -7,7 +7,7 @@
 # Purpose: 
 #
 
-inherit kde-make
+inherit kdesvn-make
 
 ECLASS="berlios"
 INHERITED="$INHERITED $ECLASS"
