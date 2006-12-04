@@ -18,7 +18,8 @@ DEPEND="|| ( kde-base/libkonq kde-base/kdebase )
 	mysql? ( dev-db/mysql )
 	postgres? ( dev-db/libpq dev-libs/libpqxx )
 	exif? ( media-libs/libkexif )
-	kipi? ( media-plugins/kipi-plugins )"
+	kipi? ( media-plugins/kipi-plugins )
+	media-libs/libexif"
 
 need-kde 3.4
 
