@@ -17,7 +17,7 @@ IUSE="exif kipi mysql postgres"
 DEPEND="|| ( kde-base/libkonq kde-base/kdebase )
 	mysql? ( dev-db/mysql )
 	postgres? ( dev-db/libpq dev-libs/libpqxx )
-	exif? ( media-libs/libkexif )
+	exif? ( media-libs/libkexif media-gfx/exiv2 )
 	kipi? ( media-plugins/kipi-plugins )
 	media-libs/libexif"
 
