@@ -16,9 +16,7 @@ IUSE="alsa css dvdr dvdread encode ffmpeg flac hal kde mp3 musepack musicbrainz
         sndfile vcd vorbis emovix"
 
 DEPEND="kde? ( || ( kde-base/kdesu kde-base/kdebase ) )
-        hal? ( || ( dev-libs/dbus-qt3-old
-                                ( =sys-apps/dbus-0.30 ) )
-                sys-apps/hal )
+        hal? ( || ( sys-apps/dbus sys-apps/hal ) )
         media-libs/libsamplerate
         media-libs/taglib
         >=media-sound/cdparanoia-3.9.8
