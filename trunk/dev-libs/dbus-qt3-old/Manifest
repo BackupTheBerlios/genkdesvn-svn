@@ -1,0 +1,8 @@
+DIST dbus-qt3-0.70.tar.bz2 220305 RMD160 8e2e3919ea71d50966000239e435b41ead089b1b SHA1 d87cfd7af62d36cc98f0a01f3d7e66eb677b081a SHA256 d86531f106f8172a635d57ef35b7856cb54885c50f175bd1bff374c0e5a5f5ed
+EBUILD dbus-qt3-old-0.70-r1.ebuild 871 RMD160 26317af6bcc4285bac8f891e0c495ffc686b9488 SHA1 4a87e84702b3e7858a4c7c73f445777f3aacb98a SHA256 43eefeb61dfb77b24aa562b6c21bfd7a7bf42aec8c8be682fd0f4d0e9e94df20
+MD5 994e25c9f528e314fa46f661509e4877 dbus-qt3-old-0.70-r1.ebuild 871
+RMD160 26317af6bcc4285bac8f891e0c495ffc686b9488 dbus-qt3-old-0.70-r1.ebuild 871
+SHA256 43eefeb61dfb77b24aa562b6c21bfd7a7bf42aec8c8be682fd0f4d0e9e94df20 dbus-qt3-old-0.70-r1.ebuild 871
+MD5 e8ae521ff3edc25d8bd07364fcb5eab5 files/digest-dbus-qt3-old-0.70-r1 244
+RMD160 faf1e11833147ae1d32dde57fa9d9567b1ecfe3b files/digest-dbus-qt3-old-0.70-r1 244
+SHA256 15db114a08840ee5ba18044da3b85feacfdd6a2e5f3ea993398bcc496f612973 files/digest-dbus-qt3-old-0.70-r1 244
