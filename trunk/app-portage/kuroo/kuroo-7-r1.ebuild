@@ -3,9 +3,12 @@
 # $Header: $
 
 ESVN_PROJECT="${PN}-svn"
-ESVN_REPO_URI="svn://kuroo.org/repos/kuroo/branches/0.80.0"
+ESVN_REPO_URI="svn://kuroo.org/repos/kuroo/branches/0.81"
 ESVN_STORE_DIR="${DISTDIR}/svn-src"
-ESVN_BOOTSTRAP="make -f Makefile.cvs"
+
+# Let kde.eclass do this during kde_src_compile.
+#ESVN_BOOTSTRAP="make -f Makefile.cvs"
+
 inherit kdesvn subversion
 
 DESCRIPTION="A KDE Portage frontend"
@@ -17,7 +20,7 @@ KEYWORDS="~x86 ~amd64 ~ppc ~sparc"
 IUSE="debug"
 
 RDEPEND="!app-portage/guitoo
-	|| (kde-misc/kdiff3 kde-base/kdesdk)"
+	kde-misc/kdiff3"
 
 PATCHES="${FILESDIR}/${PN}-detect-automake.patch"
 
@@ -28,6 +31,10 @@ KMTARGETS=(
 need-kde 3.4
 
 src_compile() {
+
+# Some strange logic in kde.eclass makes this advisable.
+	unset UNSERMAKE
+
 	kde_src_compile myconf configure
 
 	einfo "generating headers in src/config"
@@ -102,7 +109,8 @@ src_compile() {
 	cd ${S}/src/queue && ${QTDIR}/bin/moc -o queuetab.moc queuetab.h
 	cd ${S}/src/queue && ${QTDIR}/bin/moc -o queue.moc queue.h
 	cd ${S}/src/queue && ${QTDIR}/bin/moc -o queuelistview.moc queuelistview.h
-	cd ${S}/src/queue && ${QTDIR}/bin/moc -o results.moc results.h
+# This is gone.	
+#	cd ${S}/src/queue && ${QTDIR}/bin/moc -o results.moc results.h
 
 	einfo "generating headers in src"
 	cd ${S}/src && ${QTDIR}/bin/uic -o kurooviewbase.h kurooviewbase.ui
