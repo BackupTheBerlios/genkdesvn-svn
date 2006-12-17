@@ -43,10 +43,12 @@ DEPEND="${RDEPEND}
 #    ${FILESDIR}/${PN}-respectflags.patch
 #    ${FILESDIR}/${PN}-closedev.patch"
 
+PATCHES="${FILESDIR}/${PN}-headers.patch"
+
 need-kde 3.2
 
 src_compile() {
-	rm ${S}/configure
+	rm -f ${S}/configure
 
 	myconf="${myconf}
         $(use_with xinerama)
@@ -57,4 +59,3 @@ src_compile() {
 
 	kdesvn_src_compile
 }
-
