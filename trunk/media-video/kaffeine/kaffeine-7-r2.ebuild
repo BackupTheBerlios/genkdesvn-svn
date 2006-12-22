@@ -7,35 +7,25 @@ KSCM_MODULE=multimedia
 KSCM_SUBDIR=kaffeine
 inherit kdesvn eutils kdesvn-source
 
-DESCRIPTION="Media player for KDE"
+DESCRIPTION="Media player for KDE using xine and gstreamer backends."
 HOMEPAGE="http://kaffeine.sourceforge.net/"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="~x86 ~ppc ~sparc ~amd64"
-IUSE="dvb encode gstreamer vorbis xinerama"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+IUSE="dvb gstreamer xinerama vorbis encode kdehiddenvisibility"
 
-RDEPEND="|| ( x11-base/xorg-server
-          >=x11-base/xorg-x11-6.8.0-r4 )
-    >=media-libs/xine-lib-1
-    gstreamer? ( =media-libs/gstreamer-0.8*
-        =media-libs/gst-plugins-0.8* )
-    media-sound/cdparanoia
-    encode? ( media-sound/lame )
-    vorbis? ( media-libs/libvorbis )
-    || ( (
-            x11-libs/libXtst
-            xinerama? ( x11-libs/libXinerama )
-        ) virtual/x11 )"
+RDEPEND=">=media-libs/xine-lib-1
+        gstreamer? ( =media-libs/gstreamer-0.8*
+                =media-libs/gst-plugins-0.8*
+                =media-plugins/gst-plugins-xvideo-0.8* )
+        media-sound/cdparanoia
+        encode? ( media-sound/lame )
+        vorbis? ( media-libs/libvorbis )
+        x11-libs/libXtst"
 
 DEPEND="${RDEPEND}
-    || ( (
-            x11-proto/xproto
-            x11-proto/xextproto
-            xinerama? ( x11-proto/xineramaproto )
-        ) virtual/x11 )
-    dvb? ( >=sys-kernel/linux-headers-2.6 )
-    dev-util/pkgconfig"
+        dvb? ( media-tv/linuxtv-dvb-headers )"
 
 # the dependency on xorg-x11 is meant to avoid gentoo bug #59746
 
@@ -45,17 +35,26 @@ DEPEND="${RDEPEND}
 
 PATCHES="${FILESDIR}/${PN}-headers.patch"
 
-need-kde 3.2
+need-kde 3.5.4
 
 src_compile() {
-	rm -f ${S}/configure
+	#rm -f ${S}/configure
+        # see bug #143168
+        replace-flags -O3 -O2
 
-	myconf="${myconf}
-        $(use_with xinerama)
-        $(use_with dvb)
-        $(use_with gstreamer)
-        $(use_with vorbis oggvorbis)
-        $(use_with encode lame)"
+        myconf="${myconf}
+                $(use_with xinerama)
+                $(use_with dvb)
+                $(use_with gstreamer)
+                $(use_with vorbis oggvorbis)
+                $(use_with encode lame)"
 
 	kdesvn_src_compile
+}
+
+src_install() {
+        kdesvn_src_install
+
+        # Remove this, as kdelibs 3.5.4 provides it
+        rm -f "${D}/usr/share/mimelnk/application/x-mplayer2.desktop"
 }
