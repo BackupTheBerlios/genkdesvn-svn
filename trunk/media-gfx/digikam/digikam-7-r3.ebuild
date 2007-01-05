@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header:$
 
@@ -8,26 +8,28 @@ KSCM_SUBDIR=$PN
 inherit kdesvn kdesvn-source
 
 DESCRIPTION="A digital photo management application for KDE."
-HOMEPAGE="http://digikam.sourceforge.net/"
+HOMEPAGE="http://www.digikam.org/"
 LICENSE="GPL-2"
 
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~x86"
-IUSE="nfs"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
+IUSE="nfs kdehiddenvisibility kdeenablefinal"
 
-DEPEND=">=media-libs/libgphoto2-2
-    >=media-libs/libkexif-0.2.1
-    >=dev-db/sqlite-3
-    >=media-libs/libkipi-0.1.1
-    media-libs/imlib2
-    media-libs/tiff
-    sys-libs/gdbm
-    >=media-gfx/dcraw-8.03"
+DEPEND=">=media-libs/libgphoto2-2.2
+	>=dev-db/sqlite-3
+	>=media-libs/libkipi-0.1
+	>=media-libs/tiff-3.8.2
+	media-libs/jasper
+	sys-libs/gdbm
+	media-gfx/dcraw
+	>=media-gfx/exiv2-0.12
+	>=media-libs/lcms-1.14
+	>=media-libs/libpng-1.2"
 
 RDEPEND="${DEPEND}
-    || ( ( kde-base/kgamma kde-base/kamera ) kde-base/kdegraphics )"
+	|| ( ( kde-base/kgamma kde-base/kamera ) kde-base/kdegraphics )"
 
-need-kde 3.4
+need-kde 3.5
 
 pkg_setup(){
 	kdesvn_pkg_setup
