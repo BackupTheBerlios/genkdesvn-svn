@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -29,16 +29,11 @@ DEPEND="${RDEPEND}
 
 # the dependency on xorg-x11 is meant to avoid gentoo bug #59746
 
-#PATCHES="${FILESDIR}/${PN}-xinerama.patch
-#    ${FILESDIR}/${PN}-respectflags.patch
-#    ${FILESDIR}/${PN}-closedev.patch"
-
-PATCHES="${FILESDIR}/${PN}-headers.patch"
+#PATCHES="${FILESDIR}/${PN}-headers.patch"
 
 need-kde 3.5.4
 
 src_compile() {
-	#rm -f ${S}/configure
         # see bug #143168
         replace-flags -O3 -O2
 
