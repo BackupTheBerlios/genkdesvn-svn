@@ -6,6 +6,7 @@ UNSERMAKE=no
 KMNAME=kdebase
 MAXKDEVER=$PV
 KM_DEPRANGE="$PV $MAXKDEVER"
+UNSERMAKE=yes
 inherit kdesvn-meta eutils kdesvn-source
 
 DESCRIPTION="The KDE Control Center"
