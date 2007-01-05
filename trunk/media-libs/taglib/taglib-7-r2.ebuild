@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-KSCM_ROOT=trunk
-KSCM_MODULE=kdesupport
+KSCM_ROOT=branches
+KSCM_MODULE=kdesupport/3.5/kdesupport
 KSCM_SUBDIR=${PN}
 inherit kdesvn-source
 
