@@ -234,7 +234,7 @@ src_install() {
         else
                 dolib.so lib/lib{editor,qassistantclient,designercore}.a
                 dolib.so lib/libqt-mt.la
-                dolib.so lib/libqt-mt.so.3.3.6 lib/libqui.so.1.0.0
+                dolib.so lib/libqt-mt.so.3.3.7 lib/libqui.so.1.0.0
                 cd ${D}/${QTBASE}/$(get_libdir)
 
                 for x in libqui.so ; do
@@ -243,13 +243,13 @@ src_install() {
                         ln -s $x.1 $x
                 done
 
-		# version symlinks - 3.3.6->3.3->3->.so
-		ln -s libqt-mt.so.3.3.6 libqt-mt.so.3.3
+		# version symlinks - 3.3.7->3.3->3->.so
+		ln -s libqt-mt.so.3.3.7 libqt-mt.so.3.3
 		ln -s libqt-mt.so.3.3 libqt-mt.so.3
 		ln -s libqt-mt.so.3 libqt-mt.so
 
 		# libqt -> libqt-mt symlinks
-		ln -s libqt-mt.so.3.3.6 libqt.so.3.3.6
+		ln -s libqt-mt.so.3.3.7 libqt.so.3.3.7
 		ln -s libqt-mt.so.3.3 libqt.so.3.3
 		ln -s libqt-mt.so.3 libqt.so.3
 		ln -s libqt-mt.so libqt.so
