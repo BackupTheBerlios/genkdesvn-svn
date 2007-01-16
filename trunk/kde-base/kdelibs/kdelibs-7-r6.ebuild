@@ -10,20 +10,20 @@ HOMEPAGE="http://www.kde.org/"
 SRC_URI=""
 LICENSE="GPL-2 LGPL-2"
 SLOT="$PV"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="acl alsa arts cups doc jpeg2k kerberos legacyssl utempter openexr spell ssl tiff
-zeroconf avahi kernel_linux fam lua linguas_he"
+zeroconf avahi kernel_linux fam lua linguas_he kdehiddenvisibility"
 
 # kde.eclass has kdelibs in DEPEND, and we can't have that in here.
 # so we recreate the entire DEPEND from scratch.
 
 # Added aspell-en as dependency to work around bug 131512.
 RDEPEND="$(qt_min_version 3.3.3)
-	arts? ( ~kde-base/arts-${PV} )
+        arts? ( ~kde-base/arts-${PV} )
         app-arch/bzip2
         >=media-libs/freetype-2
         media-libs/fontconfig
-        >=dev-libs/libxslt-1.1.15
+        >=dev-libs/libxslt-1.1.16
         >=dev-libs/libxml2-2.6.6
         >=dev-libs/libpcre-4.2
         media-libs/libart_lgpl
