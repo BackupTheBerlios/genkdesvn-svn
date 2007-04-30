@@ -1,9 +1,0 @@
-# ChangeLog for media-sound/kradio
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*kradio-7-r1 (08 Jul 2005)
-
-  08 Jul 2005; Mario Tanev <mtanev@csua.berkeley.edu>  kradio-7-r1.ebuild files/digest-kradio-7-r1
-  Introduce unsermake dependency
-

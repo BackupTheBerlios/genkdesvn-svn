@@ -1,9 +1,0 @@
-# ChangeLog for media-libs/taglib
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*taglib-7-r1 (01 Aug 2005)
-
-  01 Aug 2005; Mario Tanev <mtanev@csua.berkeley.edu>  taglib-7-r1.ebuild files/digest-taglib-7-r1
-  Update dependency and revision to reflect taglib-1.4
-
