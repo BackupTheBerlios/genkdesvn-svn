@@ -1,6 +1,0 @@
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kaffeine-7-r1 0
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kaffeine-7-r2 0
-MD5 bea6e79df091ca27d0ca4a0c601f8498 files/kaffeine-closedev.patch 458
-MD5 5509ae32f15b725c642bbc4ac99aefe9 files/kaffeine-respectflags.patch 802
-MD5 7eb46dd81c8493beac19e7078813bfc3 files/kaffeine-xinerama.patch 863
-MD5 fca53308103272cafd40f7c0d4f72ba7 kaffeine-7-r2.ebuild 1475

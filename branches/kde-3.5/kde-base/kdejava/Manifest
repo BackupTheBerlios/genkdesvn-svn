@@ -1,5 +1,0 @@
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdejava-7 0
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-kdejava-7-r1 0
-MD5 98aaced38286ff2403d813b121aa1380 files/kdejava-3.4.0_rc1-classpath.diff 471
-MD5 ed97ae461d86ff4d5f685215f5d315ae files/no-gtk-glib-check.diff 625
-MD5 7574d86c178640192ddcc6edb333b62b kdejava-7-r1.ebuild 1290

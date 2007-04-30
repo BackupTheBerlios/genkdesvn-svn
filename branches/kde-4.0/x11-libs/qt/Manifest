@@ -1,4 +1,0 @@
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-qt-cvs.4.1.0 0
-MD5 0495f1d3f467a2972feccba453135258 files/qt-4.1.0-configure-no-mysql.diff 11142
-MD5 fff1c03b4a3ad38904a30d1b2de88a07 files/qt4-nomkdir.patch 866
-MD5 6511db018cc4eebdc47c76edf54c4d19 qt-cvs.4.1.0.ebuild 6053
